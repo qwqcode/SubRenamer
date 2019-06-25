@@ -15,9 +15,13 @@ namespace SubtitleRenamer
 {
     public partial class MainForm : Form
     {
+        private static SettingForm settingForm;
+
         public MainForm()
         {
             InitializeComponent();
+            settingForm = new SettingForm();
+            LoadFilesByPath(Application.StartupPath);
         }
 
         private void PathSelBtn_Click(object sender, EventArgs e)
@@ -28,8 +32,13 @@ namespace SubtitleRenamer
                 PathSelDialog.SelectedPath = OpenPath;
             }
             PathSelDialog.ShowDialog();
-            PathTextBox.Text = OpenPath = PathSelDialog.SelectedPath;
+            LoadFilesByPath(PathSelDialog.SelectedPath);
+        }
 
+        private void LoadFilesByPath(string path)
+        {
+            OpenPath = path;
+            PathTextBox.Text = OpenPath;
             // 刷新文件列表
             ReloadFiles();
         }
@@ -71,6 +80,43 @@ namespace SubtitleRenamer
             prompt.AcceptButton = confirmation;
 
             return prompt.ShowDialog() == DialogResult.OK ? textBox.Text : "";
+        }
+
+        private void FileListBox_MouseMove(object sender, MouseEventArgs e)
+        {
+            ListBox listBox = (ListBox)sender;
+            int index = listBox.IndexFromPoint(e.Location);
+            // Check if the index is valid.
+            if (index != -1 && index < listBox.Items.Count)
+            {
+                MainToolTip.Active = true;
+                // Check if the ToolTip's text isn't already the one
+                // we are now processing.
+                if (MainToolTip.GetToolTip(listBox) != listBox.Items[index].ToString())
+                {
+                    // If it isn't, then a new item needs to be
+                    // displayed on the toolTip. Update it.
+                    MainToolTip.SetToolTip(listBox, listBox.Items[index].ToString());
+                }
+            } else
+            {
+                MainToolTip.Active = false;
+            }
+        }
+
+        private void CopyrightText_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://qwqaq.com/?from=SubtitleRenamer");
+        }
+
+        private void StartEasyBtn_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void SettingBtn_Click(object sender, EventArgs e)
+        {
+            settingForm.ShowDialog();
         }
     }
 }

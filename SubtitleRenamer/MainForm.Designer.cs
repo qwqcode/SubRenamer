@@ -28,18 +28,23 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.PathSelBtn = new System.Windows.Forms.Button();
             this.PathTextBox = new System.Windows.Forms.TextBox();
-            this.FileListBox = new System.Windows.Forms.ListBox();
-            this.StartBtn = new System.Windows.Forms.Button();
-            this.MatchEpisodeBtn = new System.Windows.Forms.Button();
+            this.VideoFileListBox = new System.Windows.Forms.ListBox();
+            this.SubtitleFileListBox = new System.Windows.Forms.ListBox();
+            this.StartEasyBtn = new System.Windows.Forms.Button();
+            this.MainToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.CopyrightText = new System.Windows.Forms.Label();
+            this.SettingBtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // PathSelBtn
             // 
-            this.PathSelBtn.Location = new System.Drawing.Point(12, 12);
+            this.PathSelBtn.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.PathSelBtn.Location = new System.Drawing.Point(563, 42);
             this.PathSelBtn.Name = "PathSelBtn";
-            this.PathSelBtn.Size = new System.Drawing.Size(96, 23);
+            this.PathSelBtn.Size = new System.Drawing.Size(115, 25);
             this.PathSelBtn.TabIndex = 0;
             this.PathSelBtn.Text = "打开文件夹";
             this.PathSelBtn.UseVisualStyleBackColor = true;
@@ -47,53 +52,84 @@
             // 
             // PathTextBox
             // 
-            this.PathTextBox.Location = new System.Drawing.Point(114, 13);
+            this.PathTextBox.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.PathTextBox.Location = new System.Drawing.Point(156, 43);
             this.PathTextBox.Name = "PathTextBox";
             this.PathTextBox.ReadOnly = true;
-            this.PathTextBox.Size = new System.Drawing.Size(490, 21);
+            this.PathTextBox.Size = new System.Drawing.Size(401, 23);
             this.PathTextBox.TabIndex = 1;
             // 
-            // FileListBox
+            // VideoFileListBox
             // 
-            this.FileListBox.FormattingEnabled = true;
-            this.FileListBox.HorizontalScrollbar = true;
-            this.FileListBox.ItemHeight = 12;
-            this.FileListBox.Location = new System.Drawing.Point(12, 50);
-            this.FileListBox.Name = "FileListBox";
-            this.FileListBox.Size = new System.Drawing.Size(592, 352);
-            this.FileListBox.TabIndex = 2;
+            this.VideoFileListBox.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.VideoFileListBox.FormattingEnabled = true;
+            this.VideoFileListBox.HorizontalScrollbar = true;
+            this.VideoFileListBox.ItemHeight = 17;
+            this.VideoFileListBox.Location = new System.Drawing.Point(349, 83);
+            this.VideoFileListBox.Name = "VideoFileListBox";
+            this.VideoFileListBox.Size = new System.Drawing.Size(330, 327);
+            this.VideoFileListBox.TabIndex = 2;
+            this.VideoFileListBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.FileListBox_MouseMove);
             // 
-            // StartBtn
+            // SubtitleFileListBox
             // 
-            this.StartBtn.Enabled = false;
-            this.StartBtn.Location = new System.Drawing.Point(166, 415);
-            this.StartBtn.Name = "StartBtn";
-            this.StartBtn.Size = new System.Drawing.Size(135, 23);
-            this.StartBtn.TabIndex = 3;
-            this.StartBtn.Text = "2. 执行重命名";
-            this.StartBtn.UseVisualStyleBackColor = true;
-            this.StartBtn.Click += new System.EventHandler(this.StartBtn_Click);
+            this.SubtitleFileListBox.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.SubtitleFileListBox.FormattingEnabled = true;
+            this.SubtitleFileListBox.HorizontalScrollbar = true;
+            this.SubtitleFileListBox.ItemHeight = 17;
+            this.SubtitleFileListBox.Location = new System.Drawing.Point(13, 83);
+            this.SubtitleFileListBox.Name = "SubtitleFileListBox";
+            this.SubtitleFileListBox.Size = new System.Drawing.Size(330, 327);
+            this.SubtitleFileListBox.TabIndex = 6;
+            this.SubtitleFileListBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.FileListBox_MouseMove);
             // 
-            // MatchEpisodeBtn
+            // StartEasyBtn
             // 
-            this.MatchEpisodeBtn.Enabled = false;
-            this.MatchEpisodeBtn.Location = new System.Drawing.Point(12, 415);
-            this.MatchEpisodeBtn.Name = "MatchEpisodeBtn";
-            this.MatchEpisodeBtn.Size = new System.Drawing.Size(135, 23);
-            this.MatchEpisodeBtn.TabIndex = 4;
-            this.MatchEpisodeBtn.Text = "1. 自动匹配集数";
-            this.MatchEpisodeBtn.UseVisualStyleBackColor = true;
-            this.MatchEpisodeBtn.Click += new System.EventHandler(this.MatchEpisodeBtn_Click);
+            this.StartEasyBtn.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.StartEasyBtn.Location = new System.Drawing.Point(12, 12);
+            this.StartEasyBtn.Name = "StartEasyBtn";
+            this.StartEasyBtn.Size = new System.Drawing.Size(137, 55);
+            this.StartEasyBtn.TabIndex = 8;
+            this.StartEasyBtn.Text = "一键改名";
+            this.StartEasyBtn.UseVisualStyleBackColor = true;
+            this.StartEasyBtn.Click += new System.EventHandler(this.StartEasyBtn_Click);
+            // 
+            // CopyrightText
+            // 
+            this.CopyrightText.AutoSize = true;
+            this.CopyrightText.BackColor = System.Drawing.Color.Transparent;
+            this.CopyrightText.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.CopyrightText.Font = new System.Drawing.Font("微软雅黑", 8F);
+            this.CopyrightText.ForeColor = System.Drawing.Color.DarkGray;
+            this.CopyrightText.Location = new System.Drawing.Point(590, 14);
+            this.CopyrightText.Name = "CopyrightText";
+            this.CopyrightText.Size = new System.Drawing.Size(87, 16);
+            this.CopyrightText.TabIndex = 10;
+            this.CopyrightText.Text = "(c) qwqaq.com";
+            this.CopyrightText.Click += new System.EventHandler(this.CopyrightText_Click);
+            // 
+            // SettingBtn
+            // 
+            this.SettingBtn.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.SettingBtn.Location = new System.Drawing.Point(155, 12);
+            this.SettingBtn.Name = "SettingBtn";
+            this.SettingBtn.Size = new System.Drawing.Size(81, 25);
+            this.SettingBtn.TabIndex = 13;
+            this.SettingBtn.Text = "设置";
+            this.SettingBtn.UseVisualStyleBackColor = true;
+            this.SettingBtn.Click += new System.EventHandler(this.SettingBtn_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(619, 450);
-            this.Controls.Add(this.MatchEpisodeBtn);
-            this.Controls.Add(this.StartBtn);
-            this.Controls.Add(this.FileListBox);
+            this.ClientSize = new System.Drawing.Size(692, 426);
+            this.Controls.Add(this.SettingBtn);
+            this.Controls.Add(this.StartEasyBtn);
+            this.Controls.Add(this.SubtitleFileListBox);
+            this.Controls.Add(this.CopyrightText);
+            this.Controls.Add(this.VideoFileListBox);
             this.Controls.Add(this.PathTextBox);
             this.Controls.Add(this.PathSelBtn);
             this.MaximizeBox = false;
@@ -111,9 +147,12 @@
 
         private System.Windows.Forms.Button PathSelBtn;
         private System.Windows.Forms.TextBox PathTextBox;
-        private System.Windows.Forms.ListBox FileListBox;
-        private System.Windows.Forms.Button StartBtn;
-        private System.Windows.Forms.Button MatchEpisodeBtn;
+        private System.Windows.Forms.ListBox VideoFileListBox;
+        private System.Windows.Forms.ListBox SubtitleFileListBox;
+        private System.Windows.Forms.Button StartEasyBtn;
+        private System.Windows.Forms.ToolTip MainToolTip;
+        private System.Windows.Forms.Label CopyrightText;
+        private System.Windows.Forms.Button SettingBtn;
     }
 }
 

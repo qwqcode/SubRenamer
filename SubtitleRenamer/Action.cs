@@ -29,7 +29,6 @@ namespace SubtitleRenamer
 
         private void ReloadFiles()
         {
-            MatchEpisodeBtn.Enabled = false;
             if (OpenPath == null || OpenPath.Trim() == "") return;
 
             var folder = new DirectoryInfo(OpenPath);
@@ -46,8 +45,6 @@ namespace SubtitleRenamer
                 SubtitleFileList.Add(file);
 
             // 清空历史数据
-            MatchEpisodeBtn.Enabled = true;
-            StartBtn.Enabled = false;
             SubtitleRenameDict.Clear();
             VideoEpisDict.Clear();
             SubtitleEpisDict.Clear();
@@ -58,31 +55,30 @@ namespace SubtitleRenamer
 
         private void RefreshFileListBox()
         {
-            FileListBox.Items.Clear();
-            FileListBox.Items.Add(">> 字幕");
+            // 字幕 listBox
+            SubtitleFileListBox.Items.Clear();
             foreach (var file in SubtitleFileList)
             {
                 var str = "";
-                str += "  ";
                 if (SubtitleEpisDict.ContainsKey(file.Name))
                     str += $"[集数:{SubtitleEpisDict[file.Name]}] ";
                 str += file.Name;
-                FileListBox.Items.Add(str);
+                SubtitleFileListBox.Items.Add(str);
                 if (SubtitleRenameDict.ContainsKey(file.Name))
                 {
-                    FileListBox.Items.Add(String.Format("{0,12}", " => ") + SubtitleRenameDict[file.Name]);
+                    SubtitleFileListBox.Items.Add(String.Format("{0,12}", " => ") + SubtitleRenameDict[file.Name]);
                 }
             }
-            FileListBox.Items.Add("");
-            FileListBox.Items.Add(">> 视频");
+
+            // 视频 listBox
+            VideoFileListBox.Items.Clear();
             foreach (var file in VideoFileList)
             {
                 var str = "";
-                str += "  ";
                 if (VideoEpisDict.ContainsKey(file.Name))
                     str += $"[集数:{VideoEpisDict[file.Name]}] ";
                 str += file.Name;
-                FileListBox.Items.Add(str);
+                VideoFileListBox.Items.Add(str);
             }
         }
 
@@ -126,9 +122,6 @@ namespace SubtitleRenamer
 
             // 刷新文件列表
             RefreshFileListBox();
-
-            // 设置改名按钮可用
-            StartBtn.Enabled = true;
         }
 
         // 通过比对两个文件名中 数字 不同的部分来得到 集数 的位置
