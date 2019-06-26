@@ -44,7 +44,7 @@
             // PathSelBtn
             // 
             this.PathSelBtn.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.PathSelBtn.Location = new System.Drawing.Point(13, 16);
+            this.PathSelBtn.Location = new System.Drawing.Point(15, 17);
             this.PathSelBtn.Name = "PathSelBtn";
             this.PathSelBtn.Size = new System.Drawing.Size(93, 25);
             this.PathSelBtn.TabIndex = 0;
@@ -55,10 +55,10 @@
             // PathTextBox
             // 
             this.PathTextBox.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.PathTextBox.Location = new System.Drawing.Point(112, 17);
+            this.PathTextBox.Location = new System.Drawing.Point(114, 18);
             this.PathTextBox.Name = "PathTextBox";
             this.PathTextBox.ReadOnly = true;
-            this.PathTextBox.Size = new System.Drawing.Size(322, 23);
+            this.PathTextBox.Size = new System.Drawing.Size(496, 23);
             this.PathTextBox.TabIndex = 1;
             // 
             // VideoFileListBox
@@ -67,9 +67,9 @@
             this.VideoFileListBox.FormattingEnabled = true;
             this.VideoFileListBox.HorizontalScrollbar = true;
             this.VideoFileListBox.ItemHeight = 17;
-            this.VideoFileListBox.Location = new System.Drawing.Point(349, 72);
+            this.VideoFileListBox.Location = new System.Drawing.Point(441, 72);
             this.VideoFileListBox.Name = "VideoFileListBox";
-            this.VideoFileListBox.Size = new System.Drawing.Size(330, 327);
+            this.VideoFileListBox.Size = new System.Drawing.Size(420, 463);
             this.VideoFileListBox.TabIndex = 2;
             this.VideoFileListBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.FileListBox_MouseMove);
             // 
@@ -81,7 +81,7 @@
             this.SubtitleFileListBox.ItemHeight = 17;
             this.SubtitleFileListBox.Location = new System.Drawing.Point(12, 72);
             this.SubtitleFileListBox.Name = "SubtitleFileListBox";
-            this.SubtitleFileListBox.Size = new System.Drawing.Size(330, 327);
+            this.SubtitleFileListBox.Size = new System.Drawing.Size(420, 463);
             this.SubtitleFileListBox.TabIndex = 6;
             this.SubtitleFileListBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.FileListBox_MouseMove);
             // 
@@ -103,7 +103,7 @@
             this.CopyrightText.Cursor = System.Windows.Forms.Cursors.Hand;
             this.CopyrightText.Font = new System.Drawing.Font("微软雅黑", 8F);
             this.CopyrightText.ForeColor = System.Drawing.Color.DarkGray;
-            this.CopyrightText.Location = new System.Drawing.Point(595, 41);
+            this.CopyrightText.Location = new System.Drawing.Point(777, 41);
             this.CopyrightText.Name = "CopyrightText";
             this.CopyrightText.Size = new System.Drawing.Size(87, 16);
             this.CopyrightText.TabIndex = 10;
@@ -113,7 +113,7 @@
             // SettingBtn
             // 
             this.SettingBtn.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.SettingBtn.Location = new System.Drawing.Point(598, 13);
+            this.SettingBtn.Location = new System.Drawing.Point(779, 12);
             this.SettingBtn.Name = "SettingBtn";
             this.SettingBtn.Size = new System.Drawing.Size(82, 24);
             this.SettingBtn.TabIndex = 13;
@@ -127,7 +127,7 @@
             this.groupBox1.Controls.Add(this.PathSelBtn);
             this.groupBox1.Location = new System.Drawing.Point(141, 6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(448, 53);
+            this.groupBox1.Size = new System.Drawing.Size(627, 53);
             this.groupBox1.TabIndex = 14;
             this.groupBox1.TabStop = false;
             // 
@@ -136,7 +136,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(692, 413);
+            this.ClientSize = new System.Drawing.Size(876, 549);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.SettingBtn);
             this.Controls.Add(this.StartEasyBtn);
