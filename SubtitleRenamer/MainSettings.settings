@@ -8,8 +8,5 @@
     <Setting Name="OpenFolderFinished" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="RenameConfirmDialog" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
   </Settings>
 </SettingsFile>

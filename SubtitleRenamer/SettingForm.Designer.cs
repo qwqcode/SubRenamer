@@ -29,15 +29,18 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.checkBox3 = new System.Windows.Forms.CheckBox();
+            this.VersionText = new System.Windows.Forms.Label();
+            this.UpdateLinkLabel = new System.Windows.Forms.LinkLabel();
+            this.GithubLinkLabel = new System.Windows.Forms.LinkLabel();
+            this.AuthorLinkLabel = new System.Windows.Forms.LinkLabel();
+            this.label1 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.checkBox2);
             this.groupBox1.Controls.Add(this.checkBox1);
             this.groupBox1.Controls.Add(this.checkBox3);
             this.groupBox1.Font = new System.Drawing.Font("微软雅黑", 8F);
@@ -47,20 +50,6 @@
             this.groupBox1.TabIndex = 15;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "常规";
-            // 
-            // checkBox2
-            // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Checked = global::SubtitleRenamer.MainSettings.Default.RenameConfirmDialog;
-            this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox2.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::SubtitleRenamer.MainSettings.Default, "RenameConfirmDialog", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.checkBox2.Font = new System.Drawing.Font("微软雅黑", 8F);
-            this.checkBox2.Location = new System.Drawing.Point(6, 74);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(137, 20);
-            this.checkBox2.TabIndex = 17;
-            this.checkBox2.Text = "改名前弹出确认对话框";
-            this.checkBox2.UseVisualStyleBackColor = true;
             // 
             // checkBox1
             // 
@@ -89,12 +78,75 @@
             this.checkBox3.Text = "备份原始字幕";
             this.checkBox3.UseVisualStyleBackColor = true;
             // 
+            // VersionText
+            // 
+            this.VersionText.AutoSize = true;
+            this.VersionText.Font = new System.Drawing.Font("微软雅黑", 8F);
+            this.VersionText.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.VersionText.Location = new System.Drawing.Point(420, 199);
+            this.VersionText.Name = "VersionText";
+            this.VersionText.Size = new System.Drawing.Size(14, 16);
+            this.VersionText.TabIndex = 16;
+            this.VersionText.Text = "v";
+            // 
+            // UpdateLinkLabel
+            // 
+            this.UpdateLinkLabel.AutoSize = true;
+            this.UpdateLinkLabel.Location = new System.Drawing.Point(359, 198);
+            this.UpdateLinkLabel.Name = "UpdateLinkLabel";
+            this.UpdateLinkLabel.Size = new System.Drawing.Size(56, 17);
+            this.UpdateLinkLabel.TabIndex = 17;
+            this.UpdateLinkLabel.TabStop = true;
+            this.UpdateLinkLabel.Text = "查看更新";
+            this.UpdateLinkLabel.VisitedLinkColor = System.Drawing.Color.Blue;
+            this.UpdateLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.UpdateLinkLabel_LinkClicked);
+            // 
+            // GithubLinkLabel
+            // 
+            this.GithubLinkLabel.AutoSize = true;
+            this.GithubLinkLabel.Location = new System.Drawing.Point(308, 198);
+            this.GithubLinkLabel.Name = "GithubLinkLabel";
+            this.GithubLinkLabel.Size = new System.Drawing.Size(48, 17);
+            this.GithubLinkLabel.TabIndex = 18;
+            this.GithubLinkLabel.TabStop = true;
+            this.GithubLinkLabel.Text = "GitHub";
+            this.GithubLinkLabel.VisitedLinkColor = System.Drawing.Color.Blue;
+            this.GithubLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.GithubLinkLabel_LinkClicked);
+            // 
+            // AuthorLinkLabel
+            // 
+            this.AuthorLinkLabel.AutoSize = true;
+            this.AuthorLinkLabel.Location = new System.Drawing.Point(251, 198);
+            this.AuthorLinkLabel.Name = "AuthorLinkLabel";
+            this.AuthorLinkLabel.Size = new System.Drawing.Size(56, 17);
+            this.AuthorLinkLabel.TabIndex = 19;
+            this.AuthorLinkLabel.TabStop = true;
+            this.AuthorLinkLabel.Text = "关注作者";
+            this.AuthorLinkLabel.VisitedLinkColor = System.Drawing.Color.Blue;
+            this.AuthorLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.AuthorLinkLabel_LinkClicked);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("微软雅黑", 15F);
+            this.label1.ForeColor = System.Drawing.SystemColors.ButtonShadow;
+            this.label1.Location = new System.Drawing.Point(273, 91);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(127, 27);
+            this.label1.TabIndex = 20;
+            this.label1.Text = "LOGO AREA";
+            // 
             // SettingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(481, 225);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.AuthorLinkLabel);
+            this.Controls.Add(this.GithubLinkLabel);
+            this.Controls.Add(this.UpdateLinkLabel);
+            this.Controls.Add(this.VersionText);
             this.Controls.Add(this.groupBox1);
             this.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -103,19 +155,26 @@
             this.Name = "SettingForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "设置";
+            this.Load += new System.EventHandler(this.SettingForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.CheckBox checkBox3;
+        private System.Windows.Forms.Label VersionText;
+        private System.Windows.Forms.LinkLabel UpdateLinkLabel;
+        private System.Windows.Forms.LinkLabel GithubLinkLabel;
+        private System.Windows.Forms.LinkLabel AuthorLinkLabel;
+        private System.Windows.Forms.Label label1;
     }
 }

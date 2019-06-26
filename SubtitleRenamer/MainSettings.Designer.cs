@@ -46,17 +46,5 @@ namespace SubtitleRenamer {
                 this["OpenFolderFinished"] = value;
             }
         }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool RenameConfirmDialog {
-            get {
-                return ((bool)(this["RenameConfirmDialog"]));
-            }
-            set {
-                this["RenameConfirmDialog"] = value;
-            }
-        }
     }
 }

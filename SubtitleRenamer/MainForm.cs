@@ -21,6 +21,11 @@ namespace SubtitleRenamer
         {
             InitializeComponent();
             settingForm = new SettingForm();
+        }
+        
+        // 窗口加载完后
+        private void MainForm_Load(object sender, EventArgs e)
+        {
             LoadFilesByPath(Application.StartupPath);
         }
 
@@ -41,16 +46,6 @@ namespace SubtitleRenamer
             PathTextBox.Text = OpenPath;
             // 刷新文件列表
             ReloadFiles();
-        }
-
-        private void StartBtn_Click(object sender, EventArgs e)
-        {
-            StartRename();
-        }
-
-        private void MatchEpisodeBtn_Click(object sender, EventArgs e)
-        {
-            MatchEpisode();
         }
 
         /// <summary>
@@ -92,11 +87,11 @@ namespace SubtitleRenamer
                 MainToolTip.Active = true;
                 // Check if the ToolTip's text isn't already the one
                 // we are now processing.
-                if (MainToolTip.GetToolTip(listBox) != listBox.Items[index].ToString())
+                if (MainToolTip.GetToolTip(listBox) != listBox.Items[index].ToString().Trim())
                 {
                     // If it isn't, then a new item needs to be
                     // displayed on the toolTip. Update it.
-                    MainToolTip.SetToolTip(listBox, listBox.Items[index].ToString());
+                    MainToolTip.SetToolTip(listBox, listBox.Items[index].ToString().Trim());
                 }
             } else
             {
@@ -111,7 +106,7 @@ namespace SubtitleRenamer
 
         private void StartEasyBtn_Click(object sender, EventArgs e)
         {
-
+            StartRename();
         }
 
         private void SettingBtn_Click(object sender, EventArgs e)

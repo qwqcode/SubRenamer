@@ -44,7 +44,7 @@
             // PathSelBtn
             // 
             this.PathSelBtn.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.PathSelBtn.Location = new System.Drawing.Point(17, 20);
+            this.PathSelBtn.Location = new System.Drawing.Point(13, 16);
             this.PathSelBtn.Name = "PathSelBtn";
             this.PathSelBtn.Size = new System.Drawing.Size(93, 25);
             this.PathSelBtn.TabIndex = 0;
@@ -55,10 +55,10 @@
             // PathTextBox
             // 
             this.PathTextBox.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.PathTextBox.Location = new System.Drawing.Point(116, 21);
+            this.PathTextBox.Location = new System.Drawing.Point(112, 17);
             this.PathTextBox.Name = "PathTextBox";
             this.PathTextBox.ReadOnly = true;
-            this.PathTextBox.Size = new System.Drawing.Size(312, 23);
+            this.PathTextBox.Size = new System.Drawing.Size(322, 23);
             this.PathTextBox.TabIndex = 1;
             // 
             // VideoFileListBox
@@ -67,7 +67,7 @@
             this.VideoFileListBox.FormattingEnabled = true;
             this.VideoFileListBox.HorizontalScrollbar = true;
             this.VideoFileListBox.ItemHeight = 17;
-            this.VideoFileListBox.Location = new System.Drawing.Point(349, 78);
+            this.VideoFileListBox.Location = new System.Drawing.Point(349, 72);
             this.VideoFileListBox.Name = "VideoFileListBox";
             this.VideoFileListBox.Size = new System.Drawing.Size(330, 327);
             this.VideoFileListBox.TabIndex = 2;
@@ -79,7 +79,7 @@
             this.SubtitleFileListBox.FormattingEnabled = true;
             this.SubtitleFileListBox.HorizontalScrollbar = true;
             this.SubtitleFileListBox.ItemHeight = 17;
-            this.SubtitleFileListBox.Location = new System.Drawing.Point(12, 78);
+            this.SubtitleFileListBox.Location = new System.Drawing.Point(12, 72);
             this.SubtitleFileListBox.Name = "SubtitleFileListBox";
             this.SubtitleFileListBox.Size = new System.Drawing.Size(330, 327);
             this.SubtitleFileListBox.TabIndex = 6;
@@ -90,7 +90,7 @@
             this.StartEasyBtn.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.StartEasyBtn.Location = new System.Drawing.Point(12, 12);
             this.StartEasyBtn.Name = "StartEasyBtn";
-            this.StartEasyBtn.Size = new System.Drawing.Size(122, 55);
+            this.StartEasyBtn.Size = new System.Drawing.Size(122, 47);
             this.StartEasyBtn.TabIndex = 8;
             this.StartEasyBtn.Text = "一键改名";
             this.StartEasyBtn.UseVisualStyleBackColor = true;
@@ -103,7 +103,7 @@
             this.CopyrightText.Cursor = System.Windows.Forms.Cursors.Hand;
             this.CopyrightText.Font = new System.Drawing.Font("微软雅黑", 8F);
             this.CopyrightText.ForeColor = System.Drawing.Color.DarkGray;
-            this.CopyrightText.Location = new System.Drawing.Point(595, 45);
+            this.CopyrightText.Location = new System.Drawing.Point(595, 41);
             this.CopyrightText.Name = "CopyrightText";
             this.CopyrightText.Size = new System.Drawing.Size(87, 16);
             this.CopyrightText.TabIndex = 10;
@@ -115,7 +115,7 @@
             this.SettingBtn.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.SettingBtn.Location = new System.Drawing.Point(598, 13);
             this.SettingBtn.Name = "SettingBtn";
-            this.SettingBtn.Size = new System.Drawing.Size(82, 23);
+            this.SettingBtn.Size = new System.Drawing.Size(82, 24);
             this.SettingBtn.TabIndex = 13;
             this.SettingBtn.Text = "设置";
             this.SettingBtn.UseVisualStyleBackColor = true;
@@ -127,7 +127,7 @@
             this.groupBox1.Controls.Add(this.PathSelBtn);
             this.groupBox1.Location = new System.Drawing.Point(141, 6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(448, 61);
+            this.groupBox1.Size = new System.Drawing.Size(448, 53);
             this.groupBox1.TabIndex = 14;
             this.groupBox1.TabStop = false;
             // 
@@ -136,7 +136,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(692, 417);
+            this.ClientSize = new System.Drawing.Size(692, 413);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.SettingBtn);
             this.Controls.Add(this.StartEasyBtn);
@@ -149,6 +149,7 @@
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "字幕文件批量重命名 - qwqaq.com";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
