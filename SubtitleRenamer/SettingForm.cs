@@ -43,5 +43,10 @@ namespace SubtitleRenamer
         {
             Process.Start("https://github.com/qwqcode");
         }
+
+        private void LinkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("https://github.com/qwqcode/SubtitleRenamer/issues/new");
+        }
     }
 }
