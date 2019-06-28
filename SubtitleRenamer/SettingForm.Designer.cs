@@ -35,9 +35,10 @@
             this.UpdateLinkLabel = new System.Windows.Forms.LinkLabel();
             this.GithubLinkLabel = new System.Windows.Forms.LinkLabel();
             this.AuthorLinkLabel = new System.Windows.Forms.LinkLabel();
-            this.label1 = new System.Windows.Forms.Label();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -47,7 +48,7 @@
             this.groupBox1.Font = new System.Drawing.Font("微软雅黑", 8F);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(183, 201);
+            this.groupBox1.Size = new System.Drawing.Size(229, 201);
             this.groupBox1.TabIndex = 15;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "常规";
@@ -93,19 +94,19 @@
             // UpdateLinkLabel
             // 
             this.UpdateLinkLabel.AutoSize = true;
-            this.UpdateLinkLabel.Location = new System.Drawing.Point(367, 196);
+            this.UpdateLinkLabel.Location = new System.Drawing.Point(390, 196);
             this.UpdateLinkLabel.Name = "UpdateLinkLabel";
-            this.UpdateLinkLabel.Size = new System.Drawing.Size(56, 17);
+            this.UpdateLinkLabel.Size = new System.Drawing.Size(32, 17);
             this.UpdateLinkLabel.TabIndex = 17;
             this.UpdateLinkLabel.TabStop = true;
-            this.UpdateLinkLabel.Text = "查看更新";
+            this.UpdateLinkLabel.Text = "更新";
             this.UpdateLinkLabel.VisitedLinkColor = System.Drawing.Color.Blue;
             this.UpdateLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.UpdateLinkLabel_LinkClicked);
             // 
             // GithubLinkLabel
             // 
             this.GithubLinkLabel.AutoSize = true;
-            this.GithubLinkLabel.Location = new System.Drawing.Point(313, 196);
+            this.GithubLinkLabel.Location = new System.Drawing.Point(338, 196);
             this.GithubLinkLabel.Name = "GithubLinkLabel";
             this.GithubLinkLabel.Size = new System.Drawing.Size(48, 17);
             this.GithubLinkLabel.TabIndex = 18;
@@ -117,30 +118,19 @@
             // AuthorLinkLabel
             // 
             this.AuthorLinkLabel.AutoSize = true;
-            this.AuthorLinkLabel.Location = new System.Drawing.Point(251, 196);
+            this.AuthorLinkLabel.Location = new System.Drawing.Point(300, 196);
             this.AuthorLinkLabel.Name = "AuthorLinkLabel";
-            this.AuthorLinkLabel.Size = new System.Drawing.Size(56, 17);
+            this.AuthorLinkLabel.Size = new System.Drawing.Size(32, 17);
             this.AuthorLinkLabel.TabIndex = 19;
             this.AuthorLinkLabel.TabStop = true;
-            this.AuthorLinkLabel.Text = "关注作者";
+            this.AuthorLinkLabel.Text = "作者";
             this.AuthorLinkLabel.VisitedLinkColor = System.Drawing.Color.Blue;
             this.AuthorLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.AuthorLinkLabel_LinkClicked);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("微软雅黑", 15F);
-            this.label1.ForeColor = System.Drawing.SystemColors.ButtonShadow;
-            this.label1.Location = new System.Drawing.Point(273, 91);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(127, 27);
-            this.label1.TabIndex = 20;
-            this.label1.Text = "LOGO AREA";
             // 
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(213, 196);
+            this.linkLabel1.Location = new System.Drawing.Point(262, 196);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(32, 17);
             this.linkLabel1.TabIndex = 21;
@@ -149,14 +139,24 @@
             this.linkLabel1.VisitedLinkColor = System.Drawing.Color.Blue;
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabel1_LinkClicked);
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::SubtitleRenamer.Properties.Resources.icon_img;
+            this.pictureBox1.Location = new System.Drawing.Point(265, 25);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(199, 153);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 22;
+            this.pictureBox1.TabStop = false;
+            // 
             // SettingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(481, 225);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.linkLabel1);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.AuthorLinkLabel);
             this.Controls.Add(this.GithubLinkLabel);
             this.Controls.Add(this.UpdateLinkLabel);
@@ -175,6 +175,7 @@
             this.Load += new System.EventHandler(this.SettingForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -189,7 +190,7 @@
         private System.Windows.Forms.LinkLabel UpdateLinkLabel;
         private System.Windows.Forms.LinkLabel GithubLinkLabel;
         private System.Windows.Forms.LinkLabel AuthorLinkLabel;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.PathSelBtn = new System.Windows.Forms.Button();
             this.PathTextBox = new System.Windows.Forms.TextBox();
             this.VideoFileListBox = new System.Windows.Forms.ListBox();
@@ -143,9 +144,9 @@
             this.Controls.Add(this.SubtitleFileListBox);
             this.Controls.Add(this.CopyrightText);
             this.Controls.Add(this.VideoFileListBox);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "MainForm";
-            this.ShowIcon = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "字幕文件批量重命名 - qwqaq.com";
