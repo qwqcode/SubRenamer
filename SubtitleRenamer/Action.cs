@@ -158,12 +158,15 @@ namespace SubtitleRenamer
 
             SetCurtStatus("匹配集数中...");
 
-            int beginPos;
-            int subBeginPos;
+            int beginPos, subBeginPos;
+            string endStr, subEndStr;
             try
             {
-                beginPos = GetEpisodePosByTwoStr(VideoFileList[0].Name, VideoFileList[1].Name);  // 视频文件名集数开始位置
-                subBeginPos = GetEpisodePosByTwoStr(SubtitleFileList[0].Name, SubtitleFileList[1].Name); // 字幕文件名集数开始位置
+                beginPos = GetEpisodePosByList(VideoFileList); // 视频文件名集数开始位置
+                subBeginPos = GetEpisodePosByList(SubtitleFileList); // 字幕文件名集数开始位置
+
+                endStr = GetEndStrByList(VideoFileList, beginPos);
+                subEndStr = GetEndStrByList(SubtitleFileList, subBeginPos);
             }
             catch
             {
@@ -174,11 +177,11 @@ namespace SubtitleRenamer
             // 集数字典更新
             VideoEpisDict.Clear();
             foreach (var file in VideoFileList)
-                VideoEpisDict[file.Name] = GetEpisByFileName(file.Name, beginPos: beginPos);
+                VideoEpisDict[file.Name] = GetEpisByFileName(file.Name, beginPos: beginPos, endStr: endStr);
 
             SubtitleEpisDict.Clear();
             foreach (var file in SubtitleFileList)
-                SubtitleEpisDict[file.Name] = GetEpisByFileName(file.Name, beginPos: subBeginPos);
+                SubtitleEpisDict[file.Name] = GetEpisByFileName(file.Name, beginPos: subBeginPos, endStr: subEndStr);
 
             // 生成改名字典
             SubtitleRenameDict.Clear();
@@ -202,6 +205,34 @@ namespace SubtitleRenamer
             RefreshFileListBox();
         }
 
+        // 遍历所有 list 中的项目，尝试得到集数开始位置
+        private int GetEpisodePosByList(List<FileInfo> list)
+        {
+            int aIndex = 0;
+            int bIndex = 1;
+            int beginPos = -1;
+
+            while (true)
+            {
+                try
+                {
+                    int result = GetEpisodePosByTwoStr(list[aIndex].Name, list[bIndex].Name);
+                    beginPos = result;
+                    break;
+                }
+                catch
+                {
+                    aIndex++;
+                    bIndex++;
+                    if (aIndex >= list.Count || bIndex >= list.Count) break;
+                }
+            }
+
+            if (beginPos == -1) throw new Exception("beginPos == -1");
+
+            return beginPos;
+        }
+
         // 通过比对两个文件名中 数字 不同的部分来得到 集数 的位置
         private int GetEpisodePosByTwoStr(string strA, string strB)
         {
@@ -221,23 +252,53 @@ namespace SubtitleRenamer
                 }
             }
 
-            if (beginPos == -1)
-            {
-                throw new Exception("beginPos == -1");
-            }
+            if (beginPos == -1) throw new Exception("beginPos == -1");
 
             return beginPos;
         }
 
-        /// 获取集数
-        private string GetEpisByFileName(string fileName, int beginPos)
+        // 获取集数
+        private string GetEpisByFileName(string fileName, int beginPos, string endStr)
         {
-            if (beginPos <= -1)
-                return null;
-
+            if (beginPos <= -1) return null;
             var str = fileName.Substring(beginPos);
             var grp = Regex.Matches(str, @"(\d+)");
-            return (grp.Count >= 1) ? grp[0].Value : null; // 为了获得完整的数字，无论多少位
+            if (grp.Count <= 0 || grp[0].Index != 0)
+            {
+                var result = "";
+                // 通过 endStr 获得集数
+                for (int i = 0; i < str.Length; i++)
+                {
+                    if (str[i].ToString() == endStr) break;
+                    result += str[i];
+                }
+                return result;
+
+            }
+            return grp[0].Value; // 为了获得完整的数字，无论多少位
+        }
+
+        // 获取终止字符
+        private string GetEndStrByList(List<FileInfo> list, int beginPos)
+        {
+            string fileName = list.Where(o => Regex.IsMatch(o.Name.Substring(beginPos)[0].ToString(), @"^\d+$")).ToList()[0].Name; // 获取开始即是数字的文件名
+            var grp = Regex.Matches(fileName, @"(\d+)");
+            if (grp.Count <= 0) return null;
+            Match firstNum = grp[0];
+            int afterNumStrIndex = firstNum.Index + firstNum.Length; // 数字后面的第一个字符 index
+
+            // 不把特定字符（空格等）作为结束字符
+            string strTmp = fileName.Substring(afterNumStrIndex);
+            string result = null;
+            for (int i = 0; i < strTmp.Length; i++)
+            {
+                if (strTmp[i].ToString() != " ")
+                {
+                    result = strTmp[i].ToString();
+                    break;
+                }
+            }
+            return result;
         }
 
         protected void StartRename() => Task.Factory.StartNew(() => _StartRename());
