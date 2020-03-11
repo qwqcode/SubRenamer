@@ -7,29 +7,37 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
-namespace SubtitleRenamer
+namespace SubRenamer
 {
     public partial class MainForm : Form
     {
         private static SettingForm settingForm;
 
+        [DllImport("uxtheme.dll", ExactSpelling = true, CharSet = CharSet.Unicode)]
+        private static extern int SetWindowTheme(IntPtr hwnd, string pszSubAppName, string pszSubIdList);
+
         public MainForm()
         {
             InitializeComponent();
             settingForm = new SettingForm();
+            this.Text += $" {Program.GetVersionStr()}";
+
+            FilesListSrc.Add(new ListItem() { Epis = "1", Subtitle ="DQWDQ", Video ="DWQ", Status="未修改" });
         }
         
         // 窗口加载完后
         private void MainForm_Load(object sender, EventArgs e)
         {
-            LoadFilesByPath(Application.StartupPath);
+            /*LoadFilesByPath(Application.StartupPath);*/
+            SetWindowTheme(this.FileListUi.Handle, "Explorer", null);
         }
 
-        private void PathSelBtn_Click(object sender, EventArgs e)
+/*        private void PathSelBtn_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog PathSelDialog = new FolderBrowserDialog();
             if (OpenPath != null)
@@ -46,7 +54,7 @@ namespace SubtitleRenamer
             PathTextBox.Text = OpenPath;
             // 刷新文件列表
             ReloadFiles();
-        }
+        }*/
 
         /// <summary>
         /// 输入对话框
@@ -79,7 +87,7 @@ namespace SubtitleRenamer
 
         private void FileListBox_MouseMove(object sender, MouseEventArgs e)
         {
-            ListBox listBox = (ListBox)sender;
+            /*ListBox listBox = (ListBox)sender;
             int index = listBox.IndexFromPoint(e.Location);
             // Check if the index is valid.
             if (index != -1 && index < listBox.Items.Count)
@@ -96,22 +104,29 @@ namespace SubtitleRenamer
             } else
             {
                 MainToolTip.Active = false;
-            }
+            }*/
         }
 
         private void CopyrightText_Click(object sender, EventArgs e)
         {
-            Process.Start("https://qwqaq.com/?from=SubtitleRenamer");
+            Process.Start("https://qwqaq.com/?from=SubRenamer");
         }
 
         private void StartEasyBtn_Click(object sender, EventArgs e)
         {
-            StartRename();
+            /*StartRename();*/
         }
 
-        private void SettingBtn_Click(object sender, EventArgs e)
+        private void SettingToolStripMenuItem_Click(object sender, EventArgs e)
         {
             settingForm.ShowDialog();
+        }
+
+        private void MainForm_Resize(object sender, EventArgs e)
+        {
+            int calcPathInfoWidth = (FileListUi.Width - (80 + 120 + 8)) / 2;
+            FileListUi.Columns[1].Width = calcPathInfoWidth;
+            FileListUi.Columns[2].Width = calcPathInfoWidth;
         }
     }
 }

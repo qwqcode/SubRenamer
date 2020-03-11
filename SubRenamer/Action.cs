@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,7 +12,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SubtitleRenamer
+namespace SubRenamer
 {
     public partial class MainForm
     {
@@ -380,3 +380,4 @@ namespace SubtitleRenamer
         }
     }
 }
+*/

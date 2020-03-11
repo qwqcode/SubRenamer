@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // 有关程序集的一般信息由以下
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("SubtitleRenamer")]
+[assembly: AssemblyTitle("SubRenamer")]
 [assembly: AssemblyDescription("字幕文件批量改名工具")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("qwqaq.com")]
-[assembly: AssemblyProduct("SubtitleRenamer")]
+[assembly: AssemblyProduct("SubRenamer")]
 [assembly: AssemblyCopyright("Copyright © qwqaq.com 2019")]
 [assembly: AssemblyTrademark("qwqaq.com")]
 [assembly: AssemblyCulture("")]
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 //可以指定所有这些值，也可以使用“生成号”和“修订号”的默认值
 //通过使用 "*"，如下所示:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.2.1.0")]
-[assembly: AssemblyFileVersion("0.2.1.0")]
+[assembly: AssemblyVersion("0.3.0.0")]
+[assembly: AssemblyFileVersion("0.3.0.0")]

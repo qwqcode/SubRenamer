@@ -1,4 +1,4 @@
-﻿namespace SubtitleRenamer
+﻿namespace SubRenamer
 {
     partial class SettingForm
     {
@@ -46,7 +46,7 @@
             this.groupBox1.Font = new System.Drawing.Font("微软雅黑", 8F);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(231, 174);
+            this.groupBox1.Size = new System.Drawing.Size(435, 174);
             this.groupBox1.TabIndex = 15;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "常规";
@@ -54,12 +54,12 @@
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Checked = global::SubtitleRenamer.MainSettings.Default.OpenFolderFinished;
-            this.checkBox1.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::SubtitleRenamer.MainSettings.Default, "OpenFolderFinished", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.checkBox1.Checked = global::SubRenamer.MainSettings.Default.OpenFolderFinished;
+            this.checkBox1.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::SubRenamer.MainSettings.Default, "OpenFolderFinished", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.checkBox1.Font = new System.Drawing.Font("微软雅黑", 8F);
-            this.checkBox1.Location = new System.Drawing.Point(12, 53);
+            this.checkBox1.Location = new System.Drawing.Point(12, 71);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(115, 20);
+            this.checkBox1.Size = new System.Drawing.Size(190, 29);
             this.checkBox1.TabIndex = 14;
             this.checkBox1.Text = "改名后打开文件夹";
             this.checkBox1.UseVisualStyleBackColor = true;
@@ -67,13 +67,13 @@
             // checkBox3
             // 
             this.checkBox3.AutoSize = true;
-            this.checkBox3.Checked = global::SubtitleRenamer.MainSettings.Default.RawSubtitleBuckup;
+            this.checkBox3.Checked = global::SubRenamer.MainSettings.Default.RawSubtitleBuckup;
             this.checkBox3.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox3.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::SubtitleRenamer.MainSettings.Default, "RawSubtitleBuckup", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.checkBox3.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::SubRenamer.MainSettings.Default, "RawSubtitleBuckup", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.checkBox3.Font = new System.Drawing.Font("微软雅黑", 8F);
-            this.checkBox3.Location = new System.Drawing.Point(12, 27);
+            this.checkBox3.Location = new System.Drawing.Point(12, 36);
             this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(93, 20);
+            this.checkBox3.Size = new System.Drawing.Size(152, 29);
             this.checkBox3.TabIndex = 13;
             this.checkBox3.Text = "备份原始字幕";
             this.checkBox3.UseVisualStyleBackColor = true;
@@ -83,18 +83,18 @@
             this.VersionText.AutoSize = true;
             this.VersionText.Font = new System.Drawing.Font("微软雅黑", 8F);
             this.VersionText.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.VersionText.Location = new System.Drawing.Point(178, 200);
+            this.VersionText.Location = new System.Drawing.Point(371, 201);
             this.VersionText.Name = "VersionText";
-            this.VersionText.Size = new System.Drawing.Size(14, 16);
+            this.VersionText.Size = new System.Drawing.Size(81, 25);
             this.VersionText.TabIndex = 16;
-            this.VersionText.Text = "v";
+            this.VersionText.Text = "v0.0.0.0";
             // 
             // UpdateLinkLabel
             // 
             this.UpdateLinkLabel.AutoSize = true;
-            this.UpdateLinkLabel.Location = new System.Drawing.Point(143, 199);
+            this.UpdateLinkLabel.Location = new System.Drawing.Point(313, 199);
             this.UpdateLinkLabel.Name = "UpdateLinkLabel";
-            this.UpdateLinkLabel.Size = new System.Drawing.Size(32, 17);
+            this.UpdateLinkLabel.Size = new System.Drawing.Size(54, 28);
             this.UpdateLinkLabel.TabIndex = 17;
             this.UpdateLinkLabel.TabStop = true;
             this.UpdateLinkLabel.Text = "更新";
@@ -104,21 +104,21 @@
             // GithubLinkLabel
             // 
             this.GithubLinkLabel.AutoSize = true;
-            this.GithubLinkLabel.Location = new System.Drawing.Point(91, 199);
+            this.GithubLinkLabel.Location = new System.Drawing.Point(135, 199);
             this.GithubLinkLabel.Name = "GithubLinkLabel";
-            this.GithubLinkLabel.Size = new System.Drawing.Size(48, 17);
+            this.GithubLinkLabel.Size = new System.Drawing.Size(96, 28);
             this.GithubLinkLabel.TabIndex = 18;
             this.GithubLinkLabel.TabStop = true;
-            this.GithubLinkLabel.Text = "GitHub";
+            this.GithubLinkLabel.Text = "开源仓库";
             this.GithubLinkLabel.VisitedLinkColor = System.Drawing.Color.Blue;
             this.GithubLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.GithubLinkLabel_LinkClicked);
             // 
             // AuthorLinkLabel
             // 
             this.AuthorLinkLabel.AutoSize = true;
-            this.AuthorLinkLabel.Location = new System.Drawing.Point(53, 199);
+            this.AuthorLinkLabel.Location = new System.Drawing.Point(75, 199);
             this.AuthorLinkLabel.Name = "AuthorLinkLabel";
-            this.AuthorLinkLabel.Size = new System.Drawing.Size(32, 17);
+            this.AuthorLinkLabel.Size = new System.Drawing.Size(54, 28);
             this.AuthorLinkLabel.TabIndex = 19;
             this.AuthorLinkLabel.TabStop = true;
             this.AuthorLinkLabel.Text = "作者";
@@ -130,7 +130,7 @@
             this.linkLabel1.AutoSize = true;
             this.linkLabel1.Location = new System.Drawing.Point(15, 199);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(32, 17);
+            this.linkLabel1.Size = new System.Drawing.Size(54, 28);
             this.linkLabel1.TabIndex = 21;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "反馈";
@@ -139,10 +139,10 @@
             // 
             // SettingForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 28F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(266, 233);
+            this.ClientSize = new System.Drawing.Size(469, 247);
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.AuthorLinkLabel);
             this.Controls.Add(this.GithubLinkLabel);
