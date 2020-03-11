@@ -28,12 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.StartEasyBtn = new System.Windows.Forms.Button();
+            this.StartBtn = new System.Windows.Forms.Button();
             this.CopyrightText = new System.Windows.Forms.Label();
             this.FileListUi = new System.Windows.Forms.ListView();
-            this.Match = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.MatchKey = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Video = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Subtitle = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Status = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -47,29 +46,27 @@
             this.SettingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TopMenuPanel = new System.Windows.Forms.Panel();
             this.MainContWrapPanel = new System.Windows.Forms.Panel();
-            this.FilesListSrc = new System.Windows.Forms.BindingSource(this.components);
             this.MainContPanel.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.TopMenuStrip.SuspendLayout();
             this.TopMenuPanel.SuspendLayout();
             this.MainContWrapPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.FilesListSrc)).BeginInit();
             this.SuspendLayout();
             // 
-            // StartEasyBtn
+            // StartBtn
             // 
-            this.StartEasyBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.StartBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.StartEasyBtn.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.StartEasyBtn.Location = new System.Drawing.Point(0, 695);
-            this.StartEasyBtn.Margin = new System.Windows.Forms.Padding(0);
-            this.StartEasyBtn.Name = "StartEasyBtn";
-            this.StartEasyBtn.Size = new System.Drawing.Size(190, 58);
-            this.StartEasyBtn.TabIndex = 8;
-            this.StartEasyBtn.Text = "一键更改";
-            this.StartEasyBtn.UseVisualStyleBackColor = true;
-            this.StartEasyBtn.Click += new System.EventHandler(this.StartEasyBtn_Click);
+            this.StartBtn.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.StartBtn.Location = new System.Drawing.Point(0, 700);
+            this.StartBtn.Margin = new System.Windows.Forms.Padding(0);
+            this.StartBtn.Name = "StartBtn";
+            this.StartBtn.Size = new System.Drawing.Size(190, 58);
+            this.StartBtn.TabIndex = 8;
+            this.StartBtn.Text = "一键改名";
+            this.StartBtn.UseVisualStyleBackColor = true;
+            this.StartBtn.Click += new System.EventHandler(this.StartBtn_Click);
             // 
             // CopyrightText
             // 
@@ -88,9 +85,8 @@
             // 
             // FileListUi
             // 
-            this.FileListUi.CheckBoxes = true;
             this.FileListUi.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.Match,
+            this.MatchKey,
             this.Video,
             this.Subtitle,
             this.Status});
@@ -101,15 +97,15 @@
             this.FileListUi.Location = new System.Drawing.Point(0, 8);
             this.FileListUi.Margin = new System.Windows.Forms.Padding(0, 0, 5, 0);
             this.FileListUi.Name = "FileListUi";
-            this.FileListUi.Size = new System.Drawing.Size(1259, 753);
+            this.FileListUi.Size = new System.Drawing.Size(1259, 758);
             this.FileListUi.TabIndex = 16;
             this.FileListUi.UseCompatibleStateImageBehavior = false;
             this.FileListUi.View = System.Windows.Forms.View.Details;
             // 
-            // Match
+            // MatchKey
             // 
-            this.Match.Text = "匹配";
-            this.Match.Width = 80;
+            this.MatchKey.Text = "匹配";
+            this.MatchKey.Width = 80;
             // 
             // Video
             // 
@@ -130,11 +126,11 @@
             // 
             this.checkBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(3, 660);
+            this.checkBox1.Location = new System.Drawing.Point(3, 665);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(122, 32);
             this.checkBox1.TabIndex = 17;
-            this.checkBox1.Text = "预览更改";
+            this.checkBox1.Text = "改名预览";
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // MainContPanel
@@ -152,7 +148,7 @@
             this.MainContPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 8F));
             this.MainContPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.MainContPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.MainContPanel.Size = new System.Drawing.Size(1454, 761);
+            this.MainContPanel.Size = new System.Drawing.Size(1454, 766);
             this.MainContPanel.TabIndex = 18;
             // 
             // tableLayoutPanel2
@@ -160,7 +156,7 @@
             this.tableLayoutPanel2.ColumnCount = 1;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.Controls.Add(this.checkBox1, 0, 2);
-            this.tableLayoutPanel2.Controls.Add(this.StartEasyBtn, 0, 3);
+            this.tableLayoutPanel2.Controls.Add(this.StartBtn, 0, 3);
             this.tableLayoutPanel2.Controls.Add(this.CopyrightText, 0, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(1264, 8);
@@ -171,7 +167,7 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 91.42367F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 112F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 57F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(190, 753);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(190, 758);
             this.tableLayoutPanel2.TabIndex = 18;
             // 
             // TopMenuStrip
@@ -202,14 +198,15 @@
             // OpenFileToolStripMenuItem
             // 
             this.OpenFileToolStripMenuItem.Name = "OpenFileToolStripMenuItem";
-            this.OpenFileToolStripMenuItem.Size = new System.Drawing.Size(234, 40);
-            this.OpenFileToolStripMenuItem.Text = "打开文件";
+            this.OpenFileToolStripMenuItem.Size = new System.Drawing.Size(315, 40);
+            this.OpenFileToolStripMenuItem.Text = "导入文件";
             // 
             // OpenFolderToolStripMenuItem
             // 
             this.OpenFolderToolStripMenuItem.Name = "OpenFolderToolStripMenuItem";
-            this.OpenFolderToolStripMenuItem.Size = new System.Drawing.Size(234, 40);
-            this.OpenFolderToolStripMenuItem.Text = "打开文件夹";
+            this.OpenFolderToolStripMenuItem.Size = new System.Drawing.Size(315, 40);
+            this.OpenFolderToolStripMenuItem.Text = "导入文件夹";
+            this.OpenFolderToolStripMenuItem.Click += new System.EventHandler(this.OpenFolderToolStripMenuItem_Click);
             // 
             // SettingToolStripMenuItem
             // 
@@ -238,13 +235,9 @@
             this.MainContWrapPanel.Location = new System.Drawing.Point(0, 40);
             this.MainContWrapPanel.Margin = new System.Windows.Forms.Padding(0);
             this.MainContWrapPanel.Name = "MainContWrapPanel";
-            this.MainContWrapPanel.Padding = new System.Windows.Forms.Padding(10, 0, 10, 15);
+            this.MainContWrapPanel.Padding = new System.Windows.Forms.Padding(10, 0, 10, 10);
             this.MainContWrapPanel.Size = new System.Drawing.Size(1476, 778);
             this.MainContWrapPanel.TabIndex = 20;
-            // 
-            // FilesListSrc
-            // 
-            this.FilesListSrc.DataSource = typeof(SubRenamer.ListItem);
             // 
             // MainForm
             // 
@@ -261,7 +254,7 @@
             this.Name = "MainForm";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "字幕文件名批量更改 (SubRenamer)";
+            this.Text = "字幕文件批量改名 (SubRenamer)";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.Resize += new System.EventHandler(this.MainForm_Resize);
             this.MainContPanel.ResumeLayout(false);
@@ -272,17 +265,15 @@
             this.TopMenuPanel.ResumeLayout(false);
             this.TopMenuPanel.PerformLayout();
             this.MainContWrapPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.FilesListSrc)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-        private System.Windows.Forms.Button StartEasyBtn;
+        private System.Windows.Forms.Button StartBtn;
         private System.Windows.Forms.Label CopyrightText;
-        private System.Windows.Forms.BindingSource FilesListSrc;
         private System.Windows.Forms.ListView FileListUi;
-        private System.Windows.Forms.ColumnHeader Match;
+        private System.Windows.Forms.ColumnHeader MatchKey;
         private System.Windows.Forms.ColumnHeader Video;
         private System.Windows.Forms.ColumnHeader Subtitle;
         private System.Windows.Forms.ColumnHeader Status;

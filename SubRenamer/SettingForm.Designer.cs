@@ -73,9 +73,9 @@
             this.checkBox3.Font = new System.Drawing.Font("微软雅黑", 8F);
             this.checkBox3.Location = new System.Drawing.Point(12, 36);
             this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(152, 29);
+            this.checkBox3.Size = new System.Drawing.Size(209, 29);
             this.checkBox3.TabIndex = 13;
-            this.checkBox3.Text = "备份原始字幕";
+            this.checkBox3.Text = "同目录备份原始字幕";
             this.checkBox3.UseVisualStyleBackColor = true;
             // 
             // VersionText
