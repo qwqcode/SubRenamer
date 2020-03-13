@@ -8,11 +8,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SubtitleRenamer {
+namespace SubRenamer {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.1.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.4.0.0")]
     internal sealed partial class MainSettings : global::System.Configuration.ApplicationSettingsBase {
         
         private static MainSettings defaultInstance = ((MainSettings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new MainSettings())));
@@ -44,6 +44,30 @@ namespace SubtitleRenamer {
             }
             set {
                 this["OpenFolderFinished"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ListItemRemovePrompt {
+            get {
+                return ((bool)(this["ListItemRemovePrompt"]));
+            }
+            set {
+                this["ListItemRemovePrompt"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ListShowFileFullName {
+            get {
+                return ((bool)(this["ListShowFileFullName"]));
+            }
+            set {
+                this["ListShowFileFullName"] = value;
             }
         }
     }

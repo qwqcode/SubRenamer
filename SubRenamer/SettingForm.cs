@@ -8,12 +8,15 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace SubtitleRenamer
+namespace SubRenamer
 {
     public partial class SettingForm : Form
     {
-        public SettingForm()
+        private readonly MainForm _mainForm;
+
+        public SettingForm(MainForm mainForm)
         {
+            _mainForm = mainForm;
             InitializeComponent();
 
             MainSettings.Default.PropertyChanged += new PropertyChangedEventHandler(MainSettings_PropertyChanged);
@@ -31,12 +34,12 @@ namespace SubtitleRenamer
 
         private void UpdateLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start("https://github.com/qwqcode/SubtitleRenamer/releases");
+            Process.Start("https://github.com/qwqcode/SubRenamer/releases");
         }
 
         private void GithubLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start("https://github.com/qwqcode/SubtitleRenamer");
+            Process.Start("https://github.com/qwqcode/SubRenamer");
         }
 
         private void AuthorLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -46,7 +49,12 @@ namespace SubtitleRenamer
 
         private void LinkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start("https://github.com/qwqcode/SubtitleRenamer/issues/new");
+            Process.Start("https://github.com/qwqcode/SubRenamer/issues/new");
+        }
+
+        private void ListShowFileFullNameCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            _mainForm.RefreshFileListUi();
         }
     }
 }

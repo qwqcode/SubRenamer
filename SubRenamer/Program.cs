@@ -8,7 +8,7 @@ using System.Threading;
 using System.Web;
 using System.Windows.Forms;
 
-namespace SubtitleRenamer
+namespace SubRenamer
 {
     static class Program
     {
@@ -112,7 +112,7 @@ namespace SubtitleRenamer
         private static void ErrorCatchAction(string type, string errorMsg)
         {
             string title = $"意外错误：{Application.ProductName} {"v" + Application.ProductVersion.ToString()}";
-            Process.Start($"https://github.com/qwqcode/SubtitleRenamer/issues/new?title={ HttpUtility.UrlEncode(title, Encoding.UTF8) }&body={ HttpUtility.UrlEncode(type+"\n"+errorMsg, Encoding.UTF8) }");
+            Process.Start($"https://github.com/qwqcode/SubRenamer/issues/new?title={ HttpUtility.UrlEncode(title, Encoding.UTF8) }&body={ HttpUtility.UrlEncode(type+"\n"+errorMsg, Encoding.UTF8) }");
             MessageBox.Show(
                 $"{title} 程序即将退出，请发起 issue 来反馈，谢谢 {Environment.NewLine}{errorMsg}",
                 $"{Application.ProductName} {type}", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -123,6 +123,11 @@ namespace SubtitleRenamer
             // detach static event handlers
             Application.ApplicationExit -= Application_ApplicationExit;
             Application.ThreadException -= Application_ThreadException;
+        }
+
+        public static string GetVersionStr()
+        {
+            return "v" + Application.ProductVersion.ToString();
         }
     }
 }
