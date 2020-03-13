@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.WindowsAPICodePack.Dialogs;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,9 +17,9 @@ namespace SubRenamer
 {
     public partial class MainForm
     {
-        private readonly List<VsFileItem> VsFileList = new List<VsFileItem> { };
-        private readonly List<FileInfo> VideoFileList = new List<FileInfo> { };
-        private readonly List<FileInfo> SubFileList = new List<FileInfo> { };
+        private List<VsFileItem> VsFileList = new List<VsFileItem> { };
+        private List<FileInfo> VideoFileList = new List<FileInfo> { };
+        private List<FileInfo> SubFileList = new List<FileInfo> { };
         private readonly Dictionary<string, string> SubRenameDict = new Dictionary<string, string> { }; // 之前文件名 -> 修改后文件名
         private string CurtStatus = "";
 
@@ -28,69 +29,41 @@ namespace SubRenamer
         private void SetCurtStatus(string status)
         {
             CurtStatus = status.Trim();
-            RefreshFileListUi();
         }
 
-        private void RefreshFileListUi() => BeginInvoke((MethodInvoker)delegate
+        public void RefreshFileListUi(bool showPreview = false) => BeginInvoke((MethodInvoker)delegate
         {
-            _RefreshFileListUi();
+            _RefreshFileListUi(showPreview);
         });
 
-        private void _RefreshFileListUi()
+        private void _RefreshFileListUi(bool showPreview)
         {
+            FileListUi.Items.Clear();
+            var showFullName = MainSettings.Default.ListShowFileFullName;
+            var subRenameDict = GetSubRenameDict(); // 重命名字幕文件路径词典
             foreach (VsFileItem vsFile in VsFileList)
             {
-                // 查找 Ui 的 Tag 中保存的 VsFileItem
-                ListViewItem findItemFromUi = null;
-                foreach (ListViewItem item in FileListUi.Items)
+                var subFileNameShow = vsFile.SubFile != null ? (showFullName ? vsFile.SubFile.FullName : vsFile.SubFile.Name) : "";
+                
+                // 显示预览内容
+                if (showPreview == true)
                 {
-                    if (item.Tag != null && (VsFileItem)item.Tag == vsFile)
-                    {
-                        findItemFromUi = item;
-                        break;
-                    }
+                    if (vsFile.SubFile != null && subRenameDict.ContainsKey(vsFile.SubFile.FullName))
+                        subFileNameShow = showFullName ? subRenameDict[vsFile.SubFile.FullName] : Path.GetFileName(subRenameDict[vsFile.SubFile.FullName]);
+                    else
+                        subFileNameShow = "(不修改)";
                 }
 
-                var itemTextArr = new string[] { vsFile.MatchKey, vsFile.VideoFile, vsFile.SubFile, vsFile.GetStatusStr() };
-                if (findItemFromUi == null)
+                var item = new ListViewItem(new string[]
                 {
-                    // Ui 列表增加
-                    var item = new ListViewItem(itemTextArr);
-                    item.Tag = vsFile;
-                    FileListUi.Items.Add(item);
-                }
-                else
-                {
-                    // Ui 列表修改
-                    findItemFromUi.Text = vsFile.MatchKey;
-                    findItemFromUi.SubItems.Clear();
-                    findItemFromUi.SubItems.AddRange(new string[] { vsFile.VideoFile, vsFile.SubFile, vsFile.GetStatusStr() });
-                }
+                    vsFile.MatchKey ?? "",
+                    vsFile.VideoFile != null ? (showFullName ? vsFile.VideoFile.FullName : vsFile.VideoFile.Name) : "",
+                    subFileNameShow,
+                    vsFile.GetStatusStr()
+                });
+                item.Tag = vsFile;
+                FileListUi.Items.Add(item);
             }
-
-            /*foreach (var file in SubFileList)
-            {
-                var str = "";
-                if (SubtitleEpisDict.ContainsKey(file.Name))
-                    str += $"[集数:{SubtitleEpisDict[file.Name]}] ";
-                str += file.Name;
-                SubtitleFileListBox.Items.Add(str);
-                if (SubtitleRenameDict.ContainsKey(file.Name))
-                {
-                    string renameStatus = SubtitleChangedStatus.ContainsKey(file.Name) ? SubtitleChangedStatus[file.Name] : "";
-                    SubtitleFileListBox.Items.Add(String.Format("{0,17}", renameStatus + " => ") + SubtitleRenameDict[file.Name]);
-                }
-            }
-
-            // 视频文件
-            foreach (var file in VideoFileList)
-            {
-                var str = "      ";
-                if (VideoEpisDict.ContainsKey(file.Name))
-                    str += $"[集数:{VideoEpisDict[file.Name]}] ";
-                str += file.Name;
-                VideoFileListBox.Items.Add(str);
-            }*/
         }
 
         protected void MatchVideoSub() => Task.Factory.StartNew(() => _MatchVideoSub());
@@ -98,46 +71,84 @@ namespace SubRenamer
         // 匹配 视频 & 字幕 集数位置
         private void _MatchVideoSub()
         {
-            if (VideoFileList.Count < 2 || SubFileList.Count < 2) return;
-
             SetCurtStatus("匹配集数中...");
 
-            int beginPos, subBeginPos;
-            string endStr, subEndStr;
-            try
-            {
-                beginPos = GetEpisodePosByList(VideoFileList); // 视频文件名集数开始位置
-                subBeginPos = GetEpisodePosByList(SubFileList); // 字幕文件名集数开始位置
-
-                endStr = GetEndStrByList(VideoFileList, beginPos);
-                subEndStr = GetEndStrByList(SubFileList, subBeginPos);
-            }
-            catch
-            {
-                MessageBox.Show("无法正确匹配集数位置，需进一步手动确认", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            // 集数字典更新
-            var videoMatchDict = new Dictionary<string, string> { };
-            var subMatchDict = new Dictionary<string, string> { };
-
-            foreach (var file in VideoFileList)
-                videoMatchDict[file.Name] = GetEpisByFileName(file.Name, beginPos: beginPos, endStr: endStr);
-
-            foreach (var file in SubFileList)
-                subMatchDict[file.Name] = GetEpisByFileName(file.Name, beginPos: subBeginPos, endStr: subEndStr);
+            // 文件去重
+            VideoFileList = VideoFileList.Distinct().ToList();
+            SubFileList = SubFileList.Distinct().ToList();
 
             // VsFileItem
-            foreach (var videoMatch in videoMatchDict)
-            {
-                // VsFileList.Find(o => o.MatchKey == videoMatch.Key)
-                // TODO.....
-            }
+            TryUpdateVsFileListOnce(VideoFileList);
+            TryUpdateVsFileListOnce(SubFileList);
+
 
             // 刷新文件列表
             SetCurtStatus("集数已匹配");
             RefreshFileListUi();
+        }
+
+        private void TryUpdateVsFileListOnce(List<FileInfo> FileList)
+        {
+            if (FileList != VideoFileList && FileList != SubFileList)
+                throw new Exception("Not allow param value.");
+
+            var beginPos = GetEpisodePosByList(FileList); // 视频文件名集数开始位置
+            var endStr = GetEndStrByList(FileList, beginPos);
+
+            VsFileList.RemoveAll(o =>
+            {
+                bool condition2 = false;
+                if (FileList == VideoFileList)
+                    condition2 = o.VideoFile != null;
+                else if (FileList == SubFileList)
+                    condition2 = o.SubFile != null;
+                return o.MatchKey == null && condition2;
+            });
+
+            foreach (var file in FileList)
+            {
+                string matchKey = null;
+                if (beginPos > -1 && endStr != null)
+                    matchKey = GetEpisByFileName(file.Name, beginPos, endStr); // 匹配字符
+
+                var vsItem = (matchKey != null) ? VsFileList.Find(o => o.MatchKey == matchKey) : null;
+                if (vsItem == null)
+                {
+                    var status = VsFileStatus.Unmatched;
+                    if (matchKey != null)
+                    {
+                        if (FileList == VideoFileList) status = VsFileStatus.SubLack;
+                        else if (FileList == SubFileList) status = VsFileStatus.VideoLack;
+                    }
+
+                    // 创建新项目
+                    vsItem = new VsFileItem()
+                    {
+                        MatchKey = matchKey ?? null,
+                        VideoFile = (FileList == VideoFileList) ? file : null,
+                        SubFile = (FileList == SubFileList) ? file : null,
+                        Status = status
+                    };
+
+                    VsFileList.Add(vsItem);
+                }
+                else
+                {
+                    if (FileList == VideoFileList)
+                    {
+                        vsItem.VideoFile = file;
+                        vsItem.Status = VsFileStatus.SubLack;
+                    }
+                    else if (FileList == SubFileList)
+                    {
+                        vsItem.SubFile = file;
+                        vsItem.Status = VsFileStatus.VideoLack;
+                    }
+
+                    if (vsItem.VideoFile != null && vsItem.SubFile != null)
+                        vsItem.Status = VsFileStatus.Ready;
+                }
+            }
         }
 
         // 遍历所有 list 中的项目，尝试得到集数开始位置
@@ -162,8 +173,6 @@ namespace SubRenamer
                     if (aIndex >= list.Count || bIndex >= list.Count) break;
                 }
             }
-
-            if (beginPos == -1) throw new Exception("beginPos == -1");
 
             return beginPos;
         }
@@ -216,7 +225,13 @@ namespace SubRenamer
         // 获取终止字符
         private string GetEndStrByList(List<FileInfo> list, int beginPos)
         {
-            string fileName = list.Where(o => Regex.IsMatch(o.Name.Substring(beginPos)[0].ToString(), @"^\d+$")).ToList()[0].Name; // 获取开始即是数字的文件名
+            if (list.Count() < 2) return null;
+            if (beginPos < 0) return null;
+
+            string fileName = list.Where(o => {
+                if (o.Name == null || o.Name.Length <= beginPos) return false;
+                return Regex.IsMatch(o.Name.Substring(beginPos)[0].ToString(), @"^\d+$");
+            }).ToList()[0].Name; // 获取开始即是数字的文件名
             var grp = Regex.Matches(fileName, @"(\d+)");
             if (grp.Count <= 0) return null;
             Match firstNum = grp[0];
@@ -241,7 +256,25 @@ namespace SubRenamer
         /// 执行改名操作
         private void _StartRename()
         {
-            /*foreach (var item in SubtitleRenameDict)
+            TaskDialog td = new TaskDialog();
+            td.Caption = "一键改名操作";
+            td.Text = "执行一键改名操作中，请稍后...";
+
+            TaskDialogProgressBar tdp = new TaskDialogProgressBar(0, 100, 34);
+            td.ProgressBar = tdp;
+
+            td.StandardButtons = TaskDialogStandardButtons.Cancel;
+            td.DetailsExpandedLabel = "查看详情";
+            td.DetailsExpandedText = "23333333 - View informatio";
+
+            td.Show();
+
+            foreach (var item in VsFileList)
+            {
+
+            }
+
+            /*foreach (var item in VsFileList)
             {
                 string before = item.Key;
                 string after = item.Value;
@@ -307,8 +340,22 @@ namespace SubRenamer
             if (MainSettings.Default.OpenFolderFinished)
             {
                 Process.Start(OpenPath);
+            }*/
+        }
+
+        // 获取修改的字幕文件名 (原始完整路径->修改后完整路径)
+        private Dictionary<string, string> GetSubRenameDict()
+        {
+            var dict = new Dictionary<string, string>() { };
+            foreach (var item in VsFileList)
+            {
+                if (item.VideoFile == null || item.SubFile == null) continue;
+                string videoName = Path.GetFileNameWithoutExtension(item.VideoFile.Name); // 去掉后缀的视频文件名
+                string subAfterFilename = videoName + item.SubFile.Extension; // 修改的字幕文件名
+                dict.Add(item.SubFile.FullName, Path.Combine(item.SubFile.DirectoryName, subAfterFilename));
             }
-            */
+
+            return dict;
         }
     }
 }

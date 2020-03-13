@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -50,15 +51,15 @@ namespace SubRenamer
         public string MatchKey { get; set; }
 
         /// <summary>
-        /// 视频文件路径
+        /// 视频文件
         /// </summary>
-        public string VideoFile { get; set; }
+        public FileInfo VideoFile { get; set; }
 
 
         /// <summary>
-        /// 字幕文件路径
+        /// 字幕文件
         /// </summary>
-        public string SubFile { get; set; }
+        public FileInfo SubFile { get; set; }
 
         /// <summary>
         /// 当前状态
@@ -71,7 +72,7 @@ namespace SubRenamer
                 { VsFileStatus.Done, "成功" },
                 { VsFileStatus.Fatal, "失败" },
                 { VsFileStatus.Ready, "已匹配" },
-                { VsFileStatus.Unmatched, "无匹配" },
+                { VsFileStatus.Unmatched, "未匹配" },
                 { VsFileStatus.VideoLack, "缺视频" },
                 { VsFileStatus.SubLack, "缺字幕" },
             };

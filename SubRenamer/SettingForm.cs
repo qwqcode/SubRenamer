@@ -12,8 +12,11 @@ namespace SubRenamer
 {
     public partial class SettingForm : Form
     {
-        public SettingForm()
+        private readonly MainForm _mainForm;
+
+        public SettingForm(MainForm mainForm)
         {
+            _mainForm = mainForm;
             InitializeComponent();
 
             MainSettings.Default.PropertyChanged += new PropertyChangedEventHandler(MainSettings_PropertyChanged);
@@ -47,6 +50,11 @@ namespace SubRenamer
         private void LinkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process.Start("https://github.com/qwqcode/SubRenamer/issues/new");
+        }
+
+        private void ListShowFileFullNameCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            _mainForm.RefreshFileListUi();
         }
     }
 }

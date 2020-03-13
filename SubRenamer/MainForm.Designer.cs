@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.StartBtn = new System.Windows.Forms.Button();
             this.CopyrightText = new System.Windows.Forms.Label();
@@ -36,33 +37,35 @@
             this.Video = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Subtitle = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Status = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.PreviewCheckBox = new System.Windows.Forms.CheckBox();
             this.MainContPanel = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.TopMenuStrip = new System.Windows.Forms.MenuStrip();
-            this.FileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.OpenFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.OpenFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.SettingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.TopMenuPanel = new System.Windows.Forms.Panel();
             this.MainContWrapPanel = new System.Windows.Forms.Panel();
+            this.TopMenu = new System.Windows.Forms.MainMenu(this.components);
+            this.TopMenu_File = new System.Windows.Forms.MenuItem();
+            this.TopMenu_OpenFileBtn = new System.Windows.Forms.MenuItem();
+            this.TopMenu_OpenFolderBtn = new System.Windows.Forms.MenuItem();
+            this.TopMenu_Setting = new System.Windows.Forms.MenuItem();
+            this.R_OpenFileBtn = new System.Windows.Forms.Button();
+            this.R_OpenFolderBtn = new System.Windows.Forms.Button();
+            this.R_EditBtn = new System.Windows.Forms.Button();
+            this.R_RemoveBtn = new System.Windows.Forms.Button();
+            this.R_ReMatchBtn = new System.Windows.Forms.Button();
+            this.R_ClearAllBtn = new System.Windows.Forms.Button();
+            this.R_RuleBtn = new System.Windows.Forms.Button();
+            this.R_SettingBtn = new System.Windows.Forms.Button();
             this.MainContPanel.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
-            this.TopMenuStrip.SuspendLayout();
-            this.TopMenuPanel.SuspendLayout();
             this.MainContWrapPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // StartBtn
             // 
-            this.StartBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.StartBtn.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.StartBtn.Location = new System.Drawing.Point(0, 700);
+            this.StartBtn.Location = new System.Drawing.Point(0, 724);
             this.StartBtn.Margin = new System.Windows.Forms.Padding(0);
             this.StartBtn.Name = "StartBtn";
-            this.StartBtn.Size = new System.Drawing.Size(190, 58);
+            this.StartBtn.Size = new System.Drawing.Size(190, 74);
             this.StartBtn.TabIndex = 8;
             this.StartBtn.Text = "一键改名";
             this.StartBtn.UseVisualStyleBackColor = true;
@@ -73,12 +76,13 @@
             this.CopyrightText.AutoSize = true;
             this.CopyrightText.BackColor = System.Drawing.Color.Transparent;
             this.CopyrightText.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.CopyrightText.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.CopyrightText.Font = new System.Drawing.Font("微软雅黑", 8F);
             this.CopyrightText.ForeColor = System.Drawing.Color.DarkGray;
-            this.CopyrightText.Location = new System.Drawing.Point(7, 10);
+            this.CopyrightText.Location = new System.Drawing.Point(7, 647);
             this.CopyrightText.Margin = new System.Windows.Forms.Padding(7, 10, 7, 10);
             this.CopyrightText.Name = "CopyrightText";
-            this.CopyrightText.Size = new System.Drawing.Size(147, 25);
+            this.CopyrightText.Size = new System.Drawing.Size(176, 25);
             this.CopyrightText.TabIndex = 10;
             this.CopyrightText.Text = "(c) qwqaq.com";
             this.CopyrightText.Click += new System.EventHandler(this.CopyrightText_Click);
@@ -97,10 +101,12 @@
             this.FileListUi.Location = new System.Drawing.Point(0, 8);
             this.FileListUi.Margin = new System.Windows.Forms.Padding(0, 0, 5, 0);
             this.FileListUi.Name = "FileListUi";
-            this.FileListUi.Size = new System.Drawing.Size(1259, 758);
+            this.FileListUi.Size = new System.Drawing.Size(1259, 798);
             this.FileListUi.TabIndex = 16;
             this.FileListUi.UseCompatibleStateImageBehavior = false;
             this.FileListUi.View = System.Windows.Forms.View.Details;
+            this.FileListUi.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FileListUi_KeyDown);
+            this.FileListUi.MouseClick += new System.Windows.Forms.MouseEventHandler(this.FileListUi_MouseClick);
             // 
             // MatchKey
             // 
@@ -122,16 +128,17 @@
             this.Status.Text = "状态";
             this.Status.Width = 120;
             // 
-            // checkBox1
+            // PreviewCheckBox
             // 
-            this.checkBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(3, 665);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(122, 32);
-            this.checkBox1.TabIndex = 17;
-            this.checkBox1.Text = "改名预览";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.PreviewCheckBox.AutoSize = true;
+            this.PreviewCheckBox.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.PreviewCheckBox.Location = new System.Drawing.Point(3, 689);
+            this.PreviewCheckBox.Name = "PreviewCheckBox";
+            this.PreviewCheckBox.Size = new System.Drawing.Size(184, 32);
+            this.PreviewCheckBox.TabIndex = 17;
+            this.PreviewCheckBox.Text = "改名预览";
+            this.PreviewCheckBox.UseVisualStyleBackColor = true;
+            this.PreviewCheckBox.CheckedChanged += new System.EventHandler(this.PreviewCheckBox_CheckedChanged);
             // 
             // MainContPanel
             // 
@@ -148,96 +155,187 @@
             this.MainContPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 8F));
             this.MainContPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.MainContPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.MainContPanel.Size = new System.Drawing.Size(1454, 766);
+            this.MainContPanel.Size = new System.Drawing.Size(1454, 806);
             this.MainContPanel.TabIndex = 18;
             // 
             // tableLayoutPanel2
             // 
             this.tableLayoutPanel2.ColumnCount = 1;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Controls.Add(this.checkBox1, 0, 2);
-            this.tableLayoutPanel2.Controls.Add(this.StartBtn, 0, 3);
-            this.tableLayoutPanel2.Controls.Add(this.CopyrightText, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.R_RuleBtn, 0, 9);
+            this.tableLayoutPanel2.Controls.Add(this.R_ClearAllBtn, 0, 7);
+            this.tableLayoutPanel2.Controls.Add(this.R_ReMatchBtn, 0, 6);
+            this.tableLayoutPanel2.Controls.Add(this.CopyrightText, 0, 12);
+            this.tableLayoutPanel2.Controls.Add(this.R_RemoveBtn, 0, 4);
+            this.tableLayoutPanel2.Controls.Add(this.R_EditBtn, 0, 3);
+            this.tableLayoutPanel2.Controls.Add(this.R_OpenFolderBtn, 0, 1);
+            this.tableLayoutPanel2.Controls.Add(this.PreviewCheckBox, 0, 13);
+            this.tableLayoutPanel2.Controls.Add(this.StartBtn, 0, 14);
+            this.tableLayoutPanel2.Controls.Add(this.R_OpenFileBtn, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.R_SettingBtn, 0, 10);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(1264, 8);
             this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 4;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.576329F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 91.42367F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 112F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 57F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(190, 758);
+            this.tableLayoutPanel2.RowCount = 15;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 63.11475F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 36.88525F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 42F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 73F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(190, 798);
             this.tableLayoutPanel2.TabIndex = 18;
-            // 
-            // TopMenuStrip
-            // 
-            this.TopMenuStrip.BackColor = System.Drawing.Color.Transparent;
-            this.TopMenuStrip.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TopMenuStrip.GripMargin = new System.Windows.Forms.Padding(4);
-            this.TopMenuStrip.ImageScalingSize = new System.Drawing.Size(28, 28);
-            this.TopMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.FileToolStripMenuItem,
-            this.SettingToolStripMenuItem});
-            this.TopMenuStrip.Location = new System.Drawing.Point(0, 0);
-            this.TopMenuStrip.Name = "TopMenuStrip";
-            this.TopMenuStrip.Padding = new System.Windows.Forms.Padding(0, 0, 10, 0);
-            this.TopMenuStrip.Size = new System.Drawing.Size(1476, 40);
-            this.TopMenuStrip.TabIndex = 19;
-            // 
-            // FileToolStripMenuItem
-            // 
-            this.FileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.OpenFileToolStripMenuItem,
-            this.OpenFolderToolStripMenuItem});
-            this.FileToolStripMenuItem.Name = "FileToolStripMenuItem";
-            this.FileToolStripMenuItem.Padding = new System.Windows.Forms.Padding(15, 5, 15, 5);
-            this.FileToolStripMenuItem.Size = new System.Drawing.Size(88, 40);
-            this.FileToolStripMenuItem.Text = "文件";
-            // 
-            // OpenFileToolStripMenuItem
-            // 
-            this.OpenFileToolStripMenuItem.Name = "OpenFileToolStripMenuItem";
-            this.OpenFileToolStripMenuItem.Size = new System.Drawing.Size(315, 40);
-            this.OpenFileToolStripMenuItem.Text = "导入文件";
-            // 
-            // OpenFolderToolStripMenuItem
-            // 
-            this.OpenFolderToolStripMenuItem.Name = "OpenFolderToolStripMenuItem";
-            this.OpenFolderToolStripMenuItem.Size = new System.Drawing.Size(315, 40);
-            this.OpenFolderToolStripMenuItem.Text = "导入文件夹";
-            this.OpenFolderToolStripMenuItem.Click += new System.EventHandler(this.OpenFolderToolStripMenuItem_Click);
-            // 
-            // SettingToolStripMenuItem
-            // 
-            this.SettingToolStripMenuItem.Name = "SettingToolStripMenuItem";
-            this.SettingToolStripMenuItem.Padding = new System.Windows.Forms.Padding(15, 0, 15, 0);
-            this.SettingToolStripMenuItem.Size = new System.Drawing.Size(88, 40);
-            this.SettingToolStripMenuItem.Text = "设置";
-            this.SettingToolStripMenuItem.Click += new System.EventHandler(this.SettingToolStripMenuItem_Click);
-            // 
-            // TopMenuPanel
-            // 
-            this.TopMenuPanel.BackColor = System.Drawing.Color.White;
-            this.TopMenuPanel.Controls.Add(this.TopMenuStrip);
-            this.TopMenuPanel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.TopMenuPanel.Location = new System.Drawing.Point(0, 0);
-            this.TopMenuPanel.Margin = new System.Windows.Forms.Padding(0);
-            this.TopMenuPanel.Name = "TopMenuPanel";
-            this.TopMenuPanel.Size = new System.Drawing.Size(1476, 40);
-            this.TopMenuPanel.TabIndex = 19;
             // 
             // MainContWrapPanel
             // 
             this.MainContWrapPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.MainContWrapPanel.Controls.Add(this.MainContPanel);
             this.MainContWrapPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.MainContWrapPanel.Location = new System.Drawing.Point(0, 40);
+            this.MainContWrapPanel.Location = new System.Drawing.Point(0, 0);
             this.MainContWrapPanel.Margin = new System.Windows.Forms.Padding(0);
             this.MainContWrapPanel.Name = "MainContWrapPanel";
             this.MainContWrapPanel.Padding = new System.Windows.Forms.Padding(10, 0, 10, 10);
-            this.MainContWrapPanel.Size = new System.Drawing.Size(1476, 778);
+            this.MainContWrapPanel.Size = new System.Drawing.Size(1476, 818);
             this.MainContWrapPanel.TabIndex = 20;
+            // 
+            // TopMenu
+            // 
+            this.TopMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.TopMenu_File,
+            this.TopMenu_Setting});
+            // 
+            // TopMenu_File
+            // 
+            this.TopMenu_File.Index = 0;
+            this.TopMenu_File.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.TopMenu_OpenFileBtn,
+            this.TopMenu_OpenFolderBtn});
+            this.TopMenu_File.Text = "文件";
+            // 
+            // TopMenu_OpenFileBtn
+            // 
+            this.TopMenu_OpenFileBtn.Index = 0;
+            this.TopMenu_OpenFileBtn.Text = "导入文件...";
+            this.TopMenu_OpenFileBtn.Click += new System.EventHandler(this.TopMenu_OpenFileBtn_Click);
+            // 
+            // TopMenu_OpenFolderBtn
+            // 
+            this.TopMenu_OpenFolderBtn.Index = 1;
+            this.TopMenu_OpenFolderBtn.Text = "导入文件夹...";
+            this.TopMenu_OpenFolderBtn.Click += new System.EventHandler(this.TopMenu_OpenFolderBtn_Click);
+            // 
+            // TopMenu_Setting
+            // 
+            this.TopMenu_Setting.Index = 1;
+            this.TopMenu_Setting.Text = "设置";
+            this.TopMenu_Setting.Click += new System.EventHandler(this.TopMenu_Setting_Click);
+            // 
+            // R_OpenFileBtn
+            // 
+            this.R_OpenFileBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.R_OpenFileBtn.Location = new System.Drawing.Point(0, 0);
+            this.R_OpenFileBtn.Margin = new System.Windows.Forms.Padding(0, 0, 0, 3);
+            this.R_OpenFileBtn.Name = "R_OpenFileBtn";
+            this.R_OpenFileBtn.Size = new System.Drawing.Size(190, 47);
+            this.R_OpenFileBtn.TabIndex = 18;
+            this.R_OpenFileBtn.Text = "导入文件";
+            this.R_OpenFileBtn.UseVisualStyleBackColor = true;
+            this.R_OpenFileBtn.Click += new System.EventHandler(this.R_OpenFileBtn_Click);
+            // 
+            // R_OpenFolderBtn
+            // 
+            this.R_OpenFolderBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.R_OpenFolderBtn.Location = new System.Drawing.Point(0, 50);
+            this.R_OpenFolderBtn.Margin = new System.Windows.Forms.Padding(0, 0, 0, 3);
+            this.R_OpenFolderBtn.Name = "R_OpenFolderBtn";
+            this.R_OpenFolderBtn.Size = new System.Drawing.Size(190, 47);
+            this.R_OpenFolderBtn.TabIndex = 19;
+            this.R_OpenFolderBtn.Text = "导入文件夹";
+            this.R_OpenFolderBtn.UseVisualStyleBackColor = true;
+            this.R_OpenFolderBtn.Click += new System.EventHandler(this.R_OpenFolderBtn_Click);
+            // 
+            // R_EditBtn
+            // 
+            this.R_EditBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.R_EditBtn.Location = new System.Drawing.Point(0, 130);
+            this.R_EditBtn.Margin = new System.Windows.Forms.Padding(0, 0, 0, 3);
+            this.R_EditBtn.Name = "R_EditBtn";
+            this.R_EditBtn.Size = new System.Drawing.Size(190, 47);
+            this.R_EditBtn.TabIndex = 20;
+            this.R_EditBtn.Text = "编辑";
+            this.R_EditBtn.UseVisualStyleBackColor = true;
+            this.R_EditBtn.Click += new System.EventHandler(this.R_EditBtn_Click);
+            // 
+            // R_RemoveBtn
+            // 
+            this.R_RemoveBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.R_RemoveBtn.Location = new System.Drawing.Point(0, 180);
+            this.R_RemoveBtn.Margin = new System.Windows.Forms.Padding(0, 0, 0, 3);
+            this.R_RemoveBtn.Name = "R_RemoveBtn";
+            this.R_RemoveBtn.Size = new System.Drawing.Size(190, 47);
+            this.R_RemoveBtn.TabIndex = 22;
+            this.R_RemoveBtn.Text = "删除";
+            this.R_RemoveBtn.UseVisualStyleBackColor = true;
+            this.R_RemoveBtn.Click += new System.EventHandler(this.R_RemoveBtn_Click);
+            // 
+            // R_ReMatchBtn
+            // 
+            this.R_ReMatchBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.R_ReMatchBtn.Location = new System.Drawing.Point(0, 250);
+            this.R_ReMatchBtn.Margin = new System.Windows.Forms.Padding(0, 0, 0, 3);
+            this.R_ReMatchBtn.Name = "R_ReMatchBtn";
+            this.R_ReMatchBtn.Size = new System.Drawing.Size(190, 47);
+            this.R_ReMatchBtn.TabIndex = 25;
+            this.R_ReMatchBtn.Text = "重新匹配";
+            this.R_ReMatchBtn.UseVisualStyleBackColor = true;
+            this.R_ReMatchBtn.Click += new System.EventHandler(this.R_ReMatchBtn_Click);
+            // 
+            // R_ClearAllBtn
+            // 
+            this.R_ClearAllBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.R_ClearAllBtn.Location = new System.Drawing.Point(0, 300);
+            this.R_ClearAllBtn.Margin = new System.Windows.Forms.Padding(0, 0, 0, 3);
+            this.R_ClearAllBtn.Name = "R_ClearAllBtn";
+            this.R_ClearAllBtn.Size = new System.Drawing.Size(190, 47);
+            this.R_ClearAllBtn.TabIndex = 26;
+            this.R_ClearAllBtn.Text = "清空列表";
+            this.R_ClearAllBtn.UseVisualStyleBackColor = true;
+            this.R_ClearAllBtn.Click += new System.EventHandler(this.R_ClearAllBtn_Click);
+            // 
+            // R_RuleBtn
+            // 
+            this.R_RuleBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.R_RuleBtn.Location = new System.Drawing.Point(0, 370);
+            this.R_RuleBtn.Margin = new System.Windows.Forms.Padding(0, 0, 0, 3);
+            this.R_RuleBtn.Name = "R_RuleBtn";
+            this.R_RuleBtn.Size = new System.Drawing.Size(190, 47);
+            this.R_RuleBtn.TabIndex = 31;
+            this.R_RuleBtn.Text = "规则";
+            this.R_RuleBtn.UseVisualStyleBackColor = true;
+            this.R_RuleBtn.Click += new System.EventHandler(this.R_RuleBtn_Click);
+            // 
+            // R_SettingBtn
+            // 
+            this.R_SettingBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.R_SettingBtn.Location = new System.Drawing.Point(0, 420);
+            this.R_SettingBtn.Margin = new System.Windows.Forms.Padding(0, 0, 0, 3);
+            this.R_SettingBtn.Name = "R_SettingBtn";
+            this.R_SettingBtn.Size = new System.Drawing.Size(190, 47);
+            this.R_SettingBtn.TabIndex = 33;
+            this.R_SettingBtn.Text = "设置";
+            this.R_SettingBtn.UseVisualStyleBackColor = true;
+            this.R_SettingBtn.Click += new System.EventHandler(this.R_SettingBtn_Click);
             // 
             // MainForm
             // 
@@ -245,11 +343,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1476, 818);
             this.Controls.Add(this.MainContWrapPanel);
-            this.Controls.Add(this.TopMenuPanel);
             this.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MainMenuStrip = this.TopMenuStrip;
             this.Margin = new System.Windows.Forms.Padding(7);
+            this.Menu = this.TopMenu;
             this.MinimumSize = new System.Drawing.Size(1500, 882);
             this.Name = "MainForm";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
@@ -260,10 +357,6 @@
             this.MainContPanel.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
-            this.TopMenuStrip.ResumeLayout(false);
-            this.TopMenuStrip.PerformLayout();
-            this.TopMenuPanel.ResumeLayout(false);
-            this.TopMenuPanel.PerformLayout();
             this.MainContWrapPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -277,16 +370,23 @@
         private System.Windows.Forms.ColumnHeader Video;
         private System.Windows.Forms.ColumnHeader Subtitle;
         private System.Windows.Forms.ColumnHeader Status;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox PreviewCheckBox;
         private System.Windows.Forms.TableLayoutPanel MainContPanel;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private System.Windows.Forms.MenuStrip TopMenuStrip;
-        private System.Windows.Forms.ToolStripMenuItem FileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem OpenFileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem OpenFolderToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem SettingToolStripMenuItem;
-        private System.Windows.Forms.Panel TopMenuPanel;
         private System.Windows.Forms.Panel MainContWrapPanel;
+        private System.Windows.Forms.MainMenu TopMenu;
+        private System.Windows.Forms.MenuItem TopMenu_File;
+        private System.Windows.Forms.MenuItem TopMenu_Setting;
+        private System.Windows.Forms.MenuItem TopMenu_OpenFileBtn;
+        private System.Windows.Forms.MenuItem TopMenu_OpenFolderBtn;
+        private System.Windows.Forms.Button R_OpenFolderBtn;
+        private System.Windows.Forms.Button R_OpenFileBtn;
+        private System.Windows.Forms.Button R_EditBtn;
+        private System.Windows.Forms.Button R_RemoveBtn;
+        private System.Windows.Forms.Button R_ReMatchBtn;
+        private System.Windows.Forms.Button R_ClearAllBtn;
+        private System.Windows.Forms.Button R_RuleBtn;
+        private System.Windows.Forms.Button R_SettingBtn;
     }
 }
 
