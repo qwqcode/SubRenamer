@@ -40,20 +40,21 @@
             this.PreviewCheckBox = new System.Windows.Forms.CheckBox();
             this.MainContPanel = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.R_RuleBtn = new System.Windows.Forms.Button();
+            this.R_ClearAllBtn = new System.Windows.Forms.Button();
+            this.R_ReMatchBtn = new System.Windows.Forms.Button();
+            this.R_RemoveBtn = new System.Windows.Forms.Button();
+            this.R_EditBtn = new System.Windows.Forms.Button();
+            this.R_OpenFolderBtn = new System.Windows.Forms.Button();
+            this.R_OpenFileBtn = new System.Windows.Forms.Button();
+            this.R_SettingBtn = new System.Windows.Forms.Button();
             this.MainContWrapPanel = new System.Windows.Forms.Panel();
             this.TopMenu = new System.Windows.Forms.MainMenu(this.components);
             this.TopMenu_File = new System.Windows.Forms.MenuItem();
             this.TopMenu_OpenFileBtn = new System.Windows.Forms.MenuItem();
             this.TopMenu_OpenFolderBtn = new System.Windows.Forms.MenuItem();
             this.TopMenu_Setting = new System.Windows.Forms.MenuItem();
-            this.R_OpenFileBtn = new System.Windows.Forms.Button();
-            this.R_OpenFolderBtn = new System.Windows.Forms.Button();
-            this.R_EditBtn = new System.Windows.Forms.Button();
-            this.R_RemoveBtn = new System.Windows.Forms.Button();
-            this.R_ReMatchBtn = new System.Windows.Forms.Button();
-            this.R_ClearAllBtn = new System.Windows.Forms.Button();
-            this.R_RuleBtn = new System.Windows.Forms.Button();
-            this.R_SettingBtn = new System.Windows.Forms.Button();
+            this.MainToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.MainContPanel.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.MainContWrapPanel.SuspendLayout();
@@ -101,6 +102,7 @@
             this.FileListUi.Location = new System.Drawing.Point(0, 8);
             this.FileListUi.Margin = new System.Windows.Forms.Padding(0, 0, 5, 0);
             this.FileListUi.Name = "FileListUi";
+            this.FileListUi.ShowItemToolTips = true;
             this.FileListUi.Size = new System.Drawing.Size(1259, 798);
             this.FileListUi.TabIndex = 16;
             this.FileListUi.UseCompatibleStateImageBehavior = false;
@@ -197,6 +199,102 @@
             this.tableLayoutPanel2.Size = new System.Drawing.Size(190, 798);
             this.tableLayoutPanel2.TabIndex = 18;
             // 
+            // R_RuleBtn
+            // 
+            this.R_RuleBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.R_RuleBtn.Location = new System.Drawing.Point(0, 370);
+            this.R_RuleBtn.Margin = new System.Windows.Forms.Padding(0, 0, 0, 3);
+            this.R_RuleBtn.Name = "R_RuleBtn";
+            this.R_RuleBtn.Size = new System.Drawing.Size(190, 47);
+            this.R_RuleBtn.TabIndex = 31;
+            this.R_RuleBtn.Text = "规则";
+            this.R_RuleBtn.UseVisualStyleBackColor = true;
+            this.R_RuleBtn.Click += new System.EventHandler(this.R_RuleBtn_Click);
+            // 
+            // R_ClearAllBtn
+            // 
+            this.R_ClearAllBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.R_ClearAllBtn.Location = new System.Drawing.Point(0, 300);
+            this.R_ClearAllBtn.Margin = new System.Windows.Forms.Padding(0, 0, 0, 3);
+            this.R_ClearAllBtn.Name = "R_ClearAllBtn";
+            this.R_ClearAllBtn.Size = new System.Drawing.Size(190, 47);
+            this.R_ClearAllBtn.TabIndex = 26;
+            this.R_ClearAllBtn.Text = "清空列表";
+            this.R_ClearAllBtn.UseVisualStyleBackColor = true;
+            this.R_ClearAllBtn.Click += new System.EventHandler(this.R_ClearAllBtn_Click);
+            // 
+            // R_ReMatchBtn
+            // 
+            this.R_ReMatchBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.R_ReMatchBtn.Location = new System.Drawing.Point(0, 250);
+            this.R_ReMatchBtn.Margin = new System.Windows.Forms.Padding(0, 0, 0, 3);
+            this.R_ReMatchBtn.Name = "R_ReMatchBtn";
+            this.R_ReMatchBtn.Size = new System.Drawing.Size(190, 47);
+            this.R_ReMatchBtn.TabIndex = 25;
+            this.R_ReMatchBtn.Text = "重新匹配";
+            this.R_ReMatchBtn.UseVisualStyleBackColor = true;
+            this.R_ReMatchBtn.Click += new System.EventHandler(this.R_ReMatchBtn_Click);
+            // 
+            // R_RemoveBtn
+            // 
+            this.R_RemoveBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.R_RemoveBtn.Location = new System.Drawing.Point(0, 180);
+            this.R_RemoveBtn.Margin = new System.Windows.Forms.Padding(0, 0, 0, 3);
+            this.R_RemoveBtn.Name = "R_RemoveBtn";
+            this.R_RemoveBtn.Size = new System.Drawing.Size(190, 47);
+            this.R_RemoveBtn.TabIndex = 22;
+            this.R_RemoveBtn.Text = "删除";
+            this.R_RemoveBtn.UseVisualStyleBackColor = true;
+            this.R_RemoveBtn.Click += new System.EventHandler(this.R_RemoveBtn_Click);
+            // 
+            // R_EditBtn
+            // 
+            this.R_EditBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.R_EditBtn.Location = new System.Drawing.Point(0, 130);
+            this.R_EditBtn.Margin = new System.Windows.Forms.Padding(0, 0, 0, 3);
+            this.R_EditBtn.Name = "R_EditBtn";
+            this.R_EditBtn.Size = new System.Drawing.Size(190, 47);
+            this.R_EditBtn.TabIndex = 20;
+            this.R_EditBtn.Text = "编辑";
+            this.R_EditBtn.UseVisualStyleBackColor = true;
+            this.R_EditBtn.Click += new System.EventHandler(this.R_EditBtn_Click);
+            // 
+            // R_OpenFolderBtn
+            // 
+            this.R_OpenFolderBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.R_OpenFolderBtn.Location = new System.Drawing.Point(0, 50);
+            this.R_OpenFolderBtn.Margin = new System.Windows.Forms.Padding(0, 0, 0, 3);
+            this.R_OpenFolderBtn.Name = "R_OpenFolderBtn";
+            this.R_OpenFolderBtn.Size = new System.Drawing.Size(190, 47);
+            this.R_OpenFolderBtn.TabIndex = 19;
+            this.R_OpenFolderBtn.Text = "导入文件夹";
+            this.R_OpenFolderBtn.UseVisualStyleBackColor = true;
+            this.R_OpenFolderBtn.Click += new System.EventHandler(this.R_OpenFolderBtn_Click);
+            // 
+            // R_OpenFileBtn
+            // 
+            this.R_OpenFileBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.R_OpenFileBtn.Location = new System.Drawing.Point(0, 0);
+            this.R_OpenFileBtn.Margin = new System.Windows.Forms.Padding(0, 0, 0, 3);
+            this.R_OpenFileBtn.Name = "R_OpenFileBtn";
+            this.R_OpenFileBtn.Size = new System.Drawing.Size(190, 47);
+            this.R_OpenFileBtn.TabIndex = 18;
+            this.R_OpenFileBtn.Text = "导入文件";
+            this.R_OpenFileBtn.UseVisualStyleBackColor = true;
+            this.R_OpenFileBtn.Click += new System.EventHandler(this.R_OpenFileBtn_Click);
+            // 
+            // R_SettingBtn
+            // 
+            this.R_SettingBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.R_SettingBtn.Location = new System.Drawing.Point(0, 420);
+            this.R_SettingBtn.Margin = new System.Windows.Forms.Padding(0, 0, 0, 3);
+            this.R_SettingBtn.Name = "R_SettingBtn";
+            this.R_SettingBtn.Size = new System.Drawing.Size(190, 47);
+            this.R_SettingBtn.TabIndex = 33;
+            this.R_SettingBtn.Text = "设置";
+            this.R_SettingBtn.UseVisualStyleBackColor = true;
+            this.R_SettingBtn.Click += new System.EventHandler(this.R_SettingBtn_Click);
+            // 
             // MainContWrapPanel
             // 
             this.MainContWrapPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -241,102 +339,6 @@
             this.TopMenu_Setting.Text = "设置";
             this.TopMenu_Setting.Click += new System.EventHandler(this.TopMenu_Setting_Click);
             // 
-            // R_OpenFileBtn
-            // 
-            this.R_OpenFileBtn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.R_OpenFileBtn.Location = new System.Drawing.Point(0, 0);
-            this.R_OpenFileBtn.Margin = new System.Windows.Forms.Padding(0, 0, 0, 3);
-            this.R_OpenFileBtn.Name = "R_OpenFileBtn";
-            this.R_OpenFileBtn.Size = new System.Drawing.Size(190, 47);
-            this.R_OpenFileBtn.TabIndex = 18;
-            this.R_OpenFileBtn.Text = "导入文件";
-            this.R_OpenFileBtn.UseVisualStyleBackColor = true;
-            this.R_OpenFileBtn.Click += new System.EventHandler(this.R_OpenFileBtn_Click);
-            // 
-            // R_OpenFolderBtn
-            // 
-            this.R_OpenFolderBtn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.R_OpenFolderBtn.Location = new System.Drawing.Point(0, 50);
-            this.R_OpenFolderBtn.Margin = new System.Windows.Forms.Padding(0, 0, 0, 3);
-            this.R_OpenFolderBtn.Name = "R_OpenFolderBtn";
-            this.R_OpenFolderBtn.Size = new System.Drawing.Size(190, 47);
-            this.R_OpenFolderBtn.TabIndex = 19;
-            this.R_OpenFolderBtn.Text = "导入文件夹";
-            this.R_OpenFolderBtn.UseVisualStyleBackColor = true;
-            this.R_OpenFolderBtn.Click += new System.EventHandler(this.R_OpenFolderBtn_Click);
-            // 
-            // R_EditBtn
-            // 
-            this.R_EditBtn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.R_EditBtn.Location = new System.Drawing.Point(0, 130);
-            this.R_EditBtn.Margin = new System.Windows.Forms.Padding(0, 0, 0, 3);
-            this.R_EditBtn.Name = "R_EditBtn";
-            this.R_EditBtn.Size = new System.Drawing.Size(190, 47);
-            this.R_EditBtn.TabIndex = 20;
-            this.R_EditBtn.Text = "编辑";
-            this.R_EditBtn.UseVisualStyleBackColor = true;
-            this.R_EditBtn.Click += new System.EventHandler(this.R_EditBtn_Click);
-            // 
-            // R_RemoveBtn
-            // 
-            this.R_RemoveBtn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.R_RemoveBtn.Location = new System.Drawing.Point(0, 180);
-            this.R_RemoveBtn.Margin = new System.Windows.Forms.Padding(0, 0, 0, 3);
-            this.R_RemoveBtn.Name = "R_RemoveBtn";
-            this.R_RemoveBtn.Size = new System.Drawing.Size(190, 47);
-            this.R_RemoveBtn.TabIndex = 22;
-            this.R_RemoveBtn.Text = "删除";
-            this.R_RemoveBtn.UseVisualStyleBackColor = true;
-            this.R_RemoveBtn.Click += new System.EventHandler(this.R_RemoveBtn_Click);
-            // 
-            // R_ReMatchBtn
-            // 
-            this.R_ReMatchBtn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.R_ReMatchBtn.Location = new System.Drawing.Point(0, 250);
-            this.R_ReMatchBtn.Margin = new System.Windows.Forms.Padding(0, 0, 0, 3);
-            this.R_ReMatchBtn.Name = "R_ReMatchBtn";
-            this.R_ReMatchBtn.Size = new System.Drawing.Size(190, 47);
-            this.R_ReMatchBtn.TabIndex = 25;
-            this.R_ReMatchBtn.Text = "重新匹配";
-            this.R_ReMatchBtn.UseVisualStyleBackColor = true;
-            this.R_ReMatchBtn.Click += new System.EventHandler(this.R_ReMatchBtn_Click);
-            // 
-            // R_ClearAllBtn
-            // 
-            this.R_ClearAllBtn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.R_ClearAllBtn.Location = new System.Drawing.Point(0, 300);
-            this.R_ClearAllBtn.Margin = new System.Windows.Forms.Padding(0, 0, 0, 3);
-            this.R_ClearAllBtn.Name = "R_ClearAllBtn";
-            this.R_ClearAllBtn.Size = new System.Drawing.Size(190, 47);
-            this.R_ClearAllBtn.TabIndex = 26;
-            this.R_ClearAllBtn.Text = "清空列表";
-            this.R_ClearAllBtn.UseVisualStyleBackColor = true;
-            this.R_ClearAllBtn.Click += new System.EventHandler(this.R_ClearAllBtn_Click);
-            // 
-            // R_RuleBtn
-            // 
-            this.R_RuleBtn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.R_RuleBtn.Location = new System.Drawing.Point(0, 370);
-            this.R_RuleBtn.Margin = new System.Windows.Forms.Padding(0, 0, 0, 3);
-            this.R_RuleBtn.Name = "R_RuleBtn";
-            this.R_RuleBtn.Size = new System.Drawing.Size(190, 47);
-            this.R_RuleBtn.TabIndex = 31;
-            this.R_RuleBtn.Text = "规则";
-            this.R_RuleBtn.UseVisualStyleBackColor = true;
-            this.R_RuleBtn.Click += new System.EventHandler(this.R_RuleBtn_Click);
-            // 
-            // R_SettingBtn
-            // 
-            this.R_SettingBtn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.R_SettingBtn.Location = new System.Drawing.Point(0, 420);
-            this.R_SettingBtn.Margin = new System.Windows.Forms.Padding(0, 0, 0, 3);
-            this.R_SettingBtn.Name = "R_SettingBtn";
-            this.R_SettingBtn.Size = new System.Drawing.Size(190, 47);
-            this.R_SettingBtn.TabIndex = 33;
-            this.R_SettingBtn.Text = "设置";
-            this.R_SettingBtn.UseVisualStyleBackColor = true;
-            this.R_SettingBtn.Click += new System.EventHandler(this.R_SettingBtn_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 28F);
@@ -351,7 +353,7 @@
             this.Name = "MainForm";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "字幕文件批量改名 (SubRenamer)";
+            this.Text = "字幕文件批量改名 (SubRenamer) Beta";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.Resize += new System.EventHandler(this.MainForm_Resize);
             this.MainContPanel.ResumeLayout(false);
@@ -387,6 +389,7 @@
         private System.Windows.Forms.Button R_ClearAllBtn;
         private System.Windows.Forms.Button R_RuleBtn;
         private System.Windows.Forms.Button R_SettingBtn;
+        private System.Windows.Forms.ToolTip MainToolTip;
     }
 }
 
