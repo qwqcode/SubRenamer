@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.Button SaveBtn;
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.MatchKey_TextBox = new System.Windows.Forms.TextBox();
             this.Video_TextBox = new System.Windows.Forms.TextBox();
@@ -37,19 +37,15 @@
             this.Sub_SelectFileBtn = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.CancelBtn = new System.Windows.Forms.Button();
-            SaveBtn = new System.Windows.Forms.Button();
+            this.PrevItemBtn = new System.Windows.Forms.Button();
+            this.NextItemBtn = new System.Windows.Forms.Button();
+            this.Video_ClearBtn = new System.Windows.Forms.Button();
+            this.Sub_ClearBtn = new System.Windows.Forms.Button();
+            this.RemoveItemBtn = new System.Windows.Forms.Button();
+            this.AddItemBtn = new System.Windows.Forms.Button();
+            this.MainToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.PageNum = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
-            // 
-            // SaveBtn
-            // 
-            SaveBtn.Location = new System.Drawing.Point(272, 155);
-            SaveBtn.Name = "SaveBtn";
-            SaveBtn.Size = new System.Drawing.Size(155, 43);
-            SaveBtn.TabIndex = 8;
-            SaveBtn.Text = "确定";
-            SaveBtn.UseVisualStyleBackColor = true;
-            SaveBtn.Click += new System.EventHandler(this.SaveBtn_Click);
             // 
             // label1
             // 
@@ -64,15 +60,16 @@
             // 
             this.MatchKey_TextBox.Location = new System.Drawing.Point(76, 19);
             this.MatchKey_TextBox.Name = "MatchKey_TextBox";
-            this.MatchKey_TextBox.Size = new System.Drawing.Size(512, 35);
+            this.MatchKey_TextBox.Size = new System.Drawing.Size(494, 35);
             this.MatchKey_TextBox.TabIndex = 1;
+            this.MatchKey_TextBox.TextChanged += new System.EventHandler(this.MatchKey_TextBox_TextChanged);
             // 
             // Video_TextBox
             // 
             this.Video_TextBox.Location = new System.Drawing.Point(76, 60);
             this.Video_TextBox.Name = "Video_TextBox";
             this.Video_TextBox.ReadOnly = true;
-            this.Video_TextBox.Size = new System.Drawing.Size(351, 35);
+            this.Video_TextBox.Size = new System.Drawing.Size(734, 35);
             this.Video_TextBox.TabIndex = 2;
             // 
             // Sub_TextBox
@@ -80,26 +77,26 @@
             this.Sub_TextBox.Location = new System.Drawing.Point(76, 101);
             this.Sub_TextBox.Name = "Sub_TextBox";
             this.Sub_TextBox.ReadOnly = true;
-            this.Sub_TextBox.Size = new System.Drawing.Size(351, 35);
+            this.Sub_TextBox.Size = new System.Drawing.Size(734, 35);
             this.Sub_TextBox.TabIndex = 3;
             // 
             // Video_SelectFileBtn
             // 
-            this.Video_SelectFileBtn.Location = new System.Drawing.Point(433, 60);
+            this.Video_SelectFileBtn.Location = new System.Drawing.Point(817, 60);
             this.Video_SelectFileBtn.Name = "Video_SelectFileBtn";
-            this.Video_SelectFileBtn.Size = new System.Drawing.Size(155, 35);
+            this.Video_SelectFileBtn.Size = new System.Drawing.Size(74, 35);
             this.Video_SelectFileBtn.TabIndex = 4;
-            this.Video_SelectFileBtn.Text = "选择文件";
+            this.Video_SelectFileBtn.Text = "...";
             this.Video_SelectFileBtn.UseVisualStyleBackColor = true;
             this.Video_SelectFileBtn.Click += new System.EventHandler(this.Video_SelectFileBtn_Click);
             // 
             // Sub_SelectFileBtn
             // 
-            this.Sub_SelectFileBtn.Location = new System.Drawing.Point(433, 101);
+            this.Sub_SelectFileBtn.Location = new System.Drawing.Point(816, 104);
             this.Sub_SelectFileBtn.Name = "Sub_SelectFileBtn";
-            this.Sub_SelectFileBtn.Size = new System.Drawing.Size(155, 35);
+            this.Sub_SelectFileBtn.Size = new System.Drawing.Size(75, 35);
             this.Sub_SelectFileBtn.TabIndex = 5;
-            this.Sub_SelectFileBtn.Text = "选择文件";
+            this.Sub_SelectFileBtn.Text = "...";
             this.Sub_SelectFileBtn.UseVisualStyleBackColor = true;
             this.Sub_SelectFileBtn.Click += new System.EventHandler(this.Sub_SelectFileBtn_Click);
             // 
@@ -121,24 +118,88 @@
             this.label3.TabIndex = 7;
             this.label3.Text = "字幕";
             // 
-            // CancelBtn
+            // PrevItemBtn
             // 
-            this.CancelBtn.Location = new System.Drawing.Point(433, 155);
-            this.CancelBtn.Name = "CancelBtn";
-            this.CancelBtn.Size = new System.Drawing.Size(155, 43);
-            this.CancelBtn.TabIndex = 9;
-            this.CancelBtn.Text = "取消";
-            this.CancelBtn.UseVisualStyleBackColor = true;
-            this.CancelBtn.Click += new System.EventHandler(this.CancelBtn_Click);
+            this.PrevItemBtn.Location = new System.Drawing.Point(656, 19);
+            this.PrevItemBtn.Name = "PrevItemBtn";
+            this.PrevItemBtn.Size = new System.Drawing.Size(74, 35);
+            this.PrevItemBtn.TabIndex = 10;
+            this.PrevItemBtn.Text = "«";
+            this.PrevItemBtn.UseVisualStyleBackColor = true;
+            this.PrevItemBtn.Click += new System.EventHandler(this.PrevItemBtn_Click);
+            // 
+            // NextItemBtn
+            // 
+            this.NextItemBtn.Location = new System.Drawing.Point(817, 19);
+            this.NextItemBtn.Name = "NextItemBtn";
+            this.NextItemBtn.Size = new System.Drawing.Size(74, 35);
+            this.NextItemBtn.TabIndex = 11;
+            this.NextItemBtn.Text = "»";
+            this.NextItemBtn.UseVisualStyleBackColor = true;
+            this.NextItemBtn.Click += new System.EventHandler(this.NextItemBtn_Click);
+            // 
+            // Video_ClearBtn
+            // 
+            this.Video_ClearBtn.Location = new System.Drawing.Point(897, 60);
+            this.Video_ClearBtn.Name = "Video_ClearBtn";
+            this.Video_ClearBtn.Size = new System.Drawing.Size(74, 35);
+            this.Video_ClearBtn.TabIndex = 12;
+            this.Video_ClearBtn.Text = "×";
+            this.Video_ClearBtn.UseVisualStyleBackColor = true;
+            this.Video_ClearBtn.Click += new System.EventHandler(this.Video_ClearBtn_Click);
+            // 
+            // Sub_ClearBtn
+            // 
+            this.Sub_ClearBtn.Location = new System.Drawing.Point(897, 104);
+            this.Sub_ClearBtn.Name = "Sub_ClearBtn";
+            this.Sub_ClearBtn.Size = new System.Drawing.Size(74, 35);
+            this.Sub_ClearBtn.TabIndex = 13;
+            this.Sub_ClearBtn.Text = "×";
+            this.Sub_ClearBtn.UseVisualStyleBackColor = true;
+            this.Sub_ClearBtn.Click += new System.EventHandler(this.Sub_ClearBtn_Click);
+            // 
+            // RemoveItemBtn
+            // 
+            this.RemoveItemBtn.Location = new System.Drawing.Point(576, 19);
+            this.RemoveItemBtn.Name = "RemoveItemBtn";
+            this.RemoveItemBtn.Size = new System.Drawing.Size(74, 35);
+            this.RemoveItemBtn.TabIndex = 14;
+            this.RemoveItemBtn.Text = "删";
+            this.RemoveItemBtn.UseVisualStyleBackColor = true;
+            this.RemoveItemBtn.Click += new System.EventHandler(this.RemoveItemBtn_Click);
+            // 
+            // AddItemBtn
+            // 
+            this.AddItemBtn.Location = new System.Drawing.Point(897, 19);
+            this.AddItemBtn.Name = "AddItemBtn";
+            this.AddItemBtn.Size = new System.Drawing.Size(74, 35);
+            this.AddItemBtn.TabIndex = 15;
+            this.AddItemBtn.Text = "增";
+            this.AddItemBtn.UseVisualStyleBackColor = true;
+            this.AddItemBtn.Click += new System.EventHandler(this.AddItemBtn_Click);
+            // 
+            // PageNum
+            // 
+            this.PageNum.Location = new System.Drawing.Point(736, 19);
+            this.PageNum.Name = "PageNum";
+            this.PageNum.ReadOnly = true;
+            this.PageNum.Size = new System.Drawing.Size(74, 35);
+            this.PageNum.TabIndex = 16;
+            this.PageNum.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // VsItemEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 28F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(609, 220);
-            this.Controls.Add(this.CancelBtn);
-            this.Controls.Add(SaveBtn);
+            this.ClientSize = new System.Drawing.Size(1000, 171);
+            this.Controls.Add(this.PageNum);
+            this.Controls.Add(this.AddItemBtn);
+            this.Controls.Add(this.RemoveItemBtn);
+            this.Controls.Add(this.Sub_ClearBtn);
+            this.Controls.Add(this.Video_ClearBtn);
+            this.Controls.Add(this.NextItemBtn);
+            this.Controls.Add(this.PrevItemBtn);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.Sub_SelectFileBtn);
@@ -155,6 +216,7 @@
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "编辑";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.VsItemEditor_FormClosed);
             this.Load += new System.EventHandler(this.VsItemEditor_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -171,6 +233,13 @@
         private System.Windows.Forms.Button Sub_SelectFileBtn;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button CancelBtn;
+        private System.Windows.Forms.Button PrevItemBtn;
+        private System.Windows.Forms.Button NextItemBtn;
+        private System.Windows.Forms.Button Video_ClearBtn;
+        private System.Windows.Forms.Button Sub_ClearBtn;
+        private System.Windows.Forms.Button RemoveItemBtn;
+        private System.Windows.Forms.Button AddItemBtn;
+        private System.Windows.Forms.ToolTip MainToolTip;
+        private System.Windows.Forms.TextBox PageNum;
     }
 }

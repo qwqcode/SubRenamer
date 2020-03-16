@@ -12,6 +12,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Microsoft.WindowsAPICodePack.Dialogs;
+using static SubRenamer.Global;
 
 namespace SubRenamer
 {
@@ -49,18 +50,7 @@ namespace SubRenamer
 
                 if (result == CommonFileDialogResult.Ok && fbd.FileNames.Count() > 0)
                 {
-                    foreach (var fileName in fbd.FileNames)
-                    {
-                        var file = new FileInfo(fileName);
-
-                        // 视频文件
-                        if (VideoExts.Contains(file.Extension.ToString().ToLower()))
-                            VideoFileList.Add(file);
-
-                        // 字幕文件
-                        else if (SubExts.Contains(file.Extension.ToString().ToLower()))
-                            SubFileList.Add(file);
-                    }
+                    foreach (var fileName in fbd.FileNames) FileListAdd(new FileInfo(fileName));
 
                     MatchVideoSub();
                 }
@@ -85,18 +75,38 @@ namespace SubRenamer
                         var folder = new DirectoryInfo(folderPath);
                         var files = folder.GetFiles("*");
 
-                        // 视频文件
-                        foreach (var file in files.Where(s => VideoExts.Contains(s.Extension.ToString().ToLower())))
-                            VideoFileList.Add(file);
-
-                        // 字幕文件
-                        foreach (var file in files.Where(s => SubExts.Contains(s.Extension.ToString().ToLower())))
-                            SubFileList.Add(file);
+                        // 添加所有 视频/字幕 文件
+                        foreach (var file in files) FileListAdd(file);
                     }
 
                     MatchVideoSub();
                 }
             }
+        }
+
+        private void FileListAdd(FileInfo file)
+        {
+            AppFileType fileType;
+            if (VideoExts.Contains(file.Extension.ToString().ToLower()))
+                fileType = AppFileType.Video;
+            else if (SubExts.Contains(file.Extension.ToString().ToLower()))
+                fileType = AppFileType.Sub;
+            else return;
+
+            var vsItem = new VsItem();
+            if (fileType == AppFileType.Video)
+            {
+                if (VsList.Exists(o => o.Video == file.FullName)) return; // 重名排除
+                vsItem.Video = file.FullName;
+            }
+            else if (fileType == AppFileType.Sub)
+            {
+                if (VsList.Exists(o => o.Sub == file.FullName)) return;
+                vsItem.Sub = file.FullName;
+            }
+
+            vsItem.Status = VsStatus.Unmatched;
+            VsList.Add(vsItem);
         }
 
         // 删除选定的项目
@@ -119,10 +129,6 @@ namespace SubRenamer
                 }
 
                 var vsItem = (VsItem)item.Tag;
-                if (vsItem.VideoFile != null)
-                    VideoFileList.RemoveAll(o => o.FullName == vsItem.VideoFile.FullName);
-                if (vsItem.SubFile != null)
-                    SubFileList.RemoveAll(o => o.FullName == vsItem.SubFile.FullName);
                 VsList.Remove(vsItem);
                 item.Remove();
             }
@@ -139,8 +145,7 @@ namespace SubRenamer
         // 清空列表
         private void ClearListAll()
         {
-            if (VideoFileList.Count() == 0 && SubFileList.Count() == 0
-                && VsList.Count() == 0 && FileListUi.Items.Count == 0)
+            if (VsList.Count() == 0 && FileListUi.Items.Count == 0)
                 return;
 
             if (MainSettings.Default.ListItemRemovePrompt)
@@ -150,8 +155,6 @@ namespace SubRenamer
             }
 
             FileListUi.Items.Clear();
-            VideoFileList.Clear();
-            SubFileList.Clear();
             VsList.Clear();
 
             RefreshFileListUi();
@@ -164,7 +167,7 @@ namespace SubRenamer
 
         private void OpenVsItemEditor(VsItem vsItem)
         {
-            var form = new VsItemEditor(this, vsItem);
+            var form = new VsItemEditor(this, VsList, vsItem);
             form.ShowDialog();
         }
 
@@ -212,7 +215,6 @@ namespace SubRenamer
                     m.MenuItems.Add(selectAll);
 
                     m.Show(FileListUi, new Point(e.X, e.Y));
-
                 }
             }
         }
@@ -224,14 +226,6 @@ namespace SubRenamer
             int calcPathInfoWidth = (FileListUi.Width - (FileListUi.Columns[0].Width + FileListUi.Columns[3].Width + 8)) / 2;
             FileListUi.Columns[1].Width = calcPathInfoWidth;
             FileListUi.Columns[2].Width = calcPathInfoWidth;
-        }
-
-        private void FileListUi_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Delete)
-                RemoveListSelectedItems();
-            else if (e.KeyCode == Keys.A && e.Control)
-                SelectListAll();
         }
 
         // 显示预览 勾选
@@ -296,6 +290,17 @@ namespace SubRenamer
             }
 
             return base.ProcessCmdKey(ref msg, keys);
+        }
+
+        // 列表快捷键
+        private void FileListUi_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F3)
+                EditListSelectedItems();
+            if (e.KeyCode == Keys.Delete)
+                RemoveListSelectedItems();
+            else if (e.KeyCode == Keys.A && e.Control)
+                SelectListAll();
         }
         #endregion
 

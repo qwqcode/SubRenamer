@@ -51,20 +51,23 @@ namespace SubRenamer
         public string MatchKey { get; set; }
 
         /// <summary>
-        /// 视频文件
+        /// 视频文件 FullName
         /// </summary>
-        public FileInfo VideoFile { get; set; }
+        public string Video { get; set; }
 
+        public FileInfo VideoFileInfo => (!string.IsNullOrWhiteSpace(Video)) ? new FileInfo(Video) : null;
 
         /// <summary>
-        /// 字幕文件
+        /// 字幕文件 FullName
         /// </summary>
-        public FileInfo SubFile { get; set; }
+        public string Sub { get; set; }
+
+        public FileInfo SubFileInfo => (!string.IsNullOrWhiteSpace(Sub)) ? new FileInfo(Sub) : null;
 
         /// <summary>
         /// 当前状态
         /// </summary>
-        public VsStatus Status { get; set; }
+        public VsStatus Status { get; set; } = VsStatus.Unmatched;
 
         public string GetStatusStr()
         {
@@ -79,5 +82,7 @@ namespace SubRenamer
 
             return transDict[this.Status];
         }
+
+        public bool IsEmpty => string.IsNullOrEmpty(MatchKey) && string.IsNullOrEmpty(Video) && string.IsNullOrEmpty(Sub);
     }
 }

@@ -94,6 +94,7 @@
     <Compile Include="Action.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Global.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="VsItem.cs" />
     <Compile Include="MainForm.cs">
