@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SubRenamer
 {
-    public enum VsFileStatus
+    public enum VsStatus
     {
         /// <summary>
         /// 预备
@@ -43,7 +43,7 @@ namespace SubRenamer
     /// <summary>
     /// 视频/字幕文件项目
     /// </summary>
-    public class VsFileItem
+    public class VsItem
     {
         /// <summary>
         /// 匹配桥梁值
@@ -51,33 +51,38 @@ namespace SubRenamer
         public string MatchKey { get; set; }
 
         /// <summary>
-        /// 视频文件
+        /// 视频文件 FullName
         /// </summary>
-        public FileInfo VideoFile { get; set; }
+        public string Video { get; set; }
 
+        public FileInfo VideoFileInfo => (!string.IsNullOrWhiteSpace(Video)) ? new FileInfo(Video) : null;
 
         /// <summary>
-        /// 字幕文件
+        /// 字幕文件 FullName
         /// </summary>
-        public FileInfo SubFile { get; set; }
+        public string Sub { get; set; }
+
+        public FileInfo SubFileInfo => (!string.IsNullOrWhiteSpace(Sub)) ? new FileInfo(Sub) : null;
 
         /// <summary>
         /// 当前状态
         /// </summary>
-        public VsFileStatus Status { get; set; }
+        public VsStatus Status { get; set; } = VsStatus.Unmatched;
 
         public string GetStatusStr()
         {
-            var transDict = new Dictionary<VsFileStatus, string> {
-                { VsFileStatus.Done, "成功" },
-                { VsFileStatus.Fatal, "失败" },
-                { VsFileStatus.Ready, "已匹配" },
-                { VsFileStatus.Unmatched, "未匹配" },
-                { VsFileStatus.VideoLack, "缺视频" },
-                { VsFileStatus.SubLack, "缺字幕" },
+            var transDict = new Dictionary<VsStatus, string> {
+                { VsStatus.Done, "成功" },
+                { VsStatus.Fatal, "失败" },
+                { VsStatus.Ready, "已匹配" },
+                { VsStatus.Unmatched, "未匹配" },
+                { VsStatus.VideoLack, "缺视频" },
+                { VsStatus.SubLack, "缺字幕" },
             };
 
             return transDict[this.Status];
         }
+
+        public bool IsEmpty => string.IsNullOrEmpty(MatchKey) && string.IsNullOrEmpty(Video) && string.IsNullOrEmpty(Sub);
     }
 }

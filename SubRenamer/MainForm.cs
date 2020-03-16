@@ -12,6 +12,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Microsoft.WindowsAPICodePack.Dialogs;
+using static SubRenamer.Global;
 
 namespace SubRenamer
 {
@@ -49,18 +50,7 @@ namespace SubRenamer
 
                 if (result == CommonFileDialogResult.Ok && fbd.FileNames.Count() > 0)
                 {
-                    foreach (var fileName in fbd.FileNames)
-                    {
-                        var file = new FileInfo(fileName);
-
-                        // 视频文件
-                        if (VideoExts.Contains(file.Extension.ToString().ToLower()))
-                            VideoFileList.Add(file);
-
-                        // 字幕文件
-                        else if (SubExts.Contains(file.Extension.ToString().ToLower()))
-                            SubFileList.Add(file);
-                    }
+                    foreach (var fileName in fbd.FileNames) FileListAdd(new FileInfo(fileName));
 
                     MatchVideoSub();
                 }
@@ -85,13 +75,8 @@ namespace SubRenamer
                         var folder = new DirectoryInfo(folderPath);
                         var files = folder.GetFiles("*");
 
-                        // 视频文件
-                        foreach (var file in files.Where(s => VideoExts.Contains(s.Extension.ToString().ToLower())))
-                            VideoFileList.Add(file);
-
-                        // 字幕文件
-                        foreach (var file in files.Where(s => SubExts.Contains(s.Extension.ToString().ToLower())))
-                            SubFileList.Add(file);
+                        // 添加所有 视频/字幕 文件
+                        foreach (var file in files) FileListAdd(file);
                     }
 
                     MatchVideoSub();
@@ -99,8 +84,36 @@ namespace SubRenamer
             }
         }
 
-        private void FileListUiRemoveSelectedItems()
+        private void FileListAdd(FileInfo file)
         {
+            AppFileType fileType;
+            if (VideoExts.Contains(file.Extension.ToString().ToLower()))
+                fileType = AppFileType.Video;
+            else if (SubExts.Contains(file.Extension.ToString().ToLower()))
+                fileType = AppFileType.Sub;
+            else return;
+
+            var vsItem = new VsItem();
+            if (fileType == AppFileType.Video)
+            {
+                if (VsList.Exists(o => o.Video == file.FullName)) return; // 重名排除
+                vsItem.Video = file.FullName;
+            }
+            else if (fileType == AppFileType.Sub)
+            {
+                if (VsList.Exists(o => o.Sub == file.FullName)) return;
+                vsItem.Sub = file.FullName;
+            }
+
+            vsItem.Status = VsStatus.Unmatched;
+            VsList.Add(vsItem);
+        }
+
+        // 删除选定的项目
+        private void RemoveListSelectedItems()
+        {
+            if (FileListUi.SelectedItems.Count <= 0) return;
+
             if (MainSettings.Default.ListItemRemovePrompt)
             {
                 var result = MessageBox.Show("你要删除选定的项目吗？", "删除所选项", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -109,15 +122,60 @@ namespace SubRenamer
 
             foreach (ListViewItem item in FileListUi.SelectedItems)
             {
-                if (item.Tag == null) continue;
+                if (item.Tag == null)
+                {
+                    item.Remove();
+                    continue;
+                }
 
-                var vsFileItem = (VsFileItem)item.Tag;
-                if (vsFileItem.VideoFile != null)
-                    VideoFileList.Remove(vsFileItem.VideoFile);
-                if (vsFileItem.SubFile != null)
-                    SubFileList.Remove(vsFileItem.SubFile);
-                VsFileList.Remove(vsFileItem);
+                var vsItem = (VsItem)item.Tag;
+                VsList.Remove(vsItem);
                 item.Remove();
+            }
+            MatchVideoSub();
+        }
+
+        // 全选操作
+        private void SelectListAll()
+        {
+            foreach (ListViewItem item in FileListUi.Items)
+                item.Selected = true;
+        }
+
+        // 清空列表
+        private void ClearListAll()
+        {
+            if (VsList.Count() == 0 && FileListUi.Items.Count == 0)
+                return;
+
+            if (MainSettings.Default.ListItemRemovePrompt)
+            {
+                var result = MessageBox.Show("你要清空列表吗？", "清空列表", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.No) return;
+            }
+
+            FileListUi.Items.Clear();
+            VsList.Clear();
+
+            RefreshFileListUi();
+        }
+
+        private void ReMatch()
+        {
+            MatchVideoSub();
+        }
+
+        private void OpenVsItemEditor(VsItem vsItem)
+        {
+            var form = new VsItemEditor(this, VsList, vsItem);
+            form.ShowDialog();
+        }
+
+        private void EditListSelectedItems()
+        {
+            if (FileListUi.SelectedItems.Count > 0)
+            {
+                OpenVsItemEditor((VsItem)FileListUi.SelectedItems[0].Tag);
             }
         }
         #endregion
@@ -132,7 +190,9 @@ namespace SubRenamer
                 {
                     ContextMenu m = new ContextMenu();
                     var editBtn = new MenuItem("编辑");
+                    editBtn.Shortcut = Shortcut.F3;
                     editBtn.Click += delegate (object sender2, EventArgs e2) {
+                        EditListSelectedItems();
                     };
                     m.MenuItems.Add(editBtn);
 
@@ -142,12 +202,19 @@ namespace SubRenamer
                     var delBtn = new MenuItem("删除");
                     delBtn.Shortcut = Shortcut.Del;
                     delBtn.Click += delegate (object sender2, EventArgs e2) {
-                        FileListUiRemoveSelectedItems();
+                        RemoveListSelectedItems();
                     };
                     m.MenuItems.Add(delBtn);
+                    m.MenuItems.Add("-");
+
+                    var selectAll = new MenuItem("全部选择");
+                    selectAll.Shortcut = Shortcut.CtrlA;
+                    selectAll.Click += delegate (object sender2, EventArgs e2) {
+                        SelectListAll();
+                    };
+                    m.MenuItems.Add(selectAll);
 
                     m.Show(FileListUi, new Point(e.X, e.Y));
-
                 }
             }
         }
@@ -161,18 +228,20 @@ namespace SubRenamer
             FileListUi.Columns[2].Width = calcPathInfoWidth;
         }
 
-        private void FileListUi_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Delete)
-            {
-                FileListUiRemoveSelectedItems();
-            }
-        }
-
         // 显示预览 勾选
         private void PreviewCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            RefreshFileListUi(showPreview: PreviewCheckBox.Checked);
+            if (PreviewCheckBox.Checked)
+            {
+                Video.Text = "字幕修改前";
+                Subtitle.Text = "字幕修改后";
+            }
+            else
+            {
+                Video.Text = "视频";
+                Subtitle.Text = "字幕";
+            }
+            RefreshFileListUi();
         }
         #endregion
 
@@ -183,10 +252,10 @@ namespace SubRenamer
         private void R_OpenFolderBtn_Click(object sender, EventArgs e) => OpenFolder();
         private void TopMenu_Setting_Click(object sender, EventArgs e) => SettingForm.ShowDialog();
         private void StartBtn_Click(object sender, EventArgs e) => StartRename();
-        private void R_EditBtn_Click(object sender, EventArgs e) { }
-        private void R_RemoveBtn_Click(object sender, EventArgs e) => FileListUiRemoveSelectedItems();
-        private void R_ReMatchBtn_Click(object sender, EventArgs e) { }
-        private void R_ClearAllBtn_Click(object sender, EventArgs e) { }
+        private void R_EditBtn_Click(object sender, EventArgs e) => EditListSelectedItems();
+        private void R_RemoveBtn_Click(object sender, EventArgs e) => RemoveListSelectedItems();
+        private void R_ReMatchBtn_Click(object sender, EventArgs e) => ReMatch();
+        private void R_ClearAllBtn_Click(object sender, EventArgs e) => ClearListAll();
         private void R_RuleBtn_Click(object sender, EventArgs e) { }
         private void R_SettingBtn_Click(object sender, EventArgs e) => SettingForm.ShowDialog();
         private void CopyrightText_Click(object sender, EventArgs e) => Process.Start("https://qwqaq.com/?from=SubRenamer");
@@ -221,6 +290,17 @@ namespace SubRenamer
             }
 
             return base.ProcessCmdKey(ref msg, keys);
+        }
+
+        // 列表快捷键
+        private void FileListUi_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F3)
+                EditListSelectedItems();
+            if (e.KeyCode == Keys.Delete)
+                RemoveListSelectedItems();
+            else if (e.KeyCode == Keys.A && e.Control)
+                SelectListAll();
         }
         #endregion
 
