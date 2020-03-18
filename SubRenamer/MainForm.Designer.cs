@@ -55,6 +55,10 @@
             this.TopMenu_OpenFolderBtn = new System.Windows.Forms.MenuItem();
             this.TopMenu_Setting = new System.Windows.Forms.MenuItem();
             this.MainToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.TopMenu_Rule = new System.Windows.Forms.MenuItem();
+            this.menuItem1 = new System.Windows.Forms.MenuItem();
+            this.TopMenu_ReMatch = new System.Windows.Forms.MenuItem();
+            this.TopMenu_ClearAll = new System.Windows.Forms.MenuItem();
             this.MainContPanel.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.MainContWrapPanel.SuspendLayout();
@@ -311,6 +315,7 @@
             // 
             this.TopMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.TopMenu_File,
+            this.TopMenu_Rule,
             this.TopMenu_Setting});
             // 
             // TopMenu_File
@@ -318,7 +323,10 @@
             this.TopMenu_File.Index = 0;
             this.TopMenu_File.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.TopMenu_OpenFileBtn,
-            this.TopMenu_OpenFolderBtn});
+            this.TopMenu_OpenFolderBtn,
+            this.menuItem1,
+            this.TopMenu_ReMatch,
+            this.TopMenu_ClearAll});
             this.TopMenu_File.Text = "文件";
             // 
             // TopMenu_OpenFileBtn
@@ -335,9 +343,32 @@
             // 
             // TopMenu_Setting
             // 
-            this.TopMenu_Setting.Index = 1;
+            this.TopMenu_Setting.Index = 2;
             this.TopMenu_Setting.Text = "设置";
             this.TopMenu_Setting.Click += new System.EventHandler(this.TopMenu_Setting_Click);
+            // 
+            // TopMenu_Rule
+            // 
+            this.TopMenu_Rule.Index = 1;
+            this.TopMenu_Rule.Text = "规则";
+            this.TopMenu_Rule.Click += new System.EventHandler(this.TopMenu_Rule_Click);
+            // 
+            // menuItem1
+            // 
+            this.menuItem1.Index = 2;
+            this.menuItem1.Text = "-";
+            // 
+            // TopMenu_ReMatch
+            // 
+            this.TopMenu_ReMatch.Index = 3;
+            this.TopMenu_ReMatch.Text = "重新匹配";
+            this.TopMenu_ReMatch.Click += new System.EventHandler(this.TopMenu_ReMatch_Click);
+            // 
+            // TopMenu_ClearAll
+            // 
+            this.TopMenu_ClearAll.Index = 4;
+            this.TopMenu_ClearAll.Text = "清空列表";
+            this.TopMenu_ClearAll.Click += new System.EventHandler(this.TopMenu_ClearAll_Click);
             // 
             // MainForm
             // 
@@ -390,6 +421,10 @@
         private System.Windows.Forms.Button R_RuleBtn;
         private System.Windows.Forms.Button R_SettingBtn;
         private System.Windows.Forms.ToolTip MainToolTip;
+        private System.Windows.Forms.MenuItem TopMenu_Rule;
+        private System.Windows.Forms.MenuItem menuItem1;
+        private System.Windows.Forms.MenuItem TopMenu_ReMatch;
+        private System.Windows.Forms.MenuItem TopMenu_ClearAll;
     }
 }
 

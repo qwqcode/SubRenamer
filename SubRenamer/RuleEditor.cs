@@ -32,11 +32,6 @@ namespace SubRenamer
                 ModeBtn_Regex.Checked = true;
         }
 
-        private void RuleEditor_MouseDown(object sender, MouseEventArgs e)
-        {
-            Console.WriteLine(1);
-        }
-
         private void ModeBtn_Auto_CheckedChanged(object sender, EventArgs e)
         {
             mainForm.CurtMatchMode = MainForm.MatchMode.Auto;
@@ -64,6 +59,11 @@ namespace SubRenamer
             ModeBtn_Regex.PerformClick();
             var form = new RegexEditor(mainForm);
             form.ShowDialog();
+        }
+
+        private void RuleEditor_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            mainForm.MatchVideoSub();
         }
     }
 }

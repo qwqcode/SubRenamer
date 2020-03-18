@@ -18,13 +18,6 @@ namespace SubRenamer
         {
             _mainForm = mainForm;
             InitializeComponent();
-
-            Properties.Settings.Default.PropertyChanged += new PropertyChangedEventHandler(MainSettings_PropertyChanged);
-        }
-
-        private void MainSettings_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            Properties.Settings.Default.Save();
         }
 
         private void SettingForm_Load(object sender, EventArgs e)

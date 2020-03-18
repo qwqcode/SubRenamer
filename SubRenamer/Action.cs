@@ -116,7 +116,7 @@ namespace SubRenamer
         }
 
         // 匹配 视频 & 字幕 集数位置
-        private void MatchVideoSub()
+        public void MatchVideoSub()
         {
             if (VsList.Count <= 0) return;
 
@@ -219,7 +219,7 @@ namespace SubRenamer
             return matchKey;
         }
 
-        private static string GetMatchKeyByBeginEndStr(string fileName, string start, string end)
+        public static string GetMatchKeyByBeginEndStr(string fileName, string start, string end)
         {
             if (string.IsNullOrWhiteSpace(fileName)
                 || string.IsNullOrWhiteSpace(start)

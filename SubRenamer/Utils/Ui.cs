@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SubRenamer
+namespace SubRenamer.Utils
 {
-    public static class Utils
+    public static class Ui
     {
         /// <summary>
         /// 输入对话框

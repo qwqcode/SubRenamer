@@ -214,7 +214,7 @@ namespace SubRenamer
                     m.MenuItems.Add(delBtn);
                     m.MenuItems.Add("-");
 
-                    var selectAll = new MenuItem("全部选择");
+                    var selectAll = new MenuItem("全选");
                     selectAll.Shortcut = Shortcut.CtrlA;
                     selectAll.Click += delegate (object sender2, EventArgs e2) {
                         SelectListAll();
@@ -257,7 +257,10 @@ namespace SubRenamer
         private void R_OpenFileBtn_Click(object sender, EventArgs e) => OpenFile();
         private void TopMenu_OpenFolderBtn_Click(object sender, EventArgs e) => OpenFolder();
         private void R_OpenFolderBtn_Click(object sender, EventArgs e) => OpenFolder();
+        private void TopMenu_Rule_Click(object sender, EventArgs e) => OpenRuleEditor();
         private void TopMenu_Setting_Click(object sender, EventArgs e) => SettingForm.ShowDialog();
+        private void TopMenu_ReMatch_Click(object sender, EventArgs e) => ReMatch();
+        private void TopMenu_ClearAll_Click(object sender, EventArgs e) => ClearListAll();
         private void StartBtn_Click(object sender, EventArgs e) => StartRename();
         private void R_EditBtn_Click(object sender, EventArgs e) => EditListSelectedItems();
         private void R_RemoveBtn_Click(object sender, EventArgs e) => RemoveListSelectedItems();
@@ -272,6 +275,8 @@ namespace SubRenamer
         // 快捷键操作
         const Keys OPEN_FILE_KEY = Keys.Control | Keys.O;
         const Keys OPEN_FOLDER_KEY = Keys.Control | Keys.Shift | Keys.O;
+        const Keys RE_MATCH_KEY = Keys.Control | Keys.R;
+        const Keys CLEAR_ALL_KEY = Keys.Control | Keys.N;
 
         // 初始化快捷键
         private void InitShorcut()
@@ -279,6 +284,8 @@ namespace SubRenamer
             // 快捷键显示
             TopMenu_OpenFileBtn.Shortcut = (Shortcut)OPEN_FILE_KEY;
             TopMenu_OpenFolderBtn.Shortcut = (Shortcut)OPEN_FOLDER_KEY;
+            TopMenu_ReMatch.Shortcut = (Shortcut)RE_MATCH_KEY;
+            TopMenu_ClearAll.Shortcut = (Shortcut)CLEAR_ALL_KEY;
         }
 
         // 快捷键操作
@@ -293,6 +300,18 @@ namespace SubRenamer
             if (keys == OPEN_FOLDER_KEY)
             {
                 TopMenu_OpenFolderBtn.PerformClick();
+                return true;
+            }
+
+            if (keys == RE_MATCH_KEY)
+            {
+                TopMenu_ReMatch.PerformClick();
+                return true;
+            }
+
+            if (keys == CLEAR_ALL_KEY)
+            {
+                TopMenu_ClearAll.PerformClick();
                 return true;
             }
 
