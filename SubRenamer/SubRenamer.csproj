@@ -95,6 +95,25 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Global.cs" />
+    <Compile Include="IniFile.cs" />
+    <Compile Include="RuleEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RuleEditor.Designer.cs">
+      <DependentUpon>RuleEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MatchModeEditor\ManuEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MatchModeEditor\ManuEditor.Designer.cs">
+      <DependentUpon>ManuEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MatchModeEditor\RegexEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MatchModeEditor\RegexEditor.Designer.cs">
+      <DependentUpon>RegexEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Utils.cs" />
     <Compile Include="VsItem.cs" />
     <Compile Include="MainForm.cs">
@@ -102,11 +121,6 @@
     </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MainSettings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>MainSettings.settings</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -135,18 +149,23 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="RuleEditor.resx">
+      <DependentUpon>RuleEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MatchModeEditor\ManuEditor.resx">
+      <DependentUpon>ManuEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MatchModeEditor\RegexEditor.resx">
+      <DependentUpon>RegexEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SettingForm.resx">
       <DependentUpon>SettingForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="VsItemEditor.resx">
       <DependentUpon>VsItemEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="app.config" />
+    <EmbeddedResource Include="app.config" />
     <None Include="icon\icon.ai" />
-    <None Include="MainSettings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>MainSettings.Designer.cs</LastGenOutput>
-    </None>
     <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">

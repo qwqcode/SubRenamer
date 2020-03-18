@@ -114,7 +114,7 @@ namespace SubRenamer
         {
             if (FileListUi.SelectedItems.Count <= 0) return;
 
-            if (MainSettings.Default.ListItemRemovePrompt)
+            if (AppSettings.ListItemRemovePrompt)
             {
                 var result = MessageBox.Show("你要删除选定的项目吗？", "删除所选项", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.No) return;
@@ -148,7 +148,7 @@ namespace SubRenamer
             if (VsList.Count() == 0 && FileListUi.Items.Count == 0)
                 return;
 
-            if (MainSettings.Default.ListItemRemovePrompt)
+            if (AppSettings.ListItemRemovePrompt)
             {
                 var result = MessageBox.Show("你要清空列表吗？", "清空列表", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.No) return;
@@ -168,6 +168,13 @@ namespace SubRenamer
         private void OpenVsItemEditor(VsItem vsItem)
         {
             var form = new VsItemEditor(this, VsList, vsItem);
+            form.ShowDialog();
+        }
+
+        // 打开规则编辑器
+        private void OpenRuleEditor()
+        {
+            var form = new RuleEditor(this);
             form.ShowDialog();
         }
 
@@ -256,7 +263,7 @@ namespace SubRenamer
         private void R_RemoveBtn_Click(object sender, EventArgs e) => RemoveListSelectedItems();
         private void R_ReMatchBtn_Click(object sender, EventArgs e) => ReMatch();
         private void R_ClearAllBtn_Click(object sender, EventArgs e) => ClearListAll();
-        private void R_RuleBtn_Click(object sender, EventArgs e) { }
+        private void R_RuleBtn_Click(object sender, EventArgs e) => OpenRuleEditor();
         private void R_SettingBtn_Click(object sender, EventArgs e) => SettingForm.ShowDialog();
         private void CopyrightText_Click(object sender, EventArgs e) => Process.Start("https://qwqaq.com/?from=SubRenamer");
         #endregion
