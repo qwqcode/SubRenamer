@@ -53,12 +53,12 @@
             this.TopMenu_File = new System.Windows.Forms.MenuItem();
             this.TopMenu_OpenFileBtn = new System.Windows.Forms.MenuItem();
             this.TopMenu_OpenFolderBtn = new System.Windows.Forms.MenuItem();
-            this.TopMenu_Setting = new System.Windows.Forms.MenuItem();
-            this.MainToolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.TopMenu_Rule = new System.Windows.Forms.MenuItem();
             this.menuItem1 = new System.Windows.Forms.MenuItem();
             this.TopMenu_ReMatch = new System.Windows.Forms.MenuItem();
             this.TopMenu_ClearAll = new System.Windows.Forms.MenuItem();
+            this.TopMenu_Rule = new System.Windows.Forms.MenuItem();
+            this.TopMenu_Setting = new System.Windows.Forms.MenuItem();
+            this.MainToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.MainContPanel.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.MainContWrapPanel.SuspendLayout();
@@ -94,6 +94,7 @@
             // 
             // FileListUi
             // 
+            this.FileListUi.AllowDrop = true;
             this.FileListUi.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.MatchKey,
             this.Video,
@@ -111,6 +112,8 @@
             this.FileListUi.TabIndex = 16;
             this.FileListUi.UseCompatibleStateImageBehavior = false;
             this.FileListUi.View = System.Windows.Forms.View.Details;
+            this.FileListUi.DragDrop += new System.Windows.Forms.DragEventHandler(this.FileListUi_DragDrop);
+            this.FileListUi.DragEnter += new System.Windows.Forms.DragEventHandler(this.FileListUi_DragEnter);
             this.FileListUi.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FileListUi_KeyDown);
             this.FileListUi.MouseClick += new System.Windows.Forms.MouseEventHandler(this.FileListUi_MouseClick);
             // 
@@ -341,18 +344,6 @@
             this.TopMenu_OpenFolderBtn.Text = "导入文件夹...";
             this.TopMenu_OpenFolderBtn.Click += new System.EventHandler(this.TopMenu_OpenFolderBtn_Click);
             // 
-            // TopMenu_Setting
-            // 
-            this.TopMenu_Setting.Index = 2;
-            this.TopMenu_Setting.Text = "设置";
-            this.TopMenu_Setting.Click += new System.EventHandler(this.TopMenu_Setting_Click);
-            // 
-            // TopMenu_Rule
-            // 
-            this.TopMenu_Rule.Index = 1;
-            this.TopMenu_Rule.Text = "规则";
-            this.TopMenu_Rule.Click += new System.EventHandler(this.TopMenu_Rule_Click);
-            // 
             // menuItem1
             // 
             this.menuItem1.Index = 2;
@@ -369,6 +360,18 @@
             this.TopMenu_ClearAll.Index = 4;
             this.TopMenu_ClearAll.Text = "清空列表";
             this.TopMenu_ClearAll.Click += new System.EventHandler(this.TopMenu_ClearAll_Click);
+            // 
+            // TopMenu_Rule
+            // 
+            this.TopMenu_Rule.Index = 1;
+            this.TopMenu_Rule.Text = "规则";
+            this.TopMenu_Rule.Click += new System.EventHandler(this.TopMenu_Rule_Click);
+            // 
+            // TopMenu_Setting
+            // 
+            this.TopMenu_Setting.Index = 2;
+            this.TopMenu_Setting.Text = "设置";
+            this.TopMenu_Setting.Click += new System.EventHandler(this.TopMenu_Setting_Click);
             // 
             // MainForm
             // 

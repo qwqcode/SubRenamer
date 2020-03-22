@@ -96,7 +96,9 @@
     </Compile>
     <Compile Include="AppSettings.cs" />
     <Compile Include="Global.cs" />
-    <Compile Include="Utils\IniFile.cs" />
+    <Compile Include="Lib\IniFile.cs" />
+    <Compile Include="Lib\Ui.cs" />
+    <Compile Include="Lib\Utils.cs" />
     <Compile Include="RuleEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -115,7 +117,6 @@
     <Compile Include="MatchModeEditor\RegexEditor.Designer.cs">
       <DependentUpon>RegexEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Utils\Ui.cs" />
     <Compile Include="VsItem.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>

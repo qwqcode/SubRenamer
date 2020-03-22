@@ -8,8 +8,10 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static SubRenamer.Global;
@@ -20,9 +22,6 @@ namespace SubRenamer
     {
         private List<VsItem> VsList = new List<VsItem> { };
         public MatchMode CurtMatchMode = MatchMode.Auto;
-
-        public static readonly List<string> VideoExts = new List<string> { ".mkv", ".mp4", "flv", ".avi", ".mov", ".rmvb", ".wmv", ".mpg", ".avs" };
-        public static readonly List<string> SubExts = new List<string> { ".srt", ".ass", ".ssa", ".sub", ".idx" };
 
         // 匹配模式
         public enum MatchMode
@@ -210,21 +209,30 @@ namespace SubRenamer
             else if (CurtMatchMode == MatchMode.Regex)
             {
                 if (fileType == AppFileType.Video && M_Regx_V != null)
-                    matchKey = M_Regx_V.Match(fileName).Groups[1].Value;
+                    matchKey = GetMatchKeyByRegex(fileName, M_Regx_V);
                 else if (fileType == AppFileType.Sub && M_Regx_S != null)
-                    matchKey = M_Regx_S.Match(fileName).Groups[1].Value;
+                    matchKey = GetMatchKeyByRegex(fileName, M_Regx_S);
             }
 
             if (string.IsNullOrWhiteSpace(matchKey)) matchKey = null;
             return matchKey;
         }
 
+        public static string GetMatchKeyByRegex(string fileName, Regex regex)
+        {
+            if (regex == null || string.IsNullOrWhiteSpace(fileName)) return null;
+            if (regex.Match(fileName).Groups.Count < 2) return null;
+            return regex.Match(fileName).Groups[1].Value;
+        }
+
         public static string GetMatchKeyByBeginEndStr(string fileName, string start, string end)
         {
-            if (string.IsNullOrWhiteSpace(fileName)
-                || string.IsNullOrWhiteSpace(start)
-                || string.IsNullOrWhiteSpace(end))
+            if (string.IsNullOrWhiteSpace(fileName))
                 return null;
+            if (string.IsNullOrWhiteSpace(start) && string.IsNullOrWhiteSpace(end))
+                return null; // 前后字符都没有，直接返回 null
+            if (start == null) start = "";
+            if (end == null) end = "";
 
             fileName = fileName.Trim();
 
@@ -249,6 +257,7 @@ namespace SubRenamer
         {
             if (string.IsNullOrWhiteSpace(fileName)) return null;
             if (beginPos <= -1) return null;
+            if (beginPos >= fileName.Length) return null;
             var str = fileName.Substring(beginPos);
 
             var result = "";
@@ -343,14 +352,23 @@ namespace SubRenamer
 
         protected void StartRename()
         {
-            if (GetSubRenameDict().Count() <= 0) return;
-            Task.Factory.StartNew(() => _StartRename());
+            var subRenameDict = GetSubRenameDict();
+            if (subRenameDict.Count() <= 0) return;
+            SwitchPreview(true);
+            Task.Factory.StartNew(() => _StartRename(subRenameDict));
         }
 
         /// 执行改名操作
-        private void _StartRename()
+        private void _StartRename(Dictionary<string, string> subRenameDict)
         {
-            var subRenameDict = GetSubRenameDict();
+            Program.Log($"[=============== 开始执行改名操作  ===============]");
+
+            string btnRawText = "";
+            Invoke((MethodInvoker)delegate {
+                StartBtn.Enabled = false;
+                btnRawText = StartBtn.Text;
+                StartBtn.Text = "改名中...";
+            });
             int renTotal = subRenameDict.Count();
             int errTotal = 0;
             void SetCurrentProgress(KeyValuePair<string, string> subRename, int index)
@@ -364,7 +382,7 @@ namespace SubRenamer
                 double percentage = (index / (double)renTotal) * 100;
                 //td.Text = $"执行一键改名操作中，请稍后... ({index}/{renTotal})" + Environment.NewLine;
                 //td.Text += $"\"{Path.GetFileName(subRename.Key)}\"{Environment.NewLine}=> \"{Path.GetFileName(subRename.Value)}\"";
-                // td.ProgressBar.Value = int.Parse(Math.Truncate(percentage).ToString());
+                //td.ProgressBar.Value = int.Parse(Math.Truncate(percentage).ToString());
             }
 
             int i = 0;
@@ -373,28 +391,36 @@ namespace SubRenamer
                 try
                 {
                     _RenameOnce(subRename);
-                    // td.DetailsExpandedText += $"[成功] [\"{subRename.Key}\"=>\"{subRename.Value}\"]{Environment.NewLine}";
+                    Program.Log("[成功]", $"[\"{subRename.Key}\"=>\"{subRename.Value}\"]");
+                    Invoke((MethodInvoker)delegate { RefreshFileListUi(); });
                 }
                 catch (Exception e)
                 {
-                    // td.DetailsExpandedText += $"[失败] [\"{subRename.Key}\"=>\"{subRename.Value}\"] {e.Message}{Environment.NewLine}";
+                    Program.Log("[错误]", $"[\"{subRename.Key}\"=>\"{subRename.Value}\"]{Environment.NewLine}  ==> {e.Message}");
                     errTotal++;
                 }
                 finally
                 {
                     i++;
-                    SetCurrentProgress(subRename, i);
+                    // SetCurrentProgress(subRename, i);
                 }
             }
 
-            RefreshFileListUi();
+            if (errTotal > 0)
+                Process.Start(LOG_FILENAME);
+
+            Invoke((MethodInvoker)delegate {
+                StartBtn.Text = btnRawText;
+                StartBtn.Enabled = true;
+            });
         }
 
         private void _RenameOnce(KeyValuePair<string, string> subRename)
         {
             var vsFile = VsList.Find(o => o.Sub == subRename.Key);
             if (vsFile == null) throw new Exception("找不到修改项");
-            if (vsFile.Status != VsStatus.Ready) throw new Exception("当然状态无法修改");
+            if (vsFile.Status == VsStatus.Done) return; // 无需再改名了
+            if (vsFile.Status != VsStatus.Ready && vsFile.Status != VsStatus.Fatal) throw new Exception("当然状态无法修改");
             if (vsFile.Video == null || vsFile.Sub == null) throw new Exception("字幕/视频文件不完整");
 
             var before = new FileInfo(subRename.Key);
@@ -404,7 +430,7 @@ namespace SubRenamer
             if (before.FullName.Equals(after.FullName))
             {
                 vsFile.Status = VsStatus.Done;
-                throw new Exception("字幕文件名无需修改");
+                throw new Exception($"文件名名未修改，因为改名后的文件已存在，无需改名");
             }
 
             // 若原文件不存在
@@ -414,10 +440,37 @@ namespace SubRenamer
                 throw new Exception($"字幕源文件不存在");
             }
 
+            // 执行备份
+            if (AppSettings.RawSubtitleBuckup)
+            {
+                try
+                {
+                    // 前字幕文件 和 后字幕文件 若是在同一个目录下
+                    if (before.DirectoryName == after.DirectoryName && File.Exists(before.FullName))
+                        BackupFile(before.FullName);
+
+                    if (File.Exists(after.FullName))
+                        BackupFile(after.FullName);
+                }
+                catch (Exception e)
+                {
+                    throw new Exception($"改名前备份发生错误 {e.GetType().FullName} {e.ToString()}");
+                }
+            }
+
             // 执行更名
             try
             {
-                File.Move(before.FullName, after.FullName);
+                if (before.DirectoryName == after.DirectoryName)
+                {
+                    if (File.Exists(after.FullName)) File.Delete(after.FullName); // 若后文件存在，则先删除 (上面有备份的)
+                    File.Move(before.FullName, after.FullName); // 前后字幕相同目录，执行改名
+                }
+                else
+                {
+                    File.Copy(before.FullName, after.FullName, true); // 前后字幕不同文件，执行复制
+                }
+
                 vsFile.Status = VsStatus.Done;
             }
             catch (Exception e)
@@ -426,6 +479,21 @@ namespace SubRenamer
                 vsFile.Status = VsStatus.Fatal;
                 throw new Exception($"改名发生错误 {e.GetType().FullName} {e.ToString()}");
             }
+        }
+
+        private void BackupFile(string filename)
+        {
+            if (!File.Exists(filename)) return;
+            var bkFolder = Path.Combine(Path.GetDirectoryName(filename), "SubBackup/");
+            if (!Directory.Exists(bkFolder)) Directory.CreateDirectory(bkFolder);
+
+            string bkDistFile = Path.Combine(bkFolder, Path.GetFileName(filename));
+            if (File.Exists(bkDistFile)) // 解决文件重名问题
+                bkDistFile = Path.Combine(
+                    bkFolder, Path.GetFileNameWithoutExtension(filename) + $".{Program.GetNowDatetime()}{Path.GetExtension(filename)}"
+                );
+
+            File.Copy(filename, bkDistFile, true);
         }
 
         // 获取修改的字幕文件名 (原始完整路径->修改后完整路径)
@@ -440,7 +508,7 @@ namespace SubRenamer
                 if (item.Video == null || item.Sub == null) continue;
                 string videoName = Path.GetFileNameWithoutExtension(item.VideoFileInfo.Name); // 去掉后缀的视频文件名
                 string subAfterFilename = videoName + item.SubFileInfo.Extension; // 修改的字幕文件名
-                dict[item.SubFileInfo.FullName] = Path.Combine(item.SubFileInfo.DirectoryName, subAfterFilename);
+                dict[item.SubFileInfo.FullName] = Path.Combine(item.VideoFileInfo.DirectoryName, subAfterFilename);
             }
 
             return dict;

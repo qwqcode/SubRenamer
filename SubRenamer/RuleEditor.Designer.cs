@@ -32,7 +32,7 @@
             this.ModeBtn_Manu = new System.Windows.Forms.RadioButton();
             this.ModeBtn_Regex = new System.Windows.Forms.RadioButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label4 = new System.Windows.Forms.Label();
+            this.Copyright = new System.Windows.Forms.Label();
             this.EditBtn_Regex = new System.Windows.Forms.LinkLabel();
             this.EditBtn_Manu = new System.Windows.Forms.LinkLabel();
             this.label3 = new System.Windows.Forms.Label();
@@ -79,7 +79,7 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.Copyright);
             this.groupBox1.Controls.Add(this.EditBtn_Regex);
             this.groupBox1.Controls.Add(this.EditBtn_Manu);
             this.groupBox1.Controls.Add(this.label3);
@@ -95,15 +95,16 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "匹配模式";
             // 
-            // label4
+            // Copyright
             // 
-            this.label4.AutoSize = true;
-            this.label4.ForeColor = System.Drawing.SystemColors.ActiveBorder;
-            this.label4.Location = new System.Drawing.Point(363, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(129, 28);
-            this.label4.TabIndex = 11;
-            this.label4.Text = "qwqaq.com";
+            this.Copyright.AutoSize = true;
+            this.Copyright.ForeColor = System.Drawing.SystemColors.ActiveBorder;
+            this.Copyright.Location = new System.Drawing.Point(363, 0);
+            this.Copyright.Name = "Copyright";
+            this.Copyright.Size = new System.Drawing.Size(129, 28);
+            this.Copyright.TabIndex = 11;
+            this.Copyright.Text = "qwqaq.com";
+            this.Copyright.Click += new System.EventHandler(this.Copyright_Click);
             // 
             // EditBtn_Regex
             // 
@@ -191,7 +192,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.LinkLabel EditBtn_Regex;
         private System.Windows.Forms.LinkLabel EditBtn_Manu;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.RadioButton ModeBtn_Auto;
+        private System.Windows.Forms.Label Copyright;
     }
 }

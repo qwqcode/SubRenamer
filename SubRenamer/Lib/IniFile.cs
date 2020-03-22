@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SubRenamer.Utils
+namespace SubRenamer.Lib
 {
     public class IniFile
     {

@@ -65,5 +65,7 @@ namespace SubRenamer
         {
             mainForm.MatchVideoSub();
         }
+
+        private void Copyright_Click(object sender, EventArgs e) => Program.OpenAuthorBlog();
     }
 }

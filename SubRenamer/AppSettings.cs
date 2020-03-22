@@ -1,7 +1,8 @@
-﻿using SubRenamer.Utils;
+﻿using SubRenamer.Lib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,29 +10,39 @@ namespace SubRenamer
 {
     public class AppSettings
     {
-        public static IniFile IniFile = new IniFile();
         public static bool RawSubtitleBuckup
         {
-            get { return IniFile.Read("RawSubtitleBuckup", "1").Equals("1"); }
-            set { RawSubtitleBuckup = value; IniFile.Write("RawSubtitleBuckup", value ? "1" : "0"); }
-        }
-
-        public static bool OpenFolderFinished
-        {
-            get { return IniFile.Read("OpenFolderFinished", "0").Equals("1"); }
-            set { OpenFolderFinished = value; IniFile.Write("OpenFolderFinished", value ? "1" : "0"); }
+            get { return GetBoolVal(defaultVal: true); }
+            set { WriteBoolVal(value); }
         }
 
         public static bool ListItemRemovePrompt
         {
-            get { return IniFile.Read("ListItemRemovePrompt", "1").Equals("1"); }
-            set { ListItemRemovePrompt = value; IniFile.Write("ListItemRemovePrompt", value ? "1" : "0"); }
+            get { return GetBoolVal(defaultVal: true); }
+            set { WriteBoolVal(value); }
         }
 
         public static bool ListShowFileFullName
         {
-            get { return IniFile.Read("ListShowFileFullName", "0").Equals("1"); }
-            set { ListShowFileFullName = value; IniFile.Write("ListShowFileFullName", value ? "1" : "0"); }
+            get { return GetBoolVal(defaultVal: false); }
+            set { WriteBoolVal(value); }
         }
+
+        #region Utils
+        public static IniFile IniFile = new IniFile();
+
+        private static bool GetBoolVal(bool defaultVal = false, [CallerMemberName]string key = null)
+        {
+            if (string.IsNullOrWhiteSpace(key)) return defaultVal;
+            string defaultValStr = defaultVal ? "1" : "0";
+            return IniFile.Read(key, defaultValStr).Equals("1");
+        }
+
+        private static void WriteBoolVal(bool val, [CallerMemberName]string key = null)
+        {
+            if (string.IsNullOrWhiteSpace(key)) return;
+            IniFile.Write(key, val ? "1" : "0");
+        }
+        #endregion
     }
 }
