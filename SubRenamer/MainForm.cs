@@ -32,7 +32,6 @@ namespace SubRenamer
         // 窗口加载完后
         private void MainForm_Load(object sender, EventArgs e)
         {
-            /*LoadFilesByPath(Application.StartupPath);*/
             SetWindowTheme(this.FileListUi.Handle, "Explorer", null);
         }
 
@@ -50,6 +49,8 @@ namespace SubRenamer
 
                 if (result == CommonFileDialogResult.Ok && fbd.FileNames.Count() > 0)
                 {
+                    SwitchPreview(false);
+
                     foreach (var fileName in fbd.FileNames) FileListAdd(new FileInfo(fileName));
 
                     MatchVideoSub();
@@ -70,6 +71,8 @@ namespace SubRenamer
 
                 if (result == CommonFileDialogResult.Ok && fbd.FileNames.Count() > 0)
                 {
+                    SwitchPreview(false);
+
                     foreach (var folderPath in fbd.FileNames)
                     {
                         var folder = new DirectoryInfo(folderPath);
@@ -84,6 +87,7 @@ namespace SubRenamer
             }
         }
 
+        // 文件添加
         private void FileListAdd(FileInfo file)
         {
             AppFileType fileType;
@@ -109,32 +113,6 @@ namespace SubRenamer
             VsList.Add(vsItem);
         }
 
-        // 删除选定的项目
-        private void RemoveListSelectedItems()
-        {
-            if (FileListUi.SelectedItems.Count <= 0) return;
-
-            if (MainSettings.Default.ListItemRemovePrompt)
-            {
-                var result = MessageBox.Show("你要删除选定的项目吗？", "删除所选项", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (result == DialogResult.No) return;
-            }
-
-            foreach (ListViewItem item in FileListUi.SelectedItems)
-            {
-                if (item.Tag == null)
-                {
-                    item.Remove();
-                    continue;
-                }
-
-                var vsItem = (VsItem)item.Tag;
-                VsList.Remove(vsItem);
-                item.Remove();
-            }
-            MatchVideoSub();
-        }
-
         // 全选操作
         private void SelectListAll()
         {
@@ -142,32 +120,23 @@ namespace SubRenamer
                 item.Selected = true;
         }
 
-        // 清空列表
-        private void ClearListAll()
-        {
-            if (VsList.Count() == 0 && FileListUi.Items.Count == 0)
-                return;
-
-            if (MainSettings.Default.ListItemRemovePrompt)
-            {
-                var result = MessageBox.Show("你要清空列表吗？", "清空列表", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (result == DialogResult.No) return;
-            }
-
-            FileListUi.Items.Clear();
-            VsList.Clear();
-
-            RefreshFileListUi();
-        }
-
+        // 重新匹配
         private void ReMatch()
         {
             MatchVideoSub();
         }
 
+        // 打开 VsItem 编辑器
         private void OpenVsItemEditor(VsItem vsItem)
         {
             var form = new VsItemEditor(this, VsList, vsItem);
+            form.ShowDialog();
+        }
+
+        // 打开规则编辑器
+        private void OpenRuleEditor()
+        {
+            var form = new RuleEditor(this);
             form.ShowDialog();
         }
 
@@ -178,9 +147,25 @@ namespace SubRenamer
                 OpenVsItemEditor((VsItem)FileListUi.SelectedItems[0].Tag);
             }
         }
-        #endregion
 
-        #region 各种操作
+        // 拖拽文件 Enter
+        private void FileListUi_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop)) // 拖拽数据是否为文件
+                e.Effect = DragDropEffects.Move;
+            else
+                e.Effect = DragDropEffects.None;
+        }
+
+        // 拖拽文件 Drop
+        private void FileListUi_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+            foreach (var fileName in files) FileListAdd(new FileInfo(fileName));
+            MatchVideoSub();
+        }
+
         private void FileListUi_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
@@ -188,32 +173,29 @@ namespace SubRenamer
                 if (FileListUi.FocusedItem != null
                     && FileListUi.Bounds.Contains(e.Location) == true)
                 {
+                    var selectedItem = (VsItem)FileListUi.SelectedItems[0].Tag;
                     ContextMenu m = new ContextMenu();
-                    var editBtn = new MenuItem("编辑");
-                    editBtn.Shortcut = Shortcut.F3;
-                    editBtn.Click += delegate (object sender2, EventArgs e2) {
-                        EditListSelectedItems();
-                    };
-                    m.MenuItems.Add(editBtn);
-
-                    var cashMenuItem2 = new MenuItem("-");
-                    m.MenuItems.Add(cashMenuItem2);
-
-                    var delBtn = new MenuItem("删除");
-                    delBtn.Shortcut = Shortcut.Del;
-                    delBtn.Click += delegate (object sender2, EventArgs e2) {
-                        RemoveListSelectedItems();
-                    };
-                    m.MenuItems.Add(delBtn);
-                    m.MenuItems.Add("-");
-
-                    var selectAll = new MenuItem("全部选择");
-                    selectAll.Shortcut = Shortcut.CtrlA;
-                    selectAll.Click += delegate (object sender2, EventArgs e2) {
-                        SelectListAll();
-                    };
-                    m.MenuItems.Add(selectAll);
-
+                    var items = m.MenuItems;
+                    items.Add(new MenuItem("编辑", (e1, s1) => EditListSelectedItems(), Shortcut.F3));
+                    items.Add("-");
+                    items.Add(new MenuItem("删除", (e1, s1) => RemoveListSelectedItems(), Shortcut.Del));
+                    var discardVideo = new MenuItem("丢弃视频", (e1, s1) => DiscardListSelectedItemsFile(AppFileType.Video));
+                    var discardSub = new MenuItem("丢弃字幕", (e1, s1) => DiscardListSelectedItemsFile(AppFileType.Sub));
+                    if (string.IsNullOrWhiteSpace(selectedItem.Video)) discardVideo.Enabled = false;
+                    if (string.IsNullOrWhiteSpace(selectedItem.Sub)) discardSub.Enabled = false;
+                    items.Add(discardVideo);
+                    items.Add(discardSub);
+                    items.Add("-");
+                    items.Add(new MenuItem("全选", (e1, s1) => SelectListAll(), Shortcut.CtrlA));
+                    items.Add("-");
+                    var openVideoFolder = new MenuItem("打开视频文件夹", (e1, s1) => OpenExplorerFile(selectedItem.Video));
+                    var openSubFolder = new MenuItem("打开字幕文件夹", (e1, s1) => OpenExplorerFile(selectedItem.Sub));
+                    if (string.IsNullOrWhiteSpace(selectedItem.Video)) openVideoFolder.Enabled = false;
+                    if (string.IsNullOrWhiteSpace(selectedItem.Sub)) openSubFolder.Enabled = false;
+                    items.Add(openVideoFolder);
+                    items.Add(openSubFolder);
+                    items.Add("-");
+                    items.Add(new MenuItem("复制改名命令至剪切板", (e1, s1) => CopyRenameCommand()));
                     m.Show(FileListUi, new Point(e.X, e.Y));
                 }
             }
@@ -231,17 +213,116 @@ namespace SubRenamer
         // 显示预览 勾选
         private void PreviewCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            if (PreviewCheckBox.Checked)
+            SwitchPreview(PreviewCheckBox.Checked, true);
+        }
+
+        private void SwitchPreview(bool value, bool force = false)
+        {
+            if (!force && value == PreviewCheckBox.Checked) return;
+
+            if (value)
             {
-                Video.Text = "字幕修改前";
-                Subtitle.Text = "字幕修改后";
+                Video.Text = "字幕文件名";
+                Subtitle.Text = "修改为";
             }
             else
             {
                 Video.Text = "视频";
                 Subtitle.Text = "字幕";
             }
+            PreviewCheckBox.Checked = value;
             RefreshFileListUi();
+
+        }
+
+        // 清空列表
+        private void ClearListAll()
+        {
+            if (VsList.Count() == 0 && FileListUi.Items.Count == 0)
+                return;
+
+            if (AppSettings.ListItemRemovePrompt)
+            {
+                var result = MessageBox.Show("你要清空列表吗？", "清空列表", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.No) return;
+            }
+
+            FileListUi.Items.Clear();
+            VsList.Clear();
+
+            RefreshFileListUi();
+        }
+
+        private void DiscardListSelectedItemsFile(AppFileType FileType)
+        {
+            if (FileListUi.SelectedItems.Count <= 0) return;
+
+            string label = "";
+            if (FileType.Equals(AppFileType.Video)) label = "视频";
+            else if (FileType.Equals(AppFileType.Sub)) label = "字幕";
+
+            if (AppSettings.ListItemRemovePrompt)
+            {
+                var result = MessageBox.Show($"你要丢弃选定项目的{label}吗？源文件不会被删除", $"丢弃所选项的{label}", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.No) return;
+            }
+
+            foreach (ListViewItem item in FileListUi.SelectedItems)
+            {
+                if (item.Tag == null)
+                {
+                    item.Remove();
+                    continue;
+                }
+
+                var vsItem = (VsItem)item.Tag;
+                if (FileType.Equals(AppFileType.Video)) vsItem.Video = null;
+                if (FileType.Equals(AppFileType.Sub)) vsItem.Sub = null;
+            }
+
+            RefreshFileListUi();
+        }
+
+        // 删除选定的项目
+        private void RemoveListSelectedItems()
+        {
+            if (FileListUi.SelectedItems.Count <= 0) return;
+
+            if (AppSettings.ListItemRemovePrompt)
+            {
+                var result = MessageBox.Show("你要删除选定的项目吗？", "删除所选项", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.No) return;
+            }
+
+            foreach (ListViewItem item in FileListUi.SelectedItems)
+            {
+                if (item.Tag == null)
+                {
+                    item.Remove();
+                    continue;
+                }
+
+                var vsItem = (VsItem)item.Tag;
+                VsList.Remove(vsItem);
+                item.Remove();
+            }
+
+            RefreshFileListUi();
+        }
+
+        private void CopyRenameCommand()
+        {
+            var cmd = "";
+            var renameDict = GetSubRenameDict();
+            if (renameDict.Count < 0) return;
+            var selectedList = new List<ListViewItem>(FileListUi.SelectedItems.OfType<ListViewItem>());
+            foreach (var rename in renameDict)
+            {
+                if (FileListUi.SelectedItems.Count > 0
+                    && !selectedList.Exists(o => o.Tag != null && ((VsItem)o.Tag).Sub == rename.Key)) continue;
+                cmd += $"mv \"{rename.Key}\" \"{rename.Value}\"{Environment.NewLine}";
+            }
+            Clipboard.SetDataObject(cmd.Trim());
         }
         #endregion
 
@@ -250,21 +331,26 @@ namespace SubRenamer
         private void R_OpenFileBtn_Click(object sender, EventArgs e) => OpenFile();
         private void TopMenu_OpenFolderBtn_Click(object sender, EventArgs e) => OpenFolder();
         private void R_OpenFolderBtn_Click(object sender, EventArgs e) => OpenFolder();
+        private void TopMenu_Rule_Click(object sender, EventArgs e) => OpenRuleEditor();
         private void TopMenu_Setting_Click(object sender, EventArgs e) => SettingForm.ShowDialog();
+        private void TopMenu_ReMatch_Click(object sender, EventArgs e) => ReMatch();
+        private void TopMenu_ClearAll_Click(object sender, EventArgs e) => ClearListAll();
         private void StartBtn_Click(object sender, EventArgs e) => StartRename();
         private void R_EditBtn_Click(object sender, EventArgs e) => EditListSelectedItems();
         private void R_RemoveBtn_Click(object sender, EventArgs e) => RemoveListSelectedItems();
         private void R_ReMatchBtn_Click(object sender, EventArgs e) => ReMatch();
         private void R_ClearAllBtn_Click(object sender, EventArgs e) => ClearListAll();
-        private void R_RuleBtn_Click(object sender, EventArgs e) { }
+        private void R_RuleBtn_Click(object sender, EventArgs e) => OpenRuleEditor();
         private void R_SettingBtn_Click(object sender, EventArgs e) => SettingForm.ShowDialog();
-        private void CopyrightText_Click(object sender, EventArgs e) => Process.Start("https://qwqaq.com/?from=SubRenamer");
+        private void CopyrightText_Click(object sender, EventArgs e) => Program.OpenAuthorBlog();
         #endregion
 
         #region 快捷键
         // 快捷键操作
         const Keys OPEN_FILE_KEY = Keys.Control | Keys.O;
         const Keys OPEN_FOLDER_KEY = Keys.Control | Keys.Shift | Keys.O;
+        const Keys RE_MATCH_KEY = Keys.Control | Keys.R;
+        const Keys CLEAR_ALL_KEY = Keys.Control | Keys.N;
 
         // 初始化快捷键
         private void InitShorcut()
@@ -272,6 +358,8 @@ namespace SubRenamer
             // 快捷键显示
             TopMenu_OpenFileBtn.Shortcut = (Shortcut)OPEN_FILE_KEY;
             TopMenu_OpenFolderBtn.Shortcut = (Shortcut)OPEN_FOLDER_KEY;
+            TopMenu_ReMatch.Shortcut = (Shortcut)RE_MATCH_KEY;
+            TopMenu_ClearAll.Shortcut = (Shortcut)CLEAR_ALL_KEY;
         }
 
         // 快捷键操作
@@ -286,6 +374,18 @@ namespace SubRenamer
             if (keys == OPEN_FOLDER_KEY)
             {
                 TopMenu_OpenFolderBtn.PerformClick();
+                return true;
+            }
+
+            if (keys == RE_MATCH_KEY)
+            {
+                TopMenu_ReMatch.PerformClick();
+                return true;
+            }
+
+            if (keys == CLEAR_ALL_KEY)
+            {
+                TopMenu_ClearAll.PerformClick();
                 return true;
             }
 
@@ -306,5 +406,13 @@ namespace SubRenamer
 
         [DllImport("uxtheme.dll", ExactSpelling = true, CharSet = CharSet.Unicode)]
         private static extern int SetWindowTheme(IntPtr hwnd, string pszSubAppName, string pszSubIdList);
+
+        public void OpenExplorerFile(string filePath)
+        {
+            if (string.IsNullOrWhiteSpace(filePath)) return;
+            if (!File.Exists(filePath)) return;
+            string args = $"/select, \"{filePath}\"";
+            Process.Start("explorer.exe", args);
+        }
     }
 }

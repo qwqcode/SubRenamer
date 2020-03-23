@@ -2,7 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Web;
@@ -112,7 +114,7 @@ namespace SubRenamer
         private static void ErrorCatchAction(string type, string errorMsg)
         {
             string title = $"意外错误：{Application.ProductName} {"v" + Application.ProductVersion.ToString()}";
-            Process.Start($"https://github.com/qwqcode/SubRenamer/issues/new?title={ HttpUtility.UrlEncode(title, Encoding.UTF8) }&body={ HttpUtility.UrlEncode(type+"\n"+errorMsg, Encoding.UTF8) }");
+            Process.Start($"https://github.com/qwqcode/SubRenamer/issues/new?title={ HttpUtility.UrlEncode(title, Encoding.UTF8) }&body={ HttpUtility.UrlEncode(type + "\n" + errorMsg, Encoding.UTF8) }");
             MessageBox.Show(
                 $"{title} 程序即将退出，请发起 issue 来反馈，谢谢 {Environment.NewLine}{errorMsg}",
                 $"{Application.ProductName} {type}", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -128,6 +130,20 @@ namespace SubRenamer
         public static string GetVersionStr()
         {
             return "v" + Application.ProductVersion.ToString();
+        }
+
+        public static void OpenAuthorBlog()
+        {
+            Process.Start("https://qwqaq.com/?from=SubRenamer");
+        }
+
+        public static string GetAppName() => Assembly.GetExecutingAssembly().GetName().Name;
+
+        public static string GetNowDatetime() => DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+
+        public static void Log(params string[] textArr)
+        {
+            File.AppendAllText(Global.LOG_FILENAME, $"[{Program.GetNowDatetime()}]{string.Join("", textArr)}{Environment.NewLine}");
         }
     }
 }

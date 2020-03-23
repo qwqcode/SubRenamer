@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.WindowsAPICodePack.Dialogs;
+using static SubRenamer.Global;
 
 namespace SubRenamer
 {
@@ -63,7 +64,7 @@ namespace SubRenamer
 
         private void Video_SelectFileBtn_Click(object sender, EventArgs e)
         {
-            var filename = OpenFileSelectDialog(MainForm.VideoExts);
+            var filename = OpenFileSelectDialog(VideoExts);
             if (filename != null)
             {
                 Video_TextBox.Text = filename;
@@ -75,7 +76,7 @@ namespace SubRenamer
 
         private void Sub_SelectFileBtn_Click(object sender, EventArgs e)
         {
-            var filename = OpenFileSelectDialog(MainForm.SubExts);
+            var filename = OpenFileSelectDialog(SubExts);
             if (filename != null)
             {
                 Sub_TextBox.Text = filename;
@@ -156,6 +157,12 @@ namespace SubRenamer
 
         private void RemoveItemBtn_Click(object sender, EventArgs e)
         {
+            if (AppSettings.ListItemRemovePrompt)
+            {
+                var result = MessageBox.Show($"你要删除当前编辑的项目吗？", "删除编辑项", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.No) return;
+            }
+
             int pos = vsList.IndexOf(vsItem);
             if (pos < 0) return;
             vsList.Remove(vsItem);
