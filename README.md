@@ -8,9 +8,17 @@
 
 > Rename Subtitle Filenames Automatically to Match Videos Easily through the Sight Tool.
 
-> 目的：重命名番剧外挂的字幕文件名，使之与视频文件名相对应
+**目的？** 重命名番剧外挂的字幕文件名，使之与视频文件名相对应
+
+**为什么？** 若视频文件名与字幕文件名一一对应（文件名相同），任何视频播放器都可以自动载入字幕。
 
 [![](https://img.shields.io/github/release/qwqcode/SubRenamer.svg?style=flat-square)](https://github.com/qwqcode/SubRenamer/releases/latest) [![](https://img.shields.io/github/downloads/qwqcode/SubRenamer/total.svg?style=flat-square)](https://github.com/qwqcode/SubRenamer/releases) [![](https://img.shields.io/github/issues/qwqcode/SubRenamer.svg?style=flat-square)](https://github.com/qwqcode/SubRenamer/issues) [![](https://img.shields.io/badge/%24-donate-%23ff69b4.svg?style=flat-square)](https://github.com/qwqcode/donate-qwqaq)
+
+## 对比普通批量改名软件，有何异同？
+
+SubRenamer 专注于字幕文件改名，简单易用。
+
+对于大多数视频与字幕文件，您仅需将其拖入程序，即可自动精准地识别，一键改名，省去了普通改名软件较为繁杂的设置操作。
 
 ## 如何拥有 SubRenamer ?
 
@@ -26,14 +34,15 @@
 
 ## 特性
 
-- 体积小 (~1MB)
-- 比较简单的操作
-- 支持自动匹配
-- 支持手动匹配
-- 支持正则表达式匹配
-- 一键改名 (支持备份)
-- 可直接拖拽文件导入
-- 可导出为命令行命令
+- 体积小巧 (~1MB)
+- 操作简单
+- 拖拽文件导入
+- 一键改名【真】
+- 自动匹配（无需在意导入顺序）
+- 手动匹配（进一步精确匹配）
+- 正则表达式匹配（满足复杂更名需求）
+- 支持 备份原字幕
+- 支持 导出为命令行命令
 
 ## 原理解释
 
@@ -49,7 +58,9 @@
 
 ## 使用场景
 
-请听 ABCDE 的故事：
+<details>
+
+<summary>请听 ABCDE 的故事：</summary>
 
 > (缩减版) 小A下载了一部新更的生肉番，又从字幕网站下载到了一套字幕文件，生肉番的 视频文件名 常常和 字幕文件名 不一致，看番时需要手动选定字幕，下次打开又得重新选定。小A拥有了 **SubRenamer**，从此改名交给他来做，终于可以安安心心看番啦。
 
@@ -63,17 +74,19 @@
 
 > (稽智版) 小F选择重新下载内挂字幕的番剧 lol
 
-## 截图
-
-待续...
-
-## 有 BUG?
-
-可在 [issues 页](https://github.com/qwqcode/SubRenamer/issues) 进行反馈，或发 Email 到 qwqcode@qq.com 联系我，欢迎反馈~~
+</details>
 
 ## FAQ
 
 待续...
+
+## 特别鸣谢
+
+[【小众软件】SubRenamer – 字幕批量重命名，自动匹配视频文件与字幕文件[Windows]](https://www.appinn.com/subrenamer-for-windows)
+
+## 有 BUG?
+
+可在 [issues 页](https://github.com/qwqcode/SubRenamer/issues) 进行反馈，或发 Email 到 qwqcode@qq.com 联系我，欢迎反馈~~
 
 ## 捐助
 
