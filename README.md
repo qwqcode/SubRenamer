@@ -10,7 +10,7 @@
 
 **目的？** 重命名番剧外挂的字幕文件名，使之与视频文件名相对应
 
-**为什么？** 若视频文件名与字幕文件名一一对应（文件名相同），任何视频播放器都可以自动载入字幕。
+**为何？** 若视频文件名与字幕文件名一一对应（文件名相同），任何视频播放器都可以自动载入字幕。
 
 [![](https://img.shields.io/github/release/qwqcode/SubRenamer.svg?style=flat-square)](https://github.com/qwqcode/SubRenamer/releases/latest) [![](https://img.shields.io/github/downloads/qwqcode/SubRenamer/total.svg?style=flat-square)](https://github.com/qwqcode/SubRenamer/releases) [![](https://img.shields.io/github/issues/qwqcode/SubRenamer.svg?style=flat-square)](https://github.com/qwqcode/SubRenamer/issues) [![](https://img.shields.io/badge/%24-donate-%23ff69b4.svg?style=flat-square)](https://github.com/qwqcode/donate-qwqaq)
 
@@ -22,15 +22,22 @@ SubRenamer 专注于字幕文件改名，简单易用。
 
 ## 如何拥有 SubRenamer ?
 
-获取最新版程序，可到 [Releases 页](https://github.com/qwqcode/SubRenamer/releases/latest) 查看
+<details>
+  
+  <summary>点我查看</summary>
+  
+  
+获取最新版程序，可到 [Releases](https://github.com/qwqcode/SubRenamer/releases/latest) 页
 
 速度慢？请: https://www.lanzous.com/iak59ji (密码:huaji)
 
 > P.S. 程序依赖 NET >= 4.5 的运行环境，请先下载安装：https://dotnet.microsoft.com/download (若为 Win10 用户，请无视此操作)
 
+</details>
+
 ## 如何食用
 
-具体操作方法可见：[哔哩哔哩传送门](https://www.bilibili.com/video/BV1e7411y7rG)
+可见：[哔哩哔哩传送门](https://www.bilibili.com/video/BV1e7411y7rG)
 
 ## 特性
 
@@ -38,14 +45,18 @@ SubRenamer 专注于字幕文件改名，简单易用。
 - 操作简单
 - 拖拽文件导入
 - 一键改名【真】
-- 自动匹配（无需在意导入顺序）
-- 手动匹配（进一步精确匹配）
-- 正则表达式匹配（满足复杂更名需求）
+- 自动匹配（无需导入顺序）
+- 手动匹配（精确匹配）
+- 正则表达式匹配（复杂需求）
 - 支持 备份原字幕
 - 支持 导出为命令行命令
 
 ## 原理解释
 
+<details>
+  
+  <summary>为什么 SubRenamer 能准确识别您的文件：</summary>
+  
 ### 自动匹配模式
 
 “自动匹配”是指：通过对比 **两个**字幕或视频的**文件名** 之间的差异，**来确定**“集数”的**位置**，从而**较为准确**地将视频文件与字幕文件**关联**起来，达到“**一键改名**”的目的。
@@ -55,6 +66,8 @@ SubRenamer 专注于字幕文件改名，简单易用。
 ### 手动匹配模式
 
 例如，您遇到了这样的情况，一个视频有**多种**语言的**字幕文件**，而这些**字幕文件**又存在于**同一个**文件夹中，导致**无法**通过“自动匹配”模式**准确关联**视频和字幕，则可以使用手动匹配模式。
+
+</details>
 
 ## 使用场景
 
@@ -78,8 +91,14 @@ SubRenamer 专注于字幕文件改名，简单易用。
 
 ## FAQ
 
-待续...
+<details>
+  
+Q: 如果我的字幕有多种语言的版本，在同一个文件夹内，无法识别怎么办？
 
+A: 您可以使用手动匹配模式，或者手动选中其中一个语言并拖入程序中即可识别。
+
+</details>
+  
 ## 特别鸣谢
 
 [【小众软件】SubRenamer – 字幕批量重命名，自动匹配视频文件与字幕文件[Windows]](https://www.appinn.com/subrenamer-for-windows)
