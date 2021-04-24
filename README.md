@@ -29,7 +29,7 @@ SubRenamer 专注于字幕文件改名，简单易用。
   
 获取最新版程序，可到 [Releases](https://github.com/qwqcode/SubRenamer/releases/latest) 页
 
-速度慢？请: https://www.lanzous.com/iak59ji (密码:huaji)
+速度慢？请: https://wwi.lanzous.com/s/sub-renamer（密码:233）
 
 > P.S. 程序依赖 NET >= 4.5 的运行环境，请先下载安装：https://dotnet.microsoft.com/download (若为 Win10 用户，请无视此操作)
 
