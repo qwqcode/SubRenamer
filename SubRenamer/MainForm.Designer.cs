@@ -387,7 +387,7 @@
             this.Name = "MainForm";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "字幕文件批量改名 (SubRenamer) Beta";
+            this.Text = "字幕文件批量改名 (SubRenamer)";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.Resize += new System.EventHandler(this.MainForm_Resize);
             this.MainContPanel.ResumeLayout(false);

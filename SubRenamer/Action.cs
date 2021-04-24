@@ -267,6 +267,10 @@ namespace SubRenamer
                 if (str[i].ToString() == endStr) break;
                 result += str[i];
             }
+
+            result = result.TrimStart('0'); // 开头为零的情况：替换 0001 为 1
+            result = result.Trim(); // 去掉前后空格
+
             return result;
         }
 
@@ -330,6 +334,7 @@ namespace SubRenamer
                 if (o.Name == null || o.Name.Length <= beginPos) return false;
                 return Regex.IsMatch(o.Name.Substring(beginPos)[0].ToString(), @"^\d+$");
             }).ToList()[0].Name; // 获取开始即是数字的文件名
+            fileName = fileName.Substring(beginPos); // 从指定开始位置 (beginPos) 开始读取数字（忽略开始位置前的所有内容）
             var grp = Regex.Matches(fileName, @"(\d+)");
             if (grp.Count <= 0) return null;
             Match firstNum = grp[0];
