@@ -28,6 +28,12 @@ namespace SubRenamer
             set { WriteBoolVal(value); }
         }
 
+        public static bool RenameVideo
+        {
+            get { return GetBoolVal(defaultVal: false); }
+            set { WriteBoolVal(value); }
+        }
+
         #region Utils
         public static IniFile IniFile = new IniFile();
 

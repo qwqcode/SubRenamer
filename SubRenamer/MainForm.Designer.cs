@@ -67,7 +67,7 @@
             // StartBtn
             // 
             this.StartBtn.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.StartBtn.Location = new System.Drawing.Point(0, 724);
+            this.StartBtn.Location = new System.Drawing.Point(0, 752);
             this.StartBtn.Margin = new System.Windows.Forms.Padding(0);
             this.StartBtn.Name = "StartBtn";
             this.StartBtn.Size = new System.Drawing.Size(190, 74);
@@ -84,10 +84,10 @@
             this.CopyrightText.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.CopyrightText.Font = new System.Drawing.Font("微软雅黑", 8F);
             this.CopyrightText.ForeColor = System.Drawing.Color.DarkGray;
-            this.CopyrightText.Location = new System.Drawing.Point(7, 647);
+            this.CopyrightText.Location = new System.Drawing.Point(7, 670);
             this.CopyrightText.Margin = new System.Windows.Forms.Padding(7, 10, 7, 10);
             this.CopyrightText.Name = "CopyrightText";
-            this.CopyrightText.Size = new System.Drawing.Size(176, 25);
+            this.CopyrightText.Size = new System.Drawing.Size(176, 30);
             this.CopyrightText.TabIndex = 10;
             this.CopyrightText.Text = "(c) qwqaq.com";
             this.CopyrightText.Click += new System.EventHandler(this.CopyrightText_Click);
@@ -108,7 +108,7 @@
             this.FileListUi.Margin = new System.Windows.Forms.Padding(0, 0, 5, 0);
             this.FileListUi.Name = "FileListUi";
             this.FileListUi.ShowItemToolTips = true;
-            this.FileListUi.Size = new System.Drawing.Size(1259, 798);
+            this.FileListUi.Size = new System.Drawing.Size(1272, 826);
             this.FileListUi.TabIndex = 16;
             this.FileListUi.UseCompatibleStateImageBehavior = false;
             this.FileListUi.View = System.Windows.Forms.View.Details;
@@ -141,9 +141,9 @@
             // 
             this.PreviewCheckBox.AutoSize = true;
             this.PreviewCheckBox.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.PreviewCheckBox.Location = new System.Drawing.Point(3, 689);
+            this.PreviewCheckBox.Location = new System.Drawing.Point(3, 714);
             this.PreviewCheckBox.Name = "PreviewCheckBox";
-            this.PreviewCheckBox.Size = new System.Drawing.Size(184, 32);
+            this.PreviewCheckBox.Size = new System.Drawing.Size(184, 35);
             this.PreviewCheckBox.TabIndex = 17;
             this.PreviewCheckBox.Text = "改名预览";
             this.PreviewCheckBox.UseVisualStyleBackColor = true;
@@ -164,7 +164,7 @@
             this.MainContPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 8F));
             this.MainContPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.MainContPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.MainContPanel.Size = new System.Drawing.Size(1454, 806);
+            this.MainContPanel.Size = new System.Drawing.Size(1467, 834);
             this.MainContPanel.TabIndex = 18;
             // 
             // tableLayoutPanel2
@@ -183,7 +183,7 @@
             this.tableLayoutPanel2.Controls.Add(this.R_OpenFileBtn, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.R_SettingBtn, 0, 10);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(1264, 8);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(1277, 8);
             this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 15;
@@ -203,7 +203,7 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 42F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 73F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(190, 798);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(190, 826);
             this.tableLayoutPanel2.TabIndex = 18;
             // 
             // R_RuleBtn
@@ -304,14 +304,16 @@
             // 
             // MainContWrapPanel
             // 
+            this.MainContWrapPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.MainContWrapPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.MainContWrapPanel.Controls.Add(this.MainContPanel);
-            this.MainContWrapPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.MainContWrapPanel.Location = new System.Drawing.Point(0, 0);
+            this.MainContWrapPanel.Location = new System.Drawing.Point(-2, 0);
             this.MainContWrapPanel.Margin = new System.Windows.Forms.Padding(0);
             this.MainContWrapPanel.Name = "MainContWrapPanel";
             this.MainContWrapPanel.Padding = new System.Windows.Forms.Padding(10, 0, 10, 10);
-            this.MainContWrapPanel.Size = new System.Drawing.Size(1476, 818);
+            this.MainContWrapPanel.Size = new System.Drawing.Size(1489, 846);
             this.MainContWrapPanel.TabIndex = 20;
             // 
             // TopMenu
@@ -375,9 +377,9 @@
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 28F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 31F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1476, 818);
+            this.ClientSize = new System.Drawing.Size(1484, 844);
             this.Controls.Add(this.MainContWrapPanel);
             this.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));

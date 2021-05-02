@@ -41,10 +41,12 @@ namespace SubRenamer
             // 显示预览内容
             if (PreviewCheckBox.Checked)
             {
-                videoText = subText;
+                videoText = !AppSettings.RenameVideo ? subText : videoText;
 
-                if (vsItem.Sub != null && subRenameDict.ContainsKey(vsItem.Sub))
+                if (!AppSettings.RenameVideo && (vsItem.Sub != null && subRenameDict.ContainsKey(vsItem.Sub)))
                     subText = showFullName ? subRenameDict[vsItem.Sub] : Path.GetFileName(subRenameDict[vsItem.Sub]);
+                else if (AppSettings.RenameVideo && (vsItem.Video != null && subRenameDict.ContainsKey(vsItem.Video)))
+                    subText = showFullName ? subRenameDict[vsItem.Video] : Path.GetFileName(subRenameDict[vsItem.Video]);
                 else
                     subText = "(不修改)";
             }
@@ -65,6 +67,8 @@ namespace SubRenamer
 
         private void _RefreshFileListUi(bool removeNull = true)
         {
+            UpdateWinTitle();
+
             // 删除无效项
             if (removeNull) VsList.RemoveAll(o => o.IsEmpty);
             foreach (ListViewItem item in FileListUi.Items)
@@ -87,6 +91,19 @@ namespace SubRenamer
                 {
                     UpdateFileListUiItem(findItem);
                 }
+            }
+
+            // 预览修改模式
+            if (PreviewCheckBox.Checked)
+            {
+                var renameFileType = !AppSettings.RenameVideo ? "字幕" : "视频";
+                Video.Text = $"{renameFileType}文件名";
+                Subtitle.Text = "修改为";
+            }
+            else
+            {
+                Video.Text = "视频";
+                Subtitle.Text = "字幕";
             }
         }
 
@@ -422,7 +439,7 @@ namespace SubRenamer
 
         private void _RenameOnce(KeyValuePair<string, string> subRename)
         {
-            var vsFile = VsList.Find(o => o.Sub == subRename.Key);
+            var vsFile = VsList.Find(o => ((AppSettings.RenameVideo) ? o.Video : o.Sub) == subRename.Key);
             if (vsFile == null) throw new Exception("找不到修改项");
             if (vsFile.Status == VsStatus.Done) return; // 无需再改名了
             if (vsFile.Status != VsStatus.Ready && vsFile.Status != VsStatus.Fatal) throw new Exception("当然状态无法修改");
@@ -511,10 +528,21 @@ namespace SubRenamer
             foreach (var item in VsList)
             {
                 if (item.Video == null || item.Sub == null) continue;
-                string videoName = Path.GetFileNameWithoutExtension(item.VideoFileInfo.Name); // 去掉后缀的视频文件名
-                string subAfterFilename = videoName + item.SubFileInfo.Extension; // 修改的字幕文件名
-                dict[item.SubFileInfo.FullName] = Path.Combine(item.VideoFileInfo.DirectoryName, subAfterFilename);
+
+                if (!AppSettings.RenameVideo)
+                {
+                    string videoName = Path.GetFileNameWithoutExtension(item.VideoFileInfo.Name); // 去掉后缀的视频文件名
+                    string subAfterFilename = videoName + item.SubFileInfo.Extension; // 修改的字幕文件名
+                    dict[item.SubFileInfo.FullName] = Path.Combine(item.VideoFileInfo.DirectoryName, subAfterFilename);
+                }
+                else
+                { // 改视频文件名模式
+                    string subName = Path.GetFileNameWithoutExtension(item.SubFileInfo.Name);
+                    string videoAfterFilename = subName + item.VideoFileInfo.Extension; // 修改的字幕文件名
+                    dict[item.VideoFileInfo.FullName] = Path.Combine(item.VideoFileInfo.DirectoryName, videoAfterFilename);
+                }
             }
+
 
             return dict;
         }

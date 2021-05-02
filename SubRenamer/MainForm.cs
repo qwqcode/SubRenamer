@@ -23,7 +23,8 @@ namespace SubRenamer
         public MainForm()
         {
             InitializeComponent();
-            Text += $" {Program.GetVersionStr()}"; // 追加版本号
+
+            UpdateWinTitle();
             SettingForm = new SettingForm(this); // 设置窗体
 
             InitShorcut(); // 初始化快捷键
@@ -33,6 +34,19 @@ namespace SubRenamer
         private void MainForm_Load(object sender, EventArgs e)
         {
             SetWindowTheme(this.FileListUi.Handle, "Explorer", null);
+        }
+
+        private void UpdateWinTitle()
+        {
+            if (!AppSettings.RenameVideo)
+            {
+                Text = "字幕文件批量改名 (SubRenamer)";
+            }
+            else
+            {
+                Text = "视频文件批量改名 (VideoRenamer)";
+            }
+            Text += $" {Program.GetVersionStr()}"; // 追加版本号
         }
 
         #region 各种操作
@@ -220,16 +234,6 @@ namespace SubRenamer
         {
             if (!force && value == PreviewCheckBox.Checked) return;
 
-            if (value)
-            {
-                Video.Text = "字幕文件名";
-                Subtitle.Text = "修改为";
-            }
-            else
-            {
-                Video.Text = "视频";
-                Subtitle.Text = "字幕";
-            }
             PreviewCheckBox.Checked = value;
             RefreshFileListUi();
 

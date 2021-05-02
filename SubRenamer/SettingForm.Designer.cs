@@ -38,6 +38,8 @@
             this.ListShowFileFullName = new System.Windows.Forms.CheckBox();
             this.ListItemRemovePrompt = new System.Windows.Forms.CheckBox();
             this.BlogLabel = new System.Windows.Forms.LinkLabel();
+            this.RenameVideo = new System.Windows.Forms.CheckBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // VersionText
@@ -45,18 +47,18 @@
             this.VersionText.AutoSize = true;
             this.VersionText.Font = new System.Drawing.Font("微软雅黑", 8F);
             this.VersionText.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.VersionText.Location = new System.Drawing.Point(643, 221);
+            this.VersionText.Location = new System.Drawing.Point(643, 300);
             this.VersionText.Name = "VersionText";
-            this.VersionText.Size = new System.Drawing.Size(81, 25);
+            this.VersionText.Size = new System.Drawing.Size(92, 30);
             this.VersionText.TabIndex = 16;
             this.VersionText.Text = "v0.0.0.0";
             // 
             // UpdateLinkLabel
             // 
             this.UpdateLinkLabel.AutoSize = true;
-            this.UpdateLinkLabel.Location = new System.Drawing.Point(583, 220);
+            this.UpdateLinkLabel.Location = new System.Drawing.Point(583, 299);
             this.UpdateLinkLabel.Name = "UpdateLinkLabel";
-            this.UpdateLinkLabel.Size = new System.Drawing.Size(54, 28);
+            this.UpdateLinkLabel.Size = new System.Drawing.Size(62, 31);
             this.UpdateLinkLabel.TabIndex = 24;
             this.UpdateLinkLabel.TabStop = true;
             this.UpdateLinkLabel.Text = "更新";
@@ -66,9 +68,9 @@
             // GithubLinkLabel
             // 
             this.GithubLinkLabel.AutoSize = true;
-            this.GithubLinkLabel.Location = new System.Drawing.Point(200, 220);
+            this.GithubLinkLabel.Location = new System.Drawing.Point(200, 299);
             this.GithubLinkLabel.Name = "GithubLinkLabel";
-            this.GithubLinkLabel.Size = new System.Drawing.Size(96, 28);
+            this.GithubLinkLabel.Size = new System.Drawing.Size(110, 31);
             this.GithubLinkLabel.TabIndex = 23;
             this.GithubLinkLabel.TabStop = true;
             this.GithubLinkLabel.Text = "开源仓库";
@@ -78,9 +80,9 @@
             // AuthorLinkLabel
             // 
             this.AuthorLinkLabel.AutoSize = true;
-            this.AuthorLinkLabel.Location = new System.Drawing.Point(77, 220);
+            this.AuthorLinkLabel.Location = new System.Drawing.Point(77, 299);
             this.AuthorLinkLabel.Name = "AuthorLinkLabel";
-            this.AuthorLinkLabel.Size = new System.Drawing.Size(54, 28);
+            this.AuthorLinkLabel.Size = new System.Drawing.Size(62, 31);
             this.AuthorLinkLabel.TabIndex = 22;
             this.AuthorLinkLabel.TabStop = true;
             this.AuthorLinkLabel.Text = "作者";
@@ -90,9 +92,9 @@
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(17, 220);
+            this.linkLabel1.Location = new System.Drawing.Point(17, 299);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(54, 28);
+            this.linkLabel1.Size = new System.Drawing.Size(62, 31);
             this.linkLabel1.TabIndex = 21;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "反馈";
@@ -106,7 +108,7 @@
             this.label1.ForeColor = System.Drawing.SystemColors.ControlDark;
             this.label1.Location = new System.Drawing.Point(47, 52);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(430, 25);
+            this.label1.Size = new System.Drawing.Size(471, 28);
             this.label1.TabIndex = 15;
             this.label1.Text = "改名前备份到相同目录下的 SubBackup 文件夹中";
             // 
@@ -116,7 +118,7 @@
             this.RawSubtitleBuckup.Font = new System.Drawing.Font("微软雅黑", 8F);
             this.RawSubtitleBuckup.Location = new System.Drawing.Point(22, 20);
             this.RawSubtitleBuckup.Name = "RawSubtitleBuckup";
-            this.RawSubtitleBuckup.Size = new System.Drawing.Size(190, 29);
+            this.RawSubtitleBuckup.Size = new System.Drawing.Size(221, 34);
             this.RawSubtitleBuckup.TabIndex = 2;
             this.RawSubtitleBuckup.Text = "备份原始字幕文件";
             this.RawSubtitleBuckup.UseVisualStyleBackColor = true;
@@ -127,7 +129,7 @@
             this.ListShowFileFullName.Font = new System.Drawing.Font("微软雅黑", 8F);
             this.ListShowFileFullName.Location = new System.Drawing.Point(22, 130);
             this.ListShowFileFullName.Name = "ListShowFileFullName";
-            this.ListShowFileFullName.Size = new System.Drawing.Size(190, 29);
+            this.ListShowFileFullName.Size = new System.Drawing.Size(221, 34);
             this.ListShowFileFullName.TabIndex = 4;
             this.ListShowFileFullName.Text = "显示文件完整路径";
             this.ListShowFileFullName.UseVisualStyleBackColor = true;
@@ -139,7 +141,7 @@
             this.ListItemRemovePrompt.Font = new System.Drawing.Font("微软雅黑", 8F);
             this.ListItemRemovePrompt.Location = new System.Drawing.Point(22, 95);
             this.ListItemRemovePrompt.Name = "ListItemRemovePrompt";
-            this.ListItemRemovePrompt.Size = new System.Drawing.Size(190, 29);
+            this.ListItemRemovePrompt.Size = new System.Drawing.Size(221, 34);
             this.ListItemRemovePrompt.TabIndex = 3;
             this.ListItemRemovePrompt.Text = "显示各种删除提示";
             this.ListItemRemovePrompt.UseVisualStyleBackColor = true;
@@ -147,21 +149,46 @@
             // BlogLabel
             // 
             this.BlogLabel.AutoSize = true;
-            this.BlogLabel.Location = new System.Drawing.Point(137, 220);
+            this.BlogLabel.Location = new System.Drawing.Point(137, 299);
             this.BlogLabel.Name = "BlogLabel";
-            this.BlogLabel.Size = new System.Drawing.Size(57, 28);
+            this.BlogLabel.Size = new System.Drawing.Size(65, 31);
             this.BlogLabel.TabIndex = 25;
             this.BlogLabel.TabStop = true;
             this.BlogLabel.Text = "Blog";
             this.BlogLabel.VisitedLinkColor = System.Drawing.Color.Blue;
             this.BlogLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.BlogLabel_LinkClicked);
             // 
+            // RenameVideo
+            // 
+            this.RenameVideo.AutoSize = true;
+            this.RenameVideo.Font = new System.Drawing.Font("微软雅黑", 8F);
+            this.RenameVideo.Location = new System.Drawing.Point(22, 203);
+            this.RenameVideo.Name = "RenameVideo";
+            this.RenameVideo.Size = new System.Drawing.Size(331, 34);
+            this.RenameVideo.TabIndex = 26;
+            this.RenameVideo.Text = "修改视频文件名（根据字幕）";
+            this.RenameVideo.UseVisualStyleBackColor = true;
+            this.RenameVideo.CheckedChanged += new System.EventHandler(this.RenameVideo_CheckedChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("微软雅黑", 7.714286F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label2.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.label2.Location = new System.Drawing.Point(47, 230);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(537, 28);
+            this.label2.TabIndex = 27;
+            this.label2.Text = "通常是修改字幕文件名，勾选根据字幕来修改视频文件名";
+            // 
             // SettingForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 28F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 31F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(737, 267);
+            this.ClientSize = new System.Drawing.Size(737, 346);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.RenameVideo);
             this.Controls.Add(this.BlogLabel);
             this.Controls.Add(this.RawSubtitleBuckup);
             this.Controls.Add(this.ListItemRemovePrompt);
@@ -199,5 +226,7 @@
         private System.Windows.Forms.CheckBox ListShowFileFullName;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.LinkLabel BlogLabel;
+        private System.Windows.Forms.CheckBox RenameVideo;
+        private System.Windows.Forms.Label label2;
     }
 }

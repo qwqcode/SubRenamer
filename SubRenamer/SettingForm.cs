@@ -27,6 +27,7 @@ namespace SubRenamer
             RawSubtitleBuckup.Checked = AppSettings.RawSubtitleBuckup;
             ListItemRemovePrompt.Checked = AppSettings.ListItemRemovePrompt;
             ListShowFileFullName.Checked = AppSettings.ListShowFileFullName;
+            RenameVideo.Checked = AppSettings.RenameVideo;
 
             foreach (Control c in Controls)//遍历groupBox1内的所有控件
             {
@@ -59,5 +60,10 @@ namespace SubRenamer
         }
 
         private void BlogLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) => Program.OpenAuthorBlog();
+
+        private void RenameVideo_CheckedChanged(object sender, EventArgs e)
+        {
+            _mainForm.RefreshFileListUi();
+        }
     }
 }

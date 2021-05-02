@@ -39,7 +39,6 @@ namespace SubRenamer
             Application.ApplicationExit += Application_ApplicationExit;
 
             Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());
         }
 
