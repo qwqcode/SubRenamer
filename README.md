@@ -119,3 +119,7 @@ A: 您可以使用手动匹配模式，或者手动选中其中一个语言并�
 捐助者的名字将保存于 [捐助者名单](https://github.com/qwqcode/donate-qwqaq)
 
 最后，我再次对您致以最最最诚挚的感谢！
+
+## Stargazers over time
+
+[![Stargazers over time](https://starchart.cc/qwqcode/SubRenamer.svg)](https://starchart.cc/qwqcode/SubRenamer)
