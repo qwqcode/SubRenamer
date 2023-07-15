@@ -84,10 +84,10 @@
             this.CopyrightText.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.CopyrightText.Font = new System.Drawing.Font("微软雅黑", 8F);
             this.CopyrightText.ForeColor = System.Drawing.Color.DarkGray;
-            this.CopyrightText.Location = new System.Drawing.Point(7, 670);
+            this.CopyrightText.Location = new System.Drawing.Point(7, 684);
             this.CopyrightText.Margin = new System.Windows.Forms.Padding(7, 10, 7, 10);
             this.CopyrightText.Name = "CopyrightText";
-            this.CopyrightText.Size = new System.Drawing.Size(176, 30);
+            this.CopyrightText.Size = new System.Drawing.Size(176, 16);
             this.CopyrightText.TabIndex = 10;
             this.CopyrightText.Text = "(c) qwqaq.com";
             this.CopyrightText.Click += new System.EventHandler(this.CopyrightText_Click);
@@ -141,9 +141,9 @@
             // 
             this.PreviewCheckBox.AutoSize = true;
             this.PreviewCheckBox.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.PreviewCheckBox.Location = new System.Drawing.Point(3, 714);
+            this.PreviewCheckBox.Location = new System.Drawing.Point(3, 728);
             this.PreviewCheckBox.Name = "PreviewCheckBox";
-            this.PreviewCheckBox.Size = new System.Drawing.Size(184, 35);
+            this.PreviewCheckBox.Size = new System.Drawing.Size(184, 21);
             this.PreviewCheckBox.TabIndex = 17;
             this.PreviewCheckBox.Text = "改名预览";
             this.PreviewCheckBox.UseVisualStyleBackColor = true;
@@ -377,7 +377,7 @@
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 31F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1484, 844);
             this.Controls.Add(this.MainContWrapPanel);
