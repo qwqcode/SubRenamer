@@ -119,6 +119,7 @@
     <Compile Include="MatchModeEditor\RegexEditor.Designer.cs">
       <DependentUpon>RegexEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Settings.cs" />
     <Compile Include="VsItem.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>

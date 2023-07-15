@@ -1,7 +1,7 @@
-﻿using MS.WindowsAPICodePack.Internal;
-using SubRenamer.Lib;
+﻿using SubRenamer.Lib;
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace SubRenamer
@@ -62,11 +62,12 @@ namespace SubRenamer
             _mainForm.RefreshFileListUi();
         }
 
-        public void LoadDefaultExtensions()
+        public void LoadExtensions()
         {
+            foreach (var i in AppSettings.GetExtensionList(AppSettings.GetStringVal(null, "VedioExtension"))) if (i != null && i != "") Global.VideoExts.Add(i);
+            foreach (var i in AppSettings.GetExtensionList(AppSettings.GetStringVal(null, "SubExtension"))) if (i != null && i != "") Global.SubExts.Add(i);
             foreach (var i in Global.VideoExts) listBoxVideoExtension.Items.Add(i);
             foreach (var i in Global.SubExts) listBoxSubExtension.Items.Add(i);
-
         }
 
         private void AddVideoExtension(object sender, EventArgs e)
@@ -81,7 +82,11 @@ namespace SubRenamer
                 return;
             }
             Global.VideoExts.Add(input);
-            listBoxVideoExtension.Items.Add(input);
+            if (!listBoxVideoExtension.Items.Contains(input))
+            {
+                listBoxVideoExtension.Items.Add(input);
+            }
+            AppSettings.IniFile.Write("VedioExtension", string.Join("|", Global.VideoExts.ToArray()));
         }
 
         private void DeleteVideoExtension(object sender, EventArgs e)
@@ -92,6 +97,7 @@ namespace SubRenamer
                 listBoxVideoExtension.Items.RemoveAt(listBoxVideoExtension.SelectedIndex);
                 if (listBoxVideoExtension.Items.Count > 0)
                     listBoxVideoExtension.SelectedIndex = 0;
+                AppSettings.IniFile.Write("VedioExtension", string.Join("|", Global.VideoExts.ToArray()));
             }
         }
 
@@ -107,7 +113,11 @@ namespace SubRenamer
                 return;
             }
             Global.SubExts.Add(input);
-            listBoxSubExtension.Items.Add(input);
+            if (!listBoxSubExtension.Items.Contains(input))
+            {
+                listBoxSubExtension.Items.Add(input);
+            }
+            AppSettings.IniFile.Write("SubExtension", string.Join("|", Global.SubExts.ToArray()));
         }
 
         private void DeleteSubExtension(object sender, EventArgs e)
@@ -118,6 +128,7 @@ namespace SubRenamer
                 listBoxSubExtension.Items.RemoveAt(listBoxSubExtension.SelectedIndex);
                 if (listBoxSubExtension.Items.Count > 0)
                     listBoxSubExtension.SelectedIndex = 0;
+                AppSettings.IniFile.Write("SubExtension", string.Join("|", Global.SubExts.ToArray()));
             }
         }
     }
