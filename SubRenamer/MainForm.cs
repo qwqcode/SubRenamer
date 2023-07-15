@@ -26,10 +26,15 @@ namespace SubRenamer
 
             UpdateWinTitle();
             SettingForm = new SettingForm(this); // 设置窗体
-
+            InitFileExtensionSetting();
             InitShorcut(); // 初始化快捷键
         }
-        
+
+        private void InitFileExtensionSetting()
+        {
+            SettingForm.LoadDefaultExtensions();
+        }
+
         // 窗口加载完后
         private void MainForm_Load(object sender, EventArgs e)
         {
@@ -58,7 +63,11 @@ namespace SubRenamer
                 Multiselect = true,
             })
             {
-                fbd.Filters.Add(new CommonFileDialogFilter("视频或字幕文件", string.Join(";", VideoExts.Concat(SubExts).ToList())));
+                fbd.Filters.Add(new CommonFileDialogFilter
+                {
+                    DisplayName = "视频或字幕文件",
+                    ShowExtensions = false
+                });
                 var result = fbd.ShowDialog();
 
                 if (result == CommonFileDialogResult.Ok && fbd.FileNames.Count() > 0)
@@ -418,5 +427,7 @@ namespace SubRenamer
             string args = $"/select, \"{filePath}\"";
             Process.Start("explorer.exe", args);
         }
+
+
     }
 }

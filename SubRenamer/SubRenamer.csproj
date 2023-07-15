@@ -97,6 +97,7 @@
     </Compile>
     <Compile Include="AppSettings.cs" />
     <Compile Include="Global.cs" />
+    <Compile Include="Lib\InputBox.cs" />
     <Compile Include="Lib\IniFile.cs" />
     <Compile Include="Lib\Ui.cs" />
     <Compile Include="Lib\Utils.cs" />
