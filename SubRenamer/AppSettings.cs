@@ -37,17 +37,29 @@ namespace SubRenamer
         #region Utils
         public static IniFile IniFile = new IniFile();
 
-        private static bool GetBoolVal(bool defaultVal = false, [CallerMemberName]string key = null)
+        private static bool GetBoolVal(bool defaultVal = false, [CallerMemberName] string key = null)
         {
             if (string.IsNullOrWhiteSpace(key)) return defaultVal;
             string defaultValStr = defaultVal ? "1" : "0";
             return IniFile.Read(key, defaultValStr).Equals("1");
         }
 
-        private static void WriteBoolVal(bool val, [CallerMemberName]string key = null)
+        private static void WriteBoolVal(bool val, [CallerMemberName] string key = null)
         {
             if (string.IsNullOrWhiteSpace(key)) return;
             IniFile.Write(key, val ? "1" : "0");
+        }
+
+        public static List<string> GetExtensionList(string listString)
+        {
+            List<string> list = listString.Split('|').ToList();
+            return list;
+        }
+
+        public static string GetStringVal(string defaultVal = null, [CallerMemberName] string key = null)
+        {
+            if (string.IsNullOrWhiteSpace(key)) return defaultVal;
+            return IniFile.Read(key, defaultVal);
         }
         #endregion
     }

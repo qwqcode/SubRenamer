@@ -86,7 +86,7 @@ namespace SubRenamer
             Sub_TextBox.SelectionStart = Sub_TextBox.Text.Length;
         }
 
-        private string OpenFileSelectDialog(List<string> exts)
+        private string OpenFileSelectDialog(HashSet<string> exts)
         {
             using (var fbd = new CommonOpenFileDialog()
             {

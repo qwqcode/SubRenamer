@@ -1,17 +1,10 @@
-﻿using Microsoft.WindowsAPICodePack.Dialogs;
-using System;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static SubRenamer.Global;
@@ -107,7 +100,7 @@ namespace SubRenamer
             }
         }
 
-        private void UpdateFileListUiItem (ListViewItem item)
+        private void UpdateFileListUiItem(ListViewItem item)
         {
             if (item.Tag == null) return;
             var itemValues = GetItemValues((VsItem)item.Tag);
@@ -147,7 +140,7 @@ namespace SubRenamer
         // 自动匹配配置
         private int M_Auto_Begin = int.MinValue;
         private string M_Auto_End = null;
-        
+
         // 手动匹配配置
         public string M_Manu_V_Begin = null;
         public string M_Manu_V_End = null;
@@ -170,14 +163,14 @@ namespace SubRenamer
                 string matchKey = GetMatchKeyByFileName(file.Name, FileType, FileList);
 
                 var findVsItem = (matchKey != null) ? VsList.Find(o => o.MatchKey == matchKey) : null; // By matchKey
-                
+
                 if (findVsItem == null)
                     findVsItem = VsList.Find(o =>
                     {
                         if (FileType == AppFileType.Video) return o.Video == file.FullName;
                         if (FileType == AppFileType.Sub) return o.Sub == file.FullName;
                         return false;
-                     }); // 通过文件名查找到的现成的 VsItem
+                    }); // 通过文件名查找到的现成的 VsItem
 
                 // 仅更新数据
                 if (findVsItem != null)
@@ -287,8 +280,23 @@ namespace SubRenamer
 
             result = result.TrimStart('0'); // 开头为零的情况：替换 0001 为 1
             result = result.Trim(); // 去掉前后空格
+            
+            string ans = "";
+            bool sflag = false;
+            foreach (var i in result)
+            {
 
-            return result;
+                if (i >= '0' && i <= '9')
+                {
+                    sflag = true;
+                    ans += i.ToString();
+                }
+                else if (sflag)
+                {
+                    break;
+                }
+            }
+            return ans;
         }
 
         // 遍历所有 list 中的项目，尝试得到集数开始位置
@@ -347,7 +355,8 @@ namespace SubRenamer
             if (list.Count() < 2) return null;
             if (beginPos <= -1) return null;
 
-            string fileName = list.Where(o => {
+            string fileName = list.Where(o =>
+            {
                 if (o.Name == null || o.Name.Length <= beginPos) return false;
                 return Regex.IsMatch(o.Name.Substring(beginPos)[0].ToString(), @"^\d+$");
             }).ToList()[0].Name; // 获取开始即是数字的文件名
@@ -386,7 +395,8 @@ namespace SubRenamer
             Program.Log($"[=============== 开始执行改名操作  ===============]");
 
             string btnRawText = "";
-            Invoke((MethodInvoker)delegate {
+            Invoke((MethodInvoker)delegate
+            {
                 StartBtn.Enabled = false;
                 btnRawText = StartBtn.Text;
                 StartBtn.Text = "改名中...";
@@ -431,7 +441,8 @@ namespace SubRenamer
             if (errTotal > 0)
                 Process.Start(LOG_FILENAME);
 
-            Invoke((MethodInvoker)delegate {
+            Invoke((MethodInvoker)delegate
+            {
                 StartBtn.Text = btnRawText;
                 StartBtn.Enabled = true;
             });

@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections;
+﻿using Microsoft.WindowsAPICodePack.Dialogs;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using Microsoft.WindowsAPICodePack.Dialogs;
 using static SubRenamer.Global;
 
 namespace SubRenamer
@@ -26,10 +21,15 @@ namespace SubRenamer
 
             UpdateWinTitle();
             SettingForm = new SettingForm(this); // 设置窗体
-
+            InitFileExtensionSetting();
             InitShorcut(); // 初始化快捷键
         }
-        
+
+        private void InitFileExtensionSetting()
+        {
+            SettingForm.LoadExtensions();
+        }
+
         // 窗口加载完后
         private void MainForm_Load(object sender, EventArgs e)
         {
@@ -58,7 +58,11 @@ namespace SubRenamer
                 Multiselect = true,
             })
             {
-                fbd.Filters.Add(new CommonFileDialogFilter("视频或字幕文件", string.Join(";", VideoExts.Concat(SubExts).ToList())));
+                fbd.Filters.Add(new CommonFileDialogFilter
+                {
+                    DisplayName = "视频或字幕文件",
+                    ShowExtensions = false
+                });
                 var result = fbd.ShowDialog();
 
                 if (result == CommonFileDialogResult.Ok && fbd.FileNames.Count() > 0)
@@ -418,5 +422,7 @@ namespace SubRenamer
             string args = $"/select, \"{filePath}\"";
             Process.Start("explorer.exe", args);
         }
+
+
     }
 }

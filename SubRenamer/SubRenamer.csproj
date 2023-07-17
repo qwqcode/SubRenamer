@@ -9,7 +9,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>SubRenamer</RootNamespace>
     <AssemblyName>SubRenamer</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
@@ -97,6 +97,7 @@
     </Compile>
     <Compile Include="AppSettings.cs" />
     <Compile Include="Global.cs" />
+    <Compile Include="Lib\InputBox.cs" />
     <Compile Include="Lib\IniFile.cs" />
     <Compile Include="Lib\Ui.cs" />
     <Compile Include="Lib\Utils.cs" />
@@ -118,6 +119,7 @@
     <Compile Include="MatchModeEditor\RegexEditor.Designer.cs">
       <DependentUpon>RegexEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Settings.cs" />
     <Compile Include="VsItem.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>

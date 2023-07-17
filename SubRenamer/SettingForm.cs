@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+﻿using SubRenamer.Lib;
+using System;
 using System.Diagnostics;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace SubRenamer
@@ -64,6 +60,76 @@ namespace SubRenamer
         private void RenameVideo_CheckedChanged(object sender, EventArgs e)
         {
             _mainForm.RefreshFileListUi();
+        }
+
+        public void LoadExtensions()
+        {
+            foreach (var i in AppSettings.GetExtensionList(AppSettings.GetStringVal(null, "VedioExtension"))) if (i != null && i != "") Global.VideoExts.Add(i);
+            foreach (var i in AppSettings.GetExtensionList(AppSettings.GetStringVal(null, "SubExtension"))) if (i != null && i != "") Global.SubExts.Add(i);
+            foreach (var i in Global.VideoExts) listBoxVideoExtension.Items.Add(i);
+            foreach (var i in Global.SubExts) listBoxSubExtension.Items.Add(i);
+        }
+
+        private void AddVideoExtension(object sender, EventArgs e)
+        {
+            string input = "";
+            var result = InputBox.Input("输入视频扩展名（以.开头）", "", ref input);
+            if (result.Equals(DialogResult.Cancel)) return;
+            input = input.Trim();
+            if (!input.StartsWith("."))
+            {
+                MessageBox.Show("请以.开头！");
+                return;
+            }
+            Global.VideoExts.Add(input);
+            if (!listBoxVideoExtension.Items.Contains(input))
+            {
+                listBoxVideoExtension.Items.Add(input);
+            }
+            AppSettings.IniFile.Write("VedioExtension", string.Join("|", Global.VideoExts.ToArray()));
+        }
+
+        private void DeleteVideoExtension(object sender, EventArgs e)
+        {
+            if (listBoxVideoExtension.Items.Count > 0)
+            {
+                Global.VideoExts.Remove(listBoxVideoExtension.SelectedItem.ToString());
+                listBoxVideoExtension.Items.RemoveAt(listBoxVideoExtension.SelectedIndex);
+                if (listBoxVideoExtension.Items.Count > 0)
+                    listBoxVideoExtension.SelectedIndex = 0;
+                AppSettings.IniFile.Write("VedioExtension", string.Join("|", Global.VideoExts.ToArray()));
+            }
+        }
+
+        private void AddSubExtension(object sender, EventArgs e)
+        {
+            string input = "";
+            var result = InputBox.Input("输入字幕扩展名（以.开头）", "", ref input);
+            if (result.Equals(DialogResult.Cancel)) return;
+            input = input.Trim();
+            if (!input.StartsWith("."))
+            {
+                MessageBox.Show("请以.开头！");
+                return;
+            }
+            Global.SubExts.Add(input);
+            if (!listBoxSubExtension.Items.Contains(input))
+            {
+                listBoxSubExtension.Items.Add(input);
+            }
+            AppSettings.IniFile.Write("SubExtension", string.Join("|", Global.SubExts.ToArray()));
+        }
+
+        private void DeleteSubExtension(object sender, EventArgs e)
+        {
+            if (listBoxSubExtension.Items.Count > 0)
+            {
+                Global.SubExts.Remove(listBoxSubExtension.SelectedItem.ToString());
+                listBoxSubExtension.Items.RemoveAt(listBoxSubExtension.SelectedIndex);
+                if (listBoxSubExtension.Items.Count > 0)
+                    listBoxSubExtension.SelectedIndex = 0;
+                AppSettings.IniFile.Write("SubExtension", string.Join("|", Global.SubExts.ToArray()));
+            }
         }
     }
 }
