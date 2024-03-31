@@ -1,10 +1,11 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Avalonia.Platform.Storage;
 
-namespace SubRenamer.Services;
+namespace SubRenamer.Model;
 
 public interface IFilesService
 {
-    public Task<IStorageFile?> OpenFileAsync();
+    public Task<IReadOnlyList<IStorageFile>> OpenFilesAsync();
     public Task<IStorageFile?> SaveFileAsync();
 }

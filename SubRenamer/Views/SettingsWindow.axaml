@@ -1,0 +1,62 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:SubRenamer.ViewModels"
+        xmlns:controls="clr-namespace:SubRenamer.Controls"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterOwner"
+        Width="500"
+        SizeToContent="Height"
+        x:Class="SubRenamer.Views.SettingsWindow"
+        x:DataType="vm:SettingsWindowViewModel"
+        Title="设置">
+        
+        <Design.DataContext>
+                <vm:SettingsWindowViewModel/>
+        </Design.DataContext>
+        
+        <Window.Styles>
+                <Style Selector="Button.hyperlink">
+                        <Setter Property="Template">
+                                <ControlTemplate>
+                                        <TextBlock Text="{TemplateBinding Content}" Foreground="{StaticResource SystemAccentColor}" TextDecorations="Underline">
+                                                <TextBlock.Styles>
+                                                        <Style Selector="TextBlock:pointerover">
+                                                                <Setter Property="Foreground" Value="{StaticResource SystemAccentColorLight1}"/>
+                                                        </Style>
+                                                </TextBlock.Styles>
+                                        </TextBlock>
+                                </ControlTemplate>
+                        </Setter>
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="BorderThickness" Value="0"/>
+                </Style>     
+        </Window.Styles>
+        
+        <StackPanel Margin="20">
+                <CheckBox>备份原始文件</CheckBox>
+                <Label Foreground="Gray" Margin="20 0 20 10">（备份字幕文件到 SubBackup 文件夹中）</Label>
+                <CheckBox>确认删除对话框</CheckBox>
+                <CheckBox>显示文件完整路径</CheckBox>
+                <Border Height="10" />
+                <Grid HorizontalAlignment="Stretch" ColumnDefinitions="*,10,*">
+                        <StackPanel Grid.Column="0">
+                                <TextBlock Margin="0 5" >视频格式自定义</TextBlock>
+                                <TextBox Watermark="以逗号分隔"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="2">
+                                <TextBlock Margin="0 5" >字幕格式自定义</TextBlock>
+                                <TextBox Watermark="以逗号分隔"/>  
+                        </StackPanel>
+                </Grid>
+                
+                <Border Height="30" />
+                <StackPanel Orientation="Horizontal" Spacing="10">
+                        <Button Classes="hyperlink" Content="反馈" Command="{Binding OpenLinkCommand}" CommandParameter="https://github.com/qwqcode/SubRenamer/issues/new" />
+                        <Button Classes="hyperlink" Content="作者" Command="{Binding OpenLinkCommand}" CommandParameter="https://github.com/qwqcode" />
+                        <Button Classes="hyperlink" Content="源码" Command="{Binding OpenLinkCommand}" CommandParameter="https://github.com/qwqcode/SubRenamer" />
+                        <Button Classes="hyperlink" Content="更新" Command="{Binding OpenLinkCommand}" CommandParameter="https://github.com/qwqcode/SubRenamer/releases" />
+                </StackPanel>
+        </StackPanel>
+</Window>

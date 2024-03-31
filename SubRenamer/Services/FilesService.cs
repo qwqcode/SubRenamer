@@ -1,6 +1,8 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Platform.Storage;
+using SubRenamer.Model;
 
 namespace SubRenamer.Services;
 
@@ -13,15 +15,15 @@ public class FilesService : IFilesService
         _target = target;
     }
 
-    public async Task<IStorageFile?> OpenFileAsync()
+    public async Task<IReadOnlyList<IStorageFile>> OpenFilesAsync()
     {
         var files = await _target.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions()
         {
-            Title = "Open Text File",
-            AllowMultiple = false
+            Title = "选择并导入文件",
+            AllowMultiple = true
         });
 
-        return files.Count >= 1 ? files[0] : null;
+        return files;
     }
 
     public async Task<IStorageFile?> SaveFileAsync()

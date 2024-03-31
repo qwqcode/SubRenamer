@@ -3,7 +3,9 @@
         xmlns:vm="using:SubRenamer.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="400"
+        mc:Ignorable="d"
+        Width="1000"
+        SizeToContent="Height"
         WindowStartupLocation="CenterScreen"
         x:DataType="vm:MainWindowViewModel"
         x:Class="SubRenamer.Views.MainWindow"
@@ -48,8 +50,11 @@
                 OpenPaneLength="170">
             
                 <!-- 左侧列表 -->
-                <DataGrid Margin="0" ItemsSource="{Binding MatchList}" 
-                          IsReadOnly="True" 
+                <DataGrid Margin="0"
+                          ItemsSource="{Binding MatchList}"
+                          SelectedIndex="{Binding SelectedItemIdx}"
+                          SelectionMode="Single"
+                          IsReadOnly="True"
                           GridLinesVisibility="All"
                           BorderThickness="1"
                           BorderBrush="#D2D4D5">
@@ -65,19 +70,19 @@
             
                 <SplitView.Pane>
                     <!-- 右侧按钮 -->
-                    <StackPanel Spacing="5" Margin="10">
+                    <StackPanel VerticalAlignment="Stretch" Spacing="5" Margin="10">
                         <Button Classes="OpBtn" Content="导入文件" Command="{Binding OpenFileCommand}" />
                         <Button Classes="OpBtn" Content="导入文件夹" Command="{Binding OpenFileCommand}" />
-                        <Border Height="20" />
+                        <Border Height="10" />
                         <Button Classes="OpBtn" Content="编辑"  />
-                        <Button Classes="OpBtn" Content="删除"  />
-                        <Border Height="20" />
-                        <Button Classes="OpBtn" Content="重新匹配"  />
-                        <Button Classes="OpBtn" Content="清空列表"  />
-                        <Border Height="20" />
+                        <Button Classes="OpBtn" Content="删除" Command="{Binding DeleteItemCommand}" />
+                        <Border Height="10" />
+                        <Button Classes="OpBtn" Content="重新匹配" />
+                        <Button Classes="OpBtn" Content="清空列表" Command="{Binding ClearAllCommand}" />
+                        <Border Height="10" />
                         <Button Classes="OpBtn" Content="规则"  />
-                        <Button Classes="OpBtn" Content="设置"  />
-                        <Border Height="20" />
+                        <Button Classes="OpBtn" Content="设置" Command="{Binding OpenSettingsCommand}"  />
+                        <Border Height="10" />
                         <StackPanel HorizontalAlignment="Stretch">
                             <CheckBox Content="预览" IsChecked="False" />
                             <Button Classes="OpBtn" Content="一键改名" />
