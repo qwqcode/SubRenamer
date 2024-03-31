@@ -1,0 +1,67 @@
+name: .NET Core Desktop
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    # strategy:
+    #   matrix:
+    #     configuration: [Debug, Release]
+
+    runs-on: windows-latest
+
+    env:
+        EXE_FILE: "SubRenamer/bin/Release/net8.0/win-x64/publish/SubRenamer.exe"
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    # Add  MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
+    - name: Setup MSBuild.exe
+      uses: microsoft/setup-msbuild@v2
+
+    - name: Install .NET Core
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+
+    - name: Cache libs
+      uses: actions/cache@v2
+      id: cache-libs
+      with:
+        path: SubRenamer\native
+        key: ${{ runner.os }}-libs
+
+    - if: steps.cache-libs.outputs.cache-hit != 'true'
+      name: Download libs
+      run: |
+        mkdir SubRenamer\native
+        $BASE_URL = "https://github.com/qwqcode/qwqcode/releases/download/dotnet-lib/"
+        $FILES = "av_libglesv2.lib,libSkiaSharp.lib,libHarfBuzzSharp.lib"
+        $FILES.Split(",") | ForEach-Object {
+          Invoke-WebRequest -Uri "$BASE_URL$_" -OutFile "SubRenamer\native\$_"
+        }
+
+    - name: Build
+      run: dotnet publish -r win-x64 -c Release
+
+    - name: Run UPX
+      uses: crazy-max/ghaction-upx@v3
+      with:
+        version: latest
+        files: |
+          ${{ env.EXE_FILE }}
+        args: -fq
+    
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: SubRenamer win-x64
+        path: ${{ env.EXE_FILE }}
