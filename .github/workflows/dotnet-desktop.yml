@@ -1,21 +1,31 @@
-name: .NET Core Desktop
+name: Build
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    tags:
+      - '*'
+
+env:
+    DIST_DIR: /tmp/builds
 
 jobs:
   build:
-    # strategy:
-    #   matrix:
-    #     configuration: [Debug, Release]
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-14]
+        include:
+          - os: windows-latest
+            build: win-x64
+            file_name: win_amd64
+          - os: ubuntu-latest
+            build: linux-x64
+            file_name: linux_amd64
+          - os: macos-14
+            build: osx-arm64
+            file_name: macos_arm64
 
-    runs-on: windows-latest
-
-    env:
-        EXE_FILE: "SubRenamer/bin/Release/net8.0/win-x64/publish/SubRenamer.exe"
+    runs-on: ${{ matrix.os }}
 
     steps:
     - name: Checkout
@@ -24,7 +34,8 @@ jobs:
         fetch-depth: 0
 
     # Add  MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
-    - name: Setup MSBuild.exe
+    - if: matrix.build == 'win-x64'
+      name: Setup MSBuild.exe
       uses: microsoft/setup-msbuild@v2
 
     - name: Install .NET Core
@@ -32,14 +43,7 @@ jobs:
       with:
         dotnet-version: 8.0.x
 
-    - name: Cache libs
-      uses: actions/cache@v2
-      id: cache-libs
-      with:
-        path: SubRenamer\native
-        key: ${{ runner.os }}-libs
-
-    - if: steps.cache-libs.outputs.cache-hit != 'true'
+    - if: matrix.build == 'win-x64'
       name: Download libs
       run: |
         mkdir SubRenamer\native
@@ -49,19 +53,116 @@ jobs:
           Invoke-WebRequest -Uri "$BASE_URL$_" -OutFile "SubRenamer\native\$_"
         }
 
-    - name: Build
-      run: dotnet publish -r win-x64 -c Release
+    - name: Restore
+      run: dotnet restore -r ${{ matrix.build }}
 
-    - name: Run UPX
+    - if: matrix.build == 'osx-arm64'
+      name: Build (macOS)
+      run: |
+        # Build app bundle for macOS
+        dotnet msbuild -t:BundleApp -p:RuntimeIdentifier=osx-arm64 -p:Configuration=Release
+
+    - if: matrix.build == 'win-x64' || matrix.build == 'linux-x64'
+      name: Build (${{ matrix.build }})
+      run: dotnet publish -r ${{ matrix.build }} -c Release
+
+    - if: matrix.build == 'win-x64'
+      name: Run UPX (win-x64)
       uses: crazy-max/ghaction-upx@v3
       with:
         version: latest
         files: |
-          ${{ env.EXE_FILE }}
+          SubRenamer/bin/Release/net8.0/win-x64/publish/SubRenamer.exe
         args: -fq
-    
-    - name: Upload build artifacts
-      uses: actions/upload-artifact@v3
+
+    - if: matrix.build == 'linux-x64'
+      name: Run UPX (linux-x64)
+      uses: crazy-max/ghaction-upx@v3
       with:
-        name: SubRenamer win-x64
-        path: ${{ env.EXE_FILE }}
+        version: latest
+        files: |
+          SubRenamer/bin/Release/net8.0/linux-x64/publish/SubRenamer
+          SubRenamer/bin/Release/net8.0/linux-x64/publish/*.so
+        args: -fq
+
+    - if: matrix.build == 'win-x64'
+      name: Post build (win-x64)
+      run: |
+        $files = Get-ChildItem -Path SubRenamer/bin/Release/net8.0/win-x64/publish
+        $files | Where-Object { $_.Name -ne "SubRenamer.exe" } | Remove-Item -Force
+
+    - if: matrix.build == 'linux-x64'
+      name: Post build (linux-x64)
+      run: |
+        chmod u+x SubRenamer/bin/Release/net8.0/linux-x64/publish/SubRenamer
+
+    - if: matrix.build == 'osx-arm64'
+      name: Post build (osx-arm64)
+      run: |
+        BASE_DIR=SubRenamer/bin/Release/net8.0/osx-arm64/publish/
+        FILES=$(ls $BASE_DIR)
+        for FILE in $FILES; do
+          if [ $FILE != "SubRenamer.app" ]; then
+            rm -rf $BASE_DIR/$FILE
+          fi
+        done
+
+    - if: matrix.build == 'osx-arm64' || matrix.build == 'linux-x64'
+      name: Pack up publish folder (*nix)
+      run: |
+        NAME="SubRenamer_${{ matrix.file_name }}"
+        mkdir -p $DIST_DIR
+        cp -r SubRenamer/bin/Release/net8.0/${{ matrix.build }}/publish $DIST_DIR/$NAME
+        cd $DIST_DIR
+        zip -r -9 $NAME.zip $NAME
+        rm -rf $NAME
+
+    - if: matrix.build == 'win-x64'
+      name: Pack up publish folder (Windows)
+      run: |
+        $NAME = "SubRenamer_${{ matrix.file_name }}"
+        mkdir -p ${{ env.DIST_DIR }}
+        Move-Item -Path SubRenamer\bin\Release\net8.0\win-x64\publish -Destination ${{ env.DIST_DIR }}\$NAME
+        Compress-Archive -Path ${{ env.DIST_DIR }}\$NAME -DestinationPath ${{ env.DIST_DIR }}\$NAME.zip
+        Remove-Item -Path ${{ env.DIST_DIR }}\$NAME -Recurse
+
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-${{ matrix.file_name }}
+        path: ${{ env.DIST_DIR }}/*
+        if-no-files-found: error
+        retention-days: 1
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download builds
+        uses: actions/download-artifact@v4
+        with:
+          path: ${{ env.DIST_DIR }}
+          pattern: build-*
+          merge-multiple: true
+
+      # checksums.txt
+      - name: Calculate checksums.txt
+        run: |
+          cd $DIST_DIR
+          sha256sum * > checksums.txt
+
+          # print checksums.txt
+          cat checksums.txt
+
+          FILES=$(find ${DIST_DIR} -type f -exec readlink -f {} \;)
+          echo -e "RELEASE_FILES<<EOF" >> $GITHUB_ENV
+          echo -e "$FILES" >> $GITHUB_ENV
+          echo -e "EOF" >> $GITHUB_ENV
+ 
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+            prerelease: true
+            files: ${{ env.RELEASE_FILES }}
+            generate_release_notes: true
+            draft: false
