@@ -1,0 +1,6 @@
+﻿<linker>
+	<!-- App -->
+	<assembly fullname="SubRenamer" preserve="All" />
+	<!-- Avalonia Themes -->
+	<assembly fullname="Avalonia.Themes.Fluent" preserve="All" />
+</linker>

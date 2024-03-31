@@ -1,0 +1,93 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:SubRenamer.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="400"
+        WindowStartupLocation="CenterScreen"
+        x:Class="SubRenamer.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="SubRenamer">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+    <Window.Styles>
+        <Style Selector="Button.OpBtn">
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Height" Value="40"/>
+        </Style>
+    </Window.Styles>
+    
+    <!-- <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/> -->
+    <Grid>
+        <DockPanel>
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="文件">
+                    <MenuItem Header="导入文件..."/>
+                    <MenuItem Header="导入文件夹..."/>
+                    <Separator/>
+                    <MenuItem Header="重新匹配"/>
+                    <MenuItem Header="清空列表"/>
+                    <Separator/>
+                    <MenuItem Header="退出程序"/>
+                </MenuItem>
+                <MenuItem Header="规则">
+                </MenuItem>
+                <MenuItem Header="设置">
+                </MenuItem>
+            </Menu>
+        
+            <SplitView
+                DockPanel.Dock="Bottom"
+                IsPaneOpen="True"
+                DisplayMode="Inline"
+                PanePlacement="Right"
+                OpenPaneLength="150">
+            
+                <!-- 左侧列表 -->
+                <DataGrid Margin="0" ItemsSource="{Binding MatchList}" 
+                          IsReadOnly="True" 
+                          GridLinesVisibility="All"
+                          BorderThickness="1"
+                          BorderBrush="#D2D4D5">
+                    
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="匹配" Width="100" Binding="{Binding Key}"/>
+                        <DataGridTextColumn Header="视频" Width="*" Binding="{Binding Video}" />
+                        <DataGridTextColumn Header="字幕" Width="*" Binding="{Binding Subtitle}" />
+                        <DataGridTextColumn Header="状态" Width="100" Binding="{Binding Status}" />
+                    </DataGrid.Columns>
+                    
+                </DataGrid>
+            
+                <SplitView.Pane>
+                    <!-- 右侧按钮 -->
+                    <StackPanel Spacing="5" Margin="10">
+                        <Button Classes="OpBtn" Content="导入文件"  />
+                        <Button Classes="OpBtn" Content="导入文件夹"  />
+                        <Border Height="20" />
+                        <Button Classes="OpBtn" Content="编辑"  />
+                        <Button Classes="OpBtn" Content="删除"  />
+                        <Border Height="20" />
+                        <Button Classes="OpBtn" Content="重新匹配"  />
+                        <Button Classes="OpBtn" Content="清空列表"  />
+                        <Border Height="20" />
+                        <Button Classes="OpBtn" Content="规则"  />
+                        <Button Classes="OpBtn" Content="设置"  />
+                        <Border Height="20" />
+                        <StackPanel HorizontalAlignment="Stretch">
+                            <CheckBox Content="预览" IsChecked="False" />
+                            <Button Classes="OpBtn" Content="一键改名" />
+                        </StackPanel>
+                    </StackPanel>
+                </SplitView.Pane>
+            
+            </SplitView>
+        </DockPanel>
+        
+    </Grid>
+</Window>
