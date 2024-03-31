@@ -1,8 +1,16 @@
+using System.Collections.ObjectModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using ReactiveUI;
 
-namespace SubRenamer.ViewModels
+namespace SubRenamer.ViewModels;
+
+public partial class ViewModelBase : ObservableObject
 {
-    public class ViewModelBase : ReactiveObject
+    protected ViewModelBase()
     {
+        ErrorMessages = new ObservableCollection<string>();
     }
+    
+    [ObservableProperty] 
+    private ObservableCollection<string>? _errorMessages;
 }

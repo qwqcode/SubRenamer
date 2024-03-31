@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="400"
         WindowStartupLocation="CenterScreen"
+        x:DataType="vm:MainWindowViewModel"
         x:Class="SubRenamer.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="SubRenamer">
@@ -27,13 +28,11 @@
         <DockPanel>
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="文件">
-                    <MenuItem Header="导入文件..."/>
-                    <MenuItem Header="导入文件夹..."/>
+                    <MenuItem Header="导入文件..." InputGesture="Ctrl+O" Command="{Binding OpenFileCommand}" />
+                    <MenuItem Header="导入文件夹..." InputGesture="Ctrl+Shift+O" Command="{Binding OpenFileCommand}" />
                     <Separator/>
-                    <MenuItem Header="重新匹配"/>
-                    <MenuItem Header="清空列表"/>
-                    <Separator/>
-                    <MenuItem Header="退出程序"/>
+                    <MenuItem Header="重新匹配" InputGesture="Ctrl+R" />
+                    <MenuItem Header="清空列表" InputGesture="Ctrl+N"/>
                 </MenuItem>
                 <MenuItem Header="规则">
                 </MenuItem>
@@ -46,7 +45,7 @@
                 IsPaneOpen="True"
                 DisplayMode="Inline"
                 PanePlacement="Right"
-                OpenPaneLength="150">
+                OpenPaneLength="170">
             
                 <!-- 左侧列表 -->
                 <DataGrid Margin="0" ItemsSource="{Binding MatchList}" 
@@ -67,8 +66,8 @@
                 <SplitView.Pane>
                     <!-- 右侧按钮 -->
                     <StackPanel Spacing="5" Margin="10">
-                        <Button Classes="OpBtn" Content="导入文件"  />
-                        <Button Classes="OpBtn" Content="导入文件夹"  />
+                        <Button Classes="OpBtn" Content="导入文件" Command="{Binding OpenFileCommand}" />
+                        <Button Classes="OpBtn" Content="导入文件夹" Command="{Binding OpenFileCommand}" />
                         <Border Height="20" />
                         <Button Classes="OpBtn" Content="编辑"  />
                         <Button Classes="OpBtn" Content="删除"  />
