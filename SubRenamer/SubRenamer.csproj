@@ -17,11 +17,10 @@
     <PropertyGroup>
         <CFBundleName>SubRenamer</CFBundleName> 
         <CFBundleDisplayName>SubRenamer</CFBundleDisplayName>
-        <CFBundleShortVersionString>SubRenamer</CFBundleShortVersionString>
+        <CFBundleShortVersionString>0.0.0</CFBundleShortVersionString>
         <CFBundleIconFile>IconTest.icns</CFBundleIconFile>
         <NSPrincipalClass>NSApplication</NSPrincipalClass>
         <CFBundlePackageType>AAPL</CFBundlePackageType>
-        <CFBundleSignature>4242</CFBundleSignature>
         <NSRequiresAquaSystemAppearance>false</NSRequiresAquaSystemAppearance>
     </PropertyGroup>
 	

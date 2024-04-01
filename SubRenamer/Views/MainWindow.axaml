@@ -30,15 +30,15 @@
         <DockPanel>
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="文件">
-                    <MenuItem Header="导入文件..." InputGesture="Ctrl+O" Command="{Binding OpenFileCommand}" />
-                    <MenuItem Header="导入文件夹..." InputGesture="Ctrl+Shift+O" Command="{Binding OpenFileCommand}" />
+                    <MenuItem Header="导入文件..." HotKey="Ctrl+O" InputGesture="Ctrl+O" Command="{Binding OpenFileCommand}" />
+                    <MenuItem Header="导入文件夹..." HotKey="Ctrl+Shift+O" InputGesture="Ctrl+Shift+O" Command="{Binding OpenFileCommand}" />
                     <Separator/>
-                    <MenuItem Header="重新匹配" InputGesture="Ctrl+R" />
-                    <MenuItem Header="清空列表" InputGesture="Ctrl+N"/>
+                    <MenuItem Header="重新匹配" HotKey="Ctrl+R" InputGesture="Ctrl+R" />
+                    <MenuItem Header="清空列表" HotKey="Ctrl+N" InputGesture="Ctrl+N" />
                 </MenuItem>
-                <MenuItem Header="规则">
+                <MenuItem Header="规则" Command="{Binding OpenRulesCommand}">
                 </MenuItem>
-                <MenuItem Header="设置">
+                <MenuItem Header="设置" HotKey="Ctrl+," InputGesture="Ctrl+," Command="{Binding OpenSettingsCommand}">
                 </MenuItem>
             </Menu>
         
@@ -50,10 +50,11 @@
                 OpenPaneLength="170">
             
                 <!-- 左侧列表 -->
-                <DataGrid Margin="0"
+                <DataGrid Name="DataGrid"
+                          Margin="0"
                           ItemsSource="{Binding MatchList}"
-                          SelectedIndex="{Binding SelectedItemIdx}"
-                          SelectionMode="Single"
+                          SelectionChanged="DataGrid_OnSelectionChanged"
+                          SelectionMode="Extended"
                           IsReadOnly="True"
                           GridLinesVisibility="All"
                           BorderThickness="1"
@@ -80,7 +81,7 @@
                         <Button Classes="OpBtn" Content="重新匹配" />
                         <Button Classes="OpBtn" Content="清空列表" Command="{Binding ClearAllCommand}" />
                         <Border Height="10" />
-                        <Button Classes="OpBtn" Content="规则"  />
+                        <Button Classes="OpBtn" Content="规则" Command="{Binding OpenRulesCommand}" />
                         <Button Classes="OpBtn" Content="设置" Command="{Binding OpenSettingsCommand}"  />
                         <Border Height="10" />
                         <StackPanel HorizontalAlignment="Stretch">

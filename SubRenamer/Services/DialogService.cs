@@ -21,4 +21,11 @@ public class DialogService : IDialogService
         dialog.DataContext = new SettingsWindowViewModel();
         var result = await dialog.ShowDialog<SettingsWindowViewModel?>(_target);
     }
+    
+    public async Task OpenRules()
+    {
+        var dialog = new RulesWindow();
+        dialog.DataContext = new RulesWindowViewModel();
+        var result = await dialog.ShowDialog<RulesWindowViewModel?>(_target);
+    }
 }

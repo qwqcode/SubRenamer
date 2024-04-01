@@ -1,13 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reactive;
-using System.Threading.Tasks;
-using Avalonia;
+using System.Collections.ObjectModel;
 using Avalonia.Controls;
-using Avalonia.Interactivity;
 using Avalonia.ReactiveUI;
-using ReactiveUI;
+using Microsoft.VisualBasic;
+using SubRenamer.Model;
 using SubRenamer.ViewModels;
 
 namespace SubRenamer.Views
@@ -17,6 +13,19 @@ namespace SubRenamer.Views
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void DataGrid_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
+        {
+            var items = new Collection<MatchItem>();
+            
+            foreach (var el in DataGrid.SelectedItems)
+            {
+                if (el is MatchItem matchItem) items.Add(matchItem);
+            }
+            
+            if (DataContext is MainWindowViewModel store)
+                store.SelectedItems = items;
         }
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,7 +17,7 @@ namespace SubRenamer.ViewModels;
 public partial class MainWindowViewModel : ViewModelBase
 {
     [ObservableProperty] private ObservableCollection<MatchItem> _matchList;
-    [ObservableProperty] private int _selectedItemIdx = -1;
+    [ObservableProperty] private Collection<MatchItem> _selectedItems = [];
     
     public MainWindowViewModel()
     {
@@ -31,9 +32,7 @@ public partial class MainWindowViewModel : ViewModelBase
     [RelayCommand]
     private void DeleteItem()
     {
-        if (SelectedItemIdx >= MatchList.Count || SelectedItemIdx < 0) return;
-        
-        MatchList.Remove(MatchList[SelectedItemIdx]);
+        foreach (var item in SelectedItems) MatchList.Remove(item);
     }
 
     [RelayCommand]
@@ -48,6 +47,14 @@ public partial class MainWindowViewModel : ViewModelBase
         var dialogService = App.Current?.Services?.GetService<IDialogService>();
         if (dialogService is null) throw new NullReferenceException("Missing Dialog Service instance.");
         await dialogService.OpenSettings();
+    }
+    
+    [RelayCommand]
+    private async Task OpenRules()
+    {
+        var dialogService = App.Current?.Services?.GetService<IDialogService>();
+        if (dialogService is null) throw new NullReferenceException("Missing Dialog Service instance.");
+        await dialogService.OpenRules();
     }
 
     [RelayCommand]

@@ -1,4 +1,4 @@
-namespace SubRenamer.ViewModels;
+namespace SubRenamer.Model;
 
 public class MatchItem(string key, string video, string subtitle, string status)
 {
