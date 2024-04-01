@@ -58,6 +58,16 @@ public partial class MainWindowViewModel : ViewModelBase
     }
 
     [RelayCommand]
+    private async Task EditItem()
+    {
+        if (SelectedItems.Count == 0) return;
+        
+        var dialogService = App.Current?.Services?.GetService<IDialogService>();
+        if (dialogService is null) throw new NullReferenceException("Missing Dialog Service instance.");
+        await dialogService.OpenItemEdit(SelectedItems.First());
+    }
+
+    [RelayCommand]
     private async Task OpenFile(CancellationToken token)
     {
         ErrorMessages?.Clear();

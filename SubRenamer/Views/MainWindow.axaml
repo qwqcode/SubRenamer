@@ -34,7 +34,7 @@
                     <MenuItem Header="导入文件夹..." HotKey="Ctrl+Shift+O" InputGesture="Ctrl+Shift+O" Command="{Binding OpenFileCommand}" />
                     <Separator/>
                     <MenuItem Header="重新匹配" HotKey="Ctrl+R" InputGesture="Ctrl+R" />
-                    <MenuItem Header="清空列表" HotKey="Ctrl+N" InputGesture="Ctrl+N" />
+                    <MenuItem Header="清空列表" HotKey="Ctrl+N" InputGesture="Ctrl+N" Command="{Binding ClearAllCommand}" />
                 </MenuItem>
                 <MenuItem Header="规则" Command="{Binding OpenRulesCommand}">
                 </MenuItem>
@@ -69,7 +69,7 @@
                     
                     <DataGrid.ContextMenu>
                         <ContextMenu>
-                            <MenuItem Header="编辑" HotKey="F3" InputGesture="F3" />
+                            <MenuItem Header="编辑" HotKey="F3" InputGesture="F3" Command="{Binding EditItemCommand}" />
                             <Separator/>
                             <MenuItem Header="删除" HotKey="Delete" InputGesture="Delete" Command="{Binding DeleteItemCommand}" />
                             <MenuItem Header="丢弃视频" />
@@ -92,7 +92,7 @@
                         <Button Classes="OpBtn" Content="导入文件" Command="{Binding OpenFileCommand}" />
                         <Button Classes="OpBtn" Content="导入文件夹" Command="{Binding OpenFileCommand}" />
                         <Border Height="10" />
-                        <Button Classes="OpBtn" Content="编辑"  />
+                        <Button Classes="OpBtn" Content="编辑" Command="{Binding EditItemCommand}" />
                         <Button Classes="OpBtn" Content="删除" Command="{Binding DeleteItemCommand}" />
                         <Border Height="10" />
                         <Button Classes="OpBtn" Content="重新匹配" />

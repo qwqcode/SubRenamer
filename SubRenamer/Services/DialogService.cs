@@ -17,15 +17,28 @@ public class DialogService : IDialogService
 
     public async Task OpenSettings()
     {
-        var dialog = new SettingsWindow();
-        dialog.DataContext = new SettingsWindowViewModel();
+        var dialog = new SettingsWindow
+        {
+            DataContext = new SettingsWindowViewModel()
+        };
         var result = await dialog.ShowDialog<SettingsWindowViewModel?>(_target);
     }
     
     public async Task OpenRules()
     {
-        var dialog = new RulesWindow();
-        dialog.DataContext = new RulesWindowViewModel();
+        var dialog = new RulesWindow
+        {
+            DataContext = new RulesWindowViewModel()
+        };
         var result = await dialog.ShowDialog<RulesWindowViewModel?>(_target);
+    }
+
+    public async Task OpenItemEdit(MatchItem item)
+    {
+        var dialog = new ItemEditWindow
+        {
+            DataContext = new ItemEditWindowViewModel(item)
+        };
+        var result = await dialog.ShowDialog<ItemEditWindowViewModel?>(_target);
     }
 }
