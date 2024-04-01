@@ -1,6 +1,7 @@
 using System;
 using System.Collections.ObjectModel;
 using Avalonia.Controls;
+using Avalonia.Interactivity;
 using Avalonia.ReactiveUI;
 using Microsoft.VisualBasic;
 using SubRenamer.Model;
@@ -26,6 +27,11 @@ namespace SubRenamer.Views
             
             if (DataContext is MainWindowViewModel store)
                 store.SelectedItems = items;
+        }
+
+        private void SelectAllMenuItem_OnClick(object? sender, RoutedEventArgs e)
+        {
+            DataGrid.SelectAll();
         }
     }
 }

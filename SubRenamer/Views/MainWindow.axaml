@@ -67,6 +67,23 @@
                         <DataGridTextColumn Header="状态" Width="100" Binding="{Binding Status}" />
                     </DataGrid.Columns>
                     
+                    <DataGrid.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="编辑" HotKey="F3" InputGesture="F3" />
+                            <Separator/>
+                            <MenuItem Header="删除" HotKey="Delete" InputGesture="Delete" Command="{Binding DeleteItemCommand}" />
+                            <MenuItem Header="丢弃视频" />
+                            <MenuItem Header="丢弃字幕" />
+                            <Separator/>
+                            <MenuItem Header="全选" HotKey="Ctrl+A" InputGesture="Ctrl+A" Name="SelectAllMenuItem" Click="SelectAllMenuItem_OnClick" />
+                            <Separator/>
+                            <MenuItem Header="在文件夹中找到视频文件" />
+                            <MenuItem Header="在文件夹中找到字幕文件" />
+                            <Separator/>
+                            <MenuItem Header="复制改名命令至剪切板" HotKey="Ctrl+Shift+C" InputGesture="Ctrl+Shift+C" />
+                        </ContextMenu>
+                    </DataGrid.ContextMenu>
+                    
                 </DataGrid>
             
                 <SplitView.Pane>
