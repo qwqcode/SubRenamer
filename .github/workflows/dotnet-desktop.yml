@@ -56,75 +56,31 @@ jobs:
     - name: Restore
       run: dotnet restore -r ${{ matrix.build }}
 
+    - if: matrix.build != 'osx-arm64'
+      name: Install UPX
+      uses: crazy-max/ghaction-upx@v3
+      with:
+          install-only: true
+
+    - if: matrix.build == 'win-x64'
+      name: Build (win)
+      run: |
+        cd scripts
+        .\build-win.ps1
+        New-Item -ItemType Directory -Force -Path $env:DIST_DIR
+        Copy-Item -Path dist\*.zip -Destination $env:DIST_DIR
+
+    - if: matrix.build == 'linux-x64'
+      name: Build (linux)
+      run: |
+        cd scripts &&./build-linux.sh
+        mkdir -p $DIST_DIR && cp dist/*.tar.gz $DIST_DIR
+
     - if: matrix.build == 'osx-arm64'
       name: Build (macOS)
       run: |
-        # Build app bundle for macOS
-        dotnet msbuild -t:BundleApp -p:RuntimeIdentifier=osx-arm64 -p:Configuration=Release
-
-    - if: matrix.build == 'win-x64' || matrix.build == 'linux-x64'
-      name: Build (${{ matrix.build }})
-      run: dotnet publish -r ${{ matrix.build }} -c Release
-
-    - if: matrix.build == 'win-x64'
-      name: Run UPX (win-x64)
-      uses: crazy-max/ghaction-upx@v3
-      with:
-        version: latest
-        files: |
-          SubRenamer/bin/Release/net8.0/win-x64/publish/SubRenamer.exe
-        args: -fq
-
-    - if: matrix.build == 'linux-x64'
-      name: Run UPX (linux-x64)
-      uses: crazy-max/ghaction-upx@v3
-      with:
-        version: latest
-        files: |
-          SubRenamer/bin/Release/net8.0/linux-x64/publish/SubRenamer
-          SubRenamer/bin/Release/net8.0/linux-x64/publish/*.so
-        args: -fq
-
-    - if: matrix.build == 'win-x64'
-      name: Post build (win-x64)
-      run: |
-        $files = Get-ChildItem -Path SubRenamer/bin/Release/net8.0/win-x64/publish
-        $files | Where-Object { $_.Name -ne "SubRenamer.exe" } | Remove-Item -Force
-
-    - if: matrix.build == 'linux-x64'
-      name: Post build (linux-x64)
-      run: |
-        chmod u+x SubRenamer/bin/Release/net8.0/linux-x64/publish/SubRenamer
-
-    - if: matrix.build == 'osx-arm64'
-      name: Post build (osx-arm64)
-      run: |
-        BASE_DIR=SubRenamer/bin/Release/net8.0/osx-arm64/publish/
-        FILES=$(ls $BASE_DIR)
-        for FILE in $FILES; do
-          if [ $FILE != "SubRenamer.app" ]; then
-            rm -rf $BASE_DIR/$FILE
-          fi
-        done
-
-    - if: matrix.build == 'osx-arm64' || matrix.build == 'linux-x64'
-      name: Pack up publish folder (*nix)
-      run: |
-        NAME="SubRenamer_${{ matrix.file_name }}"
-        mkdir -p $DIST_DIR
-        cp -r SubRenamer/bin/Release/net8.0/${{ matrix.build }}/publish $DIST_DIR/$NAME
-        cd $DIST_DIR
-        zip -r -9 $NAME.zip $NAME
-        rm -rf $NAME
-
-    - if: matrix.build == 'win-x64'
-      name: Pack up publish folder (Windows)
-      run: |
-        $NAME = "SubRenamer_${{ matrix.file_name }}"
-        mkdir -p ${{ env.DIST_DIR }}
-        Move-Item -Path SubRenamer\bin\Release\net8.0\win-x64\publish -Destination ${{ env.DIST_DIR }}\$NAME
-        Compress-Archive -Path ${{ env.DIST_DIR }}\$NAME -DestinationPath ${{ env.DIST_DIR }}\$NAME.zip
-        Remove-Item -Path ${{ env.DIST_DIR }}\$NAME -Recurse
+        cd scripts && ./build-macos.sh
+        mkdir -p $DIST_DIR && cp dist/*.zip $DIST_DIR
 
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4

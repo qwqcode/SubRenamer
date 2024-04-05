@@ -364,3 +364,4 @@ FodyWeavers.xsd
 
 .idea
 SubRenamer/native
+scripts/dist
