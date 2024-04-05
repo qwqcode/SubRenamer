@@ -19,6 +19,10 @@ namespace SubRenamer
                 .UsePlatformDetect()
                 .WithInterFont()
                 .LogToTrace()
-                .UseReactiveUI();
+                .UseReactiveUI()
+                .With(new MacOSPlatformOptions
+                {
+                    DisableDefaultApplicationMenuItems = true
+                });
     }
 }

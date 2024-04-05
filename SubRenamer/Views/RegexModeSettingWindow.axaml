@@ -1,0 +1,82 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        x:Name="Window"
+        x:Class="SubRenamer.Views.RegexModeSettingWindow"
+        xmlns:vm="clr-namespace:SubRenamer.ViewModels"
+        Title="正则表达式匹配"
+        WindowStartupLocation="CenterOwner"
+        Width="500"
+        SizeToContent="Height">
+        
+        <Design.DataContext>
+                <vm:RegexModeSettingWindowViewModel />
+        </Design.DataContext>
+        
+        <Window.Styles>
+                <Style Selector="Button.hyperlink">
+                        <Setter Property="Template">
+                                <ControlTemplate>
+                                        <TextBlock Text="{TemplateBinding Content}" Foreground="{StaticResource SystemAccentColor}" TextDecorations="Underline">
+                                                <TextBlock.Styles>
+                                                        <Style Selector="TextBlock:pointerover">
+                                                                <Setter Property="Foreground" Value="{StaticResource SystemAccentColorLight1}"/>
+                                                        </Style>
+                                                </TextBlock.Styles>
+                                        </TextBlock>
+                                </ControlTemplate>
+                        </Setter>
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="BorderThickness" Value="0"/>
+                </Style>     
+        </Window.Styles>
+        
+        <StackPanel Margin="10">
+                <Label>视频文件 正则表达式</Label>
+                <Border Height="5" />
+                <TextBox Height="90" Margin="5" AcceptsReturn="True" TextWrapping="Wrap" Text="{Binding VideoRegexStr}" />
+                
+                <Border Height="10" />
+                
+                <Label>字幕文件 正则表达式</Label>
+                <Border Height="5" />
+                <TextBox Height="90" Margin="5" AcceptsReturn="True" TextWrapping="Wrap" Text="{Binding SubtitleRegexStr}" />
+                
+                <Border BorderThickness=".5" BorderBrush="#D2D4D5" Margin="0 20"></Border>
+                
+                <StackPanel Margin="5">
+                        <Label>匹配测试</Label>
+                        <Border Height="5" />
+                        <Grid ColumnDefinitions="Auto,10,*,10,50,10,80">
+                                <Label Grid.Column="0" VerticalAlignment="Center">视频</Label>
+                                <TextBox Grid.Column="2" Watermark="输入内容或打开文件..." Text="{Binding VideoTestStr}" />
+                                <Button Grid.Column="4" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Command="{Binding OpenVideoFileCommand}">...</Button>
+                                <TextBox Grid.Column="6" IsReadOnly="True" Watermark="无匹配" Text="{Binding VideoTestResult}" />
+                        </Grid>
+                
+                        <Border Height="10" />
+                
+                        <Grid ColumnDefinitions="Auto,10,*,10,50,10,80">
+                                <Label Grid.Column="0" VerticalAlignment="Center">字幕</Label>
+                                <TextBox Grid.Column="2" Watermark="输入内容或打开文件..." Text="{Binding SubtitleTestStr}" />
+                                <Button Grid.Column="4" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Command="{Binding OpenSubtitleFileCommand}">...</Button>
+                                <TextBox Grid.Column="6" IsReadOnly="True" Watermark="无匹配" Text="{Binding SubtitleTestResult}" />
+                        </Grid>
+                </StackPanel>
+                
+                <TextBox Height="30" FontSize="14" Margin="5" IsReadOnly="True" Text="{Binding ErrorMessage}" IsVisible="{Binding  ErrorMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" BorderThickness="0" Foreground="Red" />
+                
+                <Grid ColumnDefinitions="Auto,*,Auto" Margin="10">
+                        <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="15">
+                                <Button Classes="hyperlink" Content="了解更多" Command="{Binding OpenLinkCommand}" CommandParameter="https://github.com/ziishaned/learn-regex/blob/master/translations/README-cn.md" />
+                                <Button Classes="hyperlink" Content="测试工具" Command="{Binding OpenLinkCommand}" CommandParameter="https://regexr.com/" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="15">
+                                <Button Content="保存" Name="OkBtn" Width="100" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding SaveCommand}" CommandParameter="{Binding ElementName=Window}" />
+                                <Button Content="取消" Name="NoBtn" Width="100" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Click="CancelBtn_OnClick" />
+                        </StackPanel>
+                </Grid>
+        </StackPanel>
+</Window>

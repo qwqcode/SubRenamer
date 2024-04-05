@@ -3,9 +3,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
+        x:Name="Window"
         x:Class="SubRenamer.Views.RulesWindow"
         xmlns:vm="using:SubRenamer.ViewModels"
         xmlns:model="using:SubRenamer.Model"
+        xmlns:common="clr-namespace:SubRenamer.Common"
+        xmlns:helper="clr-namespace:SubRenamer.Helper"
         Title="匹配规则"
         WindowStartupLocation="CenterOwner"
         Width="500"
@@ -16,7 +19,7 @@
         </Design.DataContext>
         
         <Window.Resources>
-                <model:EnumToBooleanConverter x:Key="EnumBoolConverter"/>        
+                <helper:EnumToBooleanConverter x:Key="EnumBoolConverter"/>        
         </Window.Resources>
         
         <Window.Styles>
@@ -38,19 +41,19 @@
         </Window.Styles>
         
         <StackPanel Margin="20">
-                <RadioButton GroupName="MatchMode" Content="自动匹配" IsChecked="{Binding MatchMode, Converter={StaticResource EnumBoolConverter}, ConverterParameter={x:Static model:EMatchMode.Diff}}" />
+                <RadioButton GroupName="MatchMode" Content="自动匹配" IsChecked="{Binding MatchMode, Converter={StaticResource EnumBoolConverter}, ConverterParameter={x:Static common:MatchMode.Diff}}" />
                 <Label Foreground="Gray" Margin="25 0 20 10">通过比较两个文件名的差异来匹配</Label>
                 
                 <StackPanel Orientation="Horizontal">
-                        <RadioButton GroupName="MatchMode" Content="手动匹配" IsChecked="{Binding MatchMode, Converter={StaticResource EnumBoolConverter}, ConverterParameter={x:Static model:EMatchMode.Manual}}" />
+                        <RadioButton GroupName="MatchMode" Content="手动匹配" IsChecked="{Binding MatchMode, Converter={StaticResource EnumBoolConverter}, ConverterParameter={x:Static common:MatchMode.Manual}}" />
                         <Border Width="10"></Border>
-                        <Button Classes="hyperlink">编辑</Button>
+                        <Button Classes="hyperlink" Command="{Binding OpenManualModeSettingCommand}" CommandParameter="{Binding ElementName=Window}" >编辑</Button>
                 </StackPanel>
                 <Label Foreground="Gray" Margin="25 0 20 10">手动输入文件名中集数前后的文字来匹配</Label>
                 <StackPanel Orientation="Horizontal">
-                        <RadioButton GroupName="MatchMode" Content="正则匹配" IsChecked="{Binding MatchMode, Converter={StaticResource EnumBoolConverter}, ConverterParameter={x:Static model:EMatchMode.Regex}}" />
+                        <RadioButton GroupName="MatchMode" Content="正则匹配" IsChecked="{Binding MatchMode, Converter={StaticResource EnumBoolConverter}, ConverterParameter={x:Static common:MatchMode.Regex}}" />
                         <Border Width="10"></Border>
-                        <Button Classes="hyperlink">编辑</Button>
+                        <Button Classes="hyperlink" Command="{Binding OpenRegexModeSettingCommand}" CommandParameter="{Binding ElementName=Window}" >编辑</Button>
                 </StackPanel>
                 <Label Foreground="Gray" Margin="25 0 20 10">手动输入用于匹配文件名集数的正则表达式</Label>
         </StackPanel>

@@ -2,6 +2,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="using:SubRenamer"
         x:Class="SubRenamer.App"
+        Name="SubRenamer"
         RequestedThemeVariant="Default">
 
     <Application.DataTemplates>
@@ -12,4 +13,12 @@
         <FluentTheme />
         <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml"/>
     </Application.Styles>
+    
+    <NativeMenu.Menu>
+        <NativeMenu>
+            <NativeMenuItem Header="设置..." Gesture="Meta+," Click="MenuSetting_OnClick" />
+            <NativeMenuItemSeparator />
+            <NativeMenuItem Header="退出 SubRenamer" Gesture="Meta+Q" Click="MenuQuit_OnClick" />
+        </NativeMenu>
+    </NativeMenu.Menu>
 </Application>

@@ -34,24 +34,24 @@
         </Window.Styles>
         
         <StackPanel Margin="20">
-                <CheckBox>备份原始文件</CheckBox>
+                <CheckBox IsChecked="{Binding BackupEnabled}">备份原始文件</CheckBox>
                 <Label Foreground="Gray" Margin="20 0 20 10">（备份字幕文件到 SubBackup 文件夹中）</Label>
-                <CheckBox>确认删除对话框</CheckBox>
-                <CheckBox>显示文件完整路径</CheckBox>
-                <Border Height="10" />
+                <!-- <CheckBox>确认删除对话框</CheckBox> -->
+                <!-- <CheckBox>显示文件完整路径</CheckBox> -->
+                <Border Height="15" />
                 <Grid HorizontalAlignment="Stretch" ColumnDefinitions="*,10,*">
                         <StackPanel Grid.Column="0">
-                                <TextBlock Margin="0 5" >视频格式自定义</TextBlock>
-                                <TextBox Watermark="以逗号分隔"/>
+                                <TextBlock Margin="0 5">视频格式扩充</TextBlock>
+                                <TextBox Watermark="以逗号分隔" Text="{Binding VideoExtAppend}" />
                         </StackPanel>
                         <StackPanel Grid.Column="2">
-                                <TextBlock Margin="0 5" >字幕格式自定义</TextBlock>
-                                <TextBox Watermark="以逗号分隔"/>  
+                                <TextBlock Margin="0 5">字幕格式扩充</TextBlock>
+                                <TextBox Watermark="以逗号分隔" Text="{Binding SubtitleExtAppend}" />  
                         </StackPanel>
                 </Grid>
                 
                 <Border Height="30" />
-                <StackPanel Orientation="Horizontal" Spacing="10">
+                <StackPanel Orientation="Horizontal" Spacing="15">
                         <Button Classes="hyperlink" Content="反馈" Command="{Binding OpenLinkCommand}" CommandParameter="https://github.com/qwqcode/SubRenamer/issues/new" />
                         <Button Classes="hyperlink" Content="作者" Command="{Binding OpenLinkCommand}" CommandParameter="https://github.com/qwqcode" />
                         <Button Classes="hyperlink" Content="源码" Command="{Binding OpenLinkCommand}" CommandParameter="https://github.com/qwqcode/SubRenamer" />

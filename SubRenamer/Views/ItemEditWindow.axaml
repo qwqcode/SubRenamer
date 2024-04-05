@@ -28,15 +28,15 @@
                         <StackPanel Grid.Column="0" Orientation="Horizontal">
                                 <Label VerticalAlignment="Center">匹配</Label>
                                 <Border Width="10" />
-                                <TextBox Text="{Binding MatchItem.Key}" />
+                                <TextBox Text="{Binding CurrItem.Key}" />
                         </StackPanel>
                         
                         <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="5">
-                                <Button Classes="OpBtn">-</Button>
-                                <Button Classes="OpBtn">«</Button>
-                                <TextBox IsReadOnly="True" Text="1/3" />
-                                <Button Classes="OpBtn">»</Button>
-                                <Button Classes="OpBtn">+</Button>
+                                <Button Classes="OpBtn" Command="{Binding DeleteCurrentCommand}">-</Button>
+                                <Button Classes="OpBtn" Command="{Binding PrevCommand}">«</Button>
+                                <TextBox IsReadOnly="True" Text="{Binding CurrPosText}" />
+                                <Button Classes="OpBtn" Command="{Binding NextCommand}">»</Button>
+                                <Button Classes="OpBtn" Command="{Binding CreateItemCommand}">+</Button>
                         </StackPanel>
                 </Grid>
                 
@@ -44,21 +44,21 @@
                 
                 <Label Margin="10 10 10 0">视频文件</Label>
                 <Grid ColumnDefinitions="*,5,50" Margin="10">
-                        <TextBox Grid.Column="0" Height="150" AcceptsReturn="True" IsReadOnly="True" Text="{Binding MatchItem.Video}" />
+                        <TextBox Grid.Column="0" Height="150" AcceptsReturn="True" TextWrapping="Wrap" IsReadOnly="True" Text="{Binding CurrItem.Video}" />
                         <StackPanel Grid.Column="2">
-                                <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Center">...</Button>
+                                <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Command="{Binding OpenFileCommand}" CommandParameter="video">...</Button>
                                 <Border Height="10"></Border>
-                                <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Center">✕</Button>
+                                <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Command="{Binding DropVideoCommand}">✕</Button>
                         </StackPanel>
                 </Grid>
                 
                 <Label Margin="10 0">字幕文件</Label>
                 <Grid ColumnDefinitions="*,5,50" Margin="10">
-                        <TextBox Grid.Column="0" Height="150" AcceptsReturn="True" IsReadOnly="True" Text="{Binding MatchItem.Subtitle}" />
+                        <TextBox Grid.Column="0" Height="150" AcceptsReturn="True" TextWrapping="Wrap" IsReadOnly="True" Text="{Binding CurrItem.Subtitle}" />
                         <StackPanel Grid.Column="2">
-                                <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Center">...</Button>
+                                <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Command="{Binding OpenFileCommand}" CommandParameter="subtitle">...</Button>
                                 <Border Height="10"></Border>
-                                <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Center">✕</Button>
+                                <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Command="{Binding DropSubtitleCommand}">✕</Button>
                         </StackPanel>
                 </Grid>
         </StackPanel>

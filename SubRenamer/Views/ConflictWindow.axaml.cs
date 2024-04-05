@@ -5,10 +5,15 @@ using Avalonia.Markup.Xaml;
 
 namespace SubRenamer.Views;
 
-public partial class RulesWindow : Window
+public partial class ConflictWindow : Window
 {
-    public RulesWindow()
+    public ConflictWindow()
     {
         InitializeComponent();
+    }
+
+    private void ConfirmBtn_OnClick(object? sender, RoutedEventArgs e)
+    {
+        Close();
     }
 }

@@ -15,6 +15,40 @@ namespace SubRenamer.ViewModels;
 
 public partial class SettingsWindowViewModel : ViewModelBase
 {
+    private bool _backupEnabled = Config.BackupEnabled;
+    private string _videoExtAppend = Config.VideoExtAppend;
+    private string _subtitleExtAppend = Config.SubtitleExtAppend;
+
+    public bool BackupEnabled
+    {
+        get => _backupEnabled;
+        set
+        {
+            Config.BackupEnabled = value;
+            SetProperty(ref _backupEnabled, value);
+        }
+    }
+
+    public string VideoExtAppend
+    {
+        get => _videoExtAppend;
+        set
+        {
+            Config.VideoExtAppend = value;
+            SetProperty(ref _videoExtAppend, value);
+        }
+    }
+    
+    public string SubtitleExtAppend
+    {
+        get => _subtitleExtAppend;
+        set
+        {
+            Config.SubtitleExtAppend = value;
+            SetProperty(ref _subtitleExtAppend, value);
+        }
+    }
+    
     [RelayCommand]
     private async Task OpenLink(string url)
     {
