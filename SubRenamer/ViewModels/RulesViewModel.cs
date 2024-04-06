@@ -9,7 +9,7 @@ using SubRenamer.Common;
 
 namespace SubRenamer.ViewModels;
 
-public partial class RulesWindowViewModel : ViewModelBase
+public partial class RulesViewModel : ViewModelBase
 {
     private MatchMode _matchMode = Config.MatchMode;
     

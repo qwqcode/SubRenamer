@@ -70,7 +70,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Compile Update="Views\ManualModeSettingWindow.axaml.cs">
+      <Compile Update="Views\ManualRuleWindow.axaml.cs">
         <DependentUpon>ManualModeSetting.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>

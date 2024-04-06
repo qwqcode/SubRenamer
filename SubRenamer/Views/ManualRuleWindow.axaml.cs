@@ -5,9 +5,9 @@ using Avalonia.Markup.Xaml;
 
 namespace SubRenamer.Views;
 
-public partial class ManualModeSettingWindow : Window
+public partial class ManualRuleWindow : Window
 {
-    public ManualModeSettingWindow()
+    public ManualRuleWindow()
     {
         InitializeComponent();
     }

@@ -13,7 +13,7 @@ using SubRenamer.Model;
 
 namespace SubRenamer.ViewModels;
 
-public partial class SettingsWindowViewModel : ViewModelBase
+public partial class SettingsViewModel : ViewModelBase
 {
     private bool _backupEnabled = Config.BackupEnabled;
     private string _videoExtAppend = Config.VideoExtAppend;

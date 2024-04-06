@@ -4,7 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         x:Name="Window"
-        x:Class="SubRenamer.Views.ManualModeSettingWindow"
+        x:Class="SubRenamer.Views.ManualRuleWindow"
         xmlns:vm="clr-namespace:SubRenamer.ViewModels"
         Title="手动匹配"
         WindowStartupLocation="CenterOwner"
@@ -12,7 +12,7 @@
         SizeToContent="Height">
         
         <Design.DataContext>
-                <vm:ManualModeSettingWindowViewModel />
+                <vm:ManualRuleViewModel />
         </Design.DataContext>
         
         <StackPanel Margin="10">

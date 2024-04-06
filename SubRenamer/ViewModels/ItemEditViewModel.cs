@@ -10,14 +10,14 @@ using SubRenamer.Model;
 
 namespace SubRenamer.ViewModels;
 
-public partial class ItemEditWindowViewModel : ViewModelBase
+public partial class ItemEditViewModel : ViewModelBase
 {
     [ObservableProperty] private ObservableCollection<MatchItem> _matchList;
     [ObservableProperty] private MatchItem _currItem;
     [ObservableProperty] private int _currPos = -1;
     [ObservableProperty] private string _currPosText = "";
     
-    public ItemEditWindowViewModel(MatchItem target, ObservableCollection<MatchItem> collection)
+    public ItemEditViewModel(MatchItem target, ObservableCollection<MatchItem> collection)
     {
         MatchList = collection;
         CurrItem = target;

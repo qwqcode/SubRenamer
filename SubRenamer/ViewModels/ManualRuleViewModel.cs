@@ -10,7 +10,7 @@ using SubRenamer.Model;
 
 namespace SubRenamer.ViewModels;
 
-public partial class ManualModeSettingWindowViewModel : ViewModelBase
+public partial class ManualRuleViewModel : ViewModelBase
 {
     [ObservableProperty] private string _videoRaw = Config.ManualVideoRaw;
     [ObservableProperty] private string _video = Config.ManualVideo;

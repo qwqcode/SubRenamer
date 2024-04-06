@@ -21,32 +21,32 @@ public class DialogService : IDialogService
     {
         var dialog = new SettingsWindow
         {
-            DataContext = new SettingsWindowViewModel()
+            DataContext = new SettingsViewModel()
         };
-        var result = await dialog.ShowDialog<SettingsWindowViewModel?>(_target);
+        var result = await dialog.ShowDialog<SettingsViewModel?>(_target);
     }
     
     public async Task OpenRules()
     {
         var dialog = new RulesWindow
         {
-            DataContext = new RulesWindowViewModel()
+            DataContext = new RulesViewModel()
         };
-        var result = await dialog.ShowDialog<RulesWindowViewModel?>(_target);
+        var result = await dialog.ShowDialog<RulesViewModel?>(_target);
     }
 
     public async Task OpenItemEdit(MatchItem item, ObservableCollection<MatchItem> collection)
     {
         var dialog = new ItemEditWindow
         {
-            DataContext = new ItemEditWindowViewModel(item, collection)
+            DataContext = new ItemEditViewModel(item, collection)
         };
-        var result = await dialog.ShowDialog<ItemEditWindowViewModel?>(_target);
+        var result = await dialog.ShowDialog<ItemEditViewModel?>(_target);
     }
 
     public async Task<string?> OpenConflict(List<string> options)
     {
-        var store = new ConflictWindowViewModel([..options, "全部保留"]);
+        var store = new ConflictViewModel([..options, "全部保留"]);
         var dialog = new ConflictWindow
         {
             DataContext = store
@@ -58,18 +58,18 @@ public class DialogService : IDialogService
     
     public async Task OpenRegexModeSetting()
     {
-        var dialog = new RegexModeSettingWindow
+        var dialog = new RegexRuleWindow
         {
-            DataContext = new RegexModeSettingWindowViewModel()
+            DataContext = new RegexRuleViewModel()
         };
         await dialog.ShowDialog(_target);
     }
     
     public async Task OpenManualModeSetting()
     {
-        var dialog = new ManualModeSettingWindow
+        var dialog = new ManualRuleWindow
         {
-            DataContext = new ManualModeSettingWindowViewModel()
+            DataContext = new ManualRuleViewModel()
         };
         await dialog.ShowDialog(_target);
     }

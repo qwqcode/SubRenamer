@@ -8,11 +8,11 @@
         Width="500"
         SizeToContent="Height"
         x:Class="SubRenamer.Views.SettingsWindow"
-        x:DataType="vm:SettingsWindowViewModel"
+        x:DataType="vm:SettingsViewModel"
         Title="设置">
         
         <Design.DataContext>
-                <vm:SettingsWindowViewModel/>
+                <vm:SettingsViewModel/>
         </Design.DataContext>
         
         <Window.Styles>

@@ -21,7 +21,7 @@ using static SubRenamer.Common.Constants;
 
 namespace SubRenamer.ViewModels;
 
-public partial class MainWindowViewModel : ViewModelBase
+public partial class MainViewModel : ViewModelBase
 {
     [ObservableProperty] private ObservableCollection<MatchItem> _matchList = [];
     [ObservableProperty] private Collection<MatchItem> _selectedItems = [];
@@ -30,7 +30,7 @@ public partial class MainWindowViewModel : ViewModelBase
     [ObservableProperty] private string _currVersionText = $"v{Config.AppVersion}";
     [ObservableProperty] private string _currVersionBtnLink = "https://github.com/qwqcode/SubRenamerNG";
     
-    public MainWindowViewModel()
+    public MainViewModel()
     {
         SyncStatusText();
         

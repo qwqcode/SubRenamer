@@ -8,13 +8,13 @@
         Height="550"
         MinHeight="550"
         WindowStartupLocation="CenterScreen"
-        x:DataType="vm:MainWindowViewModel"
+        x:DataType="vm:MainViewModel"
         x:Class="SubRenamer.Views.MainWindow"
         Icon="/Assets/icon.ico"
         Title="SubRenamer">
 
     <Design.DataContext>
-        <vm:MainWindowViewModel/>
+        <vm:MainViewModel/>
     </Design.DataContext>
 
     <Window.Styles>

@@ -15,7 +15,7 @@
         SizeToContent="Height">
     
         <Design.DataContext>
-                <vm:RulesWindowViewModel/>
+                <vm:RulesViewModel/>
         </Design.DataContext>
         
         <Window.Resources>

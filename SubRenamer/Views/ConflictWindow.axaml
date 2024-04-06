@@ -11,7 +11,7 @@
         SizeToContent="Height">
 
         <Design.DataContext>
-                <viewModels:ConflictWindowViewModel/>
+                <viewModels:ConflictViewModel/>
         </Design.DataContext>
         
         <Window.Styles>

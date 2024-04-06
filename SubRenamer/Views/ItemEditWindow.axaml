@@ -11,7 +11,7 @@
         SizeToContent="Height">
 
         <Design.DataContext>
-                <vm:ItemEditWindowViewModel />
+                <vm:ItemEditViewModel />
         </Design.DataContext>
         
         <Window.Styles>

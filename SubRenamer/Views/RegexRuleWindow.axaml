@@ -4,7 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         x:Name="Window"
-        x:Class="SubRenamer.Views.RegexModeSettingWindow"
+        x:Class="SubRenamer.Views.RegexRuleWindow"
         xmlns:vm="clr-namespace:SubRenamer.ViewModels"
         Title="正则表达式匹配"
         WindowStartupLocation="CenterOwner"
@@ -12,7 +12,7 @@
         SizeToContent="Height">
         
         <Design.DataContext>
-                <vm:RegexModeSettingWindowViewModel />
+                <vm:RegexRuleViewModel />
         </Design.DataContext>
         
         <Window.Styles>

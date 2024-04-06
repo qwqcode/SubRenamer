@@ -5,9 +5,9 @@ using Avalonia.Markup.Xaml;
 
 namespace SubRenamer.Views;
 
-public partial class RegexModeSettingWindow : Window
+public partial class RegexRuleWindow : Window
 {
-    public RegexModeSettingWindow()
+    public RegexRuleWindow()
     {
         InitializeComponent();
     }

@@ -17,7 +17,7 @@ namespace SubRenamer.Views
 
             Activated += (sender, args) =>
             {
-                if (DataContext is MainWindowViewModel store) store.SyncStatusText();
+                if (DataContext is MainViewModel store) store.SyncStatusText();
             };
         }
 
@@ -30,7 +30,7 @@ namespace SubRenamer.Views
                 if (el is MatchItem matchItem) items.Add(matchItem);
             }
             
-            if (DataContext is MainWindowViewModel store)
+            if (DataContext is MainViewModel store)
                 store.SelectedItems = items;
         }
 

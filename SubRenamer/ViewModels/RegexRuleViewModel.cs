@@ -12,7 +12,7 @@ using SubRenamer.Model;
 
 namespace SubRenamer.ViewModels;
 
-public partial class RegexModeSettingWindowViewModel : ViewModelBase
+public partial class RegexRuleViewModel : ViewModelBase
 {
     [ObservableProperty] private string _videoRegexStr = Config.VideoRegex;
     [ObservableProperty] private string _subtitleRegexStr = Config.SubtitleRegex;

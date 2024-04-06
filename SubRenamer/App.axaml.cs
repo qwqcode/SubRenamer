@@ -37,7 +37,7 @@ namespace SubRenamer
                 // load theme
                 Config.ApplyThemeMode(Config.ThemeMode);
 
-                var mainWindowStore = new MainWindowViewModel();
+                var mainWindowStore = new MainViewModel();
                 desktop.MainWindow = new MainWindow
                 {
                     DataContext = mainWindowStore,
@@ -94,7 +94,7 @@ namespace SubRenamer
             Current?.Services?.GetService<IDialogService>()!.OpenSettings();
         }
 
-        private static void _afterInitTasks(MainWindowViewModel? mainWindowStore)
+        private static void _afterInitTasks(MainViewModel? mainWindowStore)
         {
             Task.Run(async () =>
             {
@@ -120,7 +120,9 @@ namespace SubRenamer
                 await Task.Delay(2000);
                 try
                 {
+                    #if !DEBUG
                     await Updater.VisitorHit();
+                    #endif
                 }
                 catch (Exception e)
                 {
