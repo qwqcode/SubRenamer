@@ -27,6 +27,11 @@
 		<TrimmerRootDescriptor Include=".ReflectionDefine\Avalonia.xml" />
 	</ItemGroup>
 
+  <!-- Fix macos build (https://github.com/dotnet/runtime/issues/98124) -->
+  <ItemGroup>
+    <LinkerArg Include="-mmacosx-version-min=11.0" />
+  </ItemGroup>
+
 	<ItemGroup>
         <!--This helps with theme dll-s trimming.
         If you will publish your application in self-contained mode with p:PublishTrimmed=true and it will use Fluent theme Default theme will be trimmed from the output and vice versa.
