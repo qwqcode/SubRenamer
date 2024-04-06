@@ -24,6 +24,14 @@
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="Height" Value="40"/>
         </Style>
+        
+        <Style Selector="Button.TopMenuBtn">
+            <Setter Property="Background" Value="Transparent"></Setter>
+            <Setter Property="Foreground" Value="#828282"></Setter>
+        </Style>
+        <Style Selector="Button.TopMenuBtn:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="Transparent"></Setter>
+        </Style>
     </Window.Styles>
     
     <NativeMenu.Menu>
@@ -35,19 +43,30 @@
     <!-- <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/> -->
     <Grid>
         <DockPanel>
-            <Menu DockPanel.Dock="Top">
-                <MenuItem Header="文件">
-                    <MenuItem Header="导入文件..." HotKey="Meta+O" InputGesture="Meta+O" Command="{Binding OpenFileCommand}" />
-                    <MenuItem Header="导入文件夹..." HotKey="Meta+Shift+O" InputGesture="Meta+Shift+O" Command="{Binding OpenFolderCommand}" />
-                    <Separator/>
-                    <MenuItem Header="重新匹配" HotKey="Meta+R" InputGesture="Meta+R" />
-                    <MenuItem Header="清空列表" HotKey="Meta+N" InputGesture="Meta+N" Command="{Binding ClearAllCommand}" />
-                </MenuItem>
-                <MenuItem Header="规则" Command="{Binding OpenRulesCommand}">
-                </MenuItem>
-                <MenuItem Header="设置" HotKey="Meta+," InputGesture="Meta+," Command="{Binding OpenSettingsCommand}">
-                </MenuItem>
-            </Menu>
+            <Grid DockPanel.Dock="Top" ColumnDefinitions="*,Auto">
+                <Menu Grid.Column="0">
+                    <MenuItem Header="文件">
+                        <MenuItem Header="导入文件..." HotKey="Meta+O" InputGesture="Meta+O" Command="{Binding OpenFileCommand}" />
+                        <MenuItem Header="导入文件夹..." HotKey="Meta+Shift+O" InputGesture="Meta+Shift+O" Command="{Binding OpenFolderCommand}" />
+                        <Separator/>
+                        <MenuItem Header="重新匹配" HotKey="Meta+R" InputGesture="Meta+R" />
+                        <MenuItem Header="清空列表" HotKey="Meta+N" InputGesture="Meta+N" Command="{Binding ClearAllCommand}" />
+                    </MenuItem>
+                    <MenuItem Header="规则" Command="{Binding OpenRulesCommand}">
+                    </MenuItem>
+                    <MenuItem Header="设置" HotKey="Meta+," InputGesture="Meta+," Command="{Binding OpenSettingsCommand}">
+                    </MenuItem>
+                </Menu>
+                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0" Spacing="10">
+                    <Button Classes="TopMenuBtn" Foreground="#000" Command="{Binding OpenRulesCommand}">
+                        <TextBlock Text="{Binding CurrMatchModeText}" />
+                    </Button>
+                    <Button Classes="TopMenuBtn" Command="{Binding OpenVersionLinkCommand}">
+                        <TextBlock Text="{Binding CurrVersionText}" />
+                    </Button>
+                </StackPanel>
+            </Grid>
+            
         
             <SplitView
                 DockPanel.Dock="Bottom"
@@ -62,6 +81,7 @@
                           ItemsSource="{Binding MatchList}"
                           SelectionChanged="DataGrid_OnSelectionChanged"
                           SelectionMode="Extended"
+                          CanUserSortColumns="False"
                           IsReadOnly="True"
                           CanUserResizeColumns="True"
                           GridLinesVisibility="All"

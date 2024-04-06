@@ -14,6 +14,11 @@ namespace SubRenamer.Views
         public MainWindow()
         {
             InitializeComponent();
+
+            Activated += (sender, args) =>
+            {
+                if (DataContext is MainWindowViewModel store) store.SyncStatusText();
+            };
         }
 
         private void DataGrid_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)

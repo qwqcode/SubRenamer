@@ -8,7 +8,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Platform.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
+using DynamicData.Binding;
 using SubRenamer.Services;
 using Microsoft.Extensions.DependencyInjection;
 using SubRenamer.Common;
@@ -24,8 +26,14 @@ public partial class MainWindowViewModel : ViewModelBase
     [ObservableProperty] private ObservableCollection<MatchItem> _matchList = [];
     [ObservableProperty] private Collection<MatchItem> _selectedItems = [];
     
+    [ObservableProperty] private string _currMatchModeText = "";
+    [ObservableProperty] private string _currVersionText = $"v{Config.AppVersion}";
+    [ObservableProperty] private string _currVersionBtnLink = "https://github.com/qwqcode/SubRenamerNG";
+    
     public MainWindowViewModel()
     {
+        SyncStatusText();
+        
         #if DEBUG
         _matchList = new ObservableCollection<MatchItem> 
         {
@@ -37,6 +45,17 @@ public partial class MainWindowViewModel : ViewModelBase
             new ("", "", "test_subtitle_03.ass", ""),
         };
         #endif
+    }
+
+    public void SyncStatusText()
+    {
+        CurrMatchModeText = Config.MatchMode switch
+        {
+            MatchMode.Diff => "自动匹配",
+            MatchMode.Manual => "手动匹配",
+            MatchMode.Regex => "正则匹配",
+            _ => ""
+        };
     }
 
     [RelayCommand]
@@ -251,6 +270,21 @@ public partial class MainWindowViewModel : ViewModelBase
         if (path == null) return;
         
         FileHelper.RevealFileInFolder(path);
+    }
+
+    [RelayCommand]
+    private async Task OpenVersionLink()
+    {
+        if (string.IsNullOrEmpty(CurrVersionBtnLink)) return;
+        
+        try
+        {
+            await Ioc.Default.GetService<IBrowserService>()!.OpenBrowserAsync(new Uri(CurrVersionBtnLink));
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
     }
 
     [RelayCommand]

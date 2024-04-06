@@ -12,10 +12,13 @@ cp resources/App.icns $APP_DIR/Contents/Resources/App.icns
 
 mkdir -p $APP_DIR/Contents/MacOS
 dotnet publish $CS_PROJ -c Release -r osx-arm64 -o $APP_DIR/Contents/MacOS -p:PublishAot=true -p:PublishTrimmed=true -p:TrimMode=link --self-contained
-zip dist/${APP_NAME}_macos_arm64.zip -9 -r $APP_DIR -x "*/*\.dsym/*"
+cd dist
+zip ${APP_NAME}_macos_arm64.zip -9 -r ${APP_NAME}.app -x "*/*\.dsym/*"
+cd ..
 
 rm -rf $APP_DIR/Contents/MacOS
 
 mkdir -p $APP_DIR/Contents/MacOS
 dotnet publish $CS_PROJ -c Release -r osx-x64 -o $APP_DIR/Contents/MacOS -p:PublishAot=true -p:PublishTrimmed=true -p:TrimMode=link --self-contained
-zip dist/${APP_NAME}_macos_amd64.zip -r $APP_DIR -x "*/*\.dsym/*"
+zip ${APP_NAME}_macos_amd64.zip -r ${APP_DIR}.app -x "*/*\.dsym/*"
+cd ..

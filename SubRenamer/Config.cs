@@ -101,8 +101,8 @@ public class Config
     // @link https://gist.github.com/DamianSuess/c143ed869e02e002d252056656aeb9bf
     public static string ConfigDir => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), AppName);
     private static string ConfigFilePath => Path.Combine(ConfigDir, ConfigFileName);
-    public static string AppName => Process.GetCurrentProcess().MainModule?.FileVersionInfo.ProductName ?? "SubRenamer";
-    public static Version AppVersion => new(Process.GetCurrentProcess().MainModule?.FileVersionInfo.FileVersion ?? "1.0.0.0");
+    public static string AppName => System.Reflection.Assembly.GetExecutingAssembly().GetName().Name ?? "SubRenamer";
+    public static Version AppVersion => new(System.Reflection.Assembly.GetExecutingAssembly().GetName().Version?.ToString(3) ?? "1.0.0");
     
     private static IConfigurationRoot? LoadUserConfigs()
     {
