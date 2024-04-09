@@ -25,4 +25,9 @@ public partial class RenameTask(string origin = "", string alter = "", string st
      * Current Status
      */
     [ObservableProperty] private string _status = status;
+
+    /**
+     * Associated MatchItem
+     */
+    [ObservableProperty] private MatchItem? _matchItem;
 }

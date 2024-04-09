@@ -261,15 +261,36 @@ public partial class MainViewModel : ViewModelBase
                                   + "/"
                                   + Path.GetFileNameWithoutExtension(item.Video)
                                   + Path.GetExtension(item.Subtitle);
-            
-            RenameTasks.Add(new RenameTask(item.Subtitle, alteredSubtitle, "未修改"));
+
+            var task = new RenameTask(item.Subtitle, alteredSubtitle, item.Status == "已修改" ? "已修改" : "未修改");
+            task.MatchItem = item;
+            RenameTasks.Add(task);
         }
     }
 
     [RelayCommand]
     private async Task PerformRename()
     {
-        App.Current?.Services?.GetService<IDialogService>()!.OpenManualModeSetting();
+        UpdateRenameTaskList();
+        
+        // Start Rename
+        foreach (var task in RenameTasks)
+        {
+            if (task.Status == "已修改") continue;
+            if (task.Status == "已跳过") continue;
+            
+            try
+            {
+                File.Move(task.Origin, task.Alter);
+                task.Status = "已修改";
+                if (task.MatchItem != null) task.MatchItem.Status = "已修改";
+            }
+            catch (Exception e)
+            {
+                task.Status = $"失败：{e.Message}";
+                // task.Error = e.Message;
+            }
+        }
     }
 
     [RelayCommand]

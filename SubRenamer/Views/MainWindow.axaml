@@ -157,7 +157,7 @@
                         <Border Height="10" />
                         <StackPanel HorizontalAlignment="Stretch">
                             <CheckBox Content="预览" IsChecked="{Binding ShowRenameTasks}" />
-                            <Button Classes="OpBtn" Content="一键改名" Command="{Binding PerformRename}" />
+                            <Button Classes="OpBtn" Content="一键改名" Command="{Binding PerformRenameCommand}" />
                         </StackPanel>
                     </StackPanel>
                 </SplitView.Pane>
