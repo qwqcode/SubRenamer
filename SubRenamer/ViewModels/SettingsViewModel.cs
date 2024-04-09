@@ -15,7 +15,8 @@ namespace SubRenamer.ViewModels;
 
 public partial class SettingsViewModel : ViewModelBase
 {
-    private bool _backupEnabled = Config.BackupEnabled;
+    private bool _backupEnabled = Config.Backup;
+    private bool _updateCheckEnabled = Config.UpdateCheck;
     private string _videoExtAppend = Config.VideoExtAppend;
     private string _subtitleExtAppend = Config.SubtitleExtAppend;
 
@@ -24,8 +25,18 @@ public partial class SettingsViewModel : ViewModelBase
         get => _backupEnabled;
         set
         {
-            Config.BackupEnabled = value;
+            Config.Backup = value;
             SetProperty(ref _backupEnabled, value);
+        }
+    }
+    
+    public bool UpdateCheckEnabled
+    {
+        get => _updateCheckEnabled;
+        set
+        {
+            Config.UpdateCheck = value;
+            SetProperty(ref _updateCheckEnabled, value);
         }
     }
 

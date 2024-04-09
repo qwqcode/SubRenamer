@@ -18,7 +18,8 @@ namespace SubRenamer;
 public class Config
 {
     public static ThemeMode ThemeMode { get; set; } = ThemeMode.Default;
-    public static bool BackupEnabled { get; set; } = true;
+    public static bool Backup { get; set; } = true;
+    public static bool UpdateCheck { get; set; } = true;
     public static string VideoExtAppend { get; set; } = "";
     public static string SubtitleExtAppend { get; set; } = "";
     public static MatchMode MatchMode { get; set; } = MatchMode.Diff;
@@ -43,7 +44,8 @@ public class Config
 
         ThemeMode = items.GetValue(nameof(ThemeMode), ThemeMode);
         
-        BackupEnabled = items.GetValue(nameof(BackupEnabled), BackupEnabled);
+        Backup = items.GetValue(nameof(Backup), Backup);
+        UpdateCheck = items.GetValue(nameof(UpdateCheck), UpdateCheck);
         VideoExtAppend = items.GetValue(nameof(VideoExtAppend), VideoExtAppend);
         SubtitleExtAppend = items.GetValue(nameof(SubtitleExtAppend), SubtitleExtAppend);
         
@@ -78,7 +80,8 @@ public class Config
         // user configs
         _ = settings.TryAdd(nameof(ThemeMode), ThemeMode);
         
-        _ = settings.TryAdd(nameof(BackupEnabled), BackupEnabled);
+        _ = settings.TryAdd(nameof(Backup), Backup);
+        _ = settings.TryAdd(nameof(UpdateCheck), UpdateCheck);
         _ = settings.TryAdd(nameof(VideoExtAppend), VideoExtAppend);
         _ = settings.TryAdd(nameof(SubtitleExtAppend), SubtitleExtAppend);
         
