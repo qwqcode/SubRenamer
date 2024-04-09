@@ -48,6 +48,7 @@ namespace SubRenamer
 
                 services.AddSingleton<IFilesService>(x => new FilesService(desktop.MainWindow));
                 services.AddSingleton<IDialogService>(x => new DialogService(desktop.MainWindow));
+                services.AddSingleton<IClipboardService>(x => new ClipboardService(desktop.MainWindow));
 
                 Services = services.BuildServiceProvider();
 
@@ -98,6 +99,8 @@ namespace SubRenamer
         {
             Task.Run(async () =>
             {
+                if (!Config.UpdateCheck) return;
+                
                 await Task.Delay(2000);
 
                 try

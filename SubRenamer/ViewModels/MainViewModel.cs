@@ -217,6 +217,21 @@ public partial class MainViewModel : ViewModelBase
     }
 
     [RelayCommand]
+    private void CopyCommands()
+    {
+        var command = "";
+        
+        foreach (var item in SelectedItems)
+        {
+            var subtitle = !string.IsNullOrEmpty(item.Subtitle) ? item.Subtitle : "?";
+            var video = !string.IsNullOrEmpty(item.Video) ? item.Video : "?";
+            command += $"mv {subtitle} {video}\n";
+        }
+
+        App.Current?.Services?.GetService<IClipboardService>()!.CopyToClipboard(command.Trim());
+    }
+
+    [RelayCommand]
     private async Task OpenFolder(CancellationToken token)
     {
         var filesService = App.Current?.Services?.GetService<IFilesService>();

@@ -28,7 +28,7 @@
 	</ItemGroup>
 
   <!-- Fix macos build (https://github.com/dotnet/runtime/issues/98124) -->
-  <ItemGroup>
+  <ItemGroup Condition="$(RuntimeIdentifier.StartsWith('osx'))">
     <LinkerArg Include="-mmacosx-version-min=11.0" />
   </ItemGroup>
 
