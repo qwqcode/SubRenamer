@@ -25,6 +25,9 @@ public partial class MainViewModel : ViewModelBase
 {
     [ObservableProperty] private ObservableCollection<MatchItem> _matchList = [];
     [ObservableProperty] private Collection<MatchItem> _selectedItems = [];
+
+    [ObservableProperty] private bool _showRenameTasks = false;
+    [ObservableProperty] private ObservableCollection<RenameTask> _renameTasks = [];
     
     [ObservableProperty] private string _currMatchModeText = "";
     [ObservableProperty] private string _currVersionText = $"v{Config.AppVersion}";
@@ -239,6 +242,28 @@ public partial class MainViewModel : ViewModelBase
         await ImportFiles(files.Select(x => x.Path.LocalPath).ToList());
         
         await PerformMatch();
+    }
+
+    partial void OnShowRenameTasksChanged(bool value)
+    {
+        UpdateRenameTaskList();
+    }
+
+    private void UpdateRenameTaskList()
+    {
+        RenameTasks.Clear();
+
+        foreach (var item in MatchList)
+        {
+            if (string.IsNullOrEmpty(item.Subtitle) || string.IsNullOrEmpty(item.Video)) continue;
+            
+            var alteredSubtitle = Path.GetDirectoryName(item.Subtitle)
+                                  + "/"
+                                  + Path.GetFileNameWithoutExtension(item.Video)
+                                  + Path.GetExtension(item.Subtitle);
+            
+            RenameTasks.Add(new RenameTask(item.Subtitle, alteredSubtitle, "未修改"));
+        }
     }
 
     [RelayCommand]

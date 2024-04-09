@@ -76,43 +76,69 @@
                 OpenPaneLength="170">
             
                 <!-- 左侧列表 -->
-                <DataGrid Name="DataGrid"
-                          Margin="0"
-                          ItemsSource="{Binding MatchList}"
-                          SelectionChanged="DataGrid_OnSelectionChanged"
-                          SelectionMode="Extended"
-                          CanUserSortColumns="False"
-                          IsReadOnly="True"
-                          CanUserResizeColumns="True"
-                          GridLinesVisibility="All"
-                          BorderThickness="1"
-                          BorderBrush="#D2D4D5">
+                <Grid>
+                    <DataGrid Name="DataGrid"
+                              Grid.Row="0"
+                              Margin="0"
+                              ItemsSource="{Binding MatchList}"
+                              SelectionChanged="DataGrid_OnSelectionChanged"
+                              SelectionMode="Extended"
+                              CanUserSortColumns="False"
+                              IsReadOnly="True"
+                              CanUserResizeColumns="True"
+                              GridLinesVisibility="All"
+                              BorderThickness="1"
+                              BorderBrush="#D2D4D5"
+                              IsVisible="{Binding !ShowRenameTasks}">
                     
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="匹配" Width="100" Binding="{Binding Key}"/>
-                        <DataGridTextColumn Header="视频" Width="*" Binding="{Binding VideoName}" />
-                        <DataGridTextColumn Header="字幕" Width="*" Binding="{Binding SubtitleName}" />
-                        <DataGridTextColumn Header="状态" Width="100" Binding="{Binding Status}" />
-                    </DataGrid.Columns>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="匹配" Width="100" Binding="{Binding Key}"/>
+                            <DataGridTextColumn Header="视频" Width="*" Binding="{Binding VideoName}" />
+                            <DataGridTextColumn Header="字幕" Width="*" Binding="{Binding SubtitleName}" />
+                            <DataGridTextColumn Header="状态" Width="100" Binding="{Binding Status}" />
+                        </DataGrid.Columns>
+                        
+                        <DataGrid.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="编辑" HotKey="F3" InputGesture="F3" Command="{Binding EditItemCommand}" />
+                                <Separator/>
+                                <MenuItem Header="删除" HotKey="Delete" InputGesture="Delete" Command="{Binding DeleteItemCommand}" />
+                                <MenuItem Header="丢弃视频" Command="{Binding DropSelected}" CommandParameter="video" />
+                                <MenuItem Header="丢弃字幕" Command="{Binding DropSelected}" CommandParameter="subtitle" />
+                                <Separator/>
+                                <MenuItem Header="全选" HotKey="{OnPlatform Ctrl+A, macOS=⌘+A}" InputGesture="{OnPlatform Ctrl+A, macOS=⌘+A}" Name="SelectAllMenuItem" Click="SelectAllMenuItem_OnClick" />
+                                <Separator/>
+                                <MenuItem Header="在文件夹中找到视频文件" Command="{Binding RevealFileInFolderCommand}" CommandParameter="video" />
+                                <MenuItem Header="在文件夹中找到字幕文件" Command="{Binding RevealFileInFolderCommand}" CommandParameter="subtitle" />
+                                <Separator/>
+                                <MenuItem Header="复制改名命令至剪切板" HotKey="{OnPlatform Ctrl+Shift+C, macOS=⌘+Shift+C}" InputGesture="{OnPlatform Ctrl+Shift+C, macOS=⌘+Shift+C}" Command="{Binding CopyCommandsCommand}" />
+                            </ContextMenu>
+                        </DataGrid.ContextMenu>
+                        
+                    </DataGrid>
                     
-                    <DataGrid.ContextMenu>
-                        <ContextMenu>
-                            <MenuItem Header="编辑" HotKey="F3" InputGesture="F3" Command="{Binding EditItemCommand}" />
-                            <Separator/>
-                            <MenuItem Header="删除" HotKey="Delete" InputGesture="Delete" Command="{Binding DeleteItemCommand}" />
-                            <MenuItem Header="丢弃视频" Command="{Binding DropSelected}" CommandParameter="video" />
-                            <MenuItem Header="丢弃字幕" Command="{Binding DropSelected}" CommandParameter="subtitle" />
-                            <Separator/>
-                            <MenuItem Header="全选" HotKey="{OnPlatform Ctrl+A, macOS=⌘+A}" InputGesture="{OnPlatform Ctrl+A, macOS=⌘+A}" Name="SelectAllMenuItem" Click="SelectAllMenuItem_OnClick" />
-                            <Separator/>
-                            <MenuItem Header="在文件夹中找到视频文件" Command="{Binding RevealFileInFolderCommand}" CommandParameter="video" />
-                            <MenuItem Header="在文件夹中找到字幕文件" Command="{Binding RevealFileInFolderCommand}" CommandParameter="subtitle" />
-                            <Separator/>
-                            <MenuItem Header="复制改名命令至剪切板" HotKey="{OnPlatform Ctrl+Shift+C, macOS=Ctrl+Shift+C}" InputGesture="{OnPlatform Ctrl+Shift+C, macOS=Ctrl+Shift+C}" />
-                        </ContextMenu>
-                    </DataGrid.ContextMenu>
-                    
-                </DataGrid>
+                    <DataGrid Name="DataGrid2"
+                              Grid.Row="0"
+                              VerticalAlignment="Stretch"
+                              Margin="0"
+                              ItemsSource="{Binding RenameTasks}"
+                              SelectionMode="Extended"
+                              CanUserSortColumns="False"
+                              IsReadOnly="True"
+                              CanUserResizeColumns="True"
+                              GridLinesVisibility="All"
+                              BorderThickness="1"
+                              BorderBrush="#D2D4D5"
+                              IsVisible="{Binding ShowRenameTasks}">
+                        
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="原始文件名" Width="*" Binding="{Binding OriginName}"/>
+                            <DataGridTextColumn Header="修改后" Width="*" Binding="{Binding AlterName}" />
+                            <DataGridTextColumn Header="状态" Width="100" Binding="{Binding Status}" />
+                        </DataGrid.Columns>
+                        
+                    </DataGrid>
+                </Grid>
             
                 <SplitView.Pane>
                     <!-- 右侧按钮 -->
@@ -130,7 +156,7 @@
                         <Button Classes="OpBtn" Content="设置" Command="{Binding OpenSettingsCommand}"  />
                         <Border Height="10" />
                         <StackPanel HorizontalAlignment="Stretch">
-                            <CheckBox Content="预览" IsChecked="False" />
+                            <CheckBox Content="预览" IsChecked="{Binding ShowRenameTasks}" />
                             <Button Classes="OpBtn" Content="一键改名" Command="{Binding PerformRename}" />
                         </StackPanel>
                     </StackPanel>
