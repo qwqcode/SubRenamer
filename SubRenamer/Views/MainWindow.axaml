@@ -11,7 +11,8 @@
         x:DataType="vm:MainViewModel"
         x:Class="SubRenamer.Views.MainWindow"
         Icon="/Assets/icon.ico"
-        Title="SubRenamer">
+        Title="SubRenamer"
+        DragDrop.AllowDrop="True">
 
     <Design.DataContext>
         <vm:MainViewModel/>
@@ -40,7 +41,6 @@
         </NativeMenu>
     </NativeMenu.Menu>
     
-    <!-- <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/> -->
     <Grid>
         <DockPanel>
             <Grid DockPanel.Dock="Top" ColumnDefinitions="*,Auto">
@@ -67,7 +67,6 @@
                 </StackPanel>
             </Grid>
             
-        
             <SplitView
                 DockPanel.Dock="Bottom"
                 IsPaneOpen="True"
@@ -103,8 +102,8 @@
                                 <MenuItem Header="编辑" HotKey="F3" InputGesture="F3" Command="{Binding EditItemCommand}" />
                                 <Separator/>
                                 <MenuItem Header="删除" HotKey="Delete" InputGesture="Delete" Command="{Binding DeleteItemCommand}" />
-                                <MenuItem Header="丢弃视频" Command="{Binding DropSelected}" CommandParameter="video" />
-                                <MenuItem Header="丢弃字幕" Command="{Binding DropSelected}" CommandParameter="subtitle" />
+                                <MenuItem Header="丢弃视频" Command="{Binding DropItemsField}" CommandParameter="video" />
+                                <MenuItem Header="丢弃字幕" Command="{Binding DropItemsField}" CommandParameter="subtitle" />
                                 <Separator/>
                                 <MenuItem Header="全选" HotKey="{OnPlatform Ctrl+A, macOS=⌘+A}" InputGesture="{OnPlatform Ctrl+A, macOS=⌘+A}" Name="SelectAllMenuItem" Click="SelectAllMenuItem_OnClick" />
                                 <Separator/>

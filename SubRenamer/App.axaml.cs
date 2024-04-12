@@ -7,7 +7,6 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using SubRenamer.ViewModels;
 using SubRenamer.Views;
 using Microsoft.Extensions.DependencyInjection;
-using SubRenamer.Common;
 using SubRenamer.Model;
 using SubRenamer.Services;
 
@@ -49,6 +48,8 @@ namespace SubRenamer
                 services.AddSingleton<IFilesService>(x => new FilesService(desktop.MainWindow));
                 services.AddSingleton<IDialogService>(x => new DialogService(desktop.MainWindow));
                 services.AddSingleton<IClipboardService>(x => new ClipboardService(desktop.MainWindow));
+                services.AddSingleton<IImportService>(x => new ImportService(desktop.MainWindow));
+                services.AddSingleton<IRenameService>(x => new RenameService(desktop.MainWindow));
 
                 Services = services.BuildServiceProvider();
 
@@ -62,7 +63,7 @@ namespace SubRenamer
         {
             Ioc.Default.ConfigureServices(
                 new ServiceCollection()
-                    .AddSingleton<IBrowserService, BrowserService>(_ => new BrowserService())
+                    // .AddSingleton<IBrowserService, BrowserService>(_ => new BrowserService())
                     .BuildServiceProvider());
         }
         

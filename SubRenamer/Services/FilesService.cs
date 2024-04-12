@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Platform.Storage;
+using SubRenamer.Helper;
 using static SubRenamer.Common.Constants;
 using SubRenamer.Model;
 
@@ -43,17 +44,8 @@ public class FilesService : IFilesService
             Title = "导入文件夹",
             AllowMultiple = true,
         });
-
-        var files = new List<IStorageFile>();
-        foreach (var folder in folders)
-        {
-            await foreach (var v in folder.GetItemsAsync())
-            {
-                if (v is IStorageFile file) files.Add(file);
-            }
-        }
         
-        return files;
+        return await FileHelper.ConvertFoldersToFilesAsync(folders);
     }
 
     public async Task<IStorageFile?> OpenSingleFileAsync()

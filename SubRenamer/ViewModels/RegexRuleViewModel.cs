@@ -8,6 +8,7 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
 using SubRenamer.Common;
+using SubRenamer.Helper;
 using SubRenamer.Model;
 
 namespace SubRenamer.ViewModels;
@@ -70,10 +71,5 @@ public partial class RegexRuleViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private async Task OpenLink(string url)
-    {
-        var service = Ioc.Default.GetService<IBrowserService>();
-        if (service is null) throw new NullReferenceException("Missing Browser Service instance.");
-        await service.OpenBrowserAsync(new Uri(url));
-    }
+    private void OpenLink(string url) => BrowserHelper.OpenBrowserAsync(url);
 }

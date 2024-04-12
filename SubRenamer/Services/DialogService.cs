@@ -52,7 +52,7 @@ public class DialogService : IDialogService
             DataContext = store
         };
         await dialog.ShowDialog(_target);
-        var selected = store.SelectedItem;
+        var selected = store.GetResult();
         return selected == "全部保留" ? null : selected;
     }
     
