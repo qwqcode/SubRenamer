@@ -19,6 +19,8 @@ public class LocalizationHelper
 
     private static readonly Dictionary<string, string> NativeNameMap = new ()
     {
+        {"sc", "简体中文"},
+        {"tc", "繁体中文"},
         {"chi", "简体中文"},
         {"chs", "简体中文"},
         {"chn", "简体中文"},

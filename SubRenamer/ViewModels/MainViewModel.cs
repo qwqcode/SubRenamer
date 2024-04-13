@@ -158,12 +158,12 @@ public partial class MainViewModel : ViewModelBase
      * Drop content
      */
     [RelayCommand]
-    private void DropItemsField(string fieldName)
+    private void DropItemsField(FileType type)
     {
         foreach (var item in SelectedItems)
         {
-            if (fieldName == "video") item.Video = "";
-            else if (fieldName == "subtitle") item.Subtitle = "";
+            if (type == FileType.Video) item.Video = "";
+            else if (type == FileType.Subtitle) item.Subtitle = "";
             UpdateMatchItemStatus(item);
         }
     }

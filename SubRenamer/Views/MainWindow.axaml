@@ -3,6 +3,7 @@
         xmlns:vm="using:SubRenamer.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:common="clr-namespace:SubRenamer.Common"
         mc:Ignorable="d"
         Width="1000"
         Height="550"
@@ -81,7 +82,7 @@
                               CanUserResizeColumns="True"
                               GridLinesVisibility="All"
                               BorderThickness="1"
-                              BorderBrush="#D2D4D5"
+                              BorderBrush="{StaticResource SystemControlTransientBorderBrush}"
                               IsVisible="{Binding !ShowRenameTasks}">
                     
                         <DataGrid.Columns>
@@ -96,8 +97,8 @@
                                 <MenuItem Header="编辑" HotKey="F3" InputGesture="F3" Command="{Binding EditItemCommand}" />
                                 <Separator/>
                                 <MenuItem Header="删除" HotKey="Delete" InputGesture="Delete" Command="{Binding DeleteItemCommand}" />
-                                <MenuItem Header="丢弃视频" Command="{Binding DropItemsField}" CommandParameter="video" />
-                                <MenuItem Header="丢弃字幕" Command="{Binding DropItemsField}" CommandParameter="subtitle" />
+                                <MenuItem Header="丢弃视频" Command="{Binding DropItemsFieldCommand}" CommandParameter="{x:Static common:FileType.Video}" />
+                                <MenuItem Header="丢弃字幕" Command="{Binding DropItemsFieldCommand}" CommandParameter="{x:Static common:FileType.Subtitle}" />
                                 <Separator/>
                                 <MenuItem Header="全选" HotKey="{OnPlatform Ctrl+A, macOS=⌘+A}" InputGesture="{OnPlatform Ctrl+A, macOS=⌘+A}" Name="SelectAllMenuItem" Click="SelectAllMenuItem_OnClick" />
                                 <Separator/>
@@ -121,7 +122,7 @@
                               CanUserResizeColumns="True"
                               GridLinesVisibility="All"
                               BorderThickness="1"
-                              BorderBrush="#D2D4D5"
+                              BorderBrush="{StaticResource SystemControlTransientBorderBrush}"
                               IsVisible="{Binding ShowRenameTasks}">
                         
                         <DataGrid.Columns>
