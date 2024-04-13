@@ -1,6 +1,7 @@
 using Avalonia;
 using Avalonia.ReactiveUI;
 using System;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
@@ -16,20 +17,15 @@ internal class Program
     [STAThread]
     public static void Main(string[] args)
     {
-#if !DEBUG
         try
         {
-#endif
             BuildAvaloniaApp()
                 .StartWithClassicDesktopLifetime(args);
-#if !DEBUG
         }
         catch (Exception e)
         {
-            // here we can work with the exception, for example add it to our log file
-            // Log.Fatal(e, "Something very bad happened");
-
-            CreateGitHubIssue(e.Message, e.StackTrace ?? "");
+            File.WriteAllText(App.CrashLogFile, $"{e.Message}\n${e.StackTrace ?? ""}", Encoding.UTF8);
+            throw;
         }
         finally
         {
@@ -37,7 +33,6 @@ internal class Program
             // Use the finally-block if you need to clean things up or similar
             // Log.CloseAndFlush();
         }
-#endif
     }
 
     // Avalonia configuration, don't remove; also used by visual designer.
@@ -51,14 +46,4 @@ internal class Program
             {
                 DisableDefaultApplicationMenuItems = true
             });
-    
-    private static void CreateGitHubIssue(string caption, string details)
-    {
-        Task.Run(() =>
-        {
-            var title = $"[PANIC][{"v" + Config.AppVersion}] {caption}";
-            BrowserHelper.OpenBrowserAsync(
-                $"https://github.com/qwqcode/SubRenamer/issues/new?title={HttpUtility.UrlEncode(title, Encoding.UTF8)}&body={HttpUtility.UrlEncode(caption + "\n\n```\n" + details + "\n```", Encoding.UTF8)}");
-        });
-    }
 }

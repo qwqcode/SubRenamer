@@ -4,10 +4,8 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Runtime.InteropServices;
-using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using Avalonia.Controls;
 using SubRenamer.Helper;
 
 namespace SubRenamer.Services;
@@ -61,31 +59,8 @@ public class UpdateService
 
     private GitHubReleaseAsset? ExtractPlatformAssetItem(IEnumerable<GitHubReleaseAsset> assets)
     {
-        string os = GetOSName();
-        string arch = GetArchName();
-        
-        string targetAssetName = $"{os}_{arch}";
-        
-        var targetAsset = assets.FirstOrDefault(asset => asset.Name.Contains(targetAssetName));
+        var targetAsset = assets.FirstOrDefault(asset => asset.Name.Contains(SystemInfo.GetOSArchPair()));
         return targetAsset ?? null;
-    }
-
-    private static string GetOSName()
-    {
-        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) return "windows";
-        else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX)) return "macos";
-        else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux)) return "linux";
-        else return "unknown";
-    }
-
-    private static string GetArchName()
-    {
-        return RuntimeInformation.OSArchitecture switch
-        {
-            Architecture.X64 => "amd64",
-            Architecture.Arm64 => "arm64",
-            _ => "unknown"
-        };
     }
 }
 

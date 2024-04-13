@@ -8,8 +8,18 @@ using System.Text.Json.Serialization;
 using System.Text.Json.Serialization.Metadata;
 using System.Threading;
 using System.Threading.Tasks;
+using SubRenamer.Services;
 
 namespace SubRenamer.Helper;
+
+// https://learn.microsoft.com/zh-cn/dotnet/standard/serialization/system-text-json/source-generation?pivots=dotnet-8-0
+[JsonSourceGenerationOptions(WriteIndented = true)]
+[JsonSerializable(typeof(Config))]
+[JsonSerializable(typeof(GitHubRelease))]
+[JsonSerializable(typeof(GitHubReleaseAsset))]
+internal partial class SourceGenerationContext : JsonSerializerContext
+{
+}
 
 // https://github.com/dotnet/runtimelab/issues/635
 // https://github.com/dotnet/runtime/issues/63843
@@ -24,7 +34,7 @@ public partial class JsonHelper
         Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
         NumberHandling = JsonNumberHandling.AllowReadingFromString,
 
-        TypeInfoResolver = new DefaultJsonTypeInfoResolver(),
+        TypeInfoResolver = SourceGenerationContext.Default,
 
         Converters =
         {

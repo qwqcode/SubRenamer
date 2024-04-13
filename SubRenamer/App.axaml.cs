@@ -1,13 +1,22 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using Avalonia.Threading;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using SubRenamer.ViewModels;
 using SubRenamer.Views;
 using Microsoft.Extensions.DependencyInjection;
+using MsBox.Avalonia;
+using MsBox.Avalonia.Dto;
+using MsBox.Avalonia.Enums;
+using MsBox.Avalonia.Models;
+using SubRenamer.Helper;
 using SubRenamer.Model;
 using SubRenamer.Services;
 
@@ -16,6 +25,7 @@ namespace SubRenamer
     public partial class App : Application
     {
         public static readonly UpdateService Updater = new UpdateService();
+        public static readonly string CrashLogFile = Path.Combine(Config.ConfigDir, "crash.log");
         
         public App()
         {
@@ -99,6 +109,8 @@ namespace SubRenamer
 
         private static void _afterInitTasks(MainViewModel? mainWindowStore)
         {
+            IssueReporter.CheckCrashAndShowDialog();
+            
             Task.Run(async () =>
             {
                 if (!Config.Get().UpdateCheck) return;
