@@ -198,7 +198,7 @@ public partial class MainViewModel : ViewModelBase
     #region MenuBar
     [ObservableProperty] private string _currMatchModeText = "";
     [ObservableProperty] private string _currVersionText = $"v{Config.AppVersion}";
-    [ObservableProperty] private string _currVersionBtnLink = "https://github.com/qwqcode/SubRenamerNG";
+    [ObservableProperty] private string _currVersionBtnLink = "https://github.com/qwqcode/SubRenamer";
     
     /**
      * Sync current status text

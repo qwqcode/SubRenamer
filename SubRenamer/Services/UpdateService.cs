@@ -31,7 +31,7 @@ public class UpdateService
     
     public async Task<string?> GetUpdatesAsync()
     {
-        const string url = "https://api.github.com/repos/qwqcode/SubRenamerNG/releases/latest";
+        const string url = "https://api.github.com/repos/qwqcode/SubRenamer/releases/latest";
 
         using var httpClient = new HttpClient();
         httpClient.DefaultRequestHeaders.CacheControl = new CacheControlHeaderValue
