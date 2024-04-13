@@ -22,16 +22,16 @@ SubRenamer 专注于字幕文件改名，简单易用。
 
 ## 如何拥有 SubRenamer?
 
-### GitHub 下载
+点击以下链接下载最新版本：
 
-- [Windows (x86)](https://github.com/qwqcode/SubRenamerNG/releases/latest/download/SubRenamer_windows_amd64.zip)
-- [macOS (M1)](https://github.com/qwqcode/SubRenamerNG/releases/latest/download/SubRenamer_macos_arm64.zip)
-- [macOS (Intel)](https://github.com/qwqcode/SubRenamerNG/releases/latest/download/SubRenamer_macos_amd64.zip)
-- [Linux (x86)](https://github.com/qwqcode/SubRenamerNG/releases/latest/download/SubRenamer_linux_amd64.tar.gz)
+|<img width="32" src="https://github.com/qwqcode/SubRenamer/assets/22412567/2772a99b-f10f-48cd-aed7-58488e7a726e">|<img width="32" src="https://github.com/qwqcode/SubRenamer/assets/22412567/0aef7104-b7bc-4bde-94c3-3f9df044d66b">|<img width="32" src="https://github.com/qwqcode/SubRenamer/assets/22412567/8b41fffd-2eb3-4a78-b1bd-8751a09c36c5">|
+|-|-|-|
+| [Windows (x86)](https://github.com/qwqcode/SubRenamer/releases/latest/download/SubRenamer_windows_amd64.zip) | [macOS (M1)](https://github.com/qwqcode/SubRenamer/releases/latest/download/SubRenamer_macos_arm64.zip) | [Linux (x86)](https://github.com/qwqcode/SubRenamer/releases/latest/download/SubRenamer_linux_amd64.tar.gz) |
 
-### 网盘下载
 
-- [蓝奏云](https://www.lanzoui.com/)
+可在 [Release](https://github.com/qwqcode/SubRenamer/releases) 页面找到历史版本和更新日志。
+
+如果下载速度慢，可以尝试网盘下载：[蓝奏云](https://www.lanzoui.com/)
 
 ## 使用教程
 
@@ -41,20 +41,22 @@ SubRenamer 专注于字幕文件改名，简单易用。
 
 ## 特性
 
-- **自动匹配**：自动识别算法，一键匹配视频文件和字幕文件
-- **拖拽导入**：支持拖拽导入文件及文件夹
-- **多语言字幕筛选**：自动检测并筛选指定语言的字幕
-- **多种匹配规则**：多种匹配规则，满足不同需求
-- **正则表达式编辑器**：包含正则表达式匹配测试工具
+- **自动匹配**：自动识别算法，一键匹配
+- **拖拽导入**：拖拽快速导入文件及文件夹
+- **多语言筛选**：自动检测并筛选指定语言的字幕
+- **多种匹配规则**：对于复杂的文件名格式，支持手动匹配
 - **手动匹配编辑器**：自定义规则，支持简单通配符
-- **右键菜单**：支持快速复制改名 Linux 命令到剪贴板
-- **字幕备份**：改名前自动备份
-- **自定义后缀名**：修改用于导入判断的文件类型的后缀名
+- **正则表达式编辑器**：包含正则表达式匹配测试工具
+- **匹配微调**：支持对匹配结果进行微调
+- **改名命令**：右键快速复制 Linux 改名命令到剪贴板
+- **字幕备份**：改名前自动备份字幕文件
+- **后缀名**：通过后缀名自动区分视频和字幕，支持自定义
 - **快捷键**：支持快捷键操作，提高效率
 - **夜间模式**：支持夜间模式，跟随系统切换
 - **跨平台**：支持 Windows、macOS、Linux
 - **体积小**：仅 15MB 左右
 
+> [!IMPORTANT]\
 > 重制说明：SubRenamer 第一版于 2019 年发布，当时使用 WinForm 进行开发，仅支持 Windows 平台。2024 年 SubRenamer 完成重制发布 v2.0 版本，采用全新技术栈 AvaloniaUI + .NET 8 开发，支持跨平台，能够在 Windows、macOS、Linux 上原生运行（不是 Electron.js）。
 
 <img width="800" src="https://github.com/qwqcode/SubRenamer/assets/22412567/9b620a47-61cb-418a-b6d3-3dd2e0140f69">
