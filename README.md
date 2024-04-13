@@ -129,7 +129,11 @@ sudo xattr -d com.apple.quarantine /Applications/SubRenamer.app
 
 **在 Linux Wayland 桌面环境没有缩放？**
 
-这是一个上游问题，AvaloniaUI 在 Wayland 桌面环境下缩放比例可能不准确，导致文字很小，可以在启动时设置环境变量 `AVALONIA_SCREEN_SCALE_FACTORS="eDP-1=2;" ./SubRenamer` 来手动设置缩放比例。
+这是一个上游问题，AvaloniaUI 在 Wayland 桌面环境下缩放比例可能不准确，导致文字很小，可以在启动时设置环境变量手动设置缩放比例。
+
+```bash
+AVALONIA_SCREEN_SCALE_FACTORS="eDP-1=2;" ./SubRenamer
+```
 
 - https://github.com/AvaloniaUI/Avalonia/issues/9390
 - https://github.com/AvaloniaUI/Avalonia/wiki/Configuring-X11-per-monitor-DPI
@@ -143,6 +147,8 @@ sudo xattr -d com.apple.quarantine /Applications/SubRenamer.app
 [![Stargazers over time](https://starchart.cc/qwqcode/SubRenamer.svg)](https://starchart.cc/qwqcode/SubRenamer)
 
 ## 编译说明
+
+建议使用 Rider 或 Visual Studio 2022 打开项目。
 
 ### Prerequisites
 
@@ -176,3 +182,26 @@ pwsh ./publish.ps1
 ```
 
 > if you builder the installer with nsis, you can ignore upx compression, so you can get better startup performance.
+
+## 技术实现
+
+- AOT 编译，单文件发布
+- 多平台打包及分发
+- 跨平台适配处理
+- IoC 容器，依赖注入，MVVM，LINQ
+- JSON 源生成器
+- 多线程，纤程
+- 全局异常捕获
+- 错误日志反馈
+- JSON 配置管理
+- 版本管理，升级检查
+- 用量统计
+- GitHub API
+- GitHub Actions CI/CD
+- 单元测试
+- 多语言，国际化
+- HiDPI 支持
+
+## 开源协议
+
+本项目采用 GPL-2.0 协议开源，详见 [LICENSE](./LICENSE) 文件。
