@@ -1,0 +1,65 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:SubRenamer.ViewModels"
+        mc:Ignorable="d"
+        x:Class="SubRenamer.Views.ItemEditWindow"
+        Title="编辑"
+        WindowStartupLocation="CenterOwner"
+        Width="500"
+        SizeToContent="Height">
+
+        <Design.DataContext>
+                <vm:ItemEditViewModel />
+        </Design.DataContext>
+        
+        <Window.Styles>
+                <Style Selector="Button.OpBtn">
+                        <Setter Property="Width" Value="50" />
+                        <Setter Property="VerticalAlignment" Value="Stretch" />
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                </Style>
+        </Window.Styles>
+        
+        <StackPanel>
+                <Grid ColumnDefinitions="Auto,*,Auto" Margin="10">
+                        <StackPanel Grid.Column="0" Orientation="Horizontal">
+                                <Label VerticalAlignment="Center">匹配</Label>
+                                <Border Width="10" />
+                                <TextBox Text="{Binding CurrItem.Key}" />
+                        </StackPanel>
+                        
+                        <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="5">
+                                <Button Classes="OpBtn" Command="{Binding DeleteCurrentCommand}">-</Button>
+                                <Button Classes="OpBtn" Command="{Binding PrevCommand}">«</Button>
+                                <TextBox IsReadOnly="True" Text="{Binding CurrPosText}" />
+                                <Button Classes="OpBtn" Command="{Binding NextCommand}">»</Button>
+                                <Button Classes="OpBtn" Command="{Binding CreateItemCommand}">+</Button>
+                        </StackPanel>
+                </Grid>
+                
+                <Border BorderThickness=".5" BorderBrush="#D2D4D5"></Border>
+                
+                <Label Margin="10 10 10 0">视频文件</Label>
+                <Grid ColumnDefinitions="*,5,50" Margin="10">
+                        <TextBox Grid.Column="0" Height="150" AcceptsReturn="True" TextWrapping="Wrap" IsReadOnly="True" Text="{Binding CurrItem.Video}" />
+                        <StackPanel Grid.Column="2">
+                                <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Command="{Binding OpenFileCommand}" CommandParameter="video">...</Button>
+                                <Border Height="10"></Border>
+                                <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Command="{Binding DropVideoCommand}">✕</Button>
+                        </StackPanel>
+                </Grid>
+                
+                <Label Margin="10 0">字幕文件</Label>
+                <Grid ColumnDefinitions="*,5,50" Margin="10">
+                        <TextBox Grid.Column="0" Height="150" AcceptsReturn="True" TextWrapping="Wrap" IsReadOnly="True" Text="{Binding CurrItem.Subtitle}" />
+                        <StackPanel Grid.Column="2">
+                                <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Command="{Binding OpenFileCommand}" CommandParameter="subtitle">...</Button>
+                                <Border Height="10"></Border>
+                                <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Command="{Binding DropSubtitleCommand}">✕</Button>
+                        </StackPanel>
+                </Grid>
+        </StackPanel>
+</Window>

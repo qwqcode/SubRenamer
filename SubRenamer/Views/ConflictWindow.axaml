@@ -1,0 +1,50 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModels="clr-namespace:SubRenamer.ViewModels"
+        mc:Ignorable="d"
+        x:Class="SubRenamer.Views.ConflictWindow"
+        Title="字幕筛选"
+        WindowStartupLocation="CenterOwner"
+        Width="400"
+        SizeToContent="Height">
+
+        <Design.DataContext>
+                <viewModels:ConflictViewModel/>
+        </Design.DataContext>
+        
+        <Window.Styles>
+                <Style Selector="ListBox.RadioButtonListBox">
+                        <Setter Property="BorderBrush" Value="Transparent"/>
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Setter Property="Background" Value="Transparent"/>
+                </Style>
+                <Style Selector="ListBox.RadioButtonListBox ListBoxItem">
+                        <Setter Property="Template">
+                                <Setter.Value>
+                                        <ControlTemplate>
+                                                <Border Background="Transparent">
+                                                        <RadioButton Content="{TemplateBinding ContentPresenter.Content}"
+                                                                     VerticalAlignment="Center"
+                                                                     IsChecked="{Binding Path=IsSelected,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}"/>
+                                                </Border>
+                                        </ControlTemplate>
+                                </Setter.Value>
+                        </Setter>
+                </Style>
+        </Window.Styles>
+        
+        <StackPanel Margin="20">
+                <TextBlock Text="检测到字幕似乎存在多种语言，请选择：" FontSize="16" Margin="0,0,0,10"/>
+        
+                <!-- Dynamic Radio Group -->
+                <ListBox ItemsSource="{Binding Labels}"
+                         SelectedItem="{Binding SelectedLabel}"
+                         Classes="RadioButtonListBox"/>
+                
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                        <Button Content="导入文件" Name="ConfirmBtn" Click="ConfirmBtn_OnClick" Width="100" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,20,0,0" />
+                </StackPanel>
+        </StackPanel>
+</Window>

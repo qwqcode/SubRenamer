@@ -1,148 +1,64 @@
-﻿using Microsoft.Win32;
+using Avalonia;
+using Avalonia.ReactiveUI;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Reflection;
 using System.Text;
-using System.Threading;
+using System.Threading.Tasks;
 using System.Web;
-using System.Windows.Forms;
+using SubRenamer.Helper;
 
-namespace SubRenamer
+namespace SubRenamer;
+
+internal class Program
 {
-    static class Program
+    // Initialization code. Don't use any Avalonia, third-party APIs or any
+    // SynchronizationContext-reliant code before AppMain is called: things aren't initialized
+    // yet and stuff might break.
+    [STAThread]
+    public static void Main(string[] args)
     {
-        /// <summary>
-        /// 应用程序的主入口点。
-        /// </summary>
-        [STAThread]
-        static void Main()
-        {
-            if (!IsSupportedRuntimeVersion())
-            {
-                MessageBox.Show("当前 .NET Framework 版本过低，请升级至 4.5 或更新版本",
-                "运行库版本过低", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                Process.Start(
-                    "https://www.microsoft.com/zh-cn/download/details.aspx?id=53344");
-                return;
-            }
-
 #if !DEBUG
-                Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
-                Application.ThreadException += Application_ThreadException;
-                AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+        try
+        {
 #endif
-
-            Application.ApplicationExit += Application_ApplicationExit;
-
-            Application.EnableVisualStyles();
-            Application.Run(new MainForm());
+            BuildAvaloniaApp()
+                .StartWithClassicDesktopLifetime(args);
+#if !DEBUG
         }
-
-        public static RegistryKey OpenRegKey(string name, bool writable, RegistryHive hive = RegistryHive.CurrentUser)
+        catch (Exception e)
         {
-            // we are building x86 binary for both x86 and x64, which will
-            // cause problem when opening registry key
-            // detect operating system instead of CPU
-            if (string.IsNullOrEmpty(name)) throw new ArgumentException(nameof(name));
-            try
+            // here we can work with the exception, for example add it to our log file
+            // Log.Fatal(e, "Something very bad happened");
+
+            CreateGitHubIssue(e.Message, e.StackTrace ?? "");
+        }
+        finally
+        {
+            // This block is optional. 
+            // Use the finally-block if you need to clean things up or similar
+            // Log.CloseAndFlush();
+        }
+#endif
+    }
+
+    // Avalonia configuration, don't remove; also used by visual designer.
+    public static AppBuilder BuildAvaloniaApp()
+        => AppBuilder.Configure<App>()
+            .UsePlatformDetect()
+            .WithInterFont()
+            .LogToTrace()
+            .UseReactiveUI()
+            .With(new MacOSPlatformOptions
             {
-                RegistryKey userKey = RegistryKey.OpenBaseKey(hive,
-                        Environment.Is64BitOperatingSystem ? RegistryView.Registry64 : RegistryView.Registry32)
-                    .OpenSubKey(name, writable);
-                return userKey;
-            }
-            catch (ArgumentException ae)
-            {
-                MessageBox.Show("OpenRegKey: " + ae.ToString());
-                return null;
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.ToString());
-                return null;
-            }
-        }
-
-        // See: https://msdn.microsoft.com/en-us/library/hh925568(v=vs.110).aspx
-        public static bool IsSupportedRuntimeVersion()
+                DisableDefaultApplicationMenuItems = true
+            });
+    
+    private static void CreateGitHubIssue(string caption, string details)
+    {
+        Task.Run(() =>
         {
-            const int minSupportedRelease = 378389; // NET 4.5
-
-            const string subkey = @"SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full\";
-            using (var ndpKey = OpenRegKey(subkey, false, RegistryHive.LocalMachine))
-            {
-                if (ndpKey?.GetValue("Release") != null)
-                {
-                    var releaseKey = (int)ndpKey.GetValue("Release");
-
-                    if (releaseKey >= minSupportedRelease)
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-
-        private static int exited = 0;
-
-        private static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
-        {
-            if (Interlocked.Increment(ref exited) == 1)
-            {
-                string errMsg = $"异常细节: {Environment.NewLine}{e.Exception}";
-                ErrorCatchAction("UI Error", errMsg);
-                // Application.Exit();
-            }
-        }
-
-        private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
-        {
-            if (Interlocked.Increment(ref exited) == 1)
-            {
-                string errMsg = $"异常细节: {Environment.NewLine}{e.ExceptionObject.ToString()}";
-                ErrorCatchAction("non-UI Error", errMsg);
-                // Application.Exit();
-            }
-        }
-
-        private static void ErrorCatchAction(string type, string errorMsg)
-        {
-            string title = $"意外错误：{Application.ProductName} {"v" + Application.ProductVersion.ToString()}";
-            Process.Start($"https://github.com/qwqcode/SubRenamer/issues/new?title={ HttpUtility.UrlEncode(title, Encoding.UTF8) }&body={ HttpUtility.UrlEncode(type + "\n" + errorMsg, Encoding.UTF8) }");
-            MessageBox.Show(
-                $"{title} 程序即将退出，请发起 issue 来反馈，谢谢 {Environment.NewLine}{errorMsg}",
-                $"{Application.ProductName} {type}", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
-
-        private static void Application_ApplicationExit(object sender, EventArgs e)
-        {
-            // detach static event handlers
-            Application.ApplicationExit -= Application_ApplicationExit;
-            Application.ThreadException -= Application_ThreadException;
-        }
-
-        public static string GetVersionStr()
-        {
-            return "v" + Application.ProductVersion.ToString();
-        }
-
-        public static void OpenAuthorBlog()
-        {
-            Process.Start("https://qwqaq.com/?from=SubRenamer");
-        }
-
-        public static string GetAppName() => Assembly.GetExecutingAssembly().GetName().Name;
-
-        public static string GetNowDatetime() => DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-
-        public static void Log(params string[] textArr)
-        {
-            File.AppendAllText(Global.LOG_FILENAME, $"[{Program.GetNowDatetime()}]{string.Join("", textArr)}{Environment.NewLine}");
-        }
+            var title = $"[PANIC][{"v" + Config.AppVersion}] {caption}";
+            BrowserHelper.OpenBrowserAsync(
+                $"https://github.com/qwqcode/SubRenamer/issues/new?title={HttpUtility.UrlEncode(title, Encoding.UTF8)}&body={HttpUtility.UrlEncode(caption + "\n\n```\n" + details + "\n```", Encoding.UTF8)}");
+        });
     }
 }

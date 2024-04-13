@@ -1,0 +1,124 @@
+name: Build
+
+on:
+  push:
+    tags:
+      - '*'
+
+env:
+    DIST_DIR: /tmp/builds
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-14]
+        include:
+          - os: windows-latest
+            build: win-x64
+            file_name: win_amd64
+          - os: ubuntu-latest
+            build: linux-x64
+            file_name: linux_amd64
+          - os: macos-14
+            build: osx-arm64
+            file_name: macos_arm64
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    # Add  MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
+    - if: matrix.build == 'win-x64'
+      name: Setup MSBuild.exe
+      uses: microsoft/setup-msbuild@v2
+
+    - name: Install .NET Core
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+
+    - if: matrix.build == 'win-x64'
+      name: Download libs
+      run: |
+        mkdir SubRenamer\native
+        $BASE_URL = "https://github.com/qwqcode/qwqcode/releases/download/dotnet-lib/"
+        $FILES = "av_libglesv2.lib,libSkiaSharp.lib,libHarfBuzzSharp.lib"
+        $FILES.Split(",") | ForEach-Object {
+          Invoke-WebRequest -Uri "$BASE_URL$_" -OutFile "SubRenamer\native\$_"
+        }
+
+    - name: Restore
+      run: dotnet restore -r ${{ matrix.build }}
+
+    - if: matrix.build != 'osx-arm64'
+      name: Install UPX
+      uses: crazy-max/ghaction-upx@v3
+      with:
+          install-only: true
+
+    - if: matrix.build == 'win-x64'
+      name: Build (win)
+      run: |
+        cd scripts
+        .\build-win.ps1
+        New-Item -ItemType Directory -Force -Path $env:DIST_DIR
+        Copy-Item -Path dist\*.zip -Destination $env:DIST_DIR
+
+    - if: matrix.build == 'linux-x64'
+      name: Build (linux)
+      run: |
+        cd scripts &&./build-linux.sh
+        mkdir -p $DIST_DIR && cp dist/*.tar.gz $DIST_DIR
+
+    - if: matrix.build == 'osx-arm64'
+      name: Build (macOS)
+      run: |
+        cd scripts && ./build-macos.sh
+        mkdir -p $DIST_DIR && cp dist/*.zip $DIST_DIR
+
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-${{ matrix.file_name }}
+        path: ${{ env.DIST_DIR }}/*
+        if-no-files-found: error
+        retention-days: 1
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download builds
+        uses: actions/download-artifact@v4
+        with:
+          path: ${{ env.DIST_DIR }}
+          pattern: build-*
+          merge-multiple: true
+
+      # checksums.txt
+      - name: Calculate checksums.txt
+        run: |
+          cd $DIST_DIR
+          sha256sum * > checksums.txt
+
+          # print checksums.txt
+          cat checksums.txt
+
+          FILES=$(find ${DIST_DIR} -type f -exec readlink -f {} \;)
+          echo -e "RELEASE_FILES<<EOF" >> $GITHUB_ENV
+          echo -e "$FILES" >> $GITHUB_ENV
+          echo -e "EOF" >> $GITHUB_ENV
+ 
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+            prerelease: false
+            files: ${{ env.RELEASE_FILES }}
+            generate_release_notes: true
+            draft: true

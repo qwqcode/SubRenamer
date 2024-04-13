@@ -1,76 +1,101 @@
-﻿<p align="center"><img src="./Screenshot.png"></p>
+<p align="center"><img src="https://github.com/qwqcode/SubRenamer/assets/22412567/3a49c011-ce41-4bc3-ab85-5237a6e9acd7"></p>
 
 # SubRenamer
 
-<img src='./SubRenamer/icon/icon.png' width='150' align="right" />
+<img src="https://github.com/qwqcode/SubRenamer/assets/22412567/ef9b38b0-d1c6-4f1f-9f7e-f7b67a36d9b5" width="150" align="right" />
 
-> 番剧字幕文件自动化一键批量重命名（改名）工具
+🎞 字幕文件一键批量重命名工具
 
-> Rename Subtitle Filenames Automatically to Match Videos Easily through the Sight Tool.
+> A Subtitle File Batch Renaming Tool with One-Click Automation and Intelligence.
 
-**目的？** 重命名番剧外挂的字幕文件名，使之与视频文件名相对应
+**原因？** 如果视频和字幕文件名一致，任何视频播放器都可以自动载入字幕。
 
-**为何？** 若视频文件名与字幕文件名一一对应（文件名相同），任何视频播放器都可以自动载入字幕。
+**目的？** 重命名外挂字幕文件名，使之与视频文件名对应。
 
-[![](https://img.shields.io/github/release/qwqcode/SubRenamer.svg?style=flat-square)](https://github.com/qwqcode/SubRenamer/releases/latest) [![](https://img.shields.io/github/downloads/qwqcode/SubRenamer/total.svg?style=flat-square)](https://github.com/qwqcode/SubRenamer/releases) [![](https://img.shields.io/github/issues/qwqcode/SubRenamer.svg?style=flat-square)](https://github.com/qwqcode/SubRenamer/issues) [![](https://img.shields.io/badge/%24-donate-%23ff69b4.svg?style=flat-square)](https://github.com/qwqcode/donate-qwqaq)
+[![](https://img.shields.io/github/release/qwqcode/SubRenamer.svg?style=flat-square)](https://github.com/qwqcode/SubRenamer/releases/latest) [![](https://img.shields.io/github/downloads/qwqcode/SubRenamer/total.svg?style=flat-square)](https://github.com/qwqcode/SubRenamer/releases) [![](https://img.shields.io/github/issues/qwqcode/SubRenamer.svg?style=flat-square)](https://github.com/qwqcode/SubRenamer/issues)
 
-## 对比普通批量改名软件，有何异同？
+## 对比普通批量改名软件，有什么区别？
 
 SubRenamer 专注于字幕文件改名，简单易用。
 
-对于大多数视频与字幕文件，您仅需将其拖入程序，即可自动精准地识别，一键改名，省去了普通改名软件较为繁杂的设置操作。
+对于大多数视频与字幕文件，您仅需将其拖入程序，即可被自动精准地识别，一键改名，省去了普通改名软件较为繁杂的设置操作。
 
-## 如何拥有 SubRenamer ?
+## 如何拥有 SubRenamer?
 
-<details>
-  
-  <summary>点我查看</summary>
-  
-  
-获取最新版程序，可到 [Releases](https://github.com/qwqcode/SubRenamer/releases/latest) 页
+点击以下链接下载最新版本：
 
-速度慢？请: https://wwi.lanzous.com/s/sub-renamer （密码:233）
+| [<img width="32" src="https://github.com/qwqcode/SubRenamer/assets/22412567/2772a99b-f10f-48cd-aed7-58488e7a726e">](https://github.com/qwqcode/SubRenamer/releases/latest/download/SubRenamer_windows_amd64.zip) | [<img width="32" src="https://github.com/qwqcode/SubRenamer/assets/22412567/0aef7104-b7bc-4bde-94c3-3f9df044d66b">](https://github.com/qwqcode/SubRenamer/releases/latest/download/SubRenamer_macos_arm64.zip) | [<img width="32" src="https://github.com/qwqcode/SubRenamer/assets/22412567/8b41fffd-2eb3-4a78-b1bd-8751a09c36c5">](https://github.com/qwqcode/SubRenamer/releases/latest/download/SubRenamer_linux_amd64.tar.gz) |
+|-|-|-|
+| [Windows (x86)](https://github.com/qwqcode/SubRenamer/releases/latest/download/SubRenamer_windows_amd64.zip) | [macOS (M1)](https://github.com/qwqcode/SubRenamer/releases/latest/download/SubRenamer_macos_arm64.zip) | [Linux (x86)](https://github.com/qwqcode/SubRenamer/releases/latest/download/SubRenamer_linux_amd64.tar.gz) |
 
-> P.S. 程序依赖 NET >= 4.5 的运行环境，请先下载安装：https://dotnet.microsoft.com/download (若为 Win10 用户，请无视此操作)
 
-</details>
+可在 [Release](https://github.com/qwqcode/SubRenamer/releases) 页面找到历史版本和更新日志。
 
-## 如何食用
+如果下载速度慢，可以尝试网盘下载：[蓝奏云](https://www.lanzoui.com/)
 
-可见：[哔哩哔哩传送门](https://www.bilibili.com/video/BV1e7411y7rG)
+## 使用教程
+
+[【B站】「追番神器」真 · 番剧字幕一键重命名 自动化字幕文件批量改名工具程序](https://www.bilibili.com/video/BV1e7411y7rG)
+
+[【小众软件】SubRenamer – 字幕批量重命名，自动匹配视频文件与字幕文件[Windows]](https://www.appinn.com/subrenamer-for-windows)
 
 ## 特性
 
-- 体积小巧 (~1MB)
-- 操作简单
-- 拖拽文件导入
-- 一键改名【真】
-- 自动匹配（无需导入顺序）
-- 手动匹配（精确匹配）
-- 正则表达式匹配（复杂需求）
-- 支持 备份原字幕
-- 支持 导出为命令行命令
-- 支持 根据字幕修改视频文件名（VideoRenamer）
+- **自动匹配**：自动识别算法，一键匹配
+- **拖拽导入**：拖拽快速导入文件及文件夹
+- **多语言筛选**：自动检测并筛选指定语言的字幕
+- **多种匹配规则**：对于复杂的文件名格式，支持手动匹配
+- **手动匹配编辑器**：自定义规则，支持简单通配符
+- **正则表达式编辑器**：包含正则表达式匹配测试工具
+- **匹配微调**：支持对匹配结果进行微调
+- **改名命令**：右键快速复制 Linux 改名命令到剪贴板
+- **字幕备份**：改名前自动备份字幕文件
+- **后缀名**：通过后缀名自动区分视频和字幕，支持自定义
+- **快捷键**：支持快捷键操作，提高效率
+- **夜间模式**：支持夜间模式，跟随系统切换
+- **跨平台**：支持 Windows、macOS、Linux
+- **体积小**：仅 15MB 左右
 
-## 原理解释
+> [!IMPORTANT]\
+> 重制说明：SubRenamer 第一版于 2019 年发布，当时使用 WinForm 进行开发，仅支持 Windows 平台。2024 年 SubRenamer 完成重制发布 v2.0 版本，采用全新技术栈 AvaloniaUI + .NET 8 开发，支持跨平台，能够在 Windows、macOS、Linux 上原生运行（不是 Electron.js）。
 
-<details>
-  
-  <summary>为什么 SubRenamer 能准确识别您的文件：</summary>
-  
+<img width="800" src="https://github.com/qwqcode/SubRenamer/assets/22412567/9b620a47-61cb-418a-b6d3-3dd2e0140f69">
+
+| 匹配编辑 | 匹配规则自定义 |
+|-|-|
+| <img width="612" src="https://github.com/qwqcode/SubRenamer/assets/22412567/2976022a-2545-4e0e-8202-bd3e00708e4a"> | <img width="612" src="https://github.com/qwqcode/SubRenamer/assets/22412567/7dd80067-74c8-4c73-939f-fd7b01cb3d2b"> |
+
+| 手动匹配规则编辑器 | 正则表达式规则编辑器 |
+|-|-|
+| <img width="822" src="https://github.com/qwqcode/SubRenamer/assets/22412567/ec201431-0bbc-4ca2-8963-f7ec1ce46e32"> | <img width="612" src="https://github.com/qwqcode/SubRenamer/assets/22412567/9f67d09d-4f6d-4675-834d-f7e03540d09d"> |
+
+| 夜间模式 | 字幕语言筛选 |
+|-|-|
+| <img width="600" src="https://github.com/qwqcode/SubRenamer/assets/22412567/fa46d20a-3c95-440f-90a1-f50df192c876"> |  <img width="512" src="https://github.com/qwqcode/SubRenamer/assets/22412567/59e1b56f-14d9-4414-adcc-7f259b138a35"> |
+
+| 右键菜单 | 快捷键支持 | 字幕备份 |
+|-|-|-|
+| <img width="224" src="https://github.com/qwqcode/SubRenamer/assets/22412567/e890b761-149f-4902-90ea-6f7ff7b91699"> | <img width="224" src="https://github.com/qwqcode/SubRenamer/assets/22412567/b06126e1-4541-442e-b76f-5de792c7db81"> | <img width="412" src="https://github.com/qwqcode/SubRenamer/assets/22412567/dbb0305a-9d1a-4d85-9e9a-7c7a45a82e25"> |
+
+**拖拽导入文件**
+
+[拖拽导入视频演示](https://github.com/qwqcode/SubRenamer/assets/22412567/9de8fa00-6010-4b3a-83a6-2c976dc97090)
+
+## 算法原理
+
 ### 自动匹配模式
 
-“自动匹配”是指：通过对比 **两个**字幕或视频的**文件名** 之间的差异，**来确定**“集数”的**位置**，从而**较为准确**地将视频文件与字幕文件**关联**起来，达到“**一键改名**”的目的。
+自动匹配模式通过比对文件名之间的差异部分 (diff) 来确定集数 (extract)，并根据集数自动关联视频文件和字幕文件 (mapping)，以实现自动匹配。
 
-这就意味着：您需要导入至少两个视频文件和两个字幕文件，才能进行自动匹配。
+为实施自动匹配，需导入至少两个文件名格式一致的视频文件和两个字幕文件。
+
+> 相关代码可见：[SubRenamer/Matcher](https://github.com/qwqcode/SubRenamer/tree/main/SubRenamer/Matcher)
 
 ### 手动匹配模式
 
-例如，您遇到了这样的情况，一个视频有**多种**语言的**字幕文件**，而这些**字幕文件**又存在于**同一个**文件夹中，导致**无法**通过“自动匹配”模式**准确关联**视频和字幕，则可以使用手动匹配模式。
+自动匹配模式可能在复杂的文件名格式下失效，此时可切换至手动匹配模式，手动模式允许你自定义规则（支持简单通配符和正则表达式）。程序提供一个简单的编辑器，以便你可以快速地编写匹配规则。
 
-</details>
-
-## 使用场景
+## 用户故事
 
 <details>
 
@@ -92,34 +117,62 @@ SubRenamer 专注于字幕文件改名，简单易用。
 
 ## FAQ
 
-<details>
-  
-Q: 如果我的字幕有多种语言的版本，在同一个文件夹内，无法识别怎么办？
+**macOS 无法打开，提示已损坏**
 
-A: 您可以使用手动匹配模式，或者手动选中其中一个语言并拖入程序中即可识别。
+网上可以找到很多解决的方法，这里提供一个方法，在终端中输入以下命令：
 
-</details>
-  
-## 特别鸣谢
+```bash
+sudo xattr -d com.apple.quarantine /Applications/SubRenamer.app
+```
 
-[【小众软件】SubRenamer – 字幕批量重命名，自动匹配视频文件与字幕文件[Windows]](https://www.appinn.com/subrenamer-for-windows)
+原因是没有经过苹果开发者签名，macOS 会提示已损坏，而注册开发者账号需要 99 美元/年。
+
+**在 Linux Wayland 桌面环境没有缩放？**
+
+这是一个上游问题，AvaloniaUI 在 Wayland 桌面环境下缩放比例可能不准确，导致文字很小，可以在启动时设置环境变量 `AVALONIA_SCREEN_SCALE_FACTORS="eDP-1=2;" ./SubRenamer` 来手动设置缩放比例。
+
+- https://github.com/AvaloniaUI/Avalonia/issues/9390
+- https://github.com/AvaloniaUI/Avalonia/wiki/Configuring-X11-per-monitor-DPI
 
 ## 有 BUG?
 
-可在 [issues 页](https://github.com/qwqcode/SubRenamer/issues) 进行反馈，或发 Email 到 qwqcode@qq.com 联系我，欢迎反馈~~
-
-## 捐助
-
-如果您觉得我的项目对您有帮助，并且您愿意给予我一点小小的支持，您可以通过以下方式向我捐助，这样可以维持项目的持续发展，非常感谢！(/ω＼)
-
-| Alipay | Wechat | 
-| :------: | :------: | 
-| <img width="150" src="https://raw.githubusercontent.com/qwqcode/donate-qwqaq/master/docs/donate/alipay.png"> | <img width="150" src="https://raw.githubusercontent.com/qwqcode/donate-qwqaq/master/docs/donate/wechat.png"> | 
-
-捐助者的名字将保存于 [捐助者名单](https://github.com/qwqcode/donate-qwqaq)
-
-最后，我再次对您致以最最最诚挚的感谢！
+可在 [issues 页](https://github.com/qwqcode/SubRenamer/issues) 反馈。
 
 ## Stargazers over time
 
 [![Stargazers over time](https://starchart.cc/qwqcode/SubRenamer.svg)](https://starchart.cc/qwqcode/SubRenamer)
+
+## 编译说明
+
+### Prerequisites
+
+Windows
+
+```bash
+Visual Studio 2022, including .NET 8 & Desktop development with C++ workload.
+```
+
+Ubuntu (20.04+)
+
+```bash
+sudo apt-get install dotnet-sdk-8.0 libicu-dev cmake zlib1g-dev -y
+```
+
+### Publish with NativeAOT
+
+```bash
+dotnet publish -r <RID> -c Release
+
+# Build for Windows example
+dotnet publish -r win-x64 -c Release
+```
+
+### Builder the installer with NSIS
+
+NSIS installer `~13MB size`
+
+```bash
+pwsh ./publish.ps1
+```
+
+> if you builder the installer with nsis, you can ignore upx compression, so you can get better startup performance.

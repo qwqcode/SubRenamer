@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=SubRenamer
+Comment=A subtitle renaming tool
+Exec=YOUR_LOCAL_FOLDER/SubRenamer
+Icon=YOUR_LOCAL_FOLDER/SubRenamer.icns
+Type=Application
+Terminal=false
