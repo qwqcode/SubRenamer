@@ -117,6 +117,16 @@ SubRenamer 专注于字幕文件改名，简单易用。
 
 ## FAQ
 
+**macOS 无法打开，提示已损坏**
+
+网上可以找到很多解决的方法，这里提供一个方法，在终端中输入以下命令：
+
+```bash
+sudo xattr -d com.apple.quarantine /Applications/SubRenamer.app
+```
+
+原因是没有经过苹果开发者签名，macOS 会提示已损坏，而注册开发者账号需要 99 美元/年。
+
 **在 Linux Wayland 桌面环境没有缩放？**
 
 这是一个上游问题，AvaloniaUI 在 Wayland 桌面环境下缩放比例可能不准确，导致文字很小，可以在启动时设置环境变量 `AVALONIA_SCREEN_SCALE_FACTORS="eDP-1=2;" ./SubRenamer` 来手动设置缩放比例。
