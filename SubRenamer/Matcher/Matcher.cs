@@ -30,9 +30,9 @@ public static class Matcher
         });
         
         // Get file keys
-        var m = Config.MatchMode;
-        var videoRegex = (m != MatchMode.Diff) ? (m == MatchMode.Manual ? Config.ManualVideoRegex : Config.VideoRegex) : null;
-        var subtitleRegex = (m != MatchMode.Diff) ? (m == MatchMode.Manual ? Config.ManualSubtitleRegex : Config.SubtitleRegex) : null;
+        var m = Config.Get().MatchMode;
+        var videoRegex = (m != MatchMode.Diff) ? (m == MatchMode.Manual ? Config.Get().ManualVideoRegex : Config.Get().VideoRegex) : null;
+        var subtitleRegex = (m != MatchMode.Diff) ? (m == MatchMode.Manual ? Config.Get().ManualSubtitleRegex : Config.Get().SubtitleRegex) : null;
         
         var video2Keys = CalculateFileKeys(videoFiles, videoRegex);
         var subtitle2Keys = CalculateFileKeys(subtitleFiles, subtitleRegex);

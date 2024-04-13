@@ -21,9 +21,7 @@ public class Tests
             "[Kamigami] Shingeki no Kyojin - 02 [1920x1080 x264 AAC Sub(GB,Big5,Jap)].mkv",
             "[Kamigami] Shingeki no Kyojin - 03 [1920x1080 x264 AAC Sub(GB,Big5,Jap)].mkv",
         ]);
-        Console.WriteLine(pos.Prefix);
-        Console.WriteLine(pos.Suffix);
-        
-        // Assert.That(pos, Is.EqualTo());
+        Console.WriteLine(pos?.Prefix);
+        Console.WriteLine(pos?.Suffix);
     }
 }

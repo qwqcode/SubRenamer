@@ -1,103 +1,39 @@
 using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Styling;
-using Microsoft.Extensions.Configuration;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Dynamic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
 using SubRenamer.Common;
 using SubRenamer.Helper;
 
 namespace SubRenamer;
 
-public class Config
+public partial class Config
 {
-    public static ThemeMode ThemeMode { get; set; } = ThemeMode.Default;
-    public static bool Backup { get; set; } = true;
-    public static bool UpdateCheck { get; set; } = true;
-    public static string VideoExtAppend { get; set; } = "";
-    public static string SubtitleExtAppend { get; set; } = "";
-    public static MatchMode MatchMode { get; set; } = MatchMode.Diff;
-    public static string VideoRegex { get; set; } = "";
-    public static string SubtitleRegex { get; set; } = "";
+    public ThemeMode ThemeMode { get; set; } = ThemeMode.Default;
+    public bool Backup { get; set; } = true;
+    public bool UpdateCheck { get; set; } = true;
+    
+    public string VideoExtAppend { get; set; } = "";
+    public string SubtitleExtAppend { get; set; } = "";
+    
+    public MatchMode MatchMode { get; set; } = MatchMode.Diff;
+    
+    public string VideoRegex { get; set; } = "";
+    public string SubtitleRegex { get; set; } = "";
     
     // Manual Match Mode Configs
-    public static string ManualVideoRegex { get; set; } = "";
-    public static string ManualSubtitleRegex { get; set; } = "";
-    public static string ManualVideo { get; set; } = "";
-    public static string ManualSubtitle { get; set; } = "";
-    public static string ManualVideoRaw { get; set; } = "";
-    public static string ManualSubtitleRaw { get; set; } = "";
-    
-    /// <summary>
-    /// Loads user configs from file.
-    /// </summary>
-    public static void Load()
-    {
-        Directory.CreateDirectory(ConfigDir);
-        if (LoadUserConfigs() is not IConfiguration items) return;
+    public string ManualVideoRegex { get; set; } = "";
+    public string ManualSubtitleRegex { get; set; } = "";
+    public string ManualVideo { get; set; } = "";
+    public string ManualSubtitle { get; set; } = "";
+    public string ManualVideoRaw { get; set; } = "";
+    public string ManualSubtitleRaw { get; set; } = "";
+}
 
-        ThemeMode = items.GetValue(nameof(ThemeMode), ThemeMode);
-        
-        Backup = items.GetValue(nameof(Backup), Backup);
-        UpdateCheck = items.GetValue(nameof(UpdateCheck), UpdateCheck);
-        VideoExtAppend = items.GetValue(nameof(VideoExtAppend), VideoExtAppend);
-        SubtitleExtAppend = items.GetValue(nameof(SubtitleExtAppend), SubtitleExtAppend);
-        
-        MatchMode = items.GetValue(nameof(MatchMode), MatchMode);
-        
-        VideoRegex = items.GetValue(nameof(VideoRegex), VideoRegex);
-        SubtitleRegex = items.GetValue(nameof(SubtitleRegex), SubtitleRegex);
-
-        ManualVideoRegex = items.GetValue(nameof(ManualVideoRegex), ManualVideoRegex);
-        ManualSubtitleRegex = items.GetValue(nameof(ManualSubtitleRegex), ManualSubtitleRegex);
-        ManualVideo = items.GetValue(nameof(ManualVideo), ManualVideo);
-        ManualSubtitle = items.GetValue(nameof(ManualSubtitle), ManualSubtitle);
-        ManualVideoRaw = items.GetValue(nameof(ManualVideoRaw), ManualVideoRaw);
-        ManualSubtitleRaw = items.GetValue(nameof(ManualSubtitleRaw), ManualSubtitleRaw);   
-    }
-
-    /// <summary>
-    /// Write user configs to file.
-    /// </summary>
-    public static async Task SaveAsync()
-    {
-        Directory.CreateDirectory(ConfigDir);
-
-        // metadata
-        var metadata = new ExpandoObject();
-        _ = metadata.TryAdd("Description", "SubRenamer configuration file");
-        _ = metadata.TryAdd("Version", "1.0");
-
-        var settings = new ExpandoObject();
-        _ = settings.TryAdd("_Metadata", metadata);
-        
-        // user configs
-        _ = settings.TryAdd(nameof(ThemeMode), ThemeMode);
-        
-        _ = settings.TryAdd(nameof(Backup), Backup);
-        _ = settings.TryAdd(nameof(UpdateCheck), UpdateCheck);
-        _ = settings.TryAdd(nameof(VideoExtAppend), VideoExtAppend);
-        _ = settings.TryAdd(nameof(SubtitleExtAppend), SubtitleExtAppend);
-        
-        _ = settings.TryAdd(nameof(MatchMode), MatchMode);
-        _ = settings.TryAdd(nameof(VideoRegex), VideoRegex);
-        _ = settings.TryAdd(nameof(SubtitleRegex), SubtitleRegex);
-
-        _ = settings.TryAdd(nameof(ManualVideoRegex), ManualVideoRegex);
-        _ = settings.TryAdd(nameof(ManualSubtitleRegex), ManualSubtitleRegex);
-        _ = settings.TryAdd(nameof(ManualVideo), ManualVideo);
-        _ = settings.TryAdd(nameof(ManualSubtitle), ManualSubtitle);
-        _ = settings.TryAdd(nameof(ManualVideoRaw), ManualVideoRaw);
-        _ = settings.TryAdd(nameof(ManualSubtitleRaw), ManualSubtitleRaw);
-        
-        await JsonHelper.WriteJsonAsync(ConfigFilePath, settings);
-    }
+public partial class Config
+{
+    private static Config _instance = new ();
+    public static Config Get() => _instance;
     
     private static string ConfigFileName => "SubRenamer.config.json";
     // @link https://learn.microsoft.com/en-us/dotnet/api/system.environment.specialfolder?view=net-8.0
@@ -107,17 +43,34 @@ public class Config
     public static string AppName => System.Reflection.Assembly.GetExecutingAssembly().GetName().Name ?? "SubRenamer";
     public static Version AppVersion => new(System.Reflection.Assembly.GetExecutingAssembly().GetName().Version?.ToString(3) ?? "1.0.0");
     
-    private static IConfigurationRoot? LoadUserConfigs()
+    /**
+     * Loads user configs from file
+     */
+    public static void Load()
     {
-        return new ConfigurationBuilder()
-            .SetBasePath(ConfigDir)
-            .AddJsonFile(ConfigFileName, optional: true)
-            .Build();
+        Directory.CreateDirectory(ConfigDir);
+        
+        if (!File.Exists(ConfigFilePath)) return;
+
+        using (var fs = new FileStream(ConfigFilePath, FileMode.Open))
+        {
+            var conf = JsonHelper.ParseJsonSync<Config>(fs);
+            if (conf != null) _instance = conf;
+        }
     }
 
-    /// <summary>
-    /// Applies theme mode to the app.
-    /// </summary>
+    /**
+     * Write user configs to file
+     */
+    public static async void Save()
+    {
+        Directory.CreateDirectory(ConfigDir);
+        await JsonHelper.WriteJsonAsync(ConfigFilePath, _instance);
+    }
+    
+    /**
+     * Applies theme mode to the app
+     */
     public static void ApplyThemeMode(ThemeMode mode)
     {
         if (Application.Current == null) return;

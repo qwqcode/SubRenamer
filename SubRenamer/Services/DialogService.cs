@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
@@ -7,6 +8,8 @@ using SubRenamer.ViewModels;
 using SubRenamer.Views;
 
 namespace SubRenamer.Services;
+
+public class UserCancelDialogException: Exception {}
 
 public class DialogService : IDialogService
 {
@@ -23,6 +26,7 @@ public class DialogService : IDialogService
         {
             DataContext = new SettingsViewModel()
         };
+        dialog.Closed += (sender, args) => Config.Save();
         var result = await dialog.ShowDialog<SettingsViewModel?>(_target);
     }
     
@@ -43,7 +47,7 @@ public class DialogService : IDialogService
         };
         var result = await dialog.ShowDialog<ItemEditViewModel?>(_target);
     }
-
+    
     public async Task<string?> OpenConflict(List<string> options)
     {
         var store = new ConflictViewModel([..options, "全部保留"]);
@@ -51,7 +55,13 @@ public class DialogService : IDialogService
         {
             DataContext = store
         };
+        var cancel = false;
+        dialog.Closing += (object? sender, WindowClosingEventArgs e) =>
+        {
+            if (!e.IsProgrammatic) cancel = true;
+        };
         await dialog.ShowDialog(_target);
+        if (cancel) throw new UserCancelDialogException();
         var selected = store.GetResult();
         return selected == "全部保留" ? null : selected;
     }

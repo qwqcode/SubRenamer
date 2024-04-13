@@ -6,6 +6,7 @@
         x:Name="Window"
         x:Class="SubRenamer.Views.ManualRuleWindow"
         xmlns:vm="clr-namespace:SubRenamer.ViewModels"
+        xmlns:common="clr-namespace:SubRenamer.Common"
         Title="手动匹配"
         WindowStartupLocation="CenterOwner"
         Width="710"
@@ -23,7 +24,7 @@
                         <Grid ColumnDefinitions="3*,10,*">
                                 <TextBox Grid.Column="0" Height="130" AcceptsReturn="True" TextWrapping="Wrap" Text="{Binding Video}" />
                                 <StackPanel Grid.Column="2" Spacing="10">
-                                        <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Command="{Binding OpenVideoFileCommand}">选择视频文件</Button>
+                                        <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Command="{Binding OpenFileCommand}" CommandParameter="{x:Static common:FileType.Video}">选择视频文件</Button>
                                         <TextBlock TextWrapping="Wrap" LineSpacing="5">任意选择一个文件，然后手动将左侧集数修改为 $$</TextBlock>
                                         <TextBox IsReadOnly="True" Watermark="无匹配" Text="{Binding VideoMatchResult}" />
                                 </StackPanel>
@@ -39,7 +40,7 @@
                         <Grid ColumnDefinitions="3*,10,*">
                                 <TextBox Grid.Column="0" Height="130" AcceptsReturn="True" TextWrapping="Wrap" Text="{Binding Subtitle}" />
                                 <StackPanel Grid.Column="2" Spacing="10">
-                                        <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Command="{Binding OpenSubtitleFileCommand}">选择字幕文件</Button>
+                                        <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Command="{Binding OpenFileCommand}" CommandParameter="{x:Static common:FileType.Subtitle}">选择字幕文件</Button>
                                         <TextBlock TextWrapping="Wrap" LineSpacing="5">任意选择一个文件，然后手动将左侧集数修改为 $$</TextBlock>
                                         <TextBox IsReadOnly="True" Watermark="无匹配" Text="{Binding SubtitleMatchResult}" />
                                 </StackPanel>

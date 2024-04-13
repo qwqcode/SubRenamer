@@ -36,7 +36,7 @@ public static class Diff
         return null;
     }
 
-    private static string? FindCommonPrefix(string a, string b)
+    private static string FindCommonPrefix(string a, string b)
     {
         var minLength = Math.Min(a.Length, b.Length);
         for (var i = 0; i < minLength; i++)
@@ -52,7 +52,7 @@ public static class Diff
         return a.Substring(0, minLength);
     }
 
-    private static string? FindCommonSuffix(string prefix, string a, string b)
+    private static string FindCommonSuffix(string prefix, string a, string b)
     {
         a = a[prefix.Length..];
         b = b[prefix.Length..];
@@ -65,7 +65,7 @@ public static class Diff
             }
         }
 
-        return null;
+        return "";
 
         bool IsSymbol(char c) => !char.IsLetterOrDigit(c) && c != ' '; // skip whitespace
     }

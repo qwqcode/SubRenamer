@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
@@ -34,7 +35,7 @@ namespace SubRenamer
                 Config.Load();
                 
                 // load theme
-                Config.ApplyThemeMode(Config.ThemeMode);
+                Config.ApplyThemeMode(Config.Get().ThemeMode);
 
                 var mainWindowStore = new MainViewModel();
                 desktop.MainWindow = new MainWindow
@@ -69,7 +70,7 @@ namespace SubRenamer
         
         private void Desktop_ShutdownRequested(object? sender, ShutdownRequestedEventArgs e)
         {
-            _ = Config.SaveAsync();
+            Config.Save();
         }
 
         public new static App? Current => Application.Current as App;
@@ -93,14 +94,14 @@ namespace SubRenamer
 
         private void MenuSetting_OnClick(object? sender, EventArgs e)
         {
-            Current?.Services?.GetService<IDialogService>()!.OpenSettings();
+            Current?.Services?.GetService<IDialogService>()?.OpenSettings();
         }
 
         private static void _afterInitTasks(MainViewModel? mainWindowStore)
         {
             Task.Run(async () =>
             {
-                if (!Config.UpdateCheck) return;
+                if (!Config.Get().UpdateCheck) return;
                 
                 await Task.Delay(2000);
 

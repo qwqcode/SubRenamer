@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using SubRenamer.Common;
 using SubRenamer.Helper;
 using SubRenamer.Model;
+using SubRenamer.Services;
 
 namespace SubRenamer.ViewModels;
 
@@ -75,23 +76,32 @@ public partial class MainViewModel : ViewModelBase
     /**
      * Import from storage file list
      */
-    public async Task Import(IEnumerable<IStorageFile> files)
+    public async Task Import(IReadOnlyList<IStorageFile> files)
     {
-        var filenames = files
-            .Select<IStorageFile, string>(x => x.Path.LocalPath)
-            .ToList();
-        await Import(filenames);
-        PerformMatch();
+        if (files.Count == 0) return;
+        var fileNames = files.Select<IStorageFile, string>(x => x.Path.LocalPath).ToList();
+        await ImportFromFileNames(fileNames);
     }
     
     /**
      * Import from file name list
      */
-    public async Task Import(List<string> filenames)
+    public async Task ImportFromFileNames(List<string> fileNames)
     {
-        await GetImportService().ImportMultipleFiles(
-            filenames, MatchList, async options =>
-                await GetDialogService().OpenConflict(options));
+        if (fileNames.Count == 0) return;
+
+        try
+        {
+            await GetImportService().ImportMultipleFiles(
+                fileNames, MatchList, async options =>
+                    await GetDialogService().OpenConflict(options));
+        }
+        catch (UserCancelDialogException)
+        {
+            return;
+        }
+
+        PerformMatch();
     }
     #endregion
     
@@ -189,7 +199,7 @@ public partial class MainViewModel : ViewModelBase
      * Sync current status text
      */
     public void SyncCurrentStatusText() =>
-        CurrMatchModeText = Config.MatchMode switch
+        CurrMatchModeText = Config.Get().MatchMode switch
         {
             MatchMode.Diff => "自动匹配",
             MatchMode.Manual => "手动匹配",
@@ -223,7 +233,7 @@ public partial class MainViewModel : ViewModelBase
      * Open about dialog
      */
     [RelayCommand]
-    private async Task About()
+    private void About()
     {
     }
     #endregion

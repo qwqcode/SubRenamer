@@ -6,6 +6,7 @@
         x:Name="Window"
         x:Class="SubRenamer.Views.RegexRuleWindow"
         xmlns:vm="clr-namespace:SubRenamer.ViewModels"
+        xmlns:common="clr-namespace:SubRenamer.Common"
         Title="正则表达式匹配"
         WindowStartupLocation="CenterOwner"
         Width="500"
@@ -52,7 +53,7 @@
                         <Grid ColumnDefinitions="Auto,10,*,10,50,10,80">
                                 <Label Grid.Column="0" VerticalAlignment="Center">视频</Label>
                                 <TextBox Grid.Column="2" Watermark="输入内容或打开文件..." Text="{Binding VideoTestStr}" />
-                                <Button Grid.Column="4" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Command="{Binding OpenVideoFileCommand}">...</Button>
+                                <Button Grid.Column="4" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Command="{Binding OpenFileCommand}" CommandParameter="{x:Static common:FileType.Video}">...</Button>
                                 <TextBox Grid.Column="6" IsReadOnly="True" Watermark="无匹配" Text="{Binding VideoTestResult}" />
                         </Grid>
                 
@@ -61,7 +62,7 @@
                         <Grid ColumnDefinitions="Auto,10,*,10,50,10,80">
                                 <Label Grid.Column="0" VerticalAlignment="Center">字幕</Label>
                                 <TextBox Grid.Column="2" Watermark="输入内容或打开文件..." Text="{Binding SubtitleTestStr}" />
-                                <Button Grid.Column="4" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Command="{Binding OpenSubtitleFileCommand}">...</Button>
+                                <Button Grid.Column="4" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Command="{Binding OpenFileCommand}" CommandParameter="{x:Static common:FileType.Subtitle}">...</Button>
                                 <TextBox Grid.Column="6" IsReadOnly="True" Watermark="无匹配" Text="{Binding SubtitleTestResult}" />
                         </Grid>
                 </StackPanel>

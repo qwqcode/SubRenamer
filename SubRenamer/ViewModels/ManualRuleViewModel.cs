@@ -12,28 +12,28 @@ namespace SubRenamer.ViewModels;
 
 public partial class ManualRuleViewModel : ViewModelBase
 {
-    [ObservableProperty] private string _videoRaw = Config.ManualVideoRaw;
-    [ObservableProperty] private string _video = Config.ManualVideo;
-    [ObservableProperty] private string _videoRegex = Config.ManualVideoRegex;
+    [ObservableProperty] private string _videoRaw = Config.Get().ManualVideoRaw;
+    [ObservableProperty] private string _video = Config.Get().ManualVideo;
+    [ObservableProperty] private string _videoRegex = Config.Get().ManualVideoRegex;
     [ObservableProperty] private string _videoMatchResult = "";
     
-    [ObservableProperty] private string _subtitleRaw = Config.ManualSubtitleRaw;
-    [ObservableProperty] private string _subtitle = Config.ManualSubtitle;
-    [ObservableProperty] private string _subtitleRegex = Config.ManualSubtitleRegex;
+    [ObservableProperty] private string _subtitleRaw = Config.Get().ManualSubtitleRaw;
+    [ObservableProperty] private string _subtitle = Config.Get().ManualSubtitle;
+    [ObservableProperty] private string _subtitleRegex = Config.Get().ManualSubtitleRegex;
     [ObservableProperty] private string _subtitleMatchResult = "";
     
     [ObservableProperty] private string _errorMessage = "";
     
     [RelayCommand]
-    private async Task Save(Window window)
+    private void Save(Window window)
     {
-        Config.MatchMode = MatchMode.Manual;
-        Config.ManualVideoRaw = VideoRaw;
-        Config.ManualVideo = Video;
-        Config.ManualVideoRegex = VideoRegex;
-        Config.ManualSubtitleRaw = SubtitleRaw;
-        Config.ManualSubtitle = Subtitle;
-        Config.ManualSubtitleRegex = SubtitleRegex;
+        Config.Get().MatchMode = MatchMode.Manual;
+        Config.Get().ManualVideoRaw = VideoRaw;
+        Config.Get().ManualVideo = Video;
+        Config.Get().ManualVideoRegex = VideoRegex;
+        Config.Get().ManualSubtitleRaw = SubtitleRaw;
+        Config.Get().ManualSubtitle = Subtitle;
+        Config.Get().ManualSubtitleRegex = SubtitleRegex;
         
         window.Close();
     }
@@ -75,20 +75,21 @@ public partial class ManualRuleViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private async Task OpenVideoFile()
+    private async Task OpenFile(FileType type)
     {
-        var file = await App.Current?.Services?.GetService<IFilesService>()!.OpenSingleFileAsync();
+        var d = App.Current?.Services?.GetService<IFilesService>();
+        if (d == null) return;
+        var file = await d.OpenSingleFileAsync();
         if (file == null) return;
-        VideoRaw = file.Name;
-        Video = file.Name;
-    }
-
-    [RelayCommand]
-    private async Task OpenSubtitleFile()
-    {
-        var file = await App.Current?.Services?.GetService<IFilesService>()!.OpenSingleFileAsync();
-        if (file == null) return;
-        SubtitleRaw = file.Name;
-        Subtitle = file.Name;
+        if (type == FileType.Video)
+        {
+            VideoRaw = file.Name;
+            Video = file.Name;
+        }
+        else if (type == FileType.Subtitle)
+        {
+            SubtitleRaw = file.Name;
+            Subtitle = file.Name;
+        }
     }
 }

@@ -7,7 +7,7 @@ namespace SubRenamer.Helper;
 
 public class EnumToBooleanConverter : IValueConverter
 {
-    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+    public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         return value?.Equals(parameter);
     }

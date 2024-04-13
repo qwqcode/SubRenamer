@@ -25,7 +25,7 @@ public class RenameService(Window target) : IRenameService
                         "/" + Path.GetFileNameWithoutExtension(item.Video) +
                         Path.GetExtension(item.Subtitle);
 
-            destList.Add(new RenameTask(item.Subtitle, alter, item.Status == "已修改" ? "已修改" : "未修改")
+            destList.Add(new RenameTask(item.Subtitle, alter, item.Status == "已修改" ? "已修改" : "待修改")
             {
                 MatchItem = item
             });
@@ -41,7 +41,7 @@ public class RenameService(Window target) : IRenameService
             
             try
             {
-                if (Config.Backup) FileHelper.BackupFile(task.Origin);
+                if (Config.Get().Backup) FileHelper.BackupFile(task.Origin);
                 FileHelper.RenameFile(task.Origin, task.Alter);
                 
                 task.Status = "已修改";

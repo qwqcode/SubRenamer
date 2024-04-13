@@ -33,10 +33,7 @@ public partial class ConflictViewModel : ViewModelBase
     public ConflictViewModel(List<string> options)
     {
         _label2Key = GetFriendlyOptionsDictionary(options);
-        var labels = _label2Key.Keys.ToList();
-        labels.Sort((a, b) => a.Contains('(') || b.Contains('(') ? -1 : 0);
-        _labels = new ObservableCollection<string>(labels);
-        _label2Key.Add("", null!);
+        _labels = new ObservableCollection<string>(_label2Key.Keys.OrderBy((x) => !x.Contains('(')).ThenBy(i => i));
     }
     
     private static Dictionary<string, string> GetFriendlyOptionsDictionary(IEnumerable<string> options)

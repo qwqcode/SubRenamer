@@ -10,14 +10,14 @@ public static class Constants
 
     public static HashSet<string> GetVideoExtensions()
     {
-        var append = Config.VideoExtAppend.Split(",");
+        var append = Config.Get().VideoExtAppend.Split(",");
         if (append.Length > 0) return [..VideoExtensions.Concat(append)];
         return VideoExtensions;
     }
     
     public static HashSet<string> GetSubtitleExtensions()
     {
-        var append = Config.SubtitleExtAppend.Split(",");
+        var append = Config.Get().SubtitleExtAppend.Split(",");
         if (append.Length > 0) return [..SubtitleExtensions.Concat(append)];
         return SubtitleExtensions;
     }

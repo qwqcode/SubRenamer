@@ -52,11 +52,18 @@
                 </Grid>
                 
                 <Border Height="30" />
+                <TextBlock TextWrapping="Wrap" FontSize="13" LineHeight="24" Foreground="#5f6b7c">
+                        |´・ω・)ノ 嗨！这是开源程序<LineBreak />
+                        你可以在 <Button Classes="hyperlink" Content="GitHub" Command="{Binding OpenLinkCommand}" CommandParameter="https://github.com/qwqcode/SubRenamer" /> 找到源代码，请考虑点个 Star 🌟这会对我们很有帮助！
+                </TextBlock>
+                
+                <Border Height="5" />
+                <Border BorderThickness=".5" BorderBrush="#D2D4D5"></Border>
+                
+                <Border Height="15" />
                 <StackPanel Orientation="Horizontal" Spacing="15">
-                        <Button Classes="hyperlink" Content="反馈" Command="{Binding OpenLinkCommand}" CommandParameter="https://github.com/qwqcode/SubRenamer/issues/new" />
-                        <Button Classes="hyperlink" Content="作者" Command="{Binding OpenLinkCommand}" CommandParameter="https://github.com/qwqcode" />
-                        <Button Classes="hyperlink" Content="源码" Command="{Binding OpenLinkCommand}" CommandParameter="https://github.com/qwqcode/SubRenamer" />
-                        <Button Classes="hyperlink" Content="更新" Command="{Binding OpenLinkCommand}" CommandParameter="https://github.com/qwqcode/SubRenamer/releases" />
+                        <Button Classes="hyperlink" Content="反馈问题" Command="{Binding OpenLinkCommand}" CommandParameter="https://github.com/qwqcode/SubRenamer/issues/new" />
+                        <Button Classes="hyperlink" Content="更新日志" Command="{Binding OpenLinkCommand}" CommandParameter="https://github.com/qwqcode/SubRenamer/releases" />
                 </StackPanel>
         </StackPanel>
 </Window>

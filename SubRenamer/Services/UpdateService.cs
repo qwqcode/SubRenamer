@@ -44,7 +44,7 @@ public class UpdateService
         if (!response.IsSuccessStatusCode) return null;
 
         var jsonResponse = await response.Content.ReadAsStreamAsync();
-        var latestRelease = await JsonHelper.ParseJson<GitHubRelease>(jsonResponse);
+        var latestRelease = await JsonHelper.ParseJsonAsync<GitHubRelease>(jsonResponse);
         if (latestRelease == null) return null;
 
         var newVersion = new Version(latestRelease.TagName.TrimStart('v'));
@@ -92,23 +92,23 @@ public class UpdateService
 public class GitHubRelease
 {
     [JsonPropertyName("tag_name")]
-    public string TagName { get; set; }
+    public string TagName { get; set; } = "";
     
     [JsonPropertyName("name")]
-    public string Name { get; set; }
+    public string Name { get; set; } = "";
     
     [JsonPropertyName("html_url")]
-    public string HtmlUrl { get; set; }
-    
+    public string HtmlUrl { get; set; } = "";
+
     [JsonPropertyName("assets")]
-    public List<GitHubReleaseAsset> Assets { get; set; }
+    public List<GitHubReleaseAsset> Assets { get; set; } = new ();
 }
 
-public class GitHubReleaseAsset
+public abstract class GitHubReleaseAsset
 {
     [JsonPropertyName("name")]
-    public string Name { get; set; }
-    
+    public string Name { get; set; } = "";
+
     [JsonPropertyName("browser_download_url")]
-    public string BrowserDownloadUrl { get; set; }
+    public string BrowserDownloadUrl { get; set; } = "";
 }

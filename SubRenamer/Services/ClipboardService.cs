@@ -18,6 +18,8 @@ public class ClipboardService : IClipboardService
     {
         var dataObject = new DataObject();
         dataObject.Set(DataFormats.Text, content);
-        await _target.Clipboard?.SetDataObjectAsync(dataObject);
+        var clipboard = _target.Clipboard;
+        if (clipboard is not null) await clipboard.SetDataObjectAsync(dataObject);
+
     }
 }

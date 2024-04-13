@@ -20,17 +20,19 @@ public class ImportService(Window target) : IImportService
         Func<List<string>, Task<string?>> onOpenSolveConflictDialog
     )
     {
+        if (files.Count == 0) return;
+        
         // Copy
         files = files.ToList();
         
-        // merge original exists files with MatchList
+        // Merge original exists files with MatchList
         dataSource.ToList().ForEach(x =>
         {
             files.Add(x.Video);
             files.Add(x.Subtitle);
         });
         
-        // distinct and remove empty
+        // Distinct and remove empty
         files = files.Distinct().Where(x => !string.IsNullOrEmpty(x)).ToList();
         
         // Group files by type
@@ -56,7 +58,7 @@ public class ImportService(Window target) : IImportService
             .ToList()!;
         
         var subtitleExtTypes = GetExtensionTypes(subtitleFilenames);
-        if (subtitleExtTypes.Count == 0) return subtitles;
+        if (subtitleExtTypes.Count <= 1) return subtitles;
         
         var keepExt = await onOpenDialog(subtitleExtTypes);
         

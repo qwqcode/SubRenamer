@@ -11,14 +11,14 @@ namespace SubRenamer.ViewModels;
 
 public partial class RulesViewModel : ViewModelBase
 {
-    private MatchMode _matchMode = Config.MatchMode;
+    private MatchMode _matchMode = Config.Get().MatchMode;
     
     public MatchMode MatchMode
     {
         get => _matchMode;
         set
         {
-            Config.MatchMode = value;
+            Config.Get().MatchMode = value;
             SetProperty(ref _matchMode, value);
         }
     }
@@ -27,13 +27,15 @@ public partial class RulesViewModel : ViewModelBase
     private async Task OpenRegexModeSetting(Window window)
     {
         window.Close();
-        await App.Current?.Services?.GetService<IDialogService>().OpenRegexModeSetting();
+        if (App.Current?.Services?.GetService<IDialogService>() is { } d)
+            await d.OpenRegexModeSetting();
     }
 
     [RelayCommand]
     private async Task OpenManualModeSetting(Window window)
     {
         window.Close();
-        await App.Current?.Services?.GetService<IDialogService>().OpenManualModeSetting();
+        if (App.Current?.Services?.GetService<IDialogService>() is { } d)
+            await d.OpenManualModeSetting();
     }
 }

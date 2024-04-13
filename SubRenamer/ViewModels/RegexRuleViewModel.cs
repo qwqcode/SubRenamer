@@ -15,8 +15,8 @@ namespace SubRenamer.ViewModels;
 
 public partial class RegexRuleViewModel : ViewModelBase
 {
-    [ObservableProperty] private string _videoRegexStr = Config.VideoRegex;
-    [ObservableProperty] private string _subtitleRegexStr = Config.SubtitleRegex;
+    [ObservableProperty] private string _videoRegexStr = Config.Get().VideoRegex;
+    [ObservableProperty] private string _subtitleRegexStr = Config.Get().SubtitleRegex;
     
     [ObservableProperty] private string _videoTestStr = "";
     [ObservableProperty] private string _subtitleTestStr = "";
@@ -27,26 +27,23 @@ public partial class RegexRuleViewModel : ViewModelBase
     [ObservableProperty] private string _errorMessage = "";
 
     [RelayCommand]
-    private async Task Save(Window window)
+    private void Save(Window window)
     {
-        Config.MatchMode = MatchMode.Regex;
-        Config.VideoRegex = VideoRegexStr;
-        Config.SubtitleRegex = SubtitleRegexStr;
+        Config.Get().MatchMode = MatchMode.Regex;
+        Config.Get().VideoRegex = VideoRegexStr;
+        Config.Get().SubtitleRegex = SubtitleRegexStr;
         window.Close();
     }
 
     [RelayCommand]
-    private async Task OpenVideoFile()
+    private async Task OpenFile(FileType type)
     {
-        var file = await App.Current?.Services?.GetService<IFilesService>()!.OpenSingleFileAsync();
-        if (file != null) VideoTestStr = file.Name;
-    }
-
-    [RelayCommand]
-    private async Task OpenSubtitleFile()
-    {
-        var file = await App.Current?.Services?.GetService<IFilesService>()!.OpenSingleFileAsync();
-        if (file != null) SubtitleTestStr = file.Name;
+        var d = App.Current?.Services?.GetService<IFilesService>();
+        if (d == null) return;
+        var file = await d.OpenSingleFileAsync();
+        if (file == null) return;
+        if (type == FileType.Subtitle) SubtitleTestStr = file.Name;
+        else if (type == FileType.Video) VideoTestStr = file.Name;
     }
 
     partial void OnVideoRegexStrChanged(string value) => VideoTestResult = MatchByInputRegex(value, VideoTestStr);
