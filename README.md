@@ -31,7 +31,7 @@ SubRenamer 专注于字幕文件改名，简单易用。
 
 可在 [Release](https://github.com/qwqcode/SubRenamer/releases) 页面找到历史版本和更新日志。
 
-如果下载速度慢，可以尝试网盘下载：[蓝奏云](https://www.lanzoui.com/)
+如果下载速度慢，可以尝试网盘下载：[蓝奏云](https://wwi.lanzoui.com/s/sub-renamer) (密码: 233)
 
 ## 使用教程
 
