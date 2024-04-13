@@ -1,4 +1,4 @@
-<p align="center"><img src="https://github.com/qwqcode/SubRenamer/assets/22412567/bc5c6000-da68-4e84-b194-30b8cdbe1b19"></p>
+<p align="center"><img src="https://github.com/qwqcode/SubRenamer/assets/22412567/3a49c011-ce41-4bc3-ab85-5237a6e9acd7"></p>
 
 # SubRenamer
 
@@ -24,7 +24,7 @@ SubRenamer 专注于字幕文件改名，简单易用。
 
 点击以下链接下载最新版本：
 
-|<img width="32" src="https://github.com/qwqcode/SubRenamer/assets/22412567/2772a99b-f10f-48cd-aed7-58488e7a726e">|<img width="32" src="https://github.com/qwqcode/SubRenamer/assets/22412567/0aef7104-b7bc-4bde-94c3-3f9df044d66b">|<img width="32" src="https://github.com/qwqcode/SubRenamer/assets/22412567/8b41fffd-2eb3-4a78-b1bd-8751a09c36c5">|
+| [<img width="32" src="https://github.com/qwqcode/SubRenamer/assets/22412567/2772a99b-f10f-48cd-aed7-58488e7a726e">](https://github.com/qwqcode/SubRenamer/releases/latest/download/SubRenamer_windows_amd64.zip) | [<img width="32" src="https://github.com/qwqcode/SubRenamer/assets/22412567/0aef7104-b7bc-4bde-94c3-3f9df044d66b">](https://github.com/qwqcode/SubRenamer/releases/latest/download/SubRenamer_macos_arm64.zip) | [<img width="32" src="https://github.com/qwqcode/SubRenamer/assets/22412567/8b41fffd-2eb3-4a78-b1bd-8751a09c36c5">](https://github.com/qwqcode/SubRenamer/releases/latest/download/SubRenamer_linux_amd64.tar.gz) |
 |-|-|-|
 | [Windows (x86)](https://github.com/qwqcode/SubRenamer/releases/latest/download/SubRenamer_windows_amd64.zip) | [macOS (M1)](https://github.com/qwqcode/SubRenamer/releases/latest/download/SubRenamer_macos_arm64.zip) | [Linux (x86)](https://github.com/qwqcode/SubRenamer/releases/latest/download/SubRenamer_linux_amd64.tar.gz) |
 
@@ -114,6 +114,15 @@ SubRenamer 专注于字幕文件改名，简单易用。
 > (稽智版) 小F选择重新下载内挂字幕的番剧 lol
 
 </details>
+
+## FAQ
+
+**在 Linux Wayland 桌面环境没有缩放？**
+
+这是一个上游问题，AvaloniaUI 在 Wayland 桌面环境下缩放比例可能不准确，导致文字很小，可以在启动时设置环境变量 `AVALONIA_SCREEN_SCALE_FACTORS="eDP-1=2;" ./SubRenamer` 来手动设置缩放比例。
+
+- https://github.com/AvaloniaUI/Avalonia/issues/9390
+- https://github.com/AvaloniaUI/Avalonia/wiki/Configuring-X11-per-monitor-DPI
 
 ## 有 BUG?
 
