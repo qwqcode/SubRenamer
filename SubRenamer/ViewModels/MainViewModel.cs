@@ -45,7 +45,11 @@ public partial class MainViewModel : ViewModelBase
      * Clear entire Table
      */
     [RelayCommand]
-    private void ClearAll() => MatchList.Clear();
+    private void ClearAll() {
+        MatchList.Clear();
+        RenameTasks.Clear();
+        ShowRenameTasks = false;
+    }
 
     /**
      * Edit an Item
@@ -137,6 +141,7 @@ public partial class MainViewModel : ViewModelBase
     [RelayCommand]
     private void PerformMatch()
     {
+        ShowRenameTasks = false;
         var result = Matcher.Matcher.Execute(MatchList.ToList());
         result.ForEach(UpdateMatchItemStatus);
         MatchList = new ObservableCollection<MatchItem>(result);

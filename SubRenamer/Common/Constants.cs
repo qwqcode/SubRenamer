@@ -6,7 +6,7 @@ namespace SubRenamer.Common;
 public static class Constants
 {
     private static readonly HashSet<string> VideoExtensions = ["mkv", "mp4", "flv", "avi", "mov", "rmvb", "wmv", "mpg", "avs", "m4v", "ts"];
-    private static readonly HashSet<string> SubtitleExtensions = ["srt", "ass", "ssa", "sub", "idx", "txt", "vtt", "smi"];
+    private static readonly HashSet<string> SubtitleExtensions = ["srt", "ass", "ssa", "sub", "idx", "txt", "vtt", "smi", "xml", "json"];
 
     public static HashSet<string> GetVideoExtensions()
     {

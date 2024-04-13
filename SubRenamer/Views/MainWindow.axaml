@@ -35,12 +35,6 @@
         </Style>
     </Window.Styles>
     
-    <NativeMenu.Menu>
-        <NativeMenu>
-            <NativeMenuItem Header="About My App" Command="{Binding AboutCommand}" />
-        </NativeMenu>
-    </NativeMenu.Menu>
-    
     <Grid>
         <DockPanel>
             <Grid DockPanel.Dock="Top" ColumnDefinitions="*,Auto">
@@ -58,11 +52,11 @@
                     </MenuItem>
                 </Menu>
                 <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0" Spacing="10">
-                    <Button Classes="TopMenuBtn" Foreground="#000" Command="{Binding OpenRulesCommand}">
-                        <TextBlock Text="{Binding CurrMatchModeText}" />
-                    </Button>
                     <Button Classes="TopMenuBtn" Command="{Binding OpenVersionLinkCommand}">
                         <TextBlock Text="{Binding CurrVersionText}" />
+                    </Button>
+                    <Button Classes="TopMenuBtn" Foreground="{StaticResource SystemAccentColor}" Command="{Binding OpenRulesCommand}">
+                        <TextBlock Text="{Binding CurrMatchModeText}" />
                     </Button>
                 </StackPanel>
             </Grid>

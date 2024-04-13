@@ -104,7 +104,7 @@ public class GitHubRelease
     public List<GitHubReleaseAsset> Assets { get; set; } = new ();
 }
 
-public abstract class GitHubReleaseAsset
+public class GitHubReleaseAsset
 {
     [JsonPropertyName("name")]
     public string Name { get; set; } = "";
