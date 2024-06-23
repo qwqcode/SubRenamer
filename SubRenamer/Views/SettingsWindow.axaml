@@ -3,6 +3,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="using:SubRenamer.ViewModels"
+		xmlns:helper="clr-namespace:SubRenamer.Helper"
+		xmlns:common="clr-namespace:SubRenamer.Common"
         mc:Ignorable="d"
         WindowStartupLocation="CenterOwner"
         Width="500"
@@ -10,60 +12,78 @@
         x:Class="SubRenamer.Views.SettingsWindow"
         x:DataType="vm:SettingsViewModel"
         Title="设置">
-        
-        <Design.DataContext>
-                <vm:SettingsViewModel/>
-        </Design.DataContext>
-        
-        <Window.Styles>
-                <Style Selector="Button.hyperlink">
-                        <Setter Property="Template">
-                                <ControlTemplate>
-                                        <TextBlock Text="{TemplateBinding Content}" Foreground="{StaticResource SystemAccentColor}" TextDecorations="Underline">
-                                                <TextBlock.Styles>
-                                                        <Style Selector="TextBlock:pointerover">
-                                                                <Setter Property="Foreground" Value="{StaticResource SystemAccentColorLight1}"/>
-                                                        </Style>
-                                                </TextBlock.Styles>
-                                        </TextBlock>
-                                </ControlTemplate>
-                        </Setter>
-                        <Setter Property="Background" Value="Transparent"/>
-                        <Setter Property="BorderThickness" Value="0"/>
-                </Style>     
-        </Window.Styles>
-        
-        <StackPanel Margin="20">
-                <CheckBox IsChecked="{Binding BackupEnabled}">备份原始文件</CheckBox>
-                <Label Foreground="Gray" Margin="20 0 20 10">（备份字幕文件到 SubBackup 文件夹中）</Label>
-                <!-- <CheckBox>确认删除对话框</CheckBox> -->
-                <!-- <CheckBox>显示文件完整路径</CheckBox> -->
-                <CheckBox IsChecked="{Binding UpdateCheckEnabled}">程序升级检查</CheckBox>
-                <Border Height="15" />
-                <Grid HorizontalAlignment="Stretch" ColumnDefinitions="*,10,*">
-                        <StackPanel Grid.Column="0">
-                                <TextBlock Margin="0 5">视频格式扩充</TextBlock>
-                                <TextBox Watermark="以逗号分隔" Text="{Binding VideoExtAppend}" />
-                        </StackPanel>
-                        <StackPanel Grid.Column="2">
-                                <TextBlock Margin="0 5">字幕格式扩充</TextBlock>
-                                <TextBox Watermark="以逗号分隔" Text="{Binding SubtitleExtAppend}" />  
-                        </StackPanel>
-                </Grid>
-                
-                <Border Height="30" />
-                <TextBlock TextWrapping="Wrap" FontSize="13" LineHeight="24" Foreground="#5f6b7c">
-                        |´・ω・)ノ 嗨！这是开源程序<LineBreak />
-                        你可以在 <Button Classes="hyperlink" Content="GitHub" Command="{Binding OpenLinkCommand}" CommandParameter="https://github.com/qwqcode/SubRenamer" /> 找到源代码，请考虑点个 Star 🌟这会对我们很有帮助！
-                </TextBlock>
-                
-                <Border Height="5" />
-                <Border BorderThickness=".5" BorderBrush="#D2D4D5"></Border>
-                
-                <Border Height="15" />
-                <StackPanel Orientation="Horizontal" Spacing="15">
-                        <Button Classes="hyperlink" Content="反馈问题" Command="{Binding OpenLinkCommand}" CommandParameter="https://github.com/qwqcode/SubRenamer/issues/new" />
-                        <Button Classes="hyperlink" Content="更新日志" Command="{Binding OpenLinkCommand}" CommandParameter="https://github.com/qwqcode/SubRenamer/releases" />
-                </StackPanel>
-        </StackPanel>
+
+	<Design.DataContext>
+		<vm:SettingsViewModel/>
+	</Design.DataContext>
+
+	<Window.Resources>
+		<helper:EnumToBooleanConverter x:Key="EnumBoolConverter"/>
+	</Window.Resources>
+
+	<Window.Styles>
+		<Style Selector="Button.hyperlink">
+			<Setter Property="Template">
+				<ControlTemplate>
+					<TextBlock Text="{TemplateBinding Content}" Foreground="{StaticResource SystemAccentColor}" TextDecorations="Underline">
+						<TextBlock.Styles>
+							<Style Selector="TextBlock:pointerover">
+								<Setter Property="Foreground" Value="{StaticResource SystemAccentColorLight1}"/>
+							</Style>
+						</TextBlock.Styles>
+					</TextBlock>
+				</ControlTemplate>
+			</Setter>
+			<Setter Property="Background" Value="Transparent"/>
+			<Setter Property="BorderThickness" Value="0"/>
+		</Style>
+	</Window.Styles>
+
+	<StackPanel Margin="20">
+		<Canvas HorizontalAlignment="Left">
+			<TextBlock  Canvas.Left="12" Canvas.Top="-5" Height="14" TextWrapping="Wrap" FontSize="11" FontWeight="Bold" LineHeight="24" Foreground="#5f6b7c" Background="White">
+				重命名设置
+			</TextBlock>
+		</Canvas>
+		<Border ZIndex="-1" CornerRadius="3" BorderThickness=".5" BorderBrush="#D2D4D5" Padding="5 0 0 0">
+			<StackPanel>
+				<RadioButton IsChecked="{Binding RenameStrategy, Converter={StaticResource EnumBoolConverter}, ConverterParameter={x:Static common:RenameStrategy.Copy}}" GroupName="howToRename" Content="将改名后的字幕文件复制到视频路径下" Margin="0 5 0 0"/>
+				<RadioButton IsChecked="{Binding RenameStrategy, Converter={StaticResource EnumBoolConverter}, ConverterParameter={x:Static common:RenameStrategy.Directly}}" GroupName="howToRename" Content="直接重命名字幕文件"/>
+				<TextBlock IsVisible="{Binding RenameStrategy, Converter={StaticResource EnumBoolConverter}, ConverterParameter={x:Static common:RenameStrategy.Directly}}">
+					<CheckBox IsChecked="{Binding BackupEnabled}" Margin="30 0 20 0">备份原始文件</CheckBox>
+					<Label VerticalAlignment="Center" Margin="-30 0 0 0" HorizontalAlignment="Left" Foreground="Gray">（备份字幕文件到 SubBackup 文件夹中）</Label>					
+				</TextBlock>
+			</StackPanel>
+		</Border>
+		<Border Height="5" />
+		<!-- <CheckBox>确认删除对话框</CheckBox> -->
+		<!-- <CheckBox>显示文件完整路径</CheckBox> -->
+		<CheckBox IsChecked="{Binding UpdateCheckEnabled}">程序升级检查</CheckBox>
+		<Border Height="15" />
+		<Grid HorizontalAlignment="Stretch" ColumnDefinitions="*,10,*">
+			<StackPanel Grid.Column="0">
+				<TextBlock Margin="0 5">视频格式扩充</TextBlock>
+				<TextBox Watermark="以逗号分隔" Text="{Binding VideoExtAppend}" />
+			</StackPanel>
+			<StackPanel Grid.Column="2">
+				<TextBlock Margin="0 5">字幕格式扩充</TextBlock>
+				<TextBox Watermark="以逗号分隔" Text="{Binding SubtitleExtAppend}" />
+			</StackPanel>
+		</Grid>
+
+		<Border Height="30" />
+		<TextBlock TextWrapping="Wrap" FontSize="13" LineHeight="24" Foreground="#5f6b7c">
+			|´・ω・)ノ 嗨！这是开源程序<LineBreak />
+			你可以在 <Button Classes="hyperlink" Content="GitHub" Command="{Binding OpenLinkCommand}" CommandParameter="https://github.com/qwqcode/SubRenamer" /> 找到源代码，请考虑点个 Star 🌟这会对我们很有帮助！
+		</TextBlock>
+
+		<Border Height="5" />
+		<Border BorderThickness=".5" BorderBrush="#D2D4D5"></Border>
+
+		<Border Height="15" />
+		<StackPanel Orientation="Horizontal" Spacing="15">
+			<Button Classes="hyperlink" Content="反馈问题" Command="{Binding OpenLinkCommand}" CommandParameter="https://github.com/qwqcode/SubRenamer/issues/new" />
+			<Button Classes="hyperlink" Content="更新日志" Command="{Binding OpenLinkCommand}" CommandParameter="https://github.com/qwqcode/SubRenamer/releases" />
+		</StackPanel>
+	</StackPanel>
 </Window>
