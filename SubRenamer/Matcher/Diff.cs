@@ -67,7 +67,7 @@ public static class Diff
 
         return "";
 
-        bool IsSymbol(char c) => !char.IsLetterOrDigit(c) && c != ' '; // skip whitespace
+        bool IsSymbol(char c) => !char.IsAsciiLetterOrDigit(c) && c != ' '; // skip whitespace
     }
     
     public static string? ExtractMatchKeyByDiff(DiffResult? diff, string filename)

@@ -21,9 +21,16 @@ public class RenameService(Window target) : IRenameService
         {
             if (string.IsNullOrEmpty(item.Subtitle) || string.IsNullOrEmpty(item.Video)) continue;
 
-            var alter = Path.GetDirectoryName(item.Subtitle) +
-                        "/" + Path.GetFileNameWithoutExtension(item.Video) +
+            var alter = "/" + Path.GetFileNameWithoutExtension(item.Video) +
                         Path.GetExtension(item.Subtitle);
+
+            if(Config.Get().RenameStrategy == Common.RenameStrategy.Copy)
+            {
+                alter = Path.GetDirectoryName(item.Video) + alter;
+            } else
+            {
+                alter = Path.GetDirectoryName(item.Subtitle) + alter;
+            }
 
             destList.Add(new RenameTask(item.Subtitle, alter, item.Status == "已修改" ? "已修改" : "待修改")
             {
@@ -41,9 +48,14 @@ public class RenameService(Window target) : IRenameService
             
             try
             {
-                if (Config.Get().Backup) FileHelper.BackupFile(task.Origin);
-                FileHelper.RenameFile(task.Origin, task.Alter);
-                
+                if (Config.Get().RenameStrategy == Common.RenameStrategy.Copy)
+                {
+                    FileHelper.CopyFile(task.Origin, task.Alter);
+                } else
+                {
+                    if (Config.Get().Backup) FileHelper.BackupFile(task.Origin);
+                    FileHelper.RenameFile(task.Origin, task.Alter);
+                }
                 task.Status = "已修改";
                 if (task.MatchItem != null) task.MatchItem.Status = "已修改";
             }

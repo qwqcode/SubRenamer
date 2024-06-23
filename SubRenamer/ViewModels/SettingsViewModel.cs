@@ -11,6 +11,7 @@ using SubRenamer.Services;
 using Microsoft.Extensions.DependencyInjection;
 using SubRenamer.Helper;
 using SubRenamer.Model;
+using SubRenamer.Common;
 
 namespace SubRenamer.ViewModels;
 
@@ -20,6 +21,17 @@ public partial class SettingsViewModel : ViewModelBase
     private bool _updateCheckEnabled = Config.Get().UpdateCheck;
     private string _videoExtAppend = Config.Get().VideoExtAppend;
     private string _subtitleExtAppend = Config.Get().SubtitleExtAppend;
+    private RenameStrategy _renameStrategy = Config.Get().RenameStrategy;
+
+    public RenameStrategy RenameStrategy
+    {
+        get => _renameStrategy;
+        set
+        {
+            Config.Get().RenameStrategy = value;
+            SetProperty(ref _renameStrategy, value);
+        }
+    }
 
     public bool BackupEnabled
     {
