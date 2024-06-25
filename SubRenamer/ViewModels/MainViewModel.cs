@@ -21,6 +21,7 @@ public partial class MainViewModel : ViewModelBase
     [ObservableProperty] private Collection<MatchItem> _selectedItems = [];
     [ObservableProperty] private ObservableCollection<RenameTask> _renameTasks = [];
     [ObservableProperty] private bool _showRenameTasks;
+    [ObservableProperty] private bool _isTopMost;
 
     #region Services
     private static IDialogService GetDialogService() => App.Current!.Services!.GetService<IDialogService>()!;
