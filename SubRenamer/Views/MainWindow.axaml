@@ -150,7 +150,10 @@
                         <Button Classes="OpBtn" Content="设置" Command="{Binding OpenSettingsCommand}"  />
                         <Border Height="10" />
                         <StackPanel HorizontalAlignment="Stretch">
+              <DockPanel>
                             <CheckBox Content="预览" IsChecked="{Binding ShowRenameTasks}" />
+                <CheckBox Content="置顶" IsChecked="{Binding IsTopMost}" HorizontalAlignment="Right"/>
+              </DockPanel>
                             <Button Classes="OpBtn" Content="一键改名" Command="{Binding PerformRenameCommand}" />
                         </StackPanel>
                     </StackPanel>
