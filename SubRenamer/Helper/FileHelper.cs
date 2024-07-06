@@ -15,7 +15,12 @@ public static class FileHelper
     {
         File.Move(originPath, alterPath);
     }
-    
+
+    public static void CopyFile(string originPath, string alterPath)
+    {
+        File.Copy(originPath, alterPath);
+    }
+
     public static void BackupFile(string path, string folderName = "SubtitleBackup")
     {
         // create new 'SubtitleBackup' directory if not exists
