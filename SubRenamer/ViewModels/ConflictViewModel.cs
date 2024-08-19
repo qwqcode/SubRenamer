@@ -36,7 +36,7 @@ public partial class ConflictViewModel : ViewModelBase
         _labels = new ObservableCollection<string>(_label2Key.Keys.OrderBy((x) => !x.Contains('(')).ThenBy(i => i));
     }
     
-    public static Dictionary<string, string> GetFriendlyOptionsDictionary(IEnumerable<string> options)
+    private static Dictionary<string, string> GetFriendlyOptionsDictionary(IEnumerable<string> options)
     {
         // var lang2Info = CultureInfo.GetCultures(CultureTypes.NeutralCultures).ToDictionary(c => c.Name, c => c);
 

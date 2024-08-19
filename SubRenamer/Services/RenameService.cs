@@ -136,20 +136,6 @@ public class RenameService(Window target) : IRenameService
         }
     }
 
-    //public string GenerateRenameCommands(IEnumerable<MatchItem> list)
-    //{
-    //    var command = "";
-
-    //    foreach (var item in list)
-    //    {
-    //        var subtitle = !string.IsNullOrEmpty(item.Subtitle) ? item.Subtitle : "?";
-    //        var video = !string.IsNullOrEmpty(item.Video) ? item.Video : "?";
-    //        command += $"mv {subtitle} {video}\n";
-    //    }
-
-    //    return command.Trim();
-    //}
-
     public string GenerateRenameCommands(IEnumerable<MatchItem> list)
     {
         var command = "";
@@ -158,27 +144,7 @@ public class RenameService(Window target) : IRenameService
         {
             var subtitle = !string.IsNullOrEmpty(item.Subtitle) ? item.Subtitle : "?";
             var video = !string.IsNullOrEmpty(item.Video) ? item.Video : "?";
-
-            // 提取字幕文件的语言标识（假设它位于文件扩展名之前）
-            var subtitleNameWithoutExtension = Path.GetFileNameWithoutExtension(subtitle);
-            var subtitleExtension = Path.GetExtension(subtitle);
-            var parts = subtitleNameWithoutExtension.Split('.');
-
-            // 默认语言标识为空
-            var languageSuffix = "";
-
-            // 判断是否有语言标识
-            if (parts.Length > 1 && parts.Last().Length == 2)  // 假设语言标识长度为2
-            {
-                languageSuffix = parts.Last();
-                var baseName = string.Join('.', parts.Take(parts.Length - 1));
-                subtitleNameWithoutExtension = baseName;
-            }
-
-            // 重新构造字幕文件名（保留语言标识）
-            var newSubtitleName = $"{subtitleNameWithoutExtension}.{languageSuffix}{subtitleExtension}";
-
-            command += $"mv \"{subtitle}\" \"{video}\"\n";
+            command += $"mv {subtitle} {video}\n";
         }
 
         return command.Trim();
