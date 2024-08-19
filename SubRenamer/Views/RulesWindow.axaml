@@ -50,11 +50,13 @@
                         <Button Classes="hyperlink" Command="{Binding OpenManualModeSettingCommand}" CommandParameter="{Binding ElementName=Window}" >编辑</Button>
                 </StackPanel>
                 <Label Foreground="Gray" Margin="25 0 20 10">手动输入文件名中集数前后的文字来匹配</Label>
+			
                 <StackPanel Orientation="Horizontal">
                         <RadioButton GroupName="MatchMode" Content="正则匹配" IsChecked="{Binding MatchMode, Converter={StaticResource EnumBoolConverter}, ConverterParameter={x:Static common:MatchMode.Regex}}" />
                         <Border Width="10"></Border>
                         <Button Classes="hyperlink" Command="{Binding OpenRegexModeSettingCommand}" CommandParameter="{Binding ElementName=Window}" >编辑</Button>
                 </StackPanel>
                 <Label Foreground="Gray" Margin="25 0 20 10">手动输入用于匹配文件名集数的正则表达式</Label>
+			
         </StackPanel>
 </Window>

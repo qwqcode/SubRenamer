@@ -19,6 +19,7 @@ public partial class SettingsViewModel : ViewModelBase
 {
     private bool _backupEnabled = Config.Get().Backup;
     private bool _updateCheckEnabled = Config.Get().UpdateCheck;
+    private bool _formatSaveMode = Config.Get().FormatSaveMode;
     private string _videoExtAppend = Config.Get().VideoExtAppend;
     private string _subtitleExtAppend = Config.Get().SubtitleExtAppend;
     private RenameStrategy _renameStrategy = Config.Get().RenameStrategy;
@@ -50,6 +51,16 @@ public partial class SettingsViewModel : ViewModelBase
         {
             Config.Get().UpdateCheck = value;
             SetProperty(ref _updateCheckEnabled, value);
+        }
+    }
+
+    public bool FormatSaveMode
+    {
+        get => _formatSaveMode;
+        set
+        {
+            Config.Get().FormatSaveMode = value;
+            SetProperty(ref _formatSaveMode, value);
         }
     }
 

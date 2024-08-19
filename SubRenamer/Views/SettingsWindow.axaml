@@ -59,6 +59,7 @@
 		<!-- <CheckBox>确认删除对话框</CheckBox> -->
 		<!-- <CheckBox>显示文件完整路径</CheckBox> -->
 		<CheckBox IsChecked="{Binding UpdateCheckEnabled}">程序升级检查</CheckBox>
+		<CheckBox IsChecked="{Binding FormatSaveMode}">保留字幕后缀</CheckBox>
 		<Border Height="15" />
 		<Grid HorizontalAlignment="Stretch" ColumnDefinitions="*,10,*">
 			<StackPanel Grid.Column="0">
