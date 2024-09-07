@@ -21,16 +21,9 @@ public class RenameService(Window target) : IRenameService
         {
             if (string.IsNullOrEmpty(item.Subtitle) || string.IsNullOrEmpty(item.Video)) continue;
 
-            var alter = "/" + Path.GetFileNameWithoutExtension(item.Video) +
-                        Path.GetExtension(item.Subtitle);
-
-            if(Config.Get().RenameStrategy == Common.RenameStrategy.Copy)
-            {
-                alter = Path.GetDirectoryName(item.Video) + alter;
-            } else
-            {
-                alter = Path.GetDirectoryName(item.Subtitle) + alter;
-            }
+            var videoFolder = Path.GetDirectoryName(item.Video) ?? "";
+            var subAltered = Path.GetFileNameWithoutExtension(item.Video) + Path.GetExtension(item.Subtitle);
+            var alter = Path.Combine(videoFolder, subAltered);
 
             destList.Add(new RenameTask(item.Subtitle, alter, item.Status == "已修改" ? "已修改" : "待修改")
             {
@@ -48,14 +41,22 @@ public class RenameService(Window target) : IRenameService
             
             try
             {
-                if (Config.Get().RenameStrategy == Common.RenameStrategy.Copy)
+                // Whether the origin and alter files are in the same folder
+                // If they are, rename in-place; otherwise, copy the file
+                var isSameFolder = Path.GetDirectoryName(task.Origin) == Path.GetDirectoryName(task.Alter);
+
+                if (isSameFolder)
                 {
-                    FileHelper.CopyFile(task.Origin, task.Alter);
-                } else
-                {
+                    // Rename in-place (like mv in linux)
                     if (Config.Get().Backup) FileHelper.BackupFile(task.Origin);
                     FileHelper.RenameFile(task.Origin, task.Alter);
                 }
+                else
+                {
+                    // Copy (like cp in linux)
+                    FileHelper.CopyFile(task.Origin, task.Alter);
+                }
+
                 task.Status = "已修改";
                 if (task.MatchItem != null) task.MatchItem.Status = "已修改";
             }
