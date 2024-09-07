@@ -7,6 +7,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using Avalonia.Markup.Xaml.Styling;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using SubRenamer.ViewModels;
@@ -61,6 +62,7 @@ namespace SubRenamer
                 services.AddSingleton<IClipboardService>(x => new ClipboardService(desktop.MainWindow));
                 services.AddSingleton<IImportService>(x => new ImportService(desktop.MainWindow));
                 services.AddSingleton<IRenameService>(x => new RenameService(desktop.MainWindow));
+                services.AddSingleton<IWindowService>(x => new WindowService(desktop.MainWindow, OnSetTopmost));
 
                 Services = services.BuildServiceProvider();
 
@@ -68,6 +70,24 @@ namespace SubRenamer
             }
 
             base.OnFrameworkInitializationCompleted();
+        }
+
+        private StyleInclude? _topMostStyle;
+
+        private void OnSetTopmost(bool topmost)
+        {
+            if (topmost)
+            {
+                _topMostStyle ??= new StyleInclude(new Uri("resm:Styles?assembly=SubRenamer"))
+                {
+                    Source = new Uri("avares://SubRenamer/Styles/TopMost.axaml")
+                };
+                Styles.Add(_topMostStyle);
+            }
+            else
+            {
+                if (_topMostStyle != null) Styles.Remove(_topMostStyle);
+            }
         }
 
         private void ConfigureServices()

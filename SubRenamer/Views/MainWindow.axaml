@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:common="clr-namespace:SubRenamer.Common"
+        xmlns:helper="clr-namespace:SubRenamer.Helper"
         mc:Ignorable="d"
         Width="1000"
         Height="550"
@@ -13,155 +14,160 @@
         x:Class="SubRenamer.Views.MainWindow"
         Icon="/Assets/icon.ico"
         Title="SubRenamer"
-        DragDrop.AllowDrop="True"
-        Topmost="{Binding IsTopMost}">
+        DragDrop.AllowDrop="True">
 
-  <Design.DataContext>
-    <vm:MainViewModel/>
-  </Design.DataContext>
+    <Design.DataContext>
+        <vm:MainViewModel/>
+    </Design.DataContext>
 
-  <Window.Styles>
-    <Style Selector="Button.OpBtn">
-      <Setter Property="HorizontalAlignment" Value="Stretch" />
-      <Setter Property="HorizontalContentAlignment" Value="Center"/>
-      <Setter Property="VerticalContentAlignment" Value="Center"/>
-      <Setter Property="Height" Value="40"/>
-    </Style>
-
-    <Style Selector="Button.TopMenuBtn">
-      <Setter Property="Background" Value="Transparent"></Setter>
-      <Setter Property="Foreground" Value="#828282"></Setter>
-    </Style>
-    <Style Selector="Button.TopMenuBtn:pointerover /template/ ContentPresenter">
-      <Setter Property="Background" Value="Transparent"></Setter>
-    </Style>
-  </Window.Styles>
-
-  <Grid>
-    <DockPanel>
-      <Grid DockPanel.Dock="Top" ColumnDefinitions="*,Auto">
-        <Menu Grid.Column="0">
-          <MenuItem Header="文件">
-            <MenuItem Header="导入文件..." InputGesture="{OnPlatform Ctrl+O, macOS=⌘+O}" HotKey="{OnPlatform Ctrl+O, macOS=⌘+O}" Command="{Binding OpenFileCommand}" />
-            <MenuItem Header="导入文件夹..." InputGesture="{OnPlatform Ctrl+Shift+O, macOS=⌘+Shift+O}" HotKey="{OnPlatform Ctrl+Shift+O, macOS=⌘+Shift+O}" Command="{Binding OpenFolderCommand}" />
-            <Separator/>
-            <MenuItem Header="重新匹配" InputGesture="{OnPlatform Ctrl+R, macOS=⌘+R}" HotKey="{OnPlatform Ctrl+R, macOS=⌘+R}" />
-            <MenuItem Header="清空列表" InputGesture="{OnPlatform Ctrl+N, macOS=⌘+N}" HotKey="{OnPlatform Ctrl+N, macOS=⌘+N}" Command="{Binding ClearAllCommand}" />
-          </MenuItem>
-          <MenuItem Header="规则" Command="{Binding OpenRulesCommand}">
-          </MenuItem>
-          <MenuItem Header="设置" HotKey="{OnPlatform 'Ctrl+,', macOS='⌘+,'}" InputGesture="{OnPlatform 'Ctrl+,', macOS='⌘+,'}" Command="{Binding OpenSettingsCommand}">
-          </MenuItem>
-        </Menu>
-        <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0" Spacing="10">
-          <Button Classes="TopMenuBtn" Command="{Binding OpenVersionLinkCommand}">
-            <TextBlock Text="{Binding CurrVersionText}" />
-          </Button>
-          <Button Classes="TopMenuBtn" Foreground="{StaticResource SystemAccentColor}" Command="{Binding OpenRulesCommand}">
-            <TextBlock Text="{Binding CurrMatchModeText}" />
-          </Button>
-        </StackPanel>
-      </Grid>
-
-      <SplitView
-          DockPanel.Dock="Bottom"
-          IsPaneOpen="True"
-          DisplayMode="Inline"
-          PanePlacement="Right"
-          OpenPaneLength="170">
-
-        <!-- 左侧列表 -->
-        <Grid>
-          <DataGrid Name="DataGrid"
-                    Grid.Row="0"
-                    Margin="0"
-                    ItemsSource="{Binding MatchList}"
-                    SelectionChanged="DataGrid_OnSelectionChanged"
-                    SelectionMode="Extended"
-                    CanUserSortColumns="False"
-                    IsReadOnly="True"
-                    CanUserResizeColumns="True"
-                    GridLinesVisibility="All"
-                    BorderThickness="1"
-                    BorderBrush="{StaticResource SystemControlTransientBorderBrush}"
-                    IsVisible="{Binding !ShowRenameTasks}">
-
-            <DataGrid.Columns>
-              <DataGridTextColumn Header="匹配" Width="100" Binding="{Binding Key}"/>
-              <DataGridTextColumn Header="视频" Width="*" Binding="{Binding VideoName}" />
-              <DataGridTextColumn Header="字幕" Width="*" Binding="{Binding SubtitleName}" />
-              <DataGridTextColumn Header="状态" Width="100" Binding="{Binding Status}" />
-            </DataGrid.Columns>
-
-            <DataGrid.ContextMenu>
-              <ContextMenu>
-                <MenuItem Header="编辑" HotKey="F3" InputGesture="F3" Command="{Binding EditItemCommand}" />
-                <Separator/>
-                <MenuItem Header="删除" HotKey="Delete" InputGesture="Delete" Command="{Binding DeleteItemCommand}" />
-                <MenuItem Header="丢弃视频" Command="{Binding DropItemsFieldCommand}" CommandParameter="{x:Static common:FileType.Video}" />
-                <MenuItem Header="丢弃字幕" Command="{Binding DropItemsFieldCommand}" CommandParameter="{x:Static common:FileType.Subtitle}" />
-                <Separator/>
-                <MenuItem Header="全选" HotKey="{OnPlatform Ctrl+A, macOS=⌘+A}" InputGesture="{OnPlatform Ctrl+A, macOS=⌘+A}" Name="SelectAllMenuItem" Click="SelectAllMenuItem_OnClick" />
-                <Separator/>
-                <MenuItem Header="在文件夹中找到视频文件" Command="{Binding RevealFileInFolderCommand}" CommandParameter="video" />
-                <MenuItem Header="在文件夹中找到字幕文件" Command="{Binding RevealFileInFolderCommand}" CommandParameter="subtitle" />
-                <Separator/>
-                <MenuItem Header="复制改名命令至剪切板" HotKey="{OnPlatform Ctrl+Shift+C, macOS=⌘+Shift+C}" InputGesture="{OnPlatform Ctrl+Shift+C, macOS=⌘+Shift+C}" Command="{Binding CopyCommandsCommand}" />
-              </ContextMenu>
-            </DataGrid.ContextMenu>
-
-          </DataGrid>
-
-          <DataGrid Name="DataGrid2"
-                    Grid.Row="0"
-                    VerticalAlignment="Stretch"
-                    Margin="0"
-                    ItemsSource="{Binding RenameTasks}"
-                    SelectionMode="Extended"
-                    CanUserSortColumns="False"
-                    IsReadOnly="True"
-                    CanUserResizeColumns="True"
-                    GridLinesVisibility="All"
-                    BorderThickness="1"
-                    BorderBrush="{StaticResource SystemControlTransientBorderBrush}"
-                    IsVisible="{Binding ShowRenameTasks}">
-
-            <DataGrid.Columns>
-              <DataGridTextColumn Header="原始文件名" Width="*" Binding="{Binding OriginName}"/>
-              <DataGridTextColumn Header="修改后" Width="*" Binding="{Binding AlterName}" />
-              <DataGridTextColumn Header="状态" Width="100" Binding="{Binding Status}" />
-            </DataGrid.Columns>
-
-          </DataGrid>
-        </Grid>
-
-        <SplitView.Pane>
-          <!-- 右侧按钮 -->
-          <StackPanel VerticalAlignment="Stretch" Spacing="5" Margin="10">
-            <Button Classes="OpBtn" Content="导入文件" Command="{Binding OpenFileCommand}" />
-            <Button Classes="OpBtn" Content="导入文件夹" Command="{Binding OpenFolderCommand}" />
-            <Border Height="10" />
-            <Button Classes="OpBtn" Content="编辑" Command="{Binding EditItemCommand}" />
-            <Button Classes="OpBtn" Content="删除" Command="{Binding DeleteItemCommand}" />
-            <Border Height="10" />
-            <Button Classes="OpBtn" Content="重新匹配" Command="{Binding PerformMatchCommand}" />
-            <Button Classes="OpBtn" Content="清空列表" Command="{Binding ClearAllCommand}" />
-            <Border Height="10" />
-            <Button Classes="OpBtn" Content="规则" Command="{Binding OpenRulesCommand}" />
-            <Button Classes="OpBtn" Content="设置" Command="{Binding OpenSettingsCommand}"  />
-            <Border Height="10" />
-            <StackPanel HorizontalAlignment="Stretch">
-              <DockPanel>
-                <CheckBox Content="预览" IsChecked="{Binding ShowRenameTasks}" />
-                <CheckBox Content="置顶" IsChecked="{Binding IsTopMost}" HorizontalAlignment="Right"/>
-              </DockPanel>
-              <Button Classes="OpBtn" Content="一键改名" Command="{Binding PerformRenameCommand}" />
-            </StackPanel>
-          </StackPanel>
-        </SplitView.Pane>
-
-      </SplitView>
-    </DockPanel>
-
-  </Grid>
+    <Window.Styles>
+        <Style Selector="Button.OpBtn">
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Height" Value="40"/>
+        </Style>
+        
+        <Style Selector="Button.TopMenuBtn">
+            <Setter Property="Background" Value="Transparent"></Setter>
+            <Setter Property="Foreground" Value="#828282"></Setter>
+            <Setter Property="Padding" Value="5 0"></Setter>
+            <Setter Property="FontSize" Value="13"></Setter>
+        </Style>
+        <Style Selector="Button.TopMenuBtn:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="Transparent"></Setter>
+        </Style>
+    </Window.Styles>
+    
+    <Window.Resources>
+        <helper:BoolToTextConverter x:Key="BoolToTextConverter" />
+    </Window.Resources>
+    
+    <Grid>
+        <DockPanel>
+            <Grid DockPanel.Dock="Top" ColumnDefinitions="*,Auto">
+                <Menu Grid.Column="0">
+                    <MenuItem Header="文件">
+                        <MenuItem Header="导入文件..." InputGesture="{OnPlatform Ctrl+O, macOS=⌘+O}" HotKey="{OnPlatform Ctrl+O, macOS=⌘+O}" Command="{Binding OpenFileCommand}" />
+                        <MenuItem Header="导入文件夹..." InputGesture="{OnPlatform Ctrl+Shift+O, macOS=⌘+Shift+O}" HotKey="{OnPlatform Ctrl+Shift+O, macOS=⌘+Shift+O}" Command="{Binding OpenFolderCommand}" />
+                        <Separator/>
+                        <MenuItem Header="重新匹配" InputGesture="{OnPlatform Ctrl+R, macOS=⌘+R}" HotKey="{OnPlatform Ctrl+R, macOS=⌘+R}" />
+                        <MenuItem Header="清空列表" InputGesture="{OnPlatform Ctrl+N, macOS=⌘+N}" HotKey="{OnPlatform Ctrl+N, macOS=⌘+N}" Command="{Binding ClearAllCommand}" />
+                    </MenuItem>
+                    <MenuItem Header="规则" Command="{Binding OpenRulesCommand}">
+                    </MenuItem>
+                    <MenuItem Header="设置" HotKey="{OnPlatform 'Ctrl+,', macOS='⌘+,'}" InputGesture="{OnPlatform 'Ctrl+,', macOS='⌘+,'}" Command="{Binding OpenSettingsCommand}">
+                    </MenuItem>
+                </Menu>
+                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="6,0" Spacing="0">
+                    <Button Classes="TopMenuBtn" Command="{Binding ToggleTopmostCommand}">
+                        <TextBlock Text="{Binding WinTopmost, Converter={StaticResource BoolToTextConverter}, ConverterParameter='已置顶|置顶'}" />
+                    </Button>
+                    <Button Classes="TopMenuBtn" Command="{Binding OpenVersionLinkCommand}">
+                        <TextBlock Text="{Binding CurrVersionText}" />
+                    </Button>
+                    <Button Classes="TopMenuBtn" Foreground="{StaticResource SystemAccentColor}" Command="{Binding OpenRulesCommand}">
+                        <TextBlock Text="{Binding CurrMatchModeText}" />
+                    </Button>
+                </StackPanel>
+            </Grid>
+            
+            <SplitView
+                DockPanel.Dock="Bottom"
+                IsPaneOpen="True"
+                DisplayMode="Inline"
+                PanePlacement="Right"
+                OpenPaneLength="170">
+            
+                <!-- 左侧列表 -->
+                <Grid>
+                    <DataGrid Name="DataGrid"
+                              Grid.Row="0"
+                              Margin="0"
+                              ItemsSource="{Binding MatchList}"
+                              SelectionChanged="DataGrid_OnSelectionChanged"
+                              SelectionMode="Extended"
+                              CanUserSortColumns="False"
+                              IsReadOnly="True"
+                              CanUserResizeColumns="True"
+                              GridLinesVisibility="All"
+                              BorderThickness="1"
+                              BorderBrush="{StaticResource SystemControlTransientBorderBrush}"
+                              IsVisible="{Binding !ShowRenameTasks}">
+                    
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="匹配" Width="100" Binding="{Binding Key}"/>
+                            <DataGridTextColumn Header="视频" Width="*" Binding="{Binding VideoName}" />
+                            <DataGridTextColumn Header="字幕" Width="*" Binding="{Binding SubtitleName}" />
+                            <DataGridTextColumn Header="状态" Width="100" Binding="{Binding Status}" />
+                        </DataGrid.Columns>
+                        
+                        <DataGrid.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="编辑" HotKey="F3" InputGesture="F3" Command="{Binding EditItemCommand}" />
+                                <Separator/>
+                                <MenuItem Header="删除" HotKey="Delete" InputGesture="Delete" Command="{Binding DeleteItemCommand}" />
+                                <MenuItem Header="丢弃视频" Command="{Binding DropItemsFieldCommand}" CommandParameter="{x:Static common:FileType.Video}" />
+                                <MenuItem Header="丢弃字幕" Command="{Binding DropItemsFieldCommand}" CommandParameter="{x:Static common:FileType.Subtitle}" />
+                                <Separator/>
+                                <MenuItem Header="全选" HotKey="{OnPlatform Ctrl+A, macOS=⌘+A}" InputGesture="{OnPlatform Ctrl+A, macOS=⌘+A}" Name="SelectAllMenuItem" Click="SelectAllMenuItem_OnClick" />
+                                <Separator/>
+                                <MenuItem Header="在文件夹中找到视频文件" Command="{Binding RevealFileInFolderCommand}" CommandParameter="video" />
+                                <MenuItem Header="在文件夹中找到字幕文件" Command="{Binding RevealFileInFolderCommand}" CommandParameter="subtitle" />
+                                <Separator/>
+                                <MenuItem Header="复制改名命令至剪切板" HotKey="{OnPlatform Ctrl+Shift+C, macOS=⌘+Shift+C}" InputGesture="{OnPlatform Ctrl+Shift+C, macOS=⌘+Shift+C}" Command="{Binding CopyCommandsCommand}" />
+                            </ContextMenu>
+                        </DataGrid.ContextMenu>
+                        
+                    </DataGrid>
+                    
+                    <DataGrid Name="DataGrid2"
+                              Grid.Row="0"
+                              VerticalAlignment="Stretch"
+                              Margin="0"
+                              ItemsSource="{Binding RenameTasks}"
+                              SelectionMode="Extended"
+                              CanUserSortColumns="False"
+                              IsReadOnly="True"
+                              CanUserResizeColumns="True"
+                              GridLinesVisibility="All"
+                              BorderThickness="1"
+                              BorderBrush="{StaticResource SystemControlTransientBorderBrush}"
+                              IsVisible="{Binding ShowRenameTasks}">
+                        
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="原始文件名" Width="*" Binding="{Binding OriginName}"/>
+                            <DataGridTextColumn Header="修改后" Width="*" Binding="{Binding AlterName}" />
+                            <DataGridTextColumn Header="状态" Width="100" Binding="{Binding Status}" />
+                        </DataGrid.Columns>
+                        
+                    </DataGrid>
+                </Grid>
+            
+                <SplitView.Pane>
+                    <!-- 右侧按钮 -->
+                    <StackPanel VerticalAlignment="Stretch" Spacing="5" Margin="10">
+                        <Button Classes="OpBtn" Content="导入文件" Command="{Binding OpenFileCommand}" />
+                        <Button Classes="OpBtn" Content="导入文件夹" Command="{Binding OpenFolderCommand}" />
+                        <Border Height="10" />
+                        <Button Classes="OpBtn" Content="编辑" Command="{Binding EditItemCommand}" />
+                        <Button Classes="OpBtn" Content="删除" Command="{Binding DeleteItemCommand}" />
+                        <Border Height="10" />
+                        <Button Classes="OpBtn" Content="重新匹配" Command="{Binding PerformMatchCommand}" />
+                        <Button Classes="OpBtn" Content="清空列表" Command="{Binding ClearAllCommand}" />
+                        <Border Height="10" />
+                        <Button Classes="OpBtn" Content="规则" Command="{Binding OpenRulesCommand}" />
+                        <Button Classes="OpBtn" Content="设置" Command="{Binding OpenSettingsCommand}"  />
+                        <Border Height="10" />
+                        <StackPanel HorizontalAlignment="Stretch">
+                            <CheckBox Content="预览" IsChecked="{Binding ShowRenameTasks}" />
+                            <Button Classes="OpBtn" Content="一键改名" Command="{Binding PerformRenameCommand}" />
+                        </StackPanel>
+                    </StackPanel>
+                </SplitView.Pane>
+            
+            </SplitView>
+        </DockPanel>
+        
+    </Grid>
 </Window>
