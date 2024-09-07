@@ -29,7 +29,7 @@ public partial class MainViewModel : ViewModelBase
     private static IRenameService GetRenameService() => App.Current!.Services!.GetService<IRenameService>()!;
     private static IImportService GetImportService() => App.Current!.Services!.GetService<IImportService>()!;
     #endregion
-
+    
     public MainViewModel()
     {
         SyncCurrentStatusText();
@@ -62,7 +62,7 @@ public partial class MainViewModel : ViewModelBase
         return false;
     });
     #endregion
-
+    
     #region Import
     /**
      * Open a file
@@ -70,7 +70,7 @@ public partial class MainViewModel : ViewModelBase
     [RelayCommand]
     private async Task OpenFile() =>
         await Import(await GetFilesService().OpenFilesAsync());
-
+    
     /**
      * Open a folder
      */
@@ -87,7 +87,7 @@ public partial class MainViewModel : ViewModelBase
         var fileNames = files.Select<IStorageFile, string>(x => x.Path.LocalPath).ToList();
         await ImportFromFileNames(fileNames);
     }
-
+    
     /**
      * Import from file name list
      */
@@ -109,15 +109,15 @@ public partial class MainViewModel : ViewModelBase
         PerformMatch();
     }
     #endregion
-
+    
     #region Rename
-
+    
     /**
      * Update the Rename Task List
      */
     private void UpdateRenameTaskList() =>
         GetRenameService().UpdateRenameTaskList(MatchList, RenameTasks);
-
+    
     /**
      * Update when preview button clicked
      */
@@ -132,9 +132,9 @@ public partial class MainViewModel : ViewModelBase
         UpdateRenameTaskList();
         GetRenameService().ExecuteRename(RenameTasks);
     }
-
+    
     #endregion
-
+    
     #region Match
     /**
      * Perform Match
@@ -153,7 +153,7 @@ public partial class MainViewModel : ViewModelBase
      */
     private static void UpdateMatchItemStatus(MatchItem item) => MatchItemHelper.UpdateMatchItemStatus(item);
     #endregion
-
+    
     #region TableRightClick
     /**
      * Drop content
@@ -168,7 +168,7 @@ public partial class MainViewModel : ViewModelBase
             UpdateMatchItemStatus(item);
         }
     }
-
+    
     /**
      * Copy the rename commands
      */
@@ -178,7 +178,7 @@ public partial class MainViewModel : ViewModelBase
         App.Current!.Services!.GetService<IClipboardService>()!.CopyToClipboard(
             GetRenameService().GenerateRenameCommands(MatchList));
     }
-
+    
     /**
      * Reveal file in folder
      */
@@ -195,12 +195,12 @@ public partial class MainViewModel : ViewModelBase
             return false;
         });
     #endregion
-
+    
     #region MenuBar
     [ObservableProperty] private string _currMatchModeText = "";
     [ObservableProperty] private string _currVersionText = $"v{Config.AppVersion}";
     [ObservableProperty] private string _currVersionBtnLink = "https://github.com/qwqcode/SubRenamer";
-
+    
     /**
      * Sync current status text
      */
@@ -212,7 +212,7 @@ public partial class MainViewModel : ViewModelBase
             MatchMode.Regex => "正则匹配",
             _ => ""
         };
-
+    
     /**
      * Open version link
      */
@@ -220,7 +220,7 @@ public partial class MainViewModel : ViewModelBase
     private void OpenVersionLink() =>
         BrowserHelper.OpenBrowserAsync(CurrVersionBtnLink);
     #endregion
-
+    
     #region Dialogs
 
     /**
@@ -228,7 +228,7 @@ public partial class MainViewModel : ViewModelBase
     */
     [RelayCommand]
     private void OpenSettings() => GetDialogService().OpenSettings();
-
+    
     /**
      * Open Rules dialog
      */
