@@ -4,13 +4,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using Avalonia.Controls;
 using SubRenamer.Helper;
-using SubRenamer.Model;
-using SubRenamer.ViewModels;
-using System.Text.RegularExpressions;
-using MsBox.Avalonia.Base;
 using SubRenamer.Model;
 
 namespace SubRenamer.Services;
