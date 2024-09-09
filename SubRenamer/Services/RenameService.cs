@@ -45,8 +45,7 @@ public class RenameService(Window target) : IRenameService
         }
     }
 
-
-        public void ExecuteRename(IEnumerable<RenameTask> taskList)
+    public void ExecuteRename(IEnumerable<RenameTask> taskList)
     {
         foreach (var task in taskList)
         {
@@ -85,7 +84,7 @@ public class RenameService(Window target) : IRenameService
     public string GenerateRenameCommands(IEnumerable<MatchItem> list)
     {
         var command = "";
-
+        
         foreach (var item in list)
         {
             var subtitle = !string.IsNullOrEmpty(item.Subtitle) ? item.Subtitle : "?";
