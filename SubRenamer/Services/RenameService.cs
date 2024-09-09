@@ -19,33 +19,6 @@ public class RenameService(Window target) : IRenameService
 {
     private readonly Window _target = target;
 
-    //原始版本
-    //public void UpdateRenameTaskList(IEnumerable<MatchItem> matchList, Collection<RenameTask> destList)
-    //{
-    //    destList.Clear();
-
-    //    foreach (var item in matchList)
-    //    {
-    //        if (string.IsNullOrEmpty(item.Subtitle) || string.IsNullOrEmpty(item.Video)) continue;
-
-    //        var alter = "/" + Path.GetFileNameWithoutExtension(item.Video) +
-    //                    Path.GetExtension(item.Subtitle);
-
-    //        if(Config.Get().RenameStrategy == Common.RenameStrategy.Copy)
-    //        {
-    //            alter = Path.GetDirectoryName(item.Video) + alter;
-    //        } else
-    //        {
-    //            alter = Path.GetDirectoryName(item.Subtitle) + alter;
-    //        }
-
-    //        destList.Add(new RenameTask(item.Subtitle, alter, item.Status == "已修改" ? "已修改" : "待修改")
-    //        {
-    //            MatchItem = item
-    //        });
-    //    }
-    //}
-
     public void UpdateRenameTaskList(IEnumerable<MatchItem> matchList, Collection<RenameTask> destList)
     {
         destList.Clear();
@@ -54,53 +27,18 @@ public class RenameService(Window target) : IRenameService
         {
             if (string.IsNullOrEmpty(item.Subtitle) || string.IsNullOrEmpty(item.Video)) continue;
 
-            // 提取字幕文件的基本名称和扩展名
-            var subtitleNameWithoutExtension = Path.GetFileNameWithoutExtension(item.Subtitle);
-            var subtitleExtension = Path.GetExtension(item.Subtitle);
+            // 提取字幕文件语言后缀
+            var subSuffix = "";
+            var subLang = Path.GetFileNameWithoutExtension(item.Subtitle)?.Split('.').Reverse().Skip(1).FirstOrDefault() ?? "";
+            if (Config.Get().KeepLangExt && !string.IsNullOrEmpty(subLang)) subSuffix = "." + subLang;
 
-            // 默认语言后缀为空
-            var languageSuffix = "";
-
-            // 使用正则表达式提取最后一个点之间的部分作为语言后缀
-            string pattern = @"(?<=\.)[^.]+$";  // 匹配最后一个点后的部分
-            var match = Regex.Match(subtitleNameWithoutExtension, pattern);
-
-            if (match.Success)
-            {
-                languageSuffix = match.Value;
-                subtitleNameWithoutExtension = subtitleNameWithoutExtension.Substring(0, subtitleNameWithoutExtension.Length - (languageSuffix.Length + 1)); // 去掉语言后缀
-            }
-
-            SettingsViewModel settingsViewModel = new SettingsViewModel();
-            bool isFormatSaveModeEnabled = settingsViewModel.FormatSaveMode;
-
-            if (isFormatSaveModeEnabled){
-            }
-            else {
-                languageSuffix = "";
-            }
-
-            // 重新构造字幕文件名（保留语言后缀）
-            var newSubtitleName = $"{subtitleNameWithoutExtension}.{languageSuffix}{subtitleExtension}";
-            Console.WriteLine($"New Subtitle Name: {newSubtitleName}");
-
-            // 构建目标路径
-            var alter = "/" + Path.GetFileNameWithoutExtension(item.Video) + (string.IsNullOrEmpty(languageSuffix) ? "" : "." + languageSuffix) + Path.GetExtension(item.Subtitle);
-
-            if (Config.Get().RenameStrategy == Common.RenameStrategy.Copy)
-            {
-                alter = Path.Combine(Path.GetDirectoryName(item.Video), Path.GetFileName(alter));
-            }
-            else
-            {
-                alter = Path.Combine(Path.GetDirectoryName(item.Subtitle), Path.GetFileName(alter));
-            }
-
-            // 输出最终生成的路径
-            Console.WriteLine($"New File Path: {alter}");
+            // 拼接新的字幕文件路径
+            var videoFolder = Path.GetDirectoryName(item.Video) ?? "";
+            var subFileName = Path.GetFileNameWithoutExtension(item.Video) + subSuffix + Path.GetExtension(item.Subtitle);
+            var altered = Path.Combine(videoFolder, subFileName);
 
             // 添加到重命名任务列表中
-            destList.Add(new RenameTask(item.Subtitle, alter, item.Status == "已修改" ? "已修改" : "待修改")
+            destList.Add(new RenameTask(item.Subtitle, altered, item.Status == "已修改" ? "已修改" : "待修改")
             {
                 MatchItem = item
             });
@@ -117,14 +55,22 @@ public class RenameService(Window target) : IRenameService
             
             try
             {
-                if (Config.Get().RenameStrategy == Common.RenameStrategy.Copy)
+                // Whether the origin and alter files are in the same folder
+                // If they are, rename in-place; otherwise, copy the file
+                var isSameFolder = Path.GetDirectoryName(task.Origin) == Path.GetDirectoryName(task.Alter);
+
+                if (isSameFolder)
                 {
-                    FileHelper.CopyFile(task.Origin, task.Alter);
-                } else
-                {
+                    // Rename in-place (like mv in linux)
                     if (Config.Get().Backup) FileHelper.BackupFile(task.Origin);
                     FileHelper.RenameFile(task.Origin, task.Alter);
                 }
+                else
+                {
+                    // Copy (like cp in linux)
+                    FileHelper.CopyFile(task.Origin, task.Alter);
+                }
+
                 task.Status = "已修改";
                 if (task.MatchItem != null) task.MatchItem.Status = "已修改";
             }
