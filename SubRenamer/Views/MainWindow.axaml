@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:common="clr-namespace:SubRenamer.Common"
+        xmlns:helper="clr-namespace:SubRenamer.Helper"
         mc:Ignorable="d"
         Width="1000"
         Height="550"
@@ -30,11 +31,17 @@
         <Style Selector="Button.TopMenuBtn">
             <Setter Property="Background" Value="Transparent"></Setter>
             <Setter Property="Foreground" Value="#828282"></Setter>
+            <Setter Property="Padding" Value="5 0"></Setter>
+            <Setter Property="FontSize" Value="13"></Setter>
         </Style>
         <Style Selector="Button.TopMenuBtn:pointerover /template/ ContentPresenter">
             <Setter Property="Background" Value="Transparent"></Setter>
         </Style>
     </Window.Styles>
+    
+    <Window.Resources>
+        <helper:BoolToTextConverter x:Key="BoolToTextConverter" />
+    </Window.Resources>
     
     <Grid>
         <DockPanel>
@@ -52,7 +59,10 @@
                     <MenuItem Header="设置" HotKey="{OnPlatform 'Ctrl+,', macOS='⌘+,'}" InputGesture="{OnPlatform 'Ctrl+,', macOS='⌘+,'}" Command="{Binding OpenSettingsCommand}">
                     </MenuItem>
                 </Menu>
-                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0" Spacing="10">
+                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="6,0" Spacing="0">
+                    <Button Classes="TopMenuBtn" Command="{Binding ToggleTopmostCommand}">
+                        <TextBlock Text="{Binding WinTopmost, Converter={StaticResource BoolToTextConverter}, ConverterParameter='已置顶|置顶'}" />
+                    </Button>
                     <Button Classes="TopMenuBtn" Command="{Binding OpenVersionLinkCommand}">
                         <TextBlock Text="{Binding CurrVersionText}" />
                     </Button>

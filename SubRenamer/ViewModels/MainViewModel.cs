@@ -21,6 +21,7 @@ public partial class MainViewModel : ViewModelBase
     [ObservableProperty] private Collection<MatchItem> _selectedItems = [];
     [ObservableProperty] private ObservableCollection<RenameTask> _renameTasks = [];
     [ObservableProperty] private bool _showRenameTasks;
+    [ObservableProperty] private bool _winTopmost;
 
     #region Services
     private static IDialogService GetDialogService() => App.Current!.Services!.GetService<IDialogService>()!;
@@ -235,11 +236,13 @@ public partial class MainViewModel : ViewModelBase
     private void OpenRules() => GetDialogService().OpenRules();
 
     /**
-     * Open about dialog
+     * Toggle Window Topmost
      */
     [RelayCommand]
-    private void About()
+    private void ToggleTopmost()
     {
+        WinTopmost = !WinTopmost;
+        App.Current?.Services?.GetService<IWindowService>()?.SetTopmost(WinTopmost);
     }
     #endregion
 }
