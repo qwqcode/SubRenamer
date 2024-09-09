@@ -24,13 +24,13 @@ public class RenameService(Window target) : IRenameService
 
             // 提取字幕文件语言后缀
             var subSuffix = "";
-            var subLang = Path.GetFileNameWithoutExtension(item.Subtitle)?.Split('.').Reverse().Skip(1).FirstOrDefault() ?? "";
-            if (Config.Get().KeepLangExt && !string.IsNullOrEmpty(subLang)) subSuffix = "." + subLang;
+            var subSplit = Path.GetFileNameWithoutExtension(item.Subtitle).Split('.');
+            if (subSplit.Length > 1) subSuffix = "." + subSplit[^1];
 
             // 拼接新的字幕文件路径
             var videoFolder = Path.GetDirectoryName(item.Video) ?? "";
-            var subFileName = Path.GetFileNameWithoutExtension(item.Video) + subSuffix + Path.GetExtension(item.Subtitle);
-            var altered = Path.Combine(videoFolder, subFileName);
+            var subFilename = Path.GetFileNameWithoutExtension(item.Video) + subSuffix + Path.GetExtension(item.Subtitle);
+            var altered = Path.Combine(videoFolder, subFilename);
 
             // 添加到重命名任务列表中
             destList.Add(new RenameTask(item.Subtitle, altered, item.Status == "已修改" ? "已修改" : "待修改")
