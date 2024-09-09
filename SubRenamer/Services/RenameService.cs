@@ -24,8 +24,10 @@ public class RenameService(Window target) : IRenameService
 
             // 提取字幕文件语言后缀
             var subSuffix = "";
-            var subSplit = Path.GetFileNameWithoutExtension(item.Subtitle).Split('.');
-            if (subSplit.Length > 1) subSuffix = "." + subSplit[^1];
+            if (Config.Get().KeepLangExt) {
+                var subSplit = Path.GetFileNameWithoutExtension(item.Subtitle).Split('.');
+                if (subSplit.Length > 1) subSuffix = "." + subSplit[^1];
+            }
 
             // 拼接新的字幕文件路径
             var videoFolder = Path.GetDirectoryName(item.Video) ?? "";
