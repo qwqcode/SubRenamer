@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using Avalonia.Controls;
 using SubRenamer.Helper;
 using SubRenamer.Model;
@@ -21,11 +22,20 @@ public class RenameService(Window target) : IRenameService
         {
             if (string.IsNullOrEmpty(item.Subtitle) || string.IsNullOrEmpty(item.Video)) continue;
 
-            var videoFolder = Path.GetDirectoryName(item.Video) ?? "";
-            var subAltered = Path.GetFileNameWithoutExtension(item.Video) + Path.GetExtension(item.Subtitle);
-            var alter = Path.Combine(videoFolder, subAltered);
+            // 提取字幕文件语言后缀
+            var subSuffix = "";
+            if (Config.Get().KeepLangExt) {
+                var subSplit = Path.GetFileNameWithoutExtension(item.Subtitle).Split('.');
+                if (subSplit.Length > 1) subSuffix = "." + subSplit[^1];
+            }
 
-            destList.Add(new RenameTask(item.Subtitle, alter, item.Status == "已修改" ? "已修改" : "待修改")
+            // 拼接新的字幕文件路径
+            var videoFolder = Path.GetDirectoryName(item.Video) ?? "";
+            var subFilename = Path.GetFileNameWithoutExtension(item.Video) + subSuffix + Path.GetExtension(item.Subtitle);
+            var altered = Path.Combine(videoFolder, subFilename);
+
+            // 添加到重命名任务列表中
+            destList.Add(new RenameTask(item.Subtitle, altered, item.Status == "已修改" ? "已修改" : "待修改")
             {
                 MatchItem = item
             });

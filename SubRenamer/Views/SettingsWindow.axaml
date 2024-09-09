@@ -38,6 +38,8 @@
                 <Label Foreground="Gray" Margin="30 0 30 10" FontSize="13" Padding="0">程序会复制字幕到视频目录，若目录相同则备份到 SubBackup</Label>
                 <!-- <CheckBox>确认删除对话框</CheckBox> -->
                 <!-- <CheckBox>显示文件完整路径</CheckBox> -->
+                <CheckBox IsChecked="{Binding KeepLangExt}">保留语言后缀</CheckBox>
+                <Label Foreground="Gray" Margin="30 0 30 10" FontSize="13" Padding="0">例如 "subtitle.sc.srt" 保留语言后缀 ".sc"</Label>
                 <CheckBox IsChecked="{Binding UpdateCheckEnabled}">程序升级检查</CheckBox>
                 <Border Height="15" />
                 <Grid HorizontalAlignment="Stretch" ColumnDefinitions="*,10,*">

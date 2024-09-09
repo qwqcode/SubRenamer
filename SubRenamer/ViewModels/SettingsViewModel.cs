@@ -18,6 +18,7 @@ public partial class SettingsViewModel : ViewModelBase
 {
     private bool _backupEnabled = Config.Get().Backup;
     private bool _updateCheckEnabled = Config.Get().UpdateCheck;
+    private bool _keepLangExt = Config.Get().KeepLangExt;
     private string _videoExtAppend = Config.Get().VideoExtAppend;
     private string _subtitleExtAppend = Config.Get().SubtitleExtAppend;
 
@@ -38,6 +39,16 @@ public partial class SettingsViewModel : ViewModelBase
         {
             Config.Get().UpdateCheck = value;
             SetProperty(ref _updateCheckEnabled, value);
+        }
+    }
+
+    public bool KeepLangExt
+    {
+        get => _keepLangExt;
+        set
+        {
+            Config.Get().KeepLangExt = value;
+            SetProperty(ref _keepLangExt, value);
         }
     }
 
