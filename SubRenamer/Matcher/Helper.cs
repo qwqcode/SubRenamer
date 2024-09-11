@@ -19,24 +19,36 @@ public static class Helper
         }
         return "";
     }
-    
+
     public static void MergeSameKeysItems(List<MatchItem> items)
     {
         for (var i = 0; i < items.Count; i++)
         {
             var item = items[i];
             if (string.IsNullOrEmpty(item.Key)) continue;
-            
-            for (var j = i + 1; j < items.Count; j++)
+            //筛选出所有Subtitles用于匹配多个字幕
+            if (item.Subtitle != "")
             {
-                var other = items[j];
-                if (item.Key == other.Key)
+                for (var j = 0; j < items.Count; j++)
                 {
-                    item.Video = !string.IsNullOrEmpty(item.Video) ? item.Video : other.Video;
-                    item.Subtitle = !string.IsNullOrEmpty(item.Subtitle) ? item.Subtitle : other.Subtitle;
-                    item.Key = item.Key;
-                    items.RemoveAt(j);
-                    j--;
+                    var other = items[j];
+                    if (item.Key == other.Key && other.Subtitle == "")
+                    {
+                        item.Video = !string.IsNullOrEmpty(item.Video) ? item.Video : other.Video;
+                        other.Status = "Paired";
+                    }
+                }
+            }
+            //将已匹配完成的只包含Video的item删除
+            if (i == (items.Count - 1))
+            {
+                for (i = 0; i < items.Count; i++)
+                {
+                    if (items[i].Status == "Paired")
+                    {
+                        items.RemoveAt(i);
+                        i--;
+                    }
                 }
             }
         }
