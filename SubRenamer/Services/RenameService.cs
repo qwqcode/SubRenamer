@@ -28,7 +28,13 @@ public class RenameService(Window target) : IRenameService
                 var subSplit = Path.GetFileNameWithoutExtension(item.Subtitle).Split('.');
                 if (subSplit.Length > 1) subSuffix = "." + subSplit[^1];
             }
-
+            
+            // 手动添加的后缀
+            if (Config.Get().CheckAddSubPrefix) {
+                var subSplit = Config.Get().AddSubPrefix;
+                if (subSplit.Length > 1) subSuffix = "." + subSplit;
+            }
+            
             // 拼接新的字幕文件路径
             var videoFolder = Path.GetDirectoryName(item.Video) ?? "";
             var subFilename = Path.GetFileNameWithoutExtension(item.Video) + subSuffix + Path.GetExtension(item.Subtitle);

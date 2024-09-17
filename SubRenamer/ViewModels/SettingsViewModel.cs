@@ -19,6 +19,8 @@ public partial class SettingsViewModel : ViewModelBase
     private bool _backupEnabled = Config.Get().Backup;
     private bool _updateCheckEnabled = Config.Get().UpdateCheck;
     private bool _keepLangExt = Config.Get().KeepLangExt;
+    private bool _checkAddSubPrefix = Config.Get().CheckAddSubPrefix;
+    private string _addSubPrefix = Config.Get().AddSubPrefix;
     private string _videoExtAppend = Config.Get().VideoExtAppend;
     private string _subtitleExtAppend = Config.Get().SubtitleExtAppend;
 
@@ -52,6 +54,31 @@ public partial class SettingsViewModel : ViewModelBase
         }
     }
 
+    public bool CheckAddSubPrefix
+    {
+        get => _checkAddSubPrefix;
+        set
+        {
+            Config.Get().CheckAddSubPrefix = value;
+            SetProperty(ref _checkAddSubPrefix, value);
+        }
+    }
+    protected void CheckBox_CheckedChanged(object sender, EventArgs e)
+    {
+        if (Config.Get().KeepLangExt)
+        {
+            CheckAddSubPrefix  = false;
+        }
+    }
+    public string AddSubPrefix
+    {
+        get => _addSubPrefix;
+        set
+        {
+            Config.Get().AddSubPrefix = value;
+            SetProperty(ref _addSubPrefix, value);
+        }
+    }
     public string VideoExtAppend
     {
         get => _videoExtAppend;
@@ -61,6 +88,8 @@ public partial class SettingsViewModel : ViewModelBase
             SetProperty(ref _videoExtAppend, value);
         }
     }
+    
+    
     
     public string SubtitleExtAppend
     {
