@@ -63,13 +63,7 @@ public partial class SettingsViewModel : ViewModelBase
             SetProperty(ref _checkAddSubPrefix, value);
         }
     }
-    protected void CheckBox_CheckedChanged(object sender, EventArgs e)
-    {
-        if (Config.Get().KeepLangExt)
-        {
-            CheckAddSubPrefix  = false;
-        }
-    }
+
     public string AddSubPrefix
     {
         get => _addSubPrefix;
