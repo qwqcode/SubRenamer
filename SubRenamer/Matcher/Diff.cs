@@ -43,7 +43,7 @@ public static class Diff
 
         for (var i = 0; i < minLength; i++)
         {
-            if (a[i] != b[i])
+            if (char.ToLower(a[i]) != char.ToLower(b[i]))
             {
                 prefix = a.Substring(0, i);
                 break;
@@ -105,7 +105,7 @@ public static class Diff
                 : $"{Regex.Escape(diff.Prefix)}(.+?){Regex.Escape(diff.Suffix)}";
         }
 
-        var match = Regex.Match(filename, pattern);
+        var match = Regex.Match(filename, pattern, RegexOptions.IgnoreCase);
         if (!match.Success || match.Groups.Count == 0) return "";
 
         var key = match.Groups[1].Value.Trim();
