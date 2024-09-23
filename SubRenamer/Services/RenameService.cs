@@ -50,6 +50,12 @@ public class RenameService(Window target) : IRenameService
 
     public void ExecuteRename(IReadOnlyList<RenameTask> taskList)
     {
+        var backupEnabled = Config.Get().Backup;
+        
+        // Record files that have been backed up,
+        // avoid duplicate backups when mapping is one-to-many (video-subtitle)
+        var filesHadBackup = new Dictionary<string, bool>();
+        
         foreach (var task in taskList)
         {
             if (task.Status == "已修改") continue;
@@ -60,11 +66,14 @@ public class RenameService(Window target) : IRenameService
                 // Whether the origin and alter files are in the same folder
                 // If they are, rename in-place; otherwise, copy the file
                 var isSameFolder = Path.GetDirectoryName(task.Origin) == Path.GetDirectoryName(task.Alter);
-
+                
                 if (isSameFolder)
                 {
+                    // Backup (only rename in-place)
+                    if (backupEnabled && filesHadBackup.TryAdd(task.Origin, true))
+                        FileHelper.BackupFile(task.Origin);
+                    
                     // Rename in-place (like mv in linux)
-                    if (Config.Get().Backup) FileHelper.BackupFile(task.Origin);
                     FileHelper.RenameFile(task.Origin, task.Alter);
                 }
                 else
