@@ -14,9 +14,15 @@ public class RenameService(Window target) : IRenameService
 {
     private readonly Window _target = target;
 
-    public void UpdateRenameTaskList(IEnumerable<MatchItem> matchList, Collection<RenameTask> destList)
+    public void UpdateRenameTaskList(IReadOnlyList<MatchItem> matchList, Collection<RenameTask> destList)
     {
         destList.Clear();
+
+        // 检查是否有重复的 Key (存在视频字幕一对多的情况)，若有则保留语言后缀
+        // @see https://github.com/qwqcode/SubRenamer/pull/54
+        // @file https://github.com/qwqcode/SubRenamer/blob/main/SubRenamer.Tests/MatcherTests/MergeSameKeysItemsTests.cs
+        var hasDuplicateKey = matchList.GroupBy(x => x.Key).Any(g => g.Count() > 1);
+        var keepLangExt = Config.Get().KeepLangExt || hasDuplicateKey;
 
         foreach (var item in matchList)
         {
@@ -24,7 +30,7 @@ public class RenameService(Window target) : IRenameService
 
             // 提取字幕文件语言后缀
             var subSuffix = "";
-            if (Config.Get().KeepLangExt) {
+            if (keepLangExt) {
                 var subSplit = Path.GetFileNameWithoutExtension(item.Subtitle).Split('.');
                 if (subSplit.Length > 1) subSuffix = "." + subSplit[^1];
             }
@@ -48,7 +54,7 @@ public class RenameService(Window target) : IRenameService
         }
     }
 
-    public void ExecuteRename(IEnumerable<RenameTask> taskList)
+    public void ExecuteRename(IReadOnlyList<RenameTask> taskList)
     {
         foreach (var task in taskList)
         {
@@ -84,7 +90,7 @@ public class RenameService(Window target) : IRenameService
         }
     }
 
-    public string GenerateRenameCommands(IEnumerable<MatchItem> list)
+    public string GenerateRenameCommands(IReadOnlyList<MatchItem> list)
     {
         var command = "";
         

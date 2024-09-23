@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [windows-latest, ubuntu-latest, macos-14]
+        os: [windows-latest, ubuntu-latest, macos-latest]
         include:
           - os: windows-latest
             build: win-x64
@@ -21,7 +21,7 @@ jobs:
           - os: ubuntu-latest
             build: linux-x64
             file_name: linux_amd64
-          - os: macos-14
+          - os: macos-latest
             build: osx-arm64
             file_name: macos_arm64
 

@@ -1,0 +1,43 @@
+name: Test
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "SubRenamer/**"
+      - "SubRenamer.Tests/**"
+  pull_request:
+    branches: ["main"]
+    paths:
+      - "SubRenamer/**"
+      - "SubRenamer.Tests/**"
+  workflow_dispatch:
+
+env:
+  TEST_RPOJECT: SubRenamer.Tests
+
+jobs:
+  build:
+    name: .NET ${{ matrix.dotnet-version }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-latest]
+        dotnet-version: ["8.0.x"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET ${{ matrix.dotnet-version }}
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ matrix.dotnet-version }}
+
+      - name: Restore dependencies
+        run: dotnet restore ${{ env.TEST_RPOJECT }}
+
+      - name: Build
+        run: dotnet build --no-restore ${{ env.TEST_RPOJECT }}
+
+      - name: Test with dotnet
+        run: dotnet test ${{ env.TEST_RPOJECT }} --verbosity normal

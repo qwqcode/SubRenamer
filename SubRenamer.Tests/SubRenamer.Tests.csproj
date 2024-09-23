@@ -22,4 +22,10 @@
     <ProjectReference Include="..\SubRenamer\SubRenamer.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="MatcherTests\TopLevelTests.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
