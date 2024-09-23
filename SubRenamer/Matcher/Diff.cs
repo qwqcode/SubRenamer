@@ -110,10 +110,6 @@ public static class Diff
 
         var key = match.Groups[1].Value.Trim();
 
-        // check is pure number
-        if (key.All(char.IsDigit))
-            key = int.Parse(key).ToString(); // '01' -> '1'
-
         return key;
     }
 }

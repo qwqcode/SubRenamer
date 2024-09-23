@@ -84,7 +84,7 @@ public static class Matcher
             // Extract Match keys
             foreach (var f in files)
             {
-                result[f] = Diff.ExtractMatchKeyByDiff(diff, Path.GetFileNameWithoutExtension(f));
+                result[f] = Helper.PatchKey(Diff.ExtractMatchKeyByDiff(diff, Path.GetFileNameWithoutExtension(f)));
             }
         }
         else
@@ -92,7 +92,7 @@ public static class Matcher
             // 2. Regex Algorithm
             foreach (var f in files)
             {
-                result[f] = Helper.ExtractMatchKeyRegex(regexPattern, Path.GetFileName(f));
+                result[f] = Helper.PatchKey(Helper.ExtractMatchKeyRegex(regexPattern, Path.GetFileName(f)));
             }
         }
 

@@ -54,7 +54,7 @@ public partial class ManualRuleViewModel : ViewModelBase
     {
         var pattern = Regex.Escape(input)
             .Replace(@"\$\$", @"(.+?)")
-            .Replace(@"\*", @"(.*?)");
+            .Replace(@"\*", @".*?");
         return pattern;
     }
 

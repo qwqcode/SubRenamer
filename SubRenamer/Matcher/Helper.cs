@@ -18,7 +18,16 @@ public static class Helper
         }
         return "";
     }
-    
+
+    public static string PatchKey(string key)
+    {
+        // check is pure number
+        if (!string.IsNullOrWhiteSpace(key) && key.All(char.IsDigit))
+            key = int.Parse(key).ToString(); // '01' -> '1'
+
+        return key;
+    }
+
     /// <summary>
     /// Merges items with the same non-empty keys by grouping them.
     /// Assuming the mapping between the video and the subtitles is one-to-many (1 to N).
