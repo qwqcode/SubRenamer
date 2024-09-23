@@ -42,7 +42,6 @@
                 <ListBox ItemsSource="{Binding Labels}"
                          SelectedItem="{Binding SelectedLabel}"
                          Classes="RadioButtonListBox"/>
-			    <Label Foreground="Gray" Margin="30,0,0,10" FontSize="13" Padding="0">Ps:全部保留将自动勾选保留语言后缀选项</Label>
                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                         <Button Content="导入文件" Name="ConfirmBtn" Click="ConfirmBtn_OnClick" Width="100" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,20,0,0" />
                 </StackPanel>
