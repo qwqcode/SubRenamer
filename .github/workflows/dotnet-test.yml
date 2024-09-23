@@ -3,10 +3,14 @@ name: Test
 on:
   push:
     branches: ["main"]
-    paths: ["**/*.cs"]
+    paths:
+      - "SubRenamer/**"
+      - "SubRenamer.Tests/**"
   pull_request:
     branches: ["main"]
-    paths: ["**/*.cs"]
+    paths:
+      - "SubRenamer/**"
+      - "SubRenamer.Tests/**"
   workflow_dispatch:
 
 env:
