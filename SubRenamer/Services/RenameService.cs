@@ -14,7 +14,7 @@ public class RenameService(Window target) : IRenameService
 {
     private readonly Window _target = target;
 
-    public void UpdateRenameTaskList(IEnumerable<MatchItem> matchList, Collection<RenameTask> destList)
+    public void UpdateRenameTaskList(IReadOnlyList<MatchItem> matchList, Collection<RenameTask> destList)
     {
         destList.Clear();
 
@@ -47,7 +47,7 @@ public class RenameService(Window target) : IRenameService
         }
     }
 
-    public void ExecuteRename(IEnumerable<RenameTask> taskList)
+    public void ExecuteRename(IReadOnlyList<RenameTask> taskList)
     {
         foreach (var task in taskList)
         {
@@ -83,7 +83,7 @@ public class RenameService(Window target) : IRenameService
         }
     }
 
-    public string GenerateRenameCommands(IEnumerable<MatchItem> list)
+    public string GenerateRenameCommands(IReadOnlyList<MatchItem> list)
     {
         var command = "";
         

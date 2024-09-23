@@ -143,7 +143,9 @@ public partial class MainViewModel : ViewModelBase
     private void PerformMatch()
     {
         ShowRenameTasks = false;
-        var result = Matcher.Matcher.Execute(MatchList.ToList());
+        var inputItems = MatcherDataConverter.ConvertMatchItems(MatchList);
+        var resultRaw = Matcher.Matcher.Execute(inputItems);
+        var result =  MatcherDataConverter.ConvertMatchItems(resultRaw);
         result.ForEach(UpdateMatchItemStatus);
         MatchList = new ObservableCollection<MatchItem>(result);
     }

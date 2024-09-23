@@ -3,19 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using SubRenamer.Helper;
-using SubRenamer.Model;
 
 namespace SubRenamer.Matcher;
 
 public static class Helper
 {
-    public static string? ExtractMatchKeyRegex(string pattern, string filename)
+    public static string ExtractMatchKeyRegex(string pattern, string filename)
     {
         try {
             var match = Regex.Match(filename, pattern, RegexOptions.IgnoreCase);
             if (match.Success) return match.Groups[1].Value;
         } catch (Exception e) {
-            Console.WriteLine(e.Message);
+            Logger.Out.WriteLine(e.Message);
         }
         return "";
     }
@@ -55,18 +54,17 @@ public static class Helper
         return result;
     }
 
-    public static void MoveEmptyKeyItemsToLast(List<MatchItem> items)
+    public static List<MatchItem> MoveEmptyKeyItemsToLast(IReadOnlyList<MatchItem> items)
     {
-        var emptyKeyItems = items.Where(x => string.IsNullOrEmpty(x.Key)).ToList();
-        foreach (var item in emptyKeyItems)
-        {
-            items.Remove(item);
-            items.Add(item);
-        }
+        var keyedItems = items.Where(x => !string.IsNullOrEmpty(x.Key));
+        var emptyKeyItems = items.Where(x => string.IsNullOrEmpty(x.Key));
+        return [..keyedItems, ..emptyKeyItems];
     }
 
-    public static void SortItemsByKeys(List<MatchItem> items)
+    public static List<MatchItem> SortItemsByKeys(IReadOnlyList<MatchItem> items)
     {
-        items.Sort((a, b) => new MixedStringComparer().Compare(a.Key, b.Key));
+        List<MatchItem> result = [..items];
+        result.Sort((a, b) => new MixedStringComparer().Compare(a.Key, b.Key));
+        return result;
     }
 }
