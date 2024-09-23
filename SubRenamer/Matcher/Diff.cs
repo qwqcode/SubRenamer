@@ -5,14 +5,14 @@ using System.Text.RegularExpressions;
 
 namespace SubRenamer.Matcher;
 
-public class DiffResult
-{
-    public string Prefix = "";
-    public string Suffix = "";
-}
-
 public static class Diff
 {
+    public record DiffResult(string Prefix, string Suffix)
+    {
+        public override string ToString() =>
+            $"DiffResult {{ Prefix = \"{Prefix}\", Suffix = \"{Suffix}\" }}";
+    }
+
     public static DiffResult? GetDiffResult(List<string> names)
     {
         // Note: the names is without extension
@@ -21,14 +21,14 @@ public static class Diff
 
         for (var i = 0; i < names.Count - 1; i++)
         {
-            for (var j = i + 1; j < names.Count; j++)
+            for (var j = names.Count - 1; j > i; j--) // Start from the end to avoid two names too similar
             {
                 var prefix = FindCommonPrefix(names[i], names[j]);
-                var suffix = FindCommonSuffix(prefix, names[i], names[j]);
+                var suffix = FindCommonSuffix(names[i][prefix.Length..], names[j][prefix.Length..]);
 
-                if (!string.IsNullOrEmpty(prefix) && !string.IsNullOrEmpty(suffix))
+                if (!string.IsNullOrEmpty(prefix))
                 {
-                    return new DiffResult { Prefix = prefix, Suffix = suffix };
+                    return new DiffResult(prefix, suffix);
                 }
             }
         }
@@ -39,38 +39,57 @@ public static class Diff
     private static string FindCommonPrefix(string a, string b)
     {
         var minLength = Math.Min(a.Length, b.Length);
+        var prefix = a.Substring(0, minLength);
+
         for (var i = 0; i < minLength; i++)
         {
             if (a[i] != b[i])
             {
-                var prefix = a.Substring(0, i);
-                // Trim end number
-                prefix = Regex.Replace(prefix, "\\d+$", "");
-                return prefix;
+                prefix = a.Substring(0, i);
+                break;
             }
         }
-        return a.Substring(0, minLength);
+
+        // Trim end number
+        prefix = Regex.Replace(prefix, "\\d+$", "");
+
+        return prefix;
     }
 
-    private static string FindCommonSuffix(string prefix, string a, string b)
+    private static string FindCommonSuffix(string a, string b)
     {
-        a = a[prefix.Length..];
-        b = b[prefix.Length..];
-        var minLength = Math.Min(a.Length, b.Length);
-        for (var i = 0; i < minLength; i++)
+        var i = 0;
+        var j = 0;
+
+        while (i < a.Length && j < b.Length)
         {
-            if (IsSymbol(a[i]) && IsSymbol(b[i]) && a[i] == b[i])
+            // Skip characters
+            while (i < a.Length && Skip(a[i])) i++;
+            while (j < b.Length && Skip(b[j])) j++;
+
+            // If both are still in valid range, compare the current character
+            if (i < a.Length && j < b.Length && char.ToLower(a[i]) == char.ToLower(b[j]))
             {
-                return a.Substring(i, 1);
+                return a[i].ToString();
             }
+
+            i++;
+            j++;
         }
 
         return "";
 
-        bool IsSymbol(char c) => !char.IsAsciiLetterOrDigit(c) && c != ' '; // skip whitespace
+        // Skip [a-z], [A-Z], [0-9], and whitespace. Which is not allowed as a suffix.
+        // Because it may be a part of the `Key` (Episode Number).
+        // Such as "file [01A] end" and "file [01B] end".
+        //
+        // But allows Chinese character as a suffix.
+        // Such as "file 01 話" and "file 02 話".
+        // @see https://github.com/qwqcode/SubRenamer/pull/45
+        bool Skip(char c) => char.IsAsciiLetterOrDigit(c) || c == ' ';
     }
-    
-    public static string? ExtractMatchKeyByDiff(DiffResult? diff, string filename)
+
+    public static string ExtractMatchKeyByDiff(DiffResult? diff, string filename)
     {
         string pattern;
         if (diff is null)
@@ -78,21 +97,23 @@ public static class Diff
             // if matchData is null then fail down to simple number match
             // (in case that filename sample less than 2)
             pattern = "(\\d+)(?!.*\\d)"; // @link https://stackoverflow.com/questions/5320525/regular-expression-to-match-last-number-in-a-string
-        } else {
-            pattern = diff.Suffix is null
+        }
+        else
+        {
+            pattern = string.IsNullOrEmpty(diff.Suffix)
                 ? $"{Regex.Escape(diff.Prefix)}(\\d+)"
                 : $"{Regex.Escape(diff.Prefix)}(.+?){Regex.Escape(diff.Suffix)}";
         }
-        
+
         var match = Regex.Match(filename, pattern);
         if (!match.Success || match.Groups.Count == 0) return "";
-        
+
         var key = match.Groups[1].Value.Trim();
 
         // check is pure number
         if (key.All(char.IsDigit))
             key = int.Parse(key).ToString(); // '01' -> '1'
-        
+
         return key;
     }
 }
