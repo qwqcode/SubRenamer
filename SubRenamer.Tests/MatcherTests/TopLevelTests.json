@@ -1,0 +1,113 @@
+[
+  {
+    "Name": "Basic",
+    "Input": [
+      {"Key": "", "Video": "abc.S02E01.123.mkv", "Subtitle": ""},
+      {"Key": "", "Video": "abc.S02E02.abc.mkv", "Subtitle": ""},
+      {"Key": "", "Video": "", "Subtitle": "[SubGroup] def.S02E01.xyz.ass"},
+      {"Key": "", "Video": "", "Subtitle": "[SubGroup] def.S02E02.abc.ass"}
+    ],
+    "Output": [
+      {"Key": "1", "Video": "abc.S02E01.123.mkv", "Subtitle": "[SubGroup] def.S02E01.xyz.ass"},
+      {"Key": "2", "Video": "abc.S02E02.abc.mkv", "Subtitle": "[SubGroup] def.S02E02.abc.ass"}
+    ]
+  },
+  {
+    "Name": "SquareBrackets",
+    "Input": [
+      {"Key": "", "Video": "abc [01].mkv", "Subtitle": ""},
+      {"Key": "", "Video": "abc [02].mkv", "Subtitle": ""},
+      {"Key": "", "Video": "", "Subtitle": "[SubGroup] def [01].ass"},
+      {"Key": "", "Video": "", "Subtitle": "[SubGroup] def [02].ass"}
+    ],
+    "Output": [
+      {"Key": "1", "Video": "abc [01].mkv", "Subtitle": "[SubGroup] def [01].ass"},
+      {"Key": "2", "Video": "abc [02].mkv", "Subtitle": "[SubGroup] def [02].ass"}
+    ]
+  },
+  {
+    "Name": "Chinese",
+    "Input": [
+      {"Key": "", "Video": "中文 第一集.mkv", "Subtitle": ""},
+      {"Key": "", "Video": "中文 第二集.mkv", "Subtitle": ""},
+      {"Key": "", "Video": "", "Subtitle": "【字幕】中文 第一集.srt"},
+      {"Key": "", "Video": "", "Subtitle": "【字幕】中文 第二集.srt"}
+    ],
+    "Output": [
+      {"Key": "一", "Video": "中文 第一集.mkv", "Subtitle": "【字幕】中文 第一集.srt"},
+      {"Key": "二", "Video": "中文 第二集.mkv", "Subtitle": "【字幕】中文 第二集.srt"}
+    ]
+  },
+  {
+    "Name": "Breaking Bad",
+    "Input": [
+      {"Key": "", "Video": "Breaking.Bad.S03E04.Green.Light.2160p.Netflix.WEB-DL.DDP.5.1.H.265.mkv", "Subtitle": ""},
+      {"Key": "", "Video": "Breaking.Bad.S03E12.Half.Measures.2160p.Netflix.WEB-DL.DDP.5.1.H.265.mkv", "Subtitle": ""},
+      {"Key": "", "Video": "", "Subtitle": "breaking.bad.s03e12.720p.hdtv.x264-ctu.en.srt"},
+      {"Key": "", "Video": "", "Subtitle": "Breaking.Bad.S03E04.720p.HDTV.x264-CTU.en.srt"}
+    ],
+    "Output": [
+      {"Key": "4", "Video": "Breaking.Bad.S03E04.Green.Light.2160p.Netflix.WEB-DL.DDP.5.1.H.265.mkv", "Subtitle": "Breaking.Bad.S03E04.720p.HDTV.x264-CTU.en.srt"},
+      {"Key": "12", "Video": "Breaking.Bad.S03E12.Half.Measures.2160p.Netflix.WEB-DL.DDP.5.1.H.265.mkv", "Subtitle": "breaking.bad.s03e12.720p.hdtv.x264-ctu.en.srt"}
+    ]
+  },
+  {
+    "Name": "Pantheon",
+    "Input": [
+      {"Key": "", "Video": "Pantheon.S02E04.Olivia.and.Farhad.1080p.AMZN.WEB-DL.DD5.1.H.264-testWEB.mkv", "Subtitle": ""},
+      {"Key": "", "Video": "Pantheon.S02E05.Yair.1080p.AMZN.WEB-DL.DD5.1.H.264-testWEB.mkv", "Subtitle": ""},
+      {"Key": "", "Video": "Pantheon.S02E06.Apokalypsis.1080p.AMZN.WEB-DL.DD5.1.H.264-testWEB.mkv", "Subtitle": ""},
+      {"Key": "", "Video": "", "Subtitle": "Pantheon.S02E04.Olivia.Farhad.1080p.AMZN.WEB-DL.DD+5.1.H.264.NTb.en.srt"},
+      {"Key": "", "Video": "", "Subtitle": "Pantheon.S02E05.Yair.1080p.AMZN.WEB-DL.DD+5.1.H.264.NTb.en.srt"},
+      {"Key": "", "Video": "", "Subtitle": "Pantheon.S02E06.Apokalypsis.1080p.AMZN.WEB-DL.DD+5.1.H.264.NTb.en.srt"}
+    ],
+    "Output": [
+      {"Key": "4", "Video": "Pantheon.S02E04.Olivia.and.Farhad.1080p.AMZN.WEB-DL.DD5.1.H.264-testWEB.mkv", "Subtitle": "Pantheon.S02E04.Olivia.Farhad.1080p.AMZN.WEB-DL.DD+5.1.H.264.NTb.en.srt"},
+      {"Key": "5", "Video": "Pantheon.S02E05.Yair.1080p.AMZN.WEB-DL.DD5.1.H.264-testWEB.mkv", "Subtitle": "Pantheon.S02E05.Yair.1080p.AMZN.WEB-DL.DD+5.1.H.264.NTb.en.srt"},
+      {"Key": "6", "Video": "Pantheon.S02E06.Apokalypsis.1080p.AMZN.WEB-DL.DD5.1.H.264-testWEB.mkv", "Subtitle": "Pantheon.S02E06.Apokalypsis.1080p.AMZN.WEB-DL.DD+5.1.H.264.NTb.en.srt"}
+    ]
+  },
+  {
+    "Name": "鬼滅之刃",
+    "Input": [
+      {"Key": "", "Video": "[Up to 21°C] 鬼滅之刃 柱訓練篇 - 02 (Baha 1920x1080 AVC AAC MP4) [784C8989].mp4", "Subtitle": ""},
+      {"Key": "", "Video": "[Up to 21°C] 鬼滅之刃 柱訓練篇 - 04 (Baha 1920x1080 AVC AAC MP4) [41B42367].mp4", "Subtitle": ""},
+      {"Key": "", "Video": "", "Subtitle": "[鬼滅] _柱訓練篇_-_02_HEVC_AC3.ass"},
+      {"Key": "", "Video": "", "Subtitle": "[鬼滅] _柱訓練篇_-_04_HEVC_AC3.ass"}
+    ],
+    "Output": [
+      {"Key": "2", "Video": "[Up to 21°C] 鬼滅之刃 柱訓練篇 - 02 (Baha 1920x1080 AVC AAC MP4) [784C8989].mp4", "Subtitle": "[鬼滅] _柱訓練篇_-_02_HEVC_AC3.ass"},
+      {"Key": "4", "Video": "[Up to 21°C] 鬼滅之刃 柱訓練篇 - 04 (Baha 1920x1080 AVC AAC MP4) [41B42367].mp4", "Subtitle": "[鬼滅] _柱訓練篇_-_04_HEVC_AC3.ass"}
+    ]
+  },
+  {
+    "Name": "BlackDoor",
+    "Input": [
+      {"Key": "", "Video": "Black Mirror (2011)(1080p)(Webdl)(VP9)(14 lang-AAC- 2.0) (S01) PHDTeam.mkv", "Subtitle": ""},
+      {"Key": "", "Video": "Black Mirror (2011)(1080p)(Webdl)(VP9)(14 lang-AAC- 2.0) (S11) PHDTeam.mkv", "Subtitle": ""},
+      {"Key": "", "Video": "", "Subtitle": "Black Mirror_S01E01_Patnáct milionů meritů.ass"},
+      {"Key": "", "Video": "", "Subtitle": "Black Mirror_S01E11_P15milMeritů-EN.ass"}
+    ],
+    "Output": [
+      {"Key": "1", "Video": "Black Mirror (2011)(1080p)(Webdl)(VP9)(14 lang-AAC- 2.0) (S01) PHDTeam.mkv", "Subtitle": "Black Mirror_S01E01_Patnáct milionů meritů.ass"},
+      {"Key": "11", "Video": "Black Mirror (2011)(1080p)(Webdl)(VP9)(14 lang-AAC- 2.0) (S11) PHDTeam.mkv", "Subtitle": "Black Mirror_S01E11_P15milMeritů-EN.ass"}
+    ]
+  },
+  {
+    "Name": "Haikyuu!! (sc & tc)",
+    "Input": [
+      {"Key": "", "Video": "[Kamigami] Haikyuu!! S2 - 09 [1920x1080 HEVC AAC Sub(Chs,Cht,Jap)].mkv", "Subtitle": ""},
+      {"Key": "", "Video": "[Kamigami] Haikyuu!! S2 - 10 [1920x1080 HEVC AAC Sub(Chs,Cht,Jap)].mkv", "Subtitle": ""},
+      {"Key": "", "Video": "", "Subtitle": "[YYDM-11FANS][Haikyuu!!][09][BDRIP][720P][X264-10bit_AAC][40A7E056].sc.ass"},
+      {"Key": "", "Video": "", "Subtitle": "[YYDM-11FANS][Haikyuu!!][09][BDRIP][720P][X264-10bit_AAC][40A7E056].tc.ass"},
+      {"Key": "", "Video": "", "Subtitle": "[YYDM-11FANS][Haikyuu!!][10][BDRIP][720P][X264-10bit_AAC][6FDEFD72].sc.ass"},
+      {"Key": "", "Video": "", "Subtitle": "[YYDM-11FANS][Haikyuu!!][10][BDRIP][720P][X264-10bit_AAC][6FDEFD72].tc.ass"}
+    ],
+    "Output": [
+      {"Key": "9", "Video": "[Kamigami] Haikyuu!! S2 - 09 [1920x1080 HEVC AAC Sub(Chs,Cht,Jap)].mkv", "Subtitle": "[YYDM-11FANS][Haikyuu!!][09][BDRIP][720P][X264-10bit_AAC][40A7E056].sc.ass"},
+      {"Key": "9", "Video": "[Kamigami] Haikyuu!! S2 - 09 [1920x1080 HEVC AAC Sub(Chs,Cht,Jap)].mkv", "Subtitle": "[YYDM-11FANS][Haikyuu!!][09][BDRIP][720P][X264-10bit_AAC][40A7E056].tc.ass"},
+      {"Key": "10", "Video": "[Kamigami] Haikyuu!! S2 - 10 [1920x1080 HEVC AAC Sub(Chs,Cht,Jap)].mkv", "Subtitle": "[YYDM-11FANS][Haikyuu!!][10][BDRIP][720P][X264-10bit_AAC][6FDEFD72].sc.ass"},
+      {"Key": "10", "Video": "[Kamigami] Haikyuu!! S2 - 10 [1920x1080 HEVC AAC Sub(Chs,Cht,Jap)].mkv", "Subtitle": "[YYDM-11FANS][Haikyuu!!][10][BDRIP][720P][X264-10bit_AAC][6FDEFD72].tc.ass"}
+    ]
+  }
+]
