@@ -19,26 +19,39 @@ public static class Helper
         return "";
     }
     
-    public static void MergeSameKeysItems(List<MatchItem> items)
+    /// <summary>
+    /// Merges items with the same non-empty keys by grouping them.
+    /// Assuming the mapping between the video and the subtitles is one-to-many (1 to N).
+    /// Each group is merged into a new list where the first non-empty video
+    /// is selected and all non-empty subtitles are kept.
+    /// </summary>
+    /// <param name="items">A read-only list of MatchItem objects to be merged by key.</param>
+    /// <returns>
+    /// A list of MatchItem objects where keys are merged, each key associated with
+    /// its first non-empty video and corresponding subtitles.
+    /// </returns>
+    public static List<MatchItem> MergeSameKeysItems(IReadOnlyList<MatchItem> items)
     {
-        for (var i = 0; i < items.Count; i++)
+        // Group items by non-empty keys, filtering out items with null or empty keys
+        var groupedItems = items
+            .Where(item => !string.IsNullOrEmpty(item.Key))
+            .GroupBy(item => item.Key);
+
+        // Create the merged list of MatchItems
+        var result = new List<MatchItem>();
+        foreach (var group in groupedItems)
         {
-            var item = items[i];
-            if (string.IsNullOrEmpty(item.Key)) continue;
-            
-            for (var j = i + 1; j < items.Count; j++)
-            {
-                var other = items[j];
-                if (item.Key == other.Key)
-                {
-                    item.Video = !string.IsNullOrEmpty(item.Video) ? item.Video : other.Video;
-                    item.Subtitle = !string.IsNullOrEmpty(item.Subtitle) ? item.Subtitle : other.Subtitle;
-                    item.Key = item.Key;
-                    items.RemoveAt(j);
-                    j--;
-                }
-            }
+            var video = group.FirstOrDefault(item => !string.IsNullOrEmpty(item.Video))?.Video ?? "";
+            var subtitles = group.Where(item => !string.IsNullOrEmpty(item.Subtitle)).Select(item => item.Subtitle);
+
+            // Add a new MatchItem for each subtitle under the same key and video
+            result.AddRange(subtitles.Select(subtitle => new MatchItem(group.Key, video, subtitle)));
         }
+
+        // Keep items with empty keys
+        result.AddRange(items.Where(item => string.IsNullOrEmpty(item.Key)));
+
+        return result;
     }
 
     public static List<MatchItem> MoveEmptyKeyItemsToLast(IReadOnlyList<MatchItem> items)
