@@ -18,10 +18,11 @@ public class RenameService(Window target) : IRenameService
     {
         destList.Clear();
 
-        // 检查是否存在视频字幕一对多的情况，若存在则保留语言后缀
+        // 检查是否有重复的 Key (存在视频字幕一对多的情况)，若有则保留语言后缀
         // @see https://github.com/qwqcode/SubRenamer/pull/54
-        var hasOneVideo2ManySubtitles = matchList.GroupBy(x => x.Video).Any(g => g.Count() > 1);
-        var keepLangExt = Config.Get().KeepLangExt || hasOneVideo2ManySubtitles;
+        // @file https://github.com/qwqcode/SubRenamer/blob/main/SubRenamer.Tests/MatcherTests/MergeSameKeysItemsTests.cs
+        var hasDuplicateKey = matchList.GroupBy(x => x.Key).Any(g => g.Count() > 1);
+        var keepLangExt = Config.Get().KeepLangExt || hasDuplicateKey;
 
         foreach (var item in matchList)
         {
