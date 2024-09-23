@@ -23,16 +23,24 @@ public class RenameService(Window target) : IRenameService
         // @file https://github.com/qwqcode/SubRenamer/blob/main/SubRenamer.Tests/MatcherTests/MergeSameKeysItemsTests.cs
         var hasDuplicateKey = matchList.GroupBy(x => x.Key).Any(g => g.Count() > 1);
         var keepLangExt = Config.Get().KeepLangExt || hasDuplicateKey;
+        var customLangExt = Config.Get().CustomLangExt.Trim();
+        var hasCustomLangExt = !string.IsNullOrEmpty(customLangExt);
 
         foreach (var item in matchList)
         {
             if (string.IsNullOrEmpty(item.Subtitle) || string.IsNullOrEmpty(item.Video)) continue;
 
-            // 提取字幕文件语言后缀
+            // 字幕文件语言后缀
             var subSuffix = "";
-            if (keepLangExt) {
+            if (keepLangExt)
+            {
+                // 从原始字幕文件名中提取语言后缀
                 var subSplit = Path.GetFileNameWithoutExtension(item.Subtitle).Split('.');
                 if (subSplit.Length > 1) subSuffix = "." + subSplit[^1];
+            }
+            if (hasCustomLangExt) {
+                // 自定义追加的后缀
+                subSuffix += "." + customLangExt.TrimStart('.');
             }
 
             // 拼接新的字幕文件路径
