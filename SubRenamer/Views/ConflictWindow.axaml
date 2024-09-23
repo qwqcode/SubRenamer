@@ -42,6 +42,7 @@
                 <ListBox ItemsSource="{Binding Labels}"
                          SelectedItem="{Binding SelectedLabel}"
                          Classes="RadioButtonListBox"/>
+                
                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                         <Button Content="导入文件" Name="ConfirmBtn" Click="ConfirmBtn_OnClick" Width="100" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,20,0,0" />
                 </StackPanel>
