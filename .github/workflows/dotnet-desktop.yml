@@ -7,6 +7,7 @@ on:
 
 env:
     DIST_DIR: /tmp/builds
+    ENABLE_NATIVE_LIBS: true
 
 jobs:
   build:

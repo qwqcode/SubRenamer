@@ -97,7 +97,9 @@ SubRenamer 专注于字幕文件改名，简单易用。
 
 为实施自动匹配，需导入至少两个文件名格式一致的视频文件和两个字幕文件。
 
-> 相关代码可见：[SubRenamer/Matcher](https://github.com/qwqcode/SubRenamer/tree/main/SubRenamer/Matcher)
+- 算法代码：[SubRenamer/Matcher](https://github.com/qwqcode/SubRenamer/tree/main/SubRenamer/Matcher)（入口函数位于 [Matcher.cs](https://github.com/qwqcode/SubRenamer/blob/main/SubRenamer/Matcher/Matcher.cs) 文件内）
+- 单元测试代码：[SubRenamer.Tests](https://github.com/qwqcode/SubRenamer/tree/main/SubRenamer.Tests)
+- 测试用例数据：[TopLevelTests.json](https://github.com/qwqcode/SubRenamer/blob/main/SubRenamer.Tests/MatcherTests/TopLevelTests.json)（**其中包含了自动匹配算法的示例数据**）
 
 ### 手动匹配模式
 
@@ -160,17 +162,62 @@ AVALONIA_SCREEN_SCALE_FACTORS="eDP-1=2;" ./SubRenamer
 
 ### Prerequisites
 
-Windows
+**Windows**
+
+Visual Studio 2022, including .NET 8 & Desktop development with C++ workload.
+
+Alternatively, you can install JetBrains Rider to build the project. (Recommended).
+
+**Fedora (36+)**
 
 ```bash
-Visual Studio 2022, including .NET 8 & Desktop development with C++ workload.
+sudo dnf group install "C Development Tools and Libraries" "Development Tools"
+
+sudo dnf install dotnet-sdk-8.0 libicu-devel cmake zlib-devel -y
 ```
 
-Ubuntu (20.04+)
+**Ubuntu (20.04+)**
 
 ```bash
 sudo apt-get install dotnet-sdk-8.0 libicu-dev cmake zlib1g-dev -y
 ```
+
+**macOS (12+)**
+
+```bash
+# Install Homebrew
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# Install xcode command line tools
+xcode-select --install
+
+# Install dependencies
+brew install dotnet-sdk8 icu4c cmake zlib
+```
+
+****
+
+### 单元测试
+
+```bash
+dotnet test SubRenamer.Tests --verbosity normal
+```
+
+单元测试代码位于 [SubRenamer.Tests](https://github.com/qwqcode/SubRenamer/tree/main/SubRenamer.Tests) 目录内，推荐使用 Rider 内置的可视化工具执行测试和查看测试结果。
+
+**测试数据**
+
+[TopLevelTests.json](https://github.com/qwqcode/SubRenamer/blob/main/SubRenamer.Tests/MatcherTests/TopLevelTests.json) 文件存放了测试用例数据，包含各种各样的字幕和视频文件名列表用于测试匹配算法，欢迎提交 PR 添加更多测试用例，修改文件后执行单元测试命令即可查看测试结果。
+
+每次代码提交将通过 GitHub Actions 自动执行单元测试，确保代码质量。
+
+### 构建单文件
+
+在 Win 平台，为了构建出单个包含静态链接依赖库的 exe 文件（无额外的动态链接 dll 依赖库文件），需要手动把 [这几个 dll 文件](https://github.com/qwqcode/qwqcode/releases/tag/dotnet-lib) 下载放到 `native` 目录内。然后添加环境变量 `ENABLE_NATIVE_LIBS=true` 再执行编译。
+
+- https://github.com/qwqcode/SubRenamer/blob/main/.github/workflows/dotnet-desktop.yml
+- https://github.com/AvaloniaUI/Avalonia/issues/9503
+- https://github.com/qwqcode/SubRenamer/blob/main/SubRenamer/SubRenamer.csproj
 
 ### Publish with NativeAOT
 

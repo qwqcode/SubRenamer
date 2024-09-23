@@ -41,7 +41,7 @@
         <TrimmableAssembly Include="Avalonia.Themes.Default" />
     </ItemGroup>
 	
-    <ItemGroup Condition="$(RuntimeIdentifier.StartsWith('win'))">
+    <ItemGroup Condition="$(RuntimeIdentifier.StartsWith('win')) And '$(ENABLE_NATIVE_LIBS)' == 'true'">
         <DirectPInvoke Include="libHarfBuzzSharp" />
         <NativeLibrary Include="native\libHarfBuzzSharp.lib" Condition="$(RuntimeIdentifier.StartsWith('win'))" />
         <DirectPInvoke Include="libSkiaSharp" />
