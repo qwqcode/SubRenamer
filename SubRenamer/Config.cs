@@ -13,8 +13,7 @@ public partial class Config
     public bool Backup { get; set; } = true;
     public bool UpdateCheck { get; set; } = true;
     public bool KeepLangExt { get; set; } = false;
-    public bool CheckAddSubPrefix { get; set; } = false;
-    public string AddSubPrefix { get; set; } = "";
+    public string CustomLangExt { get; set; } = "";
     public string VideoExtAppend { get; set; } = "";
     public string SubtitleExtAppend { get; set; } = "";
     

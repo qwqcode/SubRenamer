@@ -19,8 +19,8 @@ public partial class SettingsViewModel : ViewModelBase
     private bool _backupEnabled = Config.Get().Backup;
     private bool _updateCheckEnabled = Config.Get().UpdateCheck;
     private bool _keepLangExt = Config.Get().KeepLangExt;
-    private bool _checkAddSubPrefix = Config.Get().CheckAddSubPrefix;
-    private string _addSubPrefix = Config.Get().AddSubPrefix;
+    private bool _customLangExtEnabled = !string.IsNullOrEmpty(Config.Get().CustomLangExt);
+    private string _customLangExt = Config.Get().CustomLangExt;
     private string _videoExtAppend = Config.Get().VideoExtAppend;
     private string _subtitleExtAppend = Config.Get().SubtitleExtAppend;
 
@@ -54,23 +54,24 @@ public partial class SettingsViewModel : ViewModelBase
         }
     }
 
-    public bool CheckAddSubPrefix
+    public bool CustomLangExtEnabled
     {
-        get => _checkAddSubPrefix;
+        get => _customLangExtEnabled;
         set
         {
-            Config.Get().CheckAddSubPrefix = value;
-            SetProperty(ref _checkAddSubPrefix, value);
+            if (!value) CustomLangExt = "";
+            else KeepLangExt = false;
+            SetProperty(ref _customLangExtEnabled, value);
         }
     }
 
-    public string AddSubPrefix
+    public string CustomLangExt
     {
-        get => _addSubPrefix;
+        get => _customLangExt;
         set
         {
-            Config.Get().AddSubPrefix = value;
-            SetProperty(ref _addSubPrefix, value);
+            Config.Get().CustomLangExt = value;
+            SetProperty(ref _customLangExt, value);
         }
     }
     public string VideoExtAppend
@@ -82,9 +83,7 @@ public partial class SettingsViewModel : ViewModelBase
             SetProperty(ref _videoExtAppend, value);
         }
     }
-    
-    
-    
+
     public string SubtitleExtAppend
     {
         get => _subtitleExtAppend;
