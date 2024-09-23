@@ -18,13 +18,18 @@ public class RenameService(Window target) : IRenameService
     {
         destList.Clear();
 
+        // 检查是否存在视频字幕一对多的情况，若存在则保留语言后缀
+        // @see https://github.com/qwqcode/SubRenamer/pull/54
+        var hasOneVideo2ManySubtitles = matchList.GroupBy(x => x.Video).Any(g => g.Count() > 1);
+        var keepLangExt = Config.Get().KeepLangExt || hasOneVideo2ManySubtitles;
+
         foreach (var item in matchList)
         {
             if (string.IsNullOrEmpty(item.Subtitle) || string.IsNullOrEmpty(item.Video)) continue;
 
             // 提取字幕文件语言后缀
             var subSuffix = "";
-            if (Config.Get().KeepLangExt) {
+            if (keepLangExt) {
                 var subSplit = Path.GetFileNameWithoutExtension(item.Subtitle).Split('.');
                 if (subSplit.Length > 1) subSuffix = "." + subSplit[^1];
             }

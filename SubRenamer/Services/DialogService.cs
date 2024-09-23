@@ -63,9 +63,6 @@ public class DialogService : IDialogService
         await dialog.ShowDialog(_target);
         if (cancel) throw new UserCancelDialogException();
         var selected = store.GetResult();
-        //选择全部保留时自动勾选保留语言后缀选项
-        var config = Config.Get(); 
-        if (selected == "全部保留") config.KeepLangExt = true;
         return selected == "全部保留" ? null : selected;
     }
     

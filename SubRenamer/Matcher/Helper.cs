@@ -19,39 +19,40 @@ public static class Helper
         }
         return "";
     }
-
-    public static void MergeSameKeysItems(List<MatchItem> items)
+    
+    /// <summary>
+    /// Merges items with the same non-empty keys by grouping them.
+    /// Assuming the mapping between the video and the subtitles is one-to-many (1 to N).
+    /// Each group is merged into a new list where the first non-empty video
+    /// is selected and all non-empty subtitles are kept.
+    /// </summary>
+    /// <param name="items">A read-only list of MatchItem objects to be merged by key.</param>
+    /// <returns>
+    /// A list of MatchItem objects where keys are merged, each key associated with
+    /// its first non-empty video and corresponding subtitles.
+    /// </returns>
+    public static List<MatchItem> MergeSameKeysItems(IReadOnlyList<MatchItem> items)
     {
-        for (var i = 0; i < items.Count; i++)
+        // Group items by non-empty keys, filtering out items with null or empty keys
+        var groupedItems = items
+            .Where(item => !string.IsNullOrEmpty(item.Key))
+            .GroupBy(item => item.Key);
+
+        // Create the merged list of MatchItems
+        var result = new List<MatchItem>();
+        foreach (var group in groupedItems)
         {
-            var item = items[i];
-            if (string.IsNullOrEmpty(item.Key)) continue;
-            //筛选出所有Subtitles用于匹配多个字幕
-            if (item.Subtitle != "")
-            {
-                for (var j = 0; j < items.Count; j++)
-                {
-                    var other = items[j];
-                    if (item.Key == other.Key && other.Subtitle == "")
-                    {
-                        item.Video = !string.IsNullOrEmpty(item.Video) ? item.Video : other.Video;
-                        other.Status = "Paired";
-                    }
-                }
-            }
-            //将已匹配完成的只包含Video的item删除
-            if (i == (items.Count - 1))
-            {
-                for (i = 0; i < items.Count; i++)
-                {
-                    if (items[i].Status == "Paired")
-                    {
-                        items.RemoveAt(i);
-                        i--;
-                    }
-                }
-            }
+            var video = group.FirstOrDefault(item => !string.IsNullOrEmpty(item.Video))?.Video ?? "";
+            var subtitles = group.Where(item => !string.IsNullOrEmpty(item.Subtitle)).Select(item => item.Subtitle);
+
+            // Add a new MatchItem for each subtitle under the same key and video
+            result.AddRange(subtitles.Select(subtitle => new MatchItem(group.Key, video, subtitle)));
         }
+
+        // Keep items with empty keys
+        result.AddRange(items.Where(item => string.IsNullOrEmpty(item.Key)));
+
+        return result;
     }
 
     public static void MoveEmptyKeyItemsToLast(List<MatchItem> items)
