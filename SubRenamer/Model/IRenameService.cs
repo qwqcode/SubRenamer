@@ -5,7 +5,7 @@ namespace SubRenamer.Model;
 
 public interface IRenameService
 {
-    void UpdateRenameTaskList(IEnumerable<MatchItem> matchList, Collection<RenameTask> destList);
-    void ExecuteRename(IEnumerable<RenameTask> taskList);
-    string GenerateRenameCommands(IEnumerable<MatchItem> list);
+    void UpdateRenameTaskList(IReadOnlyList<MatchItem> matchList, Collection<RenameTask> destList);
+    void ExecuteRename(IReadOnlyList<RenameTask> taskList);
+    string GenerateRenameCommands(IReadOnlyList<MatchItem> list);
 }

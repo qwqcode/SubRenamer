@@ -3,12 +3,12 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace SubRenamer.Model;
 
-public partial class MatchItem(string? key = "", string video = "", string subtitle = "", string status = "") : ObservableObject
+public partial class MatchItem(string key = "", string video = "", string subtitle = "", string status = "") : ObservableObject
 {
     /**
      * Match Key
      */
-    [ObservableProperty] private string? _key = key;
+    [ObservableProperty] private string _key = key;
     
     /**
      * Video Absolute Path
