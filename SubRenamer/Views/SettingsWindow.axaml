@@ -46,27 +46,29 @@
                         <TextBox IsEnabled="{Binding CustomLangExtEnabled}" Watermark="输入后缀，例如：zh-Hans" Text="{Binding CustomLangExt}" />
                 </StackPanel>
                 <Border Height="15" />
-                <Grid HorizontalAlignment="Stretch" ColumnDefinitions="*,10,*">
+                <CheckBox IsChecked="{Binding FileClsExtAppendEnabled}">文件识别格式扩充</CheckBox>
+                <Label Foreground="Gray" Margin="30 0 30 8" FontSize="13" Padding="0">扩充用于识别视频和字幕文件格式的后缀名</Label>
+                <Grid IsEnabled="{Binding FileClsExtAppendEnabled}"  Margin="30 0 0 0" HorizontalAlignment="Stretch" ColumnDefinitions="*,10,*">
                         <StackPanel Grid.Column="0">
-                                <TextBlock Margin="0 5">视频格式扩充</TextBlock>
-                                <Label Foreground="Gray" Margin="0 0 0 10" Padding="0" FontSize="13">用于识别视频文件</Label>
+                                <TextBlock Margin="0 5 0 10" FontSize="13">视频格式扩充</TextBlock>
                                 <TextBox Watermark="以逗号分隔" Text="{Binding VideoExtAppend}" />
                         </StackPanel>
                         <StackPanel Grid.Column="2">
-                                <TextBlock Margin="0 5">字幕格式扩充</TextBlock>
-                                <Label Foreground="Gray" Margin="0 0 0 10" Padding="0" FontSize="13">用于识别字幕文件</Label>
+                                <TextBlock Margin="0 5 0 10" FontSize="13">字幕格式扩充</TextBlock>
                                 <TextBox Watermark="以逗号分隔" Text="{Binding SubtitleExtAppend}" />  
                         </StackPanel>
                         
                 </Grid>
+                <Border Height="15" />
+                <CheckBox IsChecked="{Binding UpdateCheckEnabled}">程序升级检查</CheckBox>
 
-                <Border Height="30" />
+                <Border Height="20" />
                 <TextBlock TextWrapping="Wrap" FontSize="13" LineHeight="24" Foreground="#5f6b7c">
                         |´・ω・)ノ 嗨！这是开源程序<LineBreak />
                         你可以在 <Button Classes="hyperlink" Content="GitHub" Command="{Binding OpenLinkCommand}" CommandParameter="https://github.com/qwqcode/SubRenamer" /> 找到源代码，请考虑点个 Star 🌟这会对我们很有帮助！
                 </TextBlock>
                 
-                <Border Height="5" />
+                <Border Height="15" />
                 <Border BorderThickness=".5" BorderBrush="#D2D4D5"></Border>
                 
                 <Border Height="15" />

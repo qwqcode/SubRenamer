@@ -24,6 +24,10 @@ public partial class SettingsViewModel : ViewModelBase
     private string _videoExtAppend = Config.Get().VideoExtAppend;
     private string _subtitleExtAppend = Config.Get().SubtitleExtAppend;
 
+    /// Whether enabled the custom extension appending to classify the video and subtitle files
+    private bool _fileClsExtAppendEnabled =
+        !string.IsNullOrEmpty(Config.Get().VideoExtAppend) || !string.IsNullOrEmpty(Config.Get().SubtitleExtAppend);
+
     public bool BackupEnabled
     {
         get => _backupEnabled;
@@ -91,6 +95,20 @@ public partial class SettingsViewModel : ViewModelBase
         {
             Config.Get().SubtitleExtAppend = value;
             SetProperty(ref _subtitleExtAppend, value);
+        }
+    }
+
+    public bool FileClsExtAppendEnabled
+    {
+        get => _fileClsExtAppendEnabled;
+        set
+        {
+            if (!value)
+            {
+                VideoExtAppend = "";
+                SubtitleExtAppend = "";
+            }
+            SetProperty(ref _fileClsExtAppendEnabled, value);
         }
     }
     
