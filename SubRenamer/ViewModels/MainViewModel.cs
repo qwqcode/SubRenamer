@@ -10,8 +10,10 @@ using DynamicData;
 using Microsoft.Extensions.DependencyInjection;
 using SubRenamer.Common;
 using SubRenamer.Helper;
+using SubRenamer.Matcher;
 using SubRenamer.Model;
 using SubRenamer.Services;
+using MatchItem = SubRenamer.Model.MatchItem;
 
 namespace SubRenamer.ViewModels;
 
@@ -144,7 +146,13 @@ public partial class MainViewModel : ViewModelBase
     {
         ShowRenameTasks = false;
         var inputItems = MatcherDataConverter.ConvertMatchItems(MatchList);
-        var resultRaw = Matcher.Matcher.Execute(inputItems);
+        var m = Config.Get().MatchMode;
+        var resultRaw = Matcher.Matcher.Execute(inputItems, new MatcherOptions()
+        {
+            // Convert Config to MatcherOptions
+            VideoRegex = (m != MatchMode.Diff) ? (m == MatchMode.Manual ? Config.Get().ManualVideoRegex : Config.Get().VideoRegex) : null,
+            SubtitleRegex = (m != MatchMode.Diff) ? (m == MatchMode.Manual ? Config.Get().ManualSubtitle : Config.Get().SubtitleRegex) : null,
+        });
         var result =  MatcherDataConverter.ConvertMatchItems(resultRaw);
         result.ForEach(UpdateMatchItemStatus);
         MatchList = new ObservableCollection<MatchItem>(result);
