@@ -24,7 +24,7 @@ public class RenameService(Window target) : IRenameService
         var hasDuplicateKey = matchList.GroupBy(x => x.Key).Any(g => g.Count() > 1);
         var keepLangExt = Config.Get().KeepLangExt || hasDuplicateKey;
         var customLangExt = Config.Get().CustomLangExt.Trim();
-        var hasCustomLangExt = !string.IsNullOrEmpty(customLangExt);
+        var hasCustomLangExt = !hasDuplicateKey && !string.IsNullOrEmpty(customLangExt);
 
         foreach (var item in matchList)
         {
