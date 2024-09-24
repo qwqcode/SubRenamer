@@ -16,17 +16,28 @@ public static class I18NHelper
 
     public static string GetLanguageNameFromOs()
     {
-        string timeZoneId = TimeZoneInfo.Local.Id.ToUpper();
+        string tz = TimeZoneInfo.Local.Id.ToLower();
         
+        // FIXME: `CultureInfo.CurrentCulture.Name` always return `null` in AvaloniaUI
         var name = CultureInfo.CurrentCulture.Name;
         if (string.IsNullOrWhiteSpace(name)) name = Environment.GetEnvironmentVariable("LANG");
 
         name = name?.Trim().ToLower().Replace("_", "-") ?? "";
-        if (name.Contains("en") || timeZoneId == "EST" || timeZoneId == "EDT") return "en-US";
-        if (name.Contains("zh-hans") || name.Contains("zh-cn") || timeZoneId == "PRC") return "zh-Hans";
-        if (name.Contains("zh-hant") || name.Contains("zh-tw") || name.Contains("zh-hk") || timeZoneId == "ROC") return "zh-Hant";
+        if (name.Contains("en")) return "en-US";
+
+        if (tz == "est" || tz == "edt" || tz.Contains("america")) return "en-US"; // on macos and linux
+        if (tz == "pacific standard time" || tz == "mountain standard time"
+            || tz == "central standard time" || tz == "eastern standard time") return "en-US";  // on windows
+
+        if (name.Contains("zh-hans") || name.Contains("zh-cn")) return "zh-Hans";
+        if (tz == "prc" || tz == "cst" || tz == "asia/shanghai" || tz.Contains("china")) return "zh-Hans";
+
+        if (name.Contains("zh-hant") || name.Contains("zh-tw") || name.Contains("zh-hk")) return "zh-Hant";
+        if (tz == "roc" || tz == "hkt" || tz == "asia/hong_kong" || tz == "asia/taipei" || tz.Contains("taiwan") || tz.Contains("hong kong"))
+            return "zh-Hant";
+
         if (name.Contains("zh")) return "zh-Hans";
-        if (name.Contains("ja") || name.Contains("jp") || timeZoneId == "JST") return "ja-JP";
+        if (name.Contains("ja") || name.Contains("jp") || tz == "JST" || tz == "asia/tokyo" || tz.Contains("japan")) return "ja-JP";
 
         return DefaultLanguage;
     }
