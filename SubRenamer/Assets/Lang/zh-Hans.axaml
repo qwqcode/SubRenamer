@@ -93,7 +93,7 @@
     <system:String x:Key="App.Strings.RulesRegexMatchDescription">手动输入用于匹配文件名集数的正则表达式</system:String>
     <system:String x:Key="App.Strings.RulesEdit">编辑</system:String>
     <system:String x:Key="App.Strings.SettingsTitle">设置</system:String>
-    <system:String x:Key="App.Strings.SettingsLanguage">语言</system:String>
+    <system:String x:Key="App.Strings.SettingsLanguage">语言 (Language)</system:String>
     <system:String x:Key="App.Strings.SettingsBackupOriginalSubtitles">备份原始字幕</system:String>
     <system:String x:Key="App.Strings.SettingsBackupHint">若字幕和视频文件处于相同目录内，则备份到 SubBackup</system:String>
     <system:String x:Key="App.Strings.SettingsLanguageFilterDialog">语言筛选对话框</system:String>

@@ -37,13 +37,13 @@ namespace SubRenamer
             {
                 // Load user config
                 Config.Load();
-                
+
                 // load theme
                 Config.ApplyThemeMode(Config.Get().ThemeMode);
-                
+
                 // load i18n
                 if (string.IsNullOrWhiteSpace(Config.Get().Language))
-                    Config.Get().Language = CultureInfo.CurrentCulture.Name.Contains("en") ? "en-US" : "zh-Hans";
+                    Config.Get().Language = I18NHelper.GetLanguageNameFromOs();
                 if (Config.Get().Language != I18NHelper.DefaultLanguage)
                     Application.Current.Translate(Config.Get().Language);
 

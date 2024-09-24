@@ -56,6 +56,7 @@ SubRenamer 专注于字幕文件改名，简单易用。
 - **快捷键**：支持快捷键操作，提高效率
 - **夜间模式**：支持夜间模式，跟随系统切换
 - **窗口置顶**：支持窗口置顶，方便操作
+- **I18n**：支持多语言切换，包含中文、英文等
 - **跨平台**：支持 Windows、macOS、Linux
 - **体积小**：仅 15MB 左右
 
@@ -150,6 +151,17 @@ AVALONIA_SCREEN_SCALE_FACTORS="eDP-1=2;" ./SubRenamer
 
 - https://github.com/AvaloniaUI/Avalonia/issues/9390
 - https://github.com/AvaloniaUI/Avalonia/wiki/Configuring-X11-per-monitor-DPI
+
+## 多语言翻译 (I18n)
+
+SubRenamer 支持多语言切换，目前支持的语言有：
+
+- English
+- 简体中文 (Simplified Chinese)
+- 繁體中文 (Traditional Chinese)
+- 日本語 (Japanese)
+
+语言文件位于：[SubRenamer/Assets/Lang](https://github.com/qwqcode/SubRenamer/blob/main/SubRenamer/Assets/Lang) 目录内，可以通过编辑 XAML 文件来添加或完善语言翻译。我们期待你的参与，欢迎提交 PR 添加更多语言翻译。
 
 ## 有 BUG?
 

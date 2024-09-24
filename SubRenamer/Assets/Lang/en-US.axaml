@@ -11,7 +11,7 @@
     <system:String x:Key="App.Strings.OpRules">Rules</system:String>
     <system:String x:Key="App.Strings.OpSettings">Settings</system:String>
     <system:String x:Key="App.Strings.OpPreview">Preview</system:String>
-    <system:String x:Key="App.Strings.OpRename">One-Click Rename</system:String>
+    <system:String x:Key="App.Strings.OpRename">Rename</system:String>
     <system:String x:Key="App.Strings.NativeMenuSettings">Settings...</system:String>
     <system:String x:Key="App.Strings.NativeMenuQuit">Quit SubRenamer</system:String>
     <system:String x:Key="App.Strings.MenuFile">File</system:String>

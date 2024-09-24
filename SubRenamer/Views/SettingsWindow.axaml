@@ -36,7 +36,7 @@
         <StackPanel Margin="20">
                 <StackPanel Orientation="Horizontal" Spacing="15">
                         <TextBlock Text="{DynamicResource App.Strings.SettingsLanguage}" FontSize="14" VerticalAlignment="Center" />
-                        <ComboBox MaxDropDownHeight="100" SelectedIndex="{Binding LanguageIndex}" ItemsSource="{Binding LanguageTitles}">
+                        <ComboBox MaxDropDownHeight="200" SelectedIndex="{Binding LanguageIndex}" ItemsSource="{Binding LanguageTitles}">
                                 <ComboBox.ItemTemplate>
                                         <DataTemplate>
                                                 <TextBlock Text="{Binding}" />
