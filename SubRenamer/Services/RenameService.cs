@@ -112,7 +112,7 @@ public class RenameService(Window target) : IRenameService
         {
             var subtitle = !string.IsNullOrEmpty(item.Subtitle) ? item.Subtitle : "?";
             var video = !string.IsNullOrEmpty(item.Video) ? item.Video : "?";
-            command += $"mv {subtitle} {video}\n";
+            command += $"mv \"{subtitle.Replace("\"", "\\\"")}\" \"{video.Replace("\"", "\\\"")}\"\n";
         }
 
         return command.Trim();
