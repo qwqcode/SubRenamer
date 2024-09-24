@@ -48,8 +48,11 @@ public class RenameService(Window target) : IRenameService
             var subFilename = Path.GetFileNameWithoutExtension(item.Video) + subSuffix + Path.GetExtension(item.Subtitle);
             var altered = Path.Combine(videoFolder, subFilename);
 
+            // 是否无需修改
+            var noNeedAlter = item.Subtitle == altered;
+            
             // 添加到重命名任务列表中
-            destList.Add(new RenameTask(item.Subtitle, altered, item.Status == "已修改" ? "已修改" : "待修改")
+            destList.Add(new RenameTask(item.Subtitle, altered, !noNeedAlter ? (item.Status == "已修改" ? "已修改" : "待修改") : "无需修改")
             {
                 MatchItem = item
             });
@@ -66,9 +69,9 @@ public class RenameService(Window target) : IRenameService
         
         foreach (var task in taskList)
         {
-            if (task.Status == "已修改") continue;
-            if (task.Status == "已跳过") continue;
-            
+            string[] skipStatus = ["已修改", "已跳过", "无需修改"];
+            if (skipStatus.Contains(task.Status)) continue;
+
             try
             {
                 // Whether the origin and alter files are in the same folder

@@ -113,17 +113,13 @@ public partial class MainViewModel : ViewModelBase
     #endregion
     
     #region Rename
-    
-    /**
-     * Update the Rename Task List
-     */
-    private void UpdateRenameTaskList() =>
-        GetRenameService().UpdateRenameTaskList(MatchList, RenameTasks);
-    
     /**
      * Update when preview button clicked
      */
-    partial void OnShowRenameTasksChanged(bool value) => UpdateRenameTaskList();
+    partial void OnShowRenameTasksChanged(bool value)
+    {
+        GetRenameService().UpdateRenameTaskList(MatchList, RenameTasks);
+    }
 
     /**
      * Perform Rename Task
@@ -131,7 +127,7 @@ public partial class MainViewModel : ViewModelBase
     [RelayCommand]
     private void PerformRename()
     {
-        UpdateRenameTaskList();
+        ShowRenameTasks = true;
         GetRenameService().ExecuteRename(RenameTasks);
     }
     

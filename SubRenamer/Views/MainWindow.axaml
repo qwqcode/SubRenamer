@@ -115,7 +115,15 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTextColumn Header="状态" Width="100" Binding="{Binding Status}" />
+                            <DataGridTemplateColumn Header="状态" Width="100" >
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Status}"
+                                                   ToolTip.Tip="{Binding Status}"
+                                                   VerticalAlignment="Center" Padding="10 0" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
                         </DataGrid.Columns>
                         
                         <DataGrid.ContextMenu>
@@ -170,7 +178,15 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTextColumn Header="状态" Width="100" Binding="{Binding Status}" />
+                            <DataGridTemplateColumn Header="状态" Width="100" >
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Status}"
+                                                   ToolTip.Tip="{Binding Status}"
+                                                   VerticalAlignment="Center" Padding="10 0" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
