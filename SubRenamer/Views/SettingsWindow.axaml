@@ -64,9 +64,9 @@
                 <CheckBox IsChecked="{Binding UpdateCheckEnabled}">程序升级检查</CheckBox>
 
                 <Border Height="20" />
-                <TextBlock TextWrapping="Wrap" FontSize="13" LineHeight="24" Foreground="#5f6b7c">
+                <TextBlock TextWrapping="Wrap" FontSize="13" LineHeight="26" Foreground="#5f6b7c">
                         |´・ω・)ノ 嗨！这是开源程序<LineBreak />
-                        你可以在 <Button Classes="hyperlink" Content="GitHub" Command="{Binding OpenLinkCommand}" CommandParameter="https://github.com/qwqcode/SubRenamer" /> 找到源代码，请考虑点个 Star 🌟这会对我们很有帮助！
+                        你可以在 <Button Classes="hyperlink" Content="GitHub" Margin="0 5 0 0" Command="{Binding OpenLinkCommand}" CommandParameter="https://github.com/qwqcode/SubRenamer" /> 找到源代码，请考虑点个 Star 🌟这会对我们很有帮助！
                 </TextBlock>
                 
                 <Border Height="15" />
