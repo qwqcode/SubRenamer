@@ -4,11 +4,11 @@
 
 <img src="https://github.com/qwqcode/SubRenamer/assets/22412567/ef9b38b0-d1c6-4f1f-9f7e-f7b67a36d9b5" width="150" align="right" />
 
-[English](./README.en.md)
+🎞 字幕文件批量改名工具
 
-🎞 字幕文件一键批量重命名工具
+A Tool for Batch Rename Subtitle Files to Match Video Names with One Click.
 
-> A Subtitle File Batch Renaming Tool with One-Click Automation and Intelligence.
+(Read this in other languages: [English](README.en.md))
 
 **原因？** 如果视频和字幕文件名一致，任何视频播放器都可以自动载入字幕。
 

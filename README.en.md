@@ -6,7 +6,7 @@
 
 🎞 One-click batch subtitle renaming tool
 
-> A Subtitle File Batch Renaming Tool with One-Click Automation and Intelligence.
+A Tool for Batch Rename Subtitle Files to Match Video Names with One Click.
 
 **Why?** If the video and subtitle filenames match, any video player can automatically load the subtitles.
 
