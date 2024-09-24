@@ -1,11 +1,13 @@
 using System;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Avalonia;
 using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
 using SubRenamer.Common;
+using SubRenamer.Helper;
 using SubRenamer.Model;
 
 namespace SubRenamer.ViewModels;
@@ -64,13 +66,14 @@ public partial class ManualRuleViewModel : ViewModelBase
         try
         {
             var match = Regex.Match(testCase, pattern);
-            if (!match.Success || match.Groups.Count == 0) return "未匹配";
+            if (!match.Success || match.Groups.Count == 0)
+                return Application.Current.GetResource<string>("App.Strings.ManualRuleNoMatch") ?? "No Match";
             return match.Groups[1].Value;
         }
         catch (Exception e)
         {
             ErrorMessage = e.Message;
-            return "错误";
+            return Application.Current.GetResource<string>("App.Strings.ManualRuleMatchErr") ?? "Error";
         }
     }
 

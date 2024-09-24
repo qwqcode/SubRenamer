@@ -44,8 +44,8 @@ public class ImportService(Window target) : IImportService
 
         // Import to list
         dataSource.Clear();
-        videos.ForEach(x => dataSource.Add(new MatchItem("", x, "", "")));
-        subtitles.ForEach(x => dataSource.Add(new MatchItem("", "", x, "")));
+        videos.ForEach(x => dataSource.Add(new MatchItem("", x, "")));
+        subtitles.ForEach(x => dataSource.Add(new MatchItem("", "", x)));
     }
 
     private static async Task<List<string>> SolveSubtitleConflict(

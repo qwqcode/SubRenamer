@@ -10,6 +10,7 @@ namespace SubRenamer;
 public partial class Config
 {
     public ThemeMode ThemeMode { get; set; } = ThemeMode.Default;
+    public string Language { get; set; } = "";
     public bool Backup { get; set; } = true;
     public bool UpdateCheck { get; set; } = true;
     public bool KeepLangExt { get; set; } = false;

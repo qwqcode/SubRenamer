@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Threading;
 using MsBox.Avalonia;
@@ -23,16 +24,17 @@ public class IssueReporter
                     
             var crashLog = await File.ReadAllTextAsync(App.CrashLogFile);
             var title = crashLog.Split('\n').FirstOrDefault() ?? "";
-                
+
+            var reportBtnName = Application.Current.GetResource<string>("App.Strings.IssueReporterReport");
             var box = MessageBoxManager.GetMessageBoxCustom(new MessageBoxCustomParams
             {
                 ButtonDefinitions = new List<ButtonDefinition>
                 {
-                    new ButtonDefinition { Name = "反馈问题", IsDefault = true },
-                    new ButtonDefinition { Name = "忽略", IsCancel = true }
+                    new ButtonDefinition { Name = reportBtnName, IsDefault = true },
+                    new ButtonDefinition { Name = Application.Current.GetResource<string>("App.Strings.IssueReporterIgnore"), IsCancel = true }
                 },
-                ContentTitle = "检测到程序崩溃 x_x",
-                ContentMessage = $"{title}\n\n点击下方按钮反馈错误报告",
+                ContentTitle = Application.Current.GetResource<string>("App.Strings.IssueReporterCapital"),
+                ContentMessage = $"{title}\n\n{Application.Current.GetResource<string>("App.Strings.IssueReporterMessage")}",
                 Icon = MsBox.Avalonia.Enums.Icon.Warning,
                 WindowStartupLocation = WindowStartupLocation.CenterScreen,
                 CanResize = false,
@@ -42,7 +44,7 @@ public class IssueReporter
                 Topmost = true
             });
             var result = await box.ShowAsync();
-            if (result == "反馈问题")
+            if (result == reportBtnName)
             {
                 CreateGitHubIssue(title, $"{crashLog}\n\nWheel: {SystemInfo.GetOSArchPair()} Version: v{Config.AppVersion}");
             }

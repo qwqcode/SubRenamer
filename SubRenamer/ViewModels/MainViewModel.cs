@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Avalonia;
 using Avalonia.Platform.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -213,9 +214,9 @@ public partial class MainViewModel : ViewModelBase
     public void SyncCurrentStatusText() =>
         CurrMatchModeText = Config.Get().MatchMode switch
         {
-            MatchMode.Diff => "自动匹配",
-            MatchMode.Manual => "手动匹配",
-            MatchMode.Regex => "正则匹配",
+            MatchMode.Diff => Application.Current.GetResource<string>("App.Strings.RulesAutoMatch") ?? "Diff",
+            MatchMode.Manual => Application.Current.GetResource<string>("App.Strings.RulesManualMatch") ?? "Manual",
+            MatchMode.Regex => Application.Current.GetResource<string>("App.Strings.RulesRegexMatch") ?? "Regex",
             _ => ""
         };
     
