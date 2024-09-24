@@ -37,13 +37,13 @@
         <StackPanel Margin="10">
                 <Label>视频文件 正则表达式</Label>
                 <Border Height="5" />
-                <TextBox Height="90" Margin="5" AcceptsReturn="True" TextWrapping="Wrap" Text="{Binding VideoRegexStr}" />
+                <TextBox Height="90" Margin="5" AcceptsReturn="True" TextWrapping="Wrap" Text="{Binding VideoRegexStr}" Watermark="例如：Breaking\.Bad\.S03E(\d+).*\.mp4" />
                 
                 <Border Height="10" />
                 
                 <Label>字幕文件 正则表达式</Label>
                 <Border Height="5" />
-                <TextBox Height="90" Margin="5" AcceptsReturn="True" TextWrapping="Wrap" Text="{Binding SubtitleRegexStr}" />
+                <TextBox Height="90" Margin="5" AcceptsReturn="True" TextWrapping="Wrap" Text="{Binding SubtitleRegexStr}" Watermark="例如：Breaking\.Bad\.S03E(\d+).*\.ass" />
                 
                 <Border BorderThickness=".5" BorderBrush="#D2D4D5" Margin="0 20"></Border>
                 

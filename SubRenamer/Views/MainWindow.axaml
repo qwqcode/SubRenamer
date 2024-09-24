@@ -97,8 +97,24 @@
                     
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="匹配" Width="100" Binding="{Binding Key}"/>
-                            <DataGridTextColumn Header="视频" Width="*" Binding="{Binding VideoName}" />
-                            <DataGridTextColumn Header="字幕" Width="*" Binding="{Binding SubtitleName}" />
+                            <DataGridTemplateColumn Header="视频" Width="*">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding VideoName}"
+                                                   ToolTip.Tip="{Binding VideoName}"
+                                                   VerticalAlignment="Center" Padding="10 0" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="字幕" Width="*">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding SubtitleName}"
+                                                   ToolTip.Tip="{Binding SubtitleName}"
+                                                   VerticalAlignment="Center" Padding="10 0" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
                             <DataGridTextColumn Header="状态" Width="100" Binding="{Binding Status}" />
                         </DataGrid.Columns>
                         
@@ -136,11 +152,26 @@
                               IsVisible="{Binding ShowRenameTasks}">
                         
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="原始文件名" Width="*" Binding="{Binding OriginName}"/>
-                            <DataGridTextColumn Header="修改后" Width="*" Binding="{Binding AlterName}" />
+                            <DataGridTemplateColumn Header="原始文件名" Width="*">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding OriginName}"
+                                                   ToolTip.Tip="{Binding OriginName}"
+                                                   VerticalAlignment="Center" Padding="10 0" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="修改后" Width="*">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding AlterName}"
+                                                   ToolTip.Tip="{Binding AlterName}"
+                                                   VerticalAlignment="Center" Padding="10 0" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
                             <DataGridTextColumn Header="状态" Width="100" Binding="{Binding Status}" />
                         </DataGrid.Columns>
-                        
                     </DataGrid>
                 </Grid>
             
