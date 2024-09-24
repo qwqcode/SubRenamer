@@ -10,12 +10,16 @@ public static class Helper
 {
     public static string ExtractMatchKeyRegex(string pattern, string filename)
     {
-        try {
+        try
+        {
             var match = Regex.Match(filename, pattern, RegexOptions.IgnoreCase);
             if (match.Success) return match.Groups[1].Value;
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             Logger.Out.WriteLine(e.Message);
         }
+
         return "";
     }
 

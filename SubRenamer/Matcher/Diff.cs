@@ -105,10 +105,13 @@ public static class Diff
                 : $"{Regex.Escape(diff.Prefix)}(.+?){Regex.Escape(diff.Suffix)}";
         }
 
-        var match = Regex.Match(filename, pattern, RegexOptions.IgnoreCase);
-        if (!match.Success || match.Groups.Count == 0) return "";
+        Logger.Out.WriteLine("[Diff.ExtractMatchKeyByDiff]\n\n  Str=\"{0}\"\n  MatchPattern=\"{1}\"", filename, pattern);
 
-        var key = match.Groups[1].Value.Trim();
+        var key = "";
+        var match = Regex.Match(filename, pattern, RegexOptions.IgnoreCase);
+        key = (match.Success && match.Groups.Count > 0) ? match.Groups[1].Value.Trim() : "";
+
+        Logger.Out.WriteLine("  MatchedKey=\"{0}\"\n", key);
 
         return key;
     }
