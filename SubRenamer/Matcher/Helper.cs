@@ -54,11 +54,13 @@ public static class Helper
         var result = new List<MatchItem>();
         foreach (var group in groupedItems)
         {
+            // One-to-Many mapping (Video-Subtitles)
             var video = group.FirstOrDefault(item => !string.IsNullOrEmpty(item.Video))?.Video ?? "";
             var subtitles = group.Where(item => !string.IsNullOrEmpty(item.Subtitle)).Select(item => item.Subtitle);
 
             // Add a new MatchItem for each subtitle under the same key and video
-            result.AddRange(subtitles.Select(subtitle => new MatchItem(group.Key, video, subtitle)));
+            result.AddRange(subtitles.Select(subtitle => new MatchItem(group.Key, video, subtitle))
+                .DefaultIfEmpty(new MatchItem(group.Key, video, ""))); // Keep video if no subtitles
         }
 
         // Keep items with empty keys

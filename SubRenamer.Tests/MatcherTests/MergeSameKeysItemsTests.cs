@@ -138,4 +138,24 @@ public class MergeSameKeysItemsTests
     {
         Assert.That(MergeSameKeysItems(new List<MatchItem>()), Is.Empty);
     }
+
+    [Test]
+    public void KeepVideoIfNoSubtitles()
+    {
+        var input = new List<MatchItem>
+        {
+            new("k1", "v1.mp4", ""),
+            new("k1", "", "s1.srt"),
+            new("k2", "v2.mp4", ""),
+            new("k3", "v3.mp4", ""),
+        };
+        var output = new List<MatchItem>
+        {
+            new("k1", "v1.mp4", "s1.srt"),
+            new("k2", "v2.mp4", ""),
+            new("k3", "v3.mp4", ""),
+        };
+
+        Assert.That(MergeSameKeysItems(input), Is.EqualTo(output));
+    }
 }
