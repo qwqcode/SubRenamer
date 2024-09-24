@@ -30,7 +30,7 @@ public class TopLevelTests
     {
         var actual = Execute(input);
 
-        var jsonOpts = new JsonSerializerOptions { WriteIndented = true };
+        var jsonOpts = new JsonSerializerOptions { WriteIndented = true, Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping };
         TestContext.Progress.WriteLine("{1}\n\n  \ud83c\udf1f Matcher Test Case: {0}\n\n{1}", name, new string('=', 50));
         TestContext.Progress.WriteLine("{2}\n  {0}\n{2}\n{1}", "Input", JsonSerializer.Serialize(input, jsonOpts),
             new string('-', 50));
