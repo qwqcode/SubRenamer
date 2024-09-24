@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using SubRenamer.Common;
 
 namespace SubRenamer.Matcher;
 
@@ -10,6 +9,9 @@ public record MatchItem(string Key, string Video, string Subtitle);
 public static class Matcher
 {
     public static List<MatchItem> Execute(IReadOnlyList<MatchItem> inputItems)
+        => Execute(inputItems, new MatcherOptions());
+
+    public static List<MatchItem> Execute(IReadOnlyList<MatchItem> inputItems, MatcherOptions options)
     {
         // Create new collection
         List<MatchItem> result = [];
@@ -30,12 +32,8 @@ public static class Matcher
         });
 
         // Get file keys
-        var m = Config.Get().MatchMode;
-        var videoRegex = (m != MatchMode.Diff) ? (m == MatchMode.Manual ? Config.Get().ManualVideoRegex : Config.Get().VideoRegex) : null;
-        var subtitleRegex = (m != MatchMode.Diff) ? (m == MatchMode.Manual ? Config.Get().ManualSubtitleRegex : Config.Get().SubtitleRegex) : null;
-
-        var video2Keys = CalculateFileKeys(videoFiles, videoRegex);
-        var subtitle2Keys = CalculateFileKeys(subtitleFiles, subtitleRegex);
+        var video2Keys = CalculateFileKeys(videoFiles, customRegex: options.VideoRegex);
+        var subtitle2Keys = CalculateFileKeys(subtitleFiles, customRegex: options.SubtitleRegex);
 
         // Apply keys
         List<MatchItem> keyedItems = [];
@@ -63,22 +61,21 @@ public static class Matcher
         return result;
     }
 
-    private static Dictionary<string, string> CalculateFileKeys(IReadOnlyList<string> files, string? regexPattern)
+    private static Dictionary<string, string> CalculateFileKeys(IReadOnlyList<string> files, string? customRegex)
     {
         var result = new Dictionary<string, string>();
 
-        if (regexPattern is null)
+        if (customRegex is null)
         {
-            // 1. Auto Diff Algorithm
-
-            // Diff filenames
-            var names = files
+            // Method 1. Auto Diff Algorithm
+            var filenames = files
                 .Select(Path.GetFileNameWithoutExtension)
                 .Where(x => !string.IsNullOrEmpty(x))
                 .Distinct()
                 .ToList();
 
-            var diff = Diff.GetDiffResult(names!);
+            // Diff filenames
+            var diff = Diff.GetDiffResult(filenames!);
             Logger.Out.WriteLine("[Diff.GetDiffResult]\n\n  {0}\n", (diff != null ? diff : "null"));
 
             // Extract Match keys
@@ -89,10 +86,10 @@ public static class Matcher
         }
         else
         {
-            // 2. Regex Algorithm
+            // Method 2. Custom Regex
             foreach (var f in files)
             {
-                result[f] = Helper.PatchKey(Helper.ExtractMatchKeyRegex(regexPattern, Path.GetFileName(f)));
+                result[f] = Helper.PatchKey(Helper.ExtractMatchKeyRegex(customRegex, Path.GetFileName(f)));
             }
         }
 
