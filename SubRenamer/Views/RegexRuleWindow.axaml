@@ -7,7 +7,7 @@
         x:Class="SubRenamer.Views.RegexRuleWindow"
         xmlns:vm="clr-namespace:SubRenamer.ViewModels"
         xmlns:common="clr-namespace:SubRenamer.Common"
-        Title="正则表达式匹配"
+        Title="{DynamicResource App.Strings.RegexRuleTitle}"
         WindowStartupLocation="CenterOwner"
         Width="500"
         SizeToContent="Height">
@@ -35,35 +35,35 @@
         </Window.Styles>
         
         <StackPanel Margin="10">
-                <Label>视频文件 正则表达式</Label>
+                <Label Content="{DynamicResource App.Strings.RegexRuleVideoLabel}" />
                 <Border Height="5" />
-                <TextBox Height="90" Margin="5" AcceptsReturn="True" TextWrapping="Wrap" Text="{Binding VideoRegexStr}" Watermark="例如：Breaking\.Bad\.S03E(\d+).*\.mp4" />
+                <TextBox Height="90" Margin="5" AcceptsReturn="True" TextWrapping="Wrap" Text="{Binding VideoRegexStr}" Watermark="{DynamicResource App.Strings.RegexRuleVideoRegexWatermark}" />
                 
                 <Border Height="10" />
                 
-                <Label>字幕文件 正则表达式</Label>
+                <Label Content="{DynamicResource App.Strings.RegexRuleSubtitleLabel}" />
                 <Border Height="5" />
-                <TextBox Height="90" Margin="5" AcceptsReturn="True" TextWrapping="Wrap" Text="{Binding SubtitleRegexStr}" Watermark="例如：Breaking\.Bad\.S03E(\d+).*\.ass" />
+                <TextBox Height="90" Margin="5" AcceptsReturn="True" TextWrapping="Wrap" Text="{Binding SubtitleRegexStr}" Watermark="{DynamicResource App.Strings.RegexRuleSubtitleRegexWatermark}" />
                 
                 <Border BorderThickness=".5" BorderBrush="#D2D4D5" Margin="0 20"></Border>
                 
                 <StackPanel Margin="5">
-                        <Label>匹配测试</Label>
+                        <Label Content="{DynamicResource App.Strings.RegexRuleMatchTestLabel}" />
                         <Border Height="5" />
                         <Grid ColumnDefinitions="Auto,10,*,10,50,10,80">
-                                <Label Grid.Column="0" VerticalAlignment="Center">视频</Label>
-                                <TextBox Grid.Column="2" Watermark="输入内容或打开文件..." Text="{Binding VideoTestStr}" />
+                                <Label Grid.Column="0" VerticalAlignment="Center" Content="{DynamicResource App.Strings.RegexRuleVideoTestLabel}" />
+                                <TextBox Grid.Column="2" Watermark="{DynamicResource App.Strings.RegexRuleInputOrOpenFileWatermark}" Text="{Binding VideoTestStr}" />
                                 <Button Grid.Column="4" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Command="{Binding OpenFileCommand}" CommandParameter="{x:Static common:FileType.Video}">...</Button>
-                                <TextBox Grid.Column="6" IsReadOnly="True" Watermark="无匹配" Text="{Binding VideoTestResult}" />
+                                <TextBox Grid.Column="6" IsReadOnly="True" Watermark="{DynamicResource App.Strings.RegexRuleNoMatchWatermark}" Text="{Binding VideoTestResult}" />
                         </Grid>
                 
                         <Border Height="10" />
                 
                         <Grid ColumnDefinitions="Auto,10,*,10,50,10,80">
-                                <Label Grid.Column="0" VerticalAlignment="Center">字幕</Label>
-                                <TextBox Grid.Column="2" Watermark="输入内容或打开文件..." Text="{Binding SubtitleTestStr}" />
+                                <Label Grid.Column="0" VerticalAlignment="Center" Content="{DynamicResource App.Strings.RegexRuleSubtitleTestLabel}" />
+                                <TextBox Grid.Column="2" Watermark="{DynamicResource App.Strings.RegexRuleInputOrOpenFileWatermark}" Text="{Binding SubtitleTestStr}" />
                                 <Button Grid.Column="4" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Command="{Binding OpenFileCommand}" CommandParameter="{x:Static common:FileType.Subtitle}">...</Button>
-                                <TextBox Grid.Column="6" IsReadOnly="True" Watermark="无匹配" Text="{Binding SubtitleTestResult}" />
+                                <TextBox Grid.Column="6" IsReadOnly="True" Watermark="{DynamicResource App.Strings.RegexRuleNoMatchWatermark}" Text="{Binding SubtitleTestResult}" />
                         </Grid>
                 </StackPanel>
                 
@@ -71,12 +71,12 @@
                 
                 <Grid ColumnDefinitions="Auto,*,Auto" Margin="10">
                         <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="15">
-                                <Button Classes="hyperlink" Content="了解更多" Command="{Binding OpenLinkCommand}" CommandParameter="https://github.com/ziishaned/learn-regex/blob/master/translations/README-cn.md" />
-                                <Button Classes="hyperlink" Content="测试工具" Command="{Binding OpenLinkCommand}" CommandParameter="https://regexr.com/" />
+                                <Button Classes="hyperlink" Content="{DynamicResource App.Strings.RegexRuleLearnMore}" Command="{Binding OpenLinkCommand}" CommandParameter="https://github.com/ziishaned/learn-regex/blob/master/translations/README-cn.md" />
+                                <Button Classes="hyperlink" Content="{DynamicResource App.Strings.RegexRuleTestTool}" Command="{Binding OpenLinkCommand}" CommandParameter="https://regexr.com/" />
                         </StackPanel>
                         <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="15">
-                                <Button Content="保存" Name="OkBtn" Width="100" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding SaveCommand}" CommandParameter="{Binding ElementName=Window}" />
-                                <Button Content="取消" Name="NoBtn" Width="100" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Click="CancelBtn_OnClick" />
+                                <Button Content="{DynamicResource App.Strings.RegexRuleSave}" Name="OkBtn" Width="100" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding SaveCommand}" CommandParameter="{Binding ElementName=Window}" />
+                                <Button Content="{DynamicResource App.Strings.RegexRuleCancel}" Name="NoBtn" Width="100" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Click="CancelBtn_OnClick" />
                         </StackPanel>
                 </Grid>
         </StackPanel>

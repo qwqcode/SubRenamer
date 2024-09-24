@@ -66,15 +66,4 @@
         <!--Compresse with UPX-->
         <!-- <PackageReference Include="PublishAotCompressed" Version="1.0.3" /> -->
     </ItemGroup>
-
-    <ItemGroup>
-      <UpToDateCheckInput Remove="Styles\HyperText.Avalonia\Styles\HyperlinkStyle.axaml" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Compile Update="Views\ManualRuleWindow.axaml.cs">
-        <DependentUpon>ManualModeSetting.axaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
-    </ItemGroup>
 </Project>

@@ -18,7 +18,9 @@ public class RenameService(Window target) : IRenameService
     {
         destList.Clear();
 
-        // 检查是否有重复的 Key (存在视频字幕一对多的情况)，若有则保留语言后缀
+        // Check for duplicate keys
+        // (there are cases where video subtitles have a one-to-many relationship),
+        // if found, retain the language suffix.
         // @see https://github.com/qwqcode/SubRenamer/pull/54
         // @file https://github.com/qwqcode/SubRenamer/blob/main/SubRenamer.Tests/MatcherTests/MergeSameKeysItemsTests.cs
         var hasDuplicateKey = matchList.GroupBy(x => x.Key).Any(g => g.Count() > 1);
@@ -30,31 +32,36 @@ public class RenameService(Window target) : IRenameService
         {
             if (string.IsNullOrEmpty(item.Subtitle) || string.IsNullOrEmpty(item.Video)) continue;
 
-            // 字幕文件语言后缀
+            // Subtitle file language suffix
             var subSuffix = "";
             if (keepLangExt)
             {
-                // 从原始字幕文件名中提取语言后缀
+                // Extract language suffix from original subtitle file name
                 var subSplit = Path.GetFileNameWithoutExtension(item.Subtitle).Split('.');
                 if (subSplit.Length > 1) subSuffix = "." + subSplit[^1];
             }
             if (hasCustomLangExt) {
-                // 自定义追加的后缀
+                // Custom appended suffix
                 subSuffix += "." + customLangExt.TrimStart('.');
             }
 
-            // 拼接新的字幕文件路径
+            // Splice new subtitle file path
             var videoFolder = Path.GetDirectoryName(item.Video) ?? "";
             var subFilename = Path.GetFileNameWithoutExtension(item.Video) + subSuffix + Path.GetExtension(item.Subtitle);
             var altered = Path.Combine(videoFolder, subFilename);
 
-            // 是否无需修改
+            // No need to alter
             var noNeedAlter = item.Subtitle == altered;
-            
-            // 添加到重命名任务列表中
-            destList.Add(new RenameTask(item.Subtitle, altered, !noNeedAlter ? (item.Status == "已修改" ? "已修改" : "待修改") : "无需修改")
+
+            // Add to rename task list
+            var status = !noNeedAlter
+                ? (item.Status != MatchItemStatus.Altered ? RenameTaskStatus.Ready : RenameTaskStatus.Altered)
+                : RenameTaskStatus.NoNeed;
+
+            destList.Add(new RenameTask(item.Subtitle, altered)
             {
-                MatchItem = item
+                MatchItem = item,
+                Status = status
             });
         }
     }
@@ -69,7 +76,7 @@ public class RenameService(Window target) : IRenameService
         
         foreach (var task in taskList)
         {
-            string[] skipStatus = ["已修改", "已跳过", "无需修改"];
+            RenameTaskStatus?[] skipStatus = [RenameTaskStatus.Altered, RenameTaskStatus.NoNeed];
             if (skipStatus.Contains(task.Status)) continue;
 
             try
@@ -93,13 +100,13 @@ public class RenameService(Window target) : IRenameService
                     FileHelper.CopyFile(task.Origin, task.Alter);
                 }
 
-                task.Status = "已修改";
-                if (task.MatchItem != null) task.MatchItem.Status = "已修改";
+                task.Status = RenameTaskStatus.Altered;
+                if (task.MatchItem != null) task.MatchItem.Status = MatchItemStatus.Altered;
             }
             catch (Exception e)
             {
-                task.Status = $"失败：{e.Message}";
-                // task.Error = e.Message;
+                task.ErrorMessage = e.Message;
+                task.Status = RenameTaskStatus.Failed;
             }
         }
     }

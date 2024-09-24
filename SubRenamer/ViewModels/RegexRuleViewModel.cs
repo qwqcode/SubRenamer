@@ -57,13 +57,14 @@ public partial class RegexRuleViewModel : ViewModelBase
         try
         {
             var match = Regex.Match(testCase, pattern);
-            if (!match.Success || match.Groups.Count == 0) return "未匹配";
+            if (!match.Success || match.Groups.Count == 0)
+                return Application.Current.GetResource<string>("App.Strings.RegexRuleNoMatch") ?? "No Match";
             return match.Groups[1].Value;
         }
         catch (Exception e)
         {
             ErrorMessage = e.Message;
-            return "错误";
+            return Application.Current.GetResource<string>("App.Strings.RegexRuleMatchErr") ?? "Error";
         }
     }
 

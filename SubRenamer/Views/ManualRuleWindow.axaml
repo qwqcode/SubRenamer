@@ -7,7 +7,7 @@
         x:Class="SubRenamer.Views.ManualRuleWindow"
         xmlns:vm="clr-namespace:SubRenamer.ViewModels"
         xmlns:common="clr-namespace:SubRenamer.Common"
-        Title="手动匹配"
+        Title="{DynamicResource App.Strings.ManualRuleTitle}"
         WindowStartupLocation="CenterOwner"
         Width="710"
         SizeToContent="Height">
@@ -18,15 +18,15 @@
         
         <StackPanel Margin="10">
                 <StackPanel Margin="5">
-                        <Label>视频 文件名规则</Label>
+                        <Label Content="{DynamicResource App.Strings.ManualRuleVideoFilenameRule}"></Label>
                         <Border Height="5" />
                 
                         <Grid ColumnDefinitions="3*,10,*">
                                 <TextBox Grid.Column="0" Height="130" AcceptsReturn="True" TextWrapping="Wrap" Text="{Binding Video}" />
                                 <StackPanel Grid.Column="2" Spacing="10">
-                                        <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Command="{Binding OpenFileCommand}" CommandParameter="{x:Static common:FileType.Video}">选择视频文件</Button>
-                                        <TextBlock TextWrapping="Wrap" LineSpacing="5">任意选择一个文件，然后手动将左侧集数修改为 $$</TextBlock>
-                                        <TextBox IsReadOnly="True" Watermark="无匹配" Text="{Binding VideoMatchResult}" />
+                                        <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Command="{Binding OpenFileCommand}" CommandParameter="{x:Static common:FileType.Video}" Content="{DynamicResource App.Strings.ManualRuleSelectVideoFile}"></Button>
+                                        <TextBlock TextWrapping="Wrap" LineSpacing="5" Text="{DynamicResource App.Strings.ManualRuleInstruction}"></TextBlock>
+                                        <TextBox IsReadOnly="True" Watermark="{DynamicResource App.Strings.ManualRuleNoMatch}" Text="{Binding VideoMatchResult}" />
                                 </StackPanel>
                         </Grid>
                 </StackPanel>
@@ -34,15 +34,15 @@
                 <Border Height="10" />
                 
                 <StackPanel Margin="5">
-                        <Label>字幕 文件名规则</Label>
+                        <Label Content="{DynamicResource App.Strings.ManualRuleSubtitleFilenameRule}"></Label>
                         <Border Height="5" />
                 
                         <Grid ColumnDefinitions="3*,10,*">
                                 <TextBox Grid.Column="0" Height="130" AcceptsReturn="True" TextWrapping="Wrap" Text="{Binding Subtitle}" />
                                 <StackPanel Grid.Column="2" Spacing="10">
-                                        <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Command="{Binding OpenFileCommand}" CommandParameter="{x:Static common:FileType.Subtitle}">选择字幕文件</Button>
-                                        <TextBlock TextWrapping="Wrap" LineSpacing="5">任意选择一个文件，然后手动将左侧集数修改为 $$</TextBlock>
-                                        <TextBox IsReadOnly="True" Watermark="无匹配" Text="{Binding SubtitleMatchResult}" />
+                                        <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Command="{Binding OpenFileCommand}" CommandParameter="{x:Static common:FileType.Subtitle}" Content="{DynamicResource App.Strings.ManualRuleSelectSubtitleFile}"></Button>
+                                        <TextBlock TextWrapping="Wrap" LineSpacing="5" Text="{DynamicResource App.Strings.ManualRuleInstruction}"></TextBlock>
+                                        <TextBox IsReadOnly="True" Watermark="{DynamicResource App.Strings.ManualRuleNoMatch}" Text="{Binding SubtitleMatchResult}" />
                                 </StackPanel>
                         </Grid>
                 </StackPanel>
@@ -50,14 +50,10 @@
                 <TextBox Height="30" FontSize="14" Margin="5" IsReadOnly="True" Text="{Binding ErrorMessage}" IsVisible="{Binding  ErrorMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" BorderThickness="0" Foreground="Red" />
                 
                 <Grid ColumnDefinitions="2*,10,*" Margin="10">
-                        <TextBlock Grid.Column="0" TextWrapping="Wrap" LineSpacing="5">
-                                通配符 * 星号可表示省略任意文字，举个栗子：<LineBreak/>
-                                对于文件名：“[Steins;Gate][11][1080P] 时空边界的教理.sc.ass”<LineBreak/>
-                                可以修改为：“[Steins;Gate][$$]*.sc.ass”
-                        </TextBlock>
+                        <TextBlock Grid.Column="0" TextWrapping="Wrap" LineSpacing="5" Text="{DynamicResource App.Strings.ManualRuleWildcardInstruction}"></TextBlock>
                         <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="15" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-                                <Button Content="保存" Name="SaveBtn" Width="100" HorizontalContentAlignment="Center" Command="{Binding SaveCommand}" CommandParameter="{Binding ElementName=Window}" />
-                                <Button Content="取消" Name="CancelBtn" Width="100" HorizontalContentAlignment="Center" Click="CancelBtn_OnClick" />
+                                <Button Content="{DynamicResource App.Strings.ManualRuleSave}" Name="SaveBtn" Width="100" HorizontalContentAlignment="Center" Command="{Binding SaveCommand}" CommandParameter="{Binding ElementName=Window}" />
+                                <Button Content="{DynamicResource App.Strings.ManualRuleCancel}" Name="CancelBtn" Width="100" HorizontalContentAlignment="Center" Click="CancelBtn_OnClick" />
                         </StackPanel>
                 </Grid>
         </StackPanel>

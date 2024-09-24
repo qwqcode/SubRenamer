@@ -9,7 +9,7 @@
         xmlns:model="using:SubRenamer.Model"
         xmlns:common="clr-namespace:SubRenamer.Common"
         xmlns:helper="clr-namespace:SubRenamer.Helper"
-        Title="匹配规则"
+        Title="{DynamicResource App.Strings.RulesTitle}"
         WindowStartupLocation="CenterOwner"
         Width="500"
         SizeToContent="Height">
@@ -41,20 +41,20 @@
         </Window.Styles>
         
         <StackPanel Margin="20">
-                <RadioButton GroupName="MatchMode" Content="自动匹配" IsChecked="{Binding MatchMode, Converter={StaticResource EnumBoolConverter}, ConverterParameter={x:Static common:MatchMode.Diff}}" />
-                <Label Foreground="Gray" Margin="25 0 20 10">通过比较两个文件名的差异来匹配</Label>
+                <RadioButton GroupName="MatchMode" Content="{DynamicResource App.Strings.RulesAutoMatch}" IsChecked="{Binding MatchMode, Converter={StaticResource EnumBoolConverter}, ConverterParameter={x:Static common:MatchMode.Diff}}" />
+                <Label Foreground="Gray" Margin="25 0 20 10" Content="{DynamicResource App.Strings.RulesAutoMatchDescription}"></Label>
                 
                 <StackPanel Orientation="Horizontal">
-                        <RadioButton GroupName="MatchMode" Content="手动匹配" IsChecked="{Binding MatchMode, Converter={StaticResource EnumBoolConverter}, ConverterParameter={x:Static common:MatchMode.Manual}}" />
+                        <RadioButton GroupName="MatchMode" Content="{DynamicResource App.Strings.RulesManualMatch}" IsChecked="{Binding MatchMode, Converter={StaticResource EnumBoolConverter}, ConverterParameter={x:Static common:MatchMode.Manual}}" />
                         <Border Width="10"></Border>
-                        <Button Classes="hyperlink" Command="{Binding OpenManualModeSettingCommand}" CommandParameter="{Binding ElementName=Window}" >编辑</Button>
+                        <Button Classes="hyperlink" Command="{Binding OpenManualModeSettingCommand}" CommandParameter="{Binding ElementName=Window}" Content="{DynamicResource App.Strings.RulesEdit}"></Button>
                 </StackPanel>
-                <Label Foreground="Gray" Margin="25 0 20 10">手动输入文件名中集数前后的文字来匹配</Label>
+                <Label Foreground="Gray" Margin="25 0 20 10" Content="{DynamicResource App.Strings.RulesManualMatchDescription}"></Label>
                 <StackPanel Orientation="Horizontal">
-                        <RadioButton GroupName="MatchMode" Content="正则匹配" IsChecked="{Binding MatchMode, Converter={StaticResource EnumBoolConverter}, ConverterParameter={x:Static common:MatchMode.Regex}}" />
+                        <RadioButton GroupName="MatchMode" Content="{DynamicResource App.Strings.RulesRegexMatch}" IsChecked="{Binding MatchMode, Converter={StaticResource EnumBoolConverter}, ConverterParameter={x:Static common:MatchMode.Regex}}" />
                         <Border Width="10"></Border>
-                        <Button Classes="hyperlink" Command="{Binding OpenRegexModeSettingCommand}" CommandParameter="{Binding ElementName=Window}" >编辑</Button>
+                        <Button Classes="hyperlink" Command="{Binding OpenRegexModeSettingCommand}" CommandParameter="{Binding ElementName=Window}" Content="{DynamicResource App.Strings.RulesEdit}"></Button>
                 </StackPanel>
-                <Label Foreground="Gray" Margin="25 0 20 10">手动输入用于匹配文件名集数的正则表达式</Label>
+                <Label Foreground="Gray" Margin="25 0 20 10" Content="{DynamicResource App.Strings.RulesRegexMatchDescription}"></Label>
         </StackPanel>
 </Window>

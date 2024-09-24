@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using Avalonia;
 using Avalonia.Controls;
+using SubRenamer.Helper;
 using SubRenamer.Model;
 using SubRenamer.ViewModels;
 using SubRenamer.Views;
@@ -50,7 +52,9 @@ public class DialogService : IDialogService
     
     public async Task<string?> OpenConflict(List<string> options)
     {
-        var store = new ConflictViewModel([..options, "全部保留"]);
+        var keepAllText = Application.Current.GetResource<string>("App.Strings.ConflictKeepAll");
+
+        var store = new ConflictViewModel([..options, keepAllText]);
         var dialog = new ConflictWindow
         {
             DataContext = store
@@ -63,7 +67,7 @@ public class DialogService : IDialogService
         await dialog.ShowDialog(_target);
         if (cancel) throw new UserCancelDialogException();
         var selected = store.GetResult();
-        return selected == "全部保留" ? null : selected;
+        return selected == keepAllText ? null : selected;
     }
     
     public async Task OpenRegexModeSetting()

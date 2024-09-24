@@ -9,6 +9,15 @@
         <local:ViewLocator/>
     </Application.DataTemplates>
 
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceInclude Source="/Assets/Lang/zh-Hans.axaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+	
+    </Application.Resources>
+
     <Application.Styles>
         <FluentTheme />
         <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml"/>
@@ -16,9 +25,9 @@
     
     <NativeMenu.Menu>
         <NativeMenu>
-            <NativeMenuItem Header="设置..." Gesture="Meta+," Click="MenuSetting_OnClick" />
+            <NativeMenuItem Header="{DynamicResource App.Strings.NativeMenuSettings}" Gesture="Meta+," Click="MenuSetting_OnClick" />
             <NativeMenuItemSeparator />
-            <NativeMenuItem Header="退出 SubRenamer" Gesture="Meta+Q" Click="MenuQuit_OnClick" />
+            <NativeMenuItem Header="{DynamicResource App.Strings.NativeMenuQuit}" Gesture="Meta+Q" Click="MenuQuit_OnClick" />
         </NativeMenu>
     </NativeMenu.Menu>
 </Application>

@@ -1,22 +1,15 @@
 using System;
-using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Avalonia.Markup.Xaml.Styling;
-using Avalonia.Threading;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using SubRenamer.ViewModels;
 using SubRenamer.Views;
 using Microsoft.Extensions.DependencyInjection;
-using MsBox.Avalonia;
-using MsBox.Avalonia.Dto;
-using MsBox.Avalonia.Enums;
-using MsBox.Avalonia.Models;
 using SubRenamer.Helper;
 using SubRenamer.Model;
 using SubRenamer.Services;
@@ -47,6 +40,12 @@ namespace SubRenamer
                 
                 // load theme
                 Config.ApplyThemeMode(Config.Get().ThemeMode);
+                
+                // load i18n
+                if (string.IsNullOrWhiteSpace(Config.Get().Language))
+                    Config.Get().Language = CultureInfo.CurrentCulture.Name.Contains("en") ? "en-US" : "zh-Hans";
+                if (Config.Get().Language != I18NHelper.DefaultLanguage)
+                    Application.Current.Translate(Config.Get().Language);
 
                 var mainWindowStore = new MainViewModel();
                 desktop.MainWindow = new MainWindow
@@ -142,7 +141,7 @@ namespace SubRenamer
                     var updateSrc = await Updater.GetUpdatesAsync();
                     if (updateSrc != null && mainWindowStore != null)
                     {
-                        mainWindowStore.CurrVersionText += " (有更新)";
+                        mainWindowStore.CurrVersionText += " " + Application.Current.GetResource<string>("App.Strings.MenuUpdateAlert");
                         mainWindowStore.CurrVersionBtnLink = updateSrc;
                     }
                 }

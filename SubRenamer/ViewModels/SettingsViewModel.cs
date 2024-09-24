@@ -1,16 +1,11 @@
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text.RegularExpressions;
-using System.Threading;
-using System.Threading.Tasks;
+using System.Linq;
+using Avalonia;
+using Avalonia.Markup.Xaml.Styling;
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
-using SubRenamer.Services;
-using Microsoft.Extensions.DependencyInjection;
 using SubRenamer.Helper;
-using SubRenamer.Model;
+using DynamicData;
 
 namespace SubRenamer.ViewModels;
 
@@ -126,4 +121,29 @@ public partial class SettingsViewModel : ViewModelBase
     
     [RelayCommand]
     private void OpenLink(string url) => BrowserHelper.OpenBrowserAsync(url);
+    
+    #region Language
+    public static string[] LanguageNames { get; } = I18NHelper.LanguageNames;
+    public static string[] LanguageTitles { get; } = I18NHelper.LanguageTitles;
+
+    private string _language = Config.Get().Language;
+
+    [ObservableProperty] private int _languageIndex = LanguageNames.IndexOf(Config.Get().Language);
+
+    public string Language
+    {
+        get => _language;
+        set
+        {
+            Config.Get().Language = value;
+            Application.Current.Translate(value);
+            SetProperty(ref _language, value);
+        }
+    }
+
+    partial void OnLanguageIndexChanged(int value)
+    {
+        Language = I18NHelper.Languages[value].Split(":")[0];
+    }
+    #endregion
 }

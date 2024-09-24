@@ -5,7 +5,7 @@
         xmlns:vm="clr-namespace:SubRenamer.ViewModels"
         mc:Ignorable="d"
         x:Class="SubRenamer.Views.ItemEditWindow"
-        Title="编辑"
+        Title="{DynamicResource App.Strings.ItemEditTitle}"
         WindowStartupLocation="CenterOwner"
         Width="500"
         SizeToContent="Height">
@@ -26,7 +26,7 @@
         <StackPanel>
                 <Grid ColumnDefinitions="Auto,*,Auto" Margin="10">
                         <StackPanel Grid.Column="0" Orientation="Horizontal">
-                                <Label VerticalAlignment="Center">匹配</Label>
+                                <Label VerticalAlignment="Center" Content="{DynamicResource App.Strings.ItemEditMatch}"></Label>
                                 <Border Width="10" />
                                 <TextBox Text="{Binding CurrItem.Key}" />
                         </StackPanel>
@@ -42,7 +42,7 @@
                 
                 <Border BorderThickness=".5" BorderBrush="#D2D4D5"></Border>
                 
-                <Label Margin="10 10 10 0">视频文件</Label>
+                <Label Margin="10 10 10 0" Content="{DynamicResource App.Strings.ItemEditVideoFile}"></Label>
                 <Grid ColumnDefinitions="*,5,50" Margin="10">
                         <TextBox Grid.Column="0" Height="150" AcceptsReturn="True" TextWrapping="Wrap" IsReadOnly="True" Text="{Binding CurrItem.Video}" />
                         <StackPanel Grid.Column="2">
@@ -52,7 +52,7 @@
                         </StackPanel>
                 </Grid>
                 
-                <Label Margin="10 0">字幕文件</Label>
+                <Label Margin="10 0" Content="{DynamicResource App.Strings.ItemEditSubtitleFile}"></Label>
                 <Grid ColumnDefinitions="*,5,50" Margin="10">
                         <TextBox Grid.Column="0" Height="150" AcceptsReturn="True" TextWrapping="Wrap" IsReadOnly="True" Text="{Binding CurrItem.Subtitle}" />
                         <StackPanel Grid.Column="2">
