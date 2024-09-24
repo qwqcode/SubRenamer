@@ -39,8 +39,9 @@ public class ImportService(Window target) : IImportService
         var (videos, subtitles) = FilesGroupByType(files);
         
         // Solve subtitle conflict
-        subtitles = await SolveSubtitleConflict(subtitles, onOpenSolveConflictDialog);
-        
+        if (Config.Get().FileConflictFilter)
+            subtitles = await SolveSubtitleConflict(subtitles, onOpenSolveConflictDialog);
+
         // Import to list
         dataSource.Clear();
         videos.ForEach(x => dataSource.Add(new MatchItem("", x, "", "")));

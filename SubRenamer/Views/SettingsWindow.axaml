@@ -35,11 +35,13 @@
         
         <StackPanel Margin="20">
                 <CheckBox IsChecked="{Binding BackupEnabled}">备份原始字幕</CheckBox>
-                <Label Foreground="Gray" Margin="30 0 30 10" FontSize="13" Padding="0">程序会复制字幕到视频目录，若目录相同则备份到 SubBackup</Label>
+                <Label Foreground="Gray" Margin="30 0 30 10" FontSize="13" Padding="0">若字幕和视频文件处于相同目录内，则备份到 SubBackup</Label>
                 <!-- <CheckBox>确认删除对话框</CheckBox> -->
                 <!-- <CheckBox>显示文件完整路径</CheckBox> -->
-                <CheckBox IsChecked="{Binding KeepLangExt}" IsEnabled="{Binding !CustomLangExtEnabled}">保留语言后缀</CheckBox>
-                <Label Foreground="Gray" Margin="30 0 30 10" FontSize="13" Padding="0">例如 "subtitle.sc.srt" 保留语言后缀 ".sc"</Label>
+                <CheckBox IsChecked="{Binding FileConflictFilter}">语言筛选对话框</CheckBox>
+                <Label Foreground="Gray" FontSize="13" Padding="0" Margin="30 0 30 10">检测到导入的字幕文件包含多种语言时，弹出语言筛选对话框</Label>
+                <CheckBox IsChecked="{Binding KeepLangExt}" IsEnabled="{Binding !CustomLangExtEnabled}">保留字幕语言后缀</CheckBox>
+                <Label Foreground="Gray" Margin="30 0 30 10" FontSize="13" Padding="0">例如 "subtitle.sc.srt" 保留字幕语言后缀 ".sc"</Label>
                 <CheckBox IsChecked="{Binding CustomLangExtEnabled}">追加字幕后缀</CheckBox>
                 <StackPanel Margin="30 0 0 0">
                         <Label Foreground="Gray" FontSize="13" Padding="0" Margin="0 0 0 10">在字幕文件扩展名前添加自定义后缀</Label>
@@ -47,17 +49,16 @@
                 </StackPanel>
                 <Border Height="15" />
                 <CheckBox IsChecked="{Binding FileClsExtAppendEnabled}">文件识别格式扩充</CheckBox>
-                <Label Foreground="Gray" Margin="30 0 30 8" FontSize="13" Padding="0">扩充用于识别视频和字幕文件格式的后缀名</Label>
+                <Label Foreground="Gray" Margin="30 0 30 8" FontSize="13" Padding="0">扩充用于识别字幕和视频文件格式的后缀名（以英文逗号分隔）</Label>
                 <Grid IsEnabled="{Binding FileClsExtAppendEnabled}"  Margin="30 0 0 0" HorizontalAlignment="Stretch" ColumnDefinitions="*,10,*">
                         <StackPanel Grid.Column="0">
-                                <TextBlock Margin="0 5 0 10" FontSize="13">视频格式扩充</TextBlock>
-                                <TextBox Watermark="以逗号分隔" Text="{Binding VideoExtAppend}" />
+                                <TextBlock Margin="0 5 0 10" FontSize="13">字幕格式扩充</TextBlock>
+                                <TextBox Watermark="例如：srt" Text="{Binding SubtitleExtAppend}" />  
                         </StackPanel>
                         <StackPanel Grid.Column="2">
-                                <TextBlock Margin="0 5 0 10" FontSize="13">字幕格式扩充</TextBlock>
-                                <TextBox Watermark="以逗号分隔" Text="{Binding SubtitleExtAppend}" />  
+                                <TextBlock Margin="0 5 0 10" FontSize="13">视频格式扩充</TextBlock>
+                                <TextBox Watermark="例如：mkv" Text="{Binding VideoExtAppend}" />
                         </StackPanel>
-                        
                 </Grid>
                 <Border Height="15" />
                 <CheckBox IsChecked="{Binding UpdateCheckEnabled}">程序升级检查</CheckBox>

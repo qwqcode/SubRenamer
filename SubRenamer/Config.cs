@@ -14,6 +14,7 @@ public partial class Config
     public bool UpdateCheck { get; set; } = true;
     public bool KeepLangExt { get; set; } = false;
     public string CustomLangExt { get; set; } = "";
+    public bool FileConflictFilter { get; set; } = true;
     public string VideoExtAppend { get; set; } = "";
     public string SubtitleExtAppend { get; set; } = "";
     

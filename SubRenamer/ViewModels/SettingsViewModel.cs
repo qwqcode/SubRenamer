@@ -20,6 +20,7 @@ public partial class SettingsViewModel : ViewModelBase
     private bool _updateCheckEnabled = Config.Get().UpdateCheck;
     private bool _keepLangExt = Config.Get().KeepLangExt;
     private bool _customLangExtEnabled = !string.IsNullOrEmpty(Config.Get().CustomLangExt);
+    private bool _fileConflictFilterEnabled = Config.Get().FileConflictFilter;
     private string _customLangExt = Config.Get().CustomLangExt;
     private string _videoExtAppend = Config.Get().VideoExtAppend;
     private string _subtitleExtAppend = Config.Get().SubtitleExtAppend;
@@ -78,6 +79,17 @@ public partial class SettingsViewModel : ViewModelBase
             SetProperty(ref _customLangExt, value);
         }
     }
+    
+    public bool FileConflictFilter
+    {
+        get => _fileConflictFilterEnabled;
+        set
+        {
+            Config.Get().FileConflictFilter = value;
+            SetProperty(ref _fileConflictFilterEnabled, value);
+        }
+    }
+    
     public string VideoExtAppend
     {
         get => _videoExtAppend;
