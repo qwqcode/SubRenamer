@@ -1,4 +1,5 @@
 using System.Reflection;
+using SubRenamer.Core;
 
 namespace SubRenamer.Tests.MatcherTests;
 
@@ -6,7 +7,7 @@ namespace SubRenamer.Tests.MatcherTests;
 public class CalculateFileKeysTests
 {
     private static Dictionary<string, string> CalculateFileKeys(IReadOnlyList<string> files, string? regexPattern)
-        => (Dictionary<string, string>)typeof(Matcher.Matcher)
+        => (Dictionary<string, string>)typeof(Matcher)
             .GetMethod("CalculateFileKeys", BindingFlags.NonPublic | BindingFlags.Static)!
             .Invoke(null, new object[] { files, regexPattern! })!;
 

@@ -1,5 +1,4 @@
-using SubRenamer.Matcher;
-using static SubRenamer.Matcher.Diff;
+using static SubRenamer.Core.MatcherDiff;
 
 namespace SubRenamer.Tests.MatcherTests;
 

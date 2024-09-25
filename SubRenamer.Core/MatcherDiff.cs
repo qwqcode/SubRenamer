@@ -1,11 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace SubRenamer.Matcher;
+namespace SubRenamer.Core;
 
-public static class Diff
+public static class MatcherDiff
 {
     public record DiffResult(string Prefix, string Suffix)
     {
@@ -105,13 +102,13 @@ public static class Diff
                 : $"{Regex.Escape(diff.Prefix)}(.+?){Regex.Escape(diff.Suffix)}";
         }
 
-        Logger.Out.WriteLine("[Diff.ExtractMatchKeyByDiff]\n\n  Str=\"{0}\"\n  MatchPattern=\"{1}\"", filename, pattern);
+        MatcherLogger.Out.WriteLine("[Diff.ExtractMatchKeyByDiff]\n\n  Str=\"{0}\"\n  MatchPattern=\"{1}\"", filename, pattern);
 
         var key = "";
         var match = Regex.Match(filename, pattern, RegexOptions.IgnoreCase);
         key = (match.Success && match.Groups.Count > 0) ? match.Groups[1].Value.Trim() : "";
 
-        Logger.Out.WriteLine("  MatchedKey=\"{0}\"\n", key);
+        MatcherLogger.Out.WriteLine("  MatchedKey=\"{0}\"\n", key);
 
         return key;
     }

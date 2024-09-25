@@ -1,8 +1,4 @@
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-
-namespace SubRenamer.Matcher;
+namespace SubRenamer.Core;
 
 public record MatchItem(string Key, string Video, string Subtitle);
 
@@ -50,13 +46,13 @@ public static class Matcher
         result = keyedItems;
 
         // Merge items with same keys
-        result = Helper.MergeSameKeysItems(result);
+        result = MatcherHelper.MergeSameKeysItems(result);
 
         // Sort
-        result = Helper.SortItemsByKeys(result);
+        result = MatcherHelper.SortItemsByKeys(result);
 
         // Move empty keys to last
-        result = Helper.MoveEmptyKeyItemsToLast(result);
+        result = MatcherHelper.MoveEmptyKeyItemsToLast(result);
 
         return result;
     }
@@ -75,13 +71,13 @@ public static class Matcher
                 .ToList();
 
             // Diff filenames
-            var diff = Diff.GetDiffResult(filenames!);
-            Logger.Out.WriteLine("[Diff.GetDiffResult]\n\n  {0}\n", (diff != null ? diff : "null"));
+            var diff = MatcherDiff.GetDiffResult(filenames!);
+            MatcherLogger.Out.WriteLine("[Diff.GetDiffResult]\n\n  {0}\n", (diff != null ? diff : "null"));
 
             // Extract Match keys
             foreach (var f in files)
             {
-                result[f] = Helper.PatchKey(Diff.ExtractMatchKeyByDiff(diff, Path.GetFileNameWithoutExtension(f)));
+                result[f] = MatcherHelper.PatchKey(MatcherDiff.ExtractMatchKeyByDiff(diff, Path.GetFileNameWithoutExtension(f)));
             }
         }
         else
@@ -89,7 +85,7 @@ public static class Matcher
             // Method 2. Custom Regex
             foreach (var f in files)
             {
-                result[f] = Helper.PatchKey(Helper.ExtractMatchKeyRegex(customRegex, Path.GetFileName(f)));
+                result[f] = MatcherHelper.PatchKey(MatcherHelper.ExtractMatchKeyRegex(customRegex, Path.GetFileName(f)));
             }
         }
 

@@ -1,9 +1,7 @@
 using System.Text.Json;
-using SubRenamer.Matcher;
+using SubRenamer.Core;
 
 namespace SubRenamer.Tests.MatcherTests;
-
-using static Matcher.Matcher;
 
 [TestFixture]
 public class TopLevelTests
@@ -28,7 +26,7 @@ public class TopLevelTests
     [Test, TestCaseSource(nameof(TestData))]
     public void TestCasesFromJson(string name, List<MatchItem> input, List<MatchItem> expected)
     {
-        var actual = Execute(input);
+        var actual = Matcher.Execute(input);
 
         var jsonOpts = new JsonSerializerOptions { WriteIndented = true, Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping };
         TestContext.Progress.WriteLine("{1}\n\n  \ud83c\udf1f Matcher Test Case: {0}\n\n{1}", name, new string('=', 50));

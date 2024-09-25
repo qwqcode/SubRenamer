@@ -1,11 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace SubRenamer.Matcher;
+namespace SubRenamer.Core;
 
-public static class Helper
+public static class MatcherHelper
 {
     public static string ExtractMatchKeyRegex(string pattern, string filename)
     {
@@ -16,7 +13,7 @@ public static class Helper
         }
         catch (Exception e)
         {
-            Logger.Out.WriteLine("[ExtractMatchKeyRegex] Exception: {0}", e.Message);
+            MatcherLogger.Out.WriteLine("[ExtractMatchKeyRegex] Exception: {0}", e.Message);
         }
 
         return "";

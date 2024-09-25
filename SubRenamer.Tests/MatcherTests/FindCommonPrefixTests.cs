@@ -1,5 +1,5 @@
 using System.Reflection;
-using SubRenamer.Matcher;
+using SubRenamer.Core;
 
 namespace SubRenamer.Tests.MatcherTests;
 
@@ -7,7 +7,7 @@ namespace SubRenamer.Tests.MatcherTests;
 public class FindCommonPrefixTests
 {
     private static string FindCommonPrefix(string a, string b)
-        => (string)typeof(Diff)
+        => (string)typeof(MatcherDiff)
             .GetMethod("FindCommonPrefix", BindingFlags.NonPublic | BindingFlags.Static)!
             .Invoke(null, new object[] { a, b })!;
 

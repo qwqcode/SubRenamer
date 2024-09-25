@@ -1,3 +1,5 @@
+using SubRenamer.Core;
+
 namespace SubRenamer.Tests;
 
 [SetUpFixture]
@@ -6,7 +8,7 @@ public class GlobalSetup
     [OneTimeSetUp]
     public void RunBeforeAnyTests()
     {
-        Matcher.Logger.SetWriter(TestContext.Progress);
+        MatcherLogger.SetWriter(TestContext.Progress);
     }
 
     [OneTimeTearDown]

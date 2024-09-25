@@ -66,4 +66,8 @@
         <!--Compresse with UPX-->
         <!-- <PackageReference Include="PublishAotCompressed" Version="1.0.3" /> -->
     </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\SubRenamer.Core\SubRenamer.Core.csproj" />
+    </ItemGroup>
 </Project>

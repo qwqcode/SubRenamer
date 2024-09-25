@@ -1,5 +1,5 @@
-using SubRenamer.Matcher;
-using static SubRenamer.Matcher.Helper;
+using SubRenamer.Core;
+using static SubRenamer.Core.MatcherHelper;
 
 namespace SubRenamer.Tests.MatcherTests;
 

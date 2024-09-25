@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SubRenamer", "SubRenamer\Su
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SubRenamer.Tests", "SubRenamer.Tests\SubRenamer.Tests.csproj", "{83A52930-8AAA-4F0A-BA92-99A6BA5BA34C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SubRenamer.Core", "SubRenamer.Core\SubRenamer.Core.csproj", "{3D4961F9-B867-4EB4-80DC-C78FDD3556D9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{83A52930-8AAA-4F0A-BA92-99A6BA5BA34C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{83A52930-8AAA-4F0A-BA92-99A6BA5BA34C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{83A52930-8AAA-4F0A-BA92-99A6BA5BA34C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D4961F9-B867-4EB4-80DC-C78FDD3556D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D4961F9-B867-4EB4-80DC-C78FDD3556D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D4961F9-B867-4EB4-80DC-C78FDD3556D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D4961F9-B867-4EB4-80DC-C78FDD3556D9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

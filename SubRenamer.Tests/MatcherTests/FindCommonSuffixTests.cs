@@ -1,5 +1,5 @@
 using System.Reflection;
-using SubRenamer.Matcher;
+using SubRenamer.Core;
 
 namespace SubRenamer.Tests.MatcherTests;
 
@@ -7,7 +7,7 @@ namespace SubRenamer.Tests.MatcherTests;
 public class FindCommonSuffixTests
 {
     private static string FindCommonSuffix(string a, string b)
-        => (string)typeof(Diff)
+        => (string)typeof(MatcherDiff)
             .GetMethod("FindCommonSuffix", BindingFlags.NonPublic | BindingFlags.Static)!
             .Invoke(null, new object[] { a, b })!;
 

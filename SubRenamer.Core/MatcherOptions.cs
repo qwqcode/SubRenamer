@@ -1,4 +1,4 @@
-namespace SubRenamer.Matcher;
+namespace SubRenamer.Core;
 
 public class MatcherOptions
 {
