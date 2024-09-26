@@ -102,7 +102,7 @@ SubRenamer 专注于字幕文件改名，简单易用。
 
 为实施自动匹配，需导入至少两个文件名格式一致的视频文件和两个字幕文件。
 
-- 算法代码：[SubRenamer/Matcher](https://github.com/qwqcode/SubRenamer/tree/main/SubRenamer/Matcher)（入口函数位于 [Matcher.cs](https://github.com/qwqcode/SubRenamer/blob/main/SubRenamer/Matcher/Matcher.cs) 文件内）
+- 算法代码：[SubRenamer.Core](https://github.com/qwqcode/SubRenamer/tree/main/SubRenamer.Core)（入口函数位于 [Matcher.cs](https://github.com/qwqcode/SubRenamer/blob/main/SubRenamer.Core/Matcher.cs) 文件内）
 - 单元测试代码：[SubRenamer.Tests](https://github.com/qwqcode/SubRenamer/tree/main/SubRenamer.Tests)
 - 测试用例数据：[TopLevelTests.json](https://github.com/qwqcode/SubRenamer/blob/main/SubRenamer.Tests/MatcherTests/TopLevelTests.json)（**其中包含了自动匹配算法的示例数据**）
 

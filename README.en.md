@@ -92,7 +92,7 @@ The automatic matching mode determines the episode (extract) by comparing the di
 
 To perform automatic matching, you need to import at least two video files and two subtitle files with consistent naming formats.
 
-- Algorithm Code: [SubRenamer/Matcher](https://github.com/qwqcode/SubRenamer/tree/main/SubRenamer/Matcher) (entry function in [Matcher.cs](https://github.com/qwqcode/SubRenamer/blob/main/SubRenamer/Matcher/Matcher.cs))
+- Algorithm Code: [SubRenamer.Core](https://github.com/qwqcode/SubRenamer/tree/main/SubRenamer.Core) (entry function in [Matcher.cs](https://github.com/qwqcode/SubRenamer/blob/main/SubRenamer.Core/Matcher.cs))
 - Unit Test Code: [SubRenamer.Tests](https://github.com/qwqcode/SubRenamer/tree/main/SubRenamer.Tests)
 - Test Case Data: [TopLevelTests.json](https://github.com/qwqcode/SubRenamer/blob/main/SubRenamer.Tests/MatcherTests/TopLevelTests.json) (**contains example data for the automatic matching algorithm**)
 
