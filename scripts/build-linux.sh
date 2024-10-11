@@ -12,4 +12,4 @@ cp resources/App.desktop.template dist/SubRenamer/SubRenamer.desktop.template
 cp resources/App.icns dist/SubRenamer/SubRenamer.icns
 
 cd dist
-tar -zcvf SubRenamer_linux_amd64.tar.gz --exclude="*/*.dbg" SubRenamer
+tar -zcvf SubRenamer_linux_amd64.tar.gz SubRenamer
