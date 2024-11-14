@@ -11,6 +11,7 @@
     <system:String x:Key="App.Strings.OpRules">规则</system:String>
     <system:String x:Key="App.Strings.OpSettings">设置</system:String>
     <system:String x:Key="App.Strings.OpPreview">预览</system:String>
+    <system:String x:Key="App.Strings.OpSubSync">调轴</system:String>
     <system:String x:Key="App.Strings.OpRename">一键改名</system:String>
     <system:String x:Key="App.Strings.NativeMenuSettings">设置...</system:String>
     <system:String x:Key="App.Strings.NativeMenuQuit">退出 SubRenamer</system:String>
@@ -32,6 +33,8 @@
     <system:String x:Key="App.Strings.ContextMenuRevealVideo">在文件夹中找到视频文件</system:String>
     <system:String x:Key="App.Strings.ContextMenuRevealSubtitle">在文件夹中找到字幕文件</system:String>
     <system:String x:Key="App.Strings.ContextMenuCopyRenameCommands">复制改名命令至剪切板</system:String>
+    <system:String x:Key="App.Strings.ContextMenuPerformSubSync">执行字幕自动调轴程序</system:String>
+    <system:String x:Key="App.Strings.ContextMenuExitPreviewMode">退出预览模式</system:String>
     <system:String x:Key="App.Strings.DataGridMatch">匹配</system:String>
     <system:String x:Key="App.Strings.DataGridVideo">视频</system:String>
     <system:String x:Key="App.Strings.DataGridSubtitle">字幕</system:String>
@@ -110,7 +113,13 @@
     <system:String x:Key="App.Strings.SettingsVideoFormatExtension">视频格式扩充</system:String>
     <system:String x:Key="App.Strings.SettingsVideoFormatWatermark">例如：mkv</system:String>
     <system:String x:Key="App.Strings.SettingsUpdateCheck">程序升级检查</system:String>
-    <system:String x:Key="App.Strings.SettingsOpenSourceProgram">|´・ω・)ノ 嗨！这是开源程序</system:String>
+    <system:String x:Key="App.Strings.SettingsSubSyncProgram">自动调轴程序：</system:String>
+    <system:String x:Key="App.Strings.SettingsSubSyncInstalled">已安装</system:String>
+    <system:String x:Key="App.Strings.SettingsSubSyncNotInstalled">未安装</system:String>
+    <system:String x:Key="App.Strings.SettingsSubSyncDesc">支持 FFsubsync + FFmpeg 自动调轴，需额外下载，默认读取当前程序目录的 ffsubsync_bin 文件</system:String>
+    <system:String x:Key="App.Strings.SettingsSubSyncDownload">下载</system:String>
+    <system:String x:Key="App.Strings.SettingsSubSyncViewReadme">查看说明</system:String>
+    <system:String x:Key="App.Strings.SettingsOpenSourceProgram">|´・ω・)ノ 嗨！SubRenamer 是开源程序</system:String>
     <system:String x:Key="App.Strings.SettingsConsiderStar1">你可以在</system:String>
     <system:String x:Key="App.Strings.SettingsConsiderStar2">GitHub</system:String>
     <system:String x:Key="App.Strings.SettingsConsiderStar3">找到源代码，请考虑点个 Star 🌟这会对我们很有帮助！</system:String>
@@ -123,4 +132,12 @@
     <system:String x:Key="App.Strings.OpenFileDialogTitle">选择并导入文件</system:String>
     <system:String x:Key="App.Strings.OpenFolderDialogTitle">导入文件夹</system:String>
     <system:String x:Key="App.Strings.SaveFileDialogTitle">保存文件</system:String>
+    <system:String x:Key="App.Strings.SubSyncTasksComplete">所有任务已完成。</system:String>
+    <system:String x:Key="App.Strings.SubSyncTasksFail">任务执行失败。</system:String>
+    <system:String x:Key="App.Strings.SubSyncTasksDuration">执行耗时：</system:String>
+    <system:String x:Key="App.Strings.SubSyncBinDownloadTitle">FFsubsync 自动调轴程序</system:String>
+    <system:String x:Key="App.Strings.SubSyncBinDownloadDesc">正在下载 FFsubsync...</system:String>
+    <system:String x:Key="App.Strings.SubSyncBinDownloadDone">FFsubsync 下载成功</system:String>
+    <system:String x:Key="App.Strings.ProgressDialogCancel">取消</system:String>
+    <system:String x:Key="App.Strings.ProgressDialogDone">完成</system:String>
 </ResourceDictionary>

@@ -14,6 +14,7 @@
         x:Class="SubRenamer.Views.MainWindow"
         Icon="/Assets/icon.ico"
         Title="{DynamicResource App.Strings.AppTitle}"
+        xmlns:li="using:LoadingIndicators.Avalonia"
         DragDrop.AllowDrop="True">
 
     <Design.DataContext>
@@ -143,6 +144,7 @@
                                 <MenuItem Header="{DynamicResource App.Strings.ContextMenuRevealSubtitle}" Command="{Binding RevealFileInFolderCommand}" CommandParameter="subtitle" />
                                 <Separator/>
                                 <MenuItem Header="{DynamicResource App.Strings.ContextMenuCopyRenameCommands}" HotKey="{OnPlatform Ctrl+Shift+C, macOS=⌘+Shift+C}" InputGesture="{OnPlatform Ctrl+Shift+C, macOS=⌘+Shift+C}" Command="{Binding CopyCommandsCommand}" />
+                                <MenuItem IsVisible="{Binding SubSyncAvailable}" Header="{DynamicResource App.Strings.ContextMenuPerformSubSync}" HotKey="{OnPlatform Ctrl+Shift+T, macOS=⌘+Shift+T}" InputGesture="{OnPlatform Ctrl+Shift+T, macOS=⌘+Shift+T}" Command="{Binding PerformSubSyncSelectedCommand}" />
                             </ContextMenu>
                         </DataGrid.ContextMenu>
                         
@@ -161,6 +163,12 @@
                               BorderThickness="1"
                               BorderBrush="{StaticResource SystemControlTransientBorderBrush}"
                               IsVisible="{Binding ShowRenameTasks}">
+                        
+                        <DataGrid.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="{StaticResource App.Strings.ContextMenuExitPreviewMode}" Command="{Binding ExitPreviewModeCommand}" />
+                            </ContextMenu>
+                        </DataGrid.ContextMenu>
                         
                         <DataGrid.Columns>
                             <DataGridTemplateColumn Header="{DynamicResource App.Strings.DataGridOriginalFileName}" Width="*">
@@ -208,10 +216,24 @@
                         <Border Height="10" />
                         <Button Classes="OpBtn" Content="{DynamicResource App.Strings.OpRules}" Command="{Binding OpenRulesCommand}" />
                         <Button Classes="OpBtn" Content="{DynamicResource App.Strings.OpSettings}" Command="{Binding OpenSettingsCommand}"  />
-                        <Border Height="10" />
+                        <Border Height="5" />
                         <StackPanel HorizontalAlignment="Stretch">
-                            <CheckBox Content="{DynamicResource App.Strings.OpPreview}" IsChecked="{Binding ShowRenameTasks}" />
-                            <Button Classes="OpBtn" Content="{DynamicResource App.Strings.OpRename}" Command="{Binding PerformRenameCommand}" />
+                            <Grid ColumnDefinitions="Auto,*,Auto">
+                                <CheckBox FontSize="13" Grid.Column="0" Content="{DynamicResource App.Strings.OpPreview}" IsChecked="{Binding ShowRenameTasks}" Margin="0, 0, 10, 0" />
+                                
+                                <StackPanel IsEnabled="{Binding SubSyncAvailable}" Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                                    <CheckBox FontSize="13" Content="{DynamicResource App.Strings.OpSubSync}" IsChecked="{Binding SubSyncEnabled}" />
+                                </StackPanel>
+                            </Grid>
+                            <Border Height="5" />
+                            <Button IsEnabled="{Binding AllowExecute}" Classes="OpBtn" Command="{Binding RunCommand}">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <TextBlock IsVisible="{Binding AllowExecute}" Text="{DynamicResource App.Strings.OpRename}" />
+                                    
+                                    <TextBlock IsVisible="{Binding !AllowExecute}" Text="{DynamicResource App.Strings.OpRename}" Padding="10, 3, 0, 0" />
+                                    <li:LoadingIndicator IsVisible="{Binding !AllowExecute}" Mode="Arc" SpeedRatio="5" />
+                                </StackPanel>
+                            </Button>
                         </StackPanel>
                     </StackPanel>
                 </SplitView.Pane>

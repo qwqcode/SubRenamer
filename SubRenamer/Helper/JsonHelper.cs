@@ -15,6 +15,7 @@ namespace SubRenamer.Helper;
 // https://learn.microsoft.com/zh-cn/dotnet/standard/serialization/system-text-json/source-generation?pivots=dotnet-8-0
 [JsonSourceGenerationOptions(WriteIndented = true)]
 [JsonSerializable(typeof(Config))]
+[JsonSerializable(typeof(ExternalProgram.ServerResult))]
 [JsonSerializable(typeof(GitHubRelease))]
 [JsonSerializable(typeof(GitHubReleaseAsset))]
 internal partial class SourceGenerationContext : JsonSerializerContext

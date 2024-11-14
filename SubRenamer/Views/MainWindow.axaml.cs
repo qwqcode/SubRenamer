@@ -42,7 +42,11 @@ public partial class MainWindow : ReactiveWindow<Window>
 
     private void OnActivated(object? sender, EventArgs args)
     {
-        if (DataContext is MainViewModel store) store.SyncCurrentStatusText();
+        if (DataContext is MainViewModel store)
+        {
+            store.SyncCurrentStatusText();
+            store.SyncSubSyncStatus();
+        }
     }
 
     private void DataGrid_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)

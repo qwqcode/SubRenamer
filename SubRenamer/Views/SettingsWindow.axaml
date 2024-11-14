@@ -75,8 +75,30 @@
                 </Grid>
                 <Border Height="15" />
                 <CheckBox IsChecked="{Binding UpdateCheckEnabled}" Content="{DynamicResource App.Strings.SettingsUpdateCheck}" />
-
-                <Border Height="20" />
+                
+                <Border Height="15" />
+                <Border BorderThickness=".5" BorderBrush="#D2D4D5"></Border>
+                <Border Height="15" />
+                
+                <Grid ColumnDefinitions="3*,40,*">
+                        <StackPanel Grid.Column="0" Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{DynamicResource App.Strings.SettingsSubSyncProgram}" FontSize="14" VerticalAlignment="Center" />
+                                        <TextBlock IsVisible="{Binding SubSyncExeDownloaded}" FontSize="14" VerticalAlignment="Center" Foreground="{StaticResource SystemAccentColor}" Text="{DynamicResource App.Strings.SettingsSubSyncInstalled}" />
+                                        <TextBlock IsVisible="{Binding !SubSyncExeDownloaded}" FontSize="14" VerticalAlignment="Center" Text="{DynamicResource App.Strings.SettingsSubSyncNotInstalled}" />
+                                </StackPanel>
+                                <TextBlock Text="{DynamicResource App.Strings.SettingsSubSyncDesc}" Foreground="Gray" Margin="0 10 0 0" FontSize="13" Padding="0" TextWrapping="Wrap" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="2" Orientation="Vertical" Spacing="10">
+                                <Button FontSize="12" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Command="{Binding DownloadSubSyncExeCommand}" Content="{DynamicResource App.Strings.SettingsSubSyncDownload}" />
+                                <Button FontSize="12" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Command="{Binding OpenLinkCommand}" CommandParameter="https://github.com/qwqcode/ffsubsync-bin" Content="{DynamicResource App.Strings.SettingsSubSyncViewReadme}" />
+                        </StackPanel>
+                </Grid>
+                
+                <Border Height="15" />
+                <Border BorderThickness=".5" BorderBrush="#D2D4D5"></Border>
+                <Border Height="15" />
+                
                 <TextBlock TextWrapping="Wrap" FontSize="13" LineHeight="26" Foreground="#5f6b7c">
                         <TextBlock.Inlines>
                                 <Run Text="{DynamicResource App.Strings.SettingsOpenSourceProgram}" />

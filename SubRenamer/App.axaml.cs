@@ -1,6 +1,7 @@
 using System;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
@@ -61,6 +62,7 @@ namespace SubRenamer
                 services.AddSingleton<IClipboardService>(x => new ClipboardService(desktop.MainWindow));
                 services.AddSingleton<IImportService>(x => new ImportService(desktop.MainWindow));
                 services.AddSingleton<IRenameService>(x => new RenameService(desktop.MainWindow));
+                services.AddSingleton<ISubSyncService>(x => new SubSyncService(desktop.MainWindow));
                 services.AddSingleton<IWindowService>(x => new WindowService(desktop.MainWindow, OnSetTopmost));
 
                 Services = services.BuildServiceProvider();
@@ -126,7 +128,7 @@ namespace SubRenamer
             Current?.Services?.GetService<IDialogService>()?.OpenSettings();
         }
 
-        private static void _afterInitTasks(MainViewModel? mainWindowStore)
+        private static void _afterInitTasks(MainViewModel store)
         {
             IssueReporter.CheckCrashAndShowDialog();
             
@@ -139,10 +141,10 @@ namespace SubRenamer
                 try
                 {
                     var updateSrc = await Updater.GetUpdatesAsync();
-                    if (updateSrc != null && mainWindowStore != null)
+                    if (updateSrc != null)
                     {
-                        mainWindowStore.CurrVersionText += " " + Application.Current.GetResource<string>("App.Strings.MenuUpdateAlert");
-                        mainWindowStore.CurrVersionBtnLink = updateSrc;
+                        store.CurrVersionText += " " + Application.Current.GetResource<string>("App.Strings.MenuUpdateAlert");
+                        store.CurrVersionBtnLink = updateSrc;
                     }
                 }
                 catch (Exception e)
@@ -163,6 +165,29 @@ namespace SubRenamer
                 catch (Exception e)
                 {
                     Console.WriteLine(e);
+                }
+            });
+
+            Task.Run(async () =>
+            {
+                var subSyncService = Current?.Services?.GetService<ISubSyncService>()!;
+                subSyncService.OnBootstrapped += () =>
+                {
+                    store.SubSyncAvailable = true;
+                };
+                subSyncService.OnShutdown += () =>
+                {
+                    store.SubSyncAvailable = false;
+                    store.SubSyncEnabled = false;
+                };
+                try
+                {
+                    await subSyncService.Bootstrap();
+                }
+                catch (Exception)
+                {
+                    store.SubSyncAvailable = false;
+                    store.SubSyncEnabled = false;
                 }
             });
         }

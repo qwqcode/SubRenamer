@@ -11,6 +11,7 @@
     <system:String x:Key="App.Strings.OpRules">ルール</system:String>
     <system:String x:Key="App.Strings.OpSettings">設定</system:String>
     <system:String x:Key="App.Strings.OpPreview">プレビュー</system:String>
+    <system:String x:Key="App.Strings.OpSubSync">同期</system:String>
     <system:String x:Key="App.Strings.OpRename">リネーム</system:String>
     <system:String x:Key="App.Strings.NativeMenuSettings">設定...</system:String>
     <system:String x:Key="App.Strings.NativeMenuQuit">SubRenamerを終了</system:String>
@@ -32,6 +33,8 @@
     <system:String x:Key="App.Strings.ContextMenuRevealVideo">フォルダでビデオファイルを見つける</system:String>
     <system:String x:Key="App.Strings.ContextMenuRevealSubtitle">フォルダで字幕ファイルを見つける</system:String>
     <system:String x:Key="App.Strings.ContextMenuCopyRenameCommands">リネームコマンドをクリップボードにコピー</system:String>
+    <system:String x:Key="App.Strings.ContextMenuPerformSubSync">字幕タイムライン同期を実行する</system:String>
+    <system:String x:Key="App.Strings.ContextMenuExitPreviewMode">レビューモードを終了</system:String>
     <system:String x:Key="App.Strings.DataGridMatch">マッチ</system:String>
     <system:String x:Key="App.Strings.DataGridVideo">ビデオ</system:String>
     <system:String x:Key="App.Strings.DataGridSubtitle">字幕</system:String>
@@ -110,7 +113,13 @@
     <system:String x:Key="App.Strings.SettingsVideoFormatExtension">ビデオフォーマット拡張</system:String>
     <system:String x:Key="App.Strings.SettingsVideoFormatWatermark">例: mkv</system:String>
     <system:String x:Key="App.Strings.SettingsUpdateCheck">プログラムの更新チェック</system:String>
-    <system:String x:Key="App.Strings.SettingsOpenSourceProgram">|´・ω・)ノ こんにちは！これはオープンソースプログラムです</system:String>
+    <system:String x:Key="App.Strings.SettingsSubSyncProgram">自動タイムライン同期: </system:String>
+    <system:String x:Key="App.Strings.SettingsSubSyncInstalled">インストール済み</system:String>
+    <system:String x:Key="App.Strings.SettingsSubSyncNotInstalled">インストールされていません</system:String>
+    <system:String x:Key="App.Strings.SettingsSubSyncDesc">FFsubsync + FFmpeg 自動軸調整をサポートし、追加のダウンロードが必要で、デフォルトで現在のプログラム ディレクトリにある ffsubsync_bin ファイルを読み取ります</system:String>
+    <system:String x:Key="App.Strings.SettingsSubSyncDownload">ダウンロード</system:String>
+    <system:String x:Key="App.Strings.SettingsSubSyncViewReadme">手順を表示</system:String>
+    <system:String x:Key="App.Strings.SettingsOpenSourceProgram">|´・ω・)ノ こんにちは！ SubRenamer はオープン ソース プログラムです。</system:String>
     <system:String x:Key="App.Strings.SettingsConsiderStar1">あなたは</system:String>
     <system:String x:Key="App.Strings.SettingsConsiderStar2">GitHub</system:String>
     <system:String x:Key="App.Strings.SettingsConsiderStar3">でソースコードを見つけることができます。Star 🌟を付けていただけると嬉しいです！</system:String>
@@ -123,4 +132,12 @@
     <system:String x:Key="App.Strings.OpenFileDialogTitle">ファイルを選択してインポート</system:String>
     <system:String x:Key="App.Strings.OpenFolderDialogTitle">フォルダをインポート</system:String>
     <system:String x:Key="App.Strings.SaveFileDialogTitle">ファイルを保存</system:String>
+    <system:String x:Key="App.Strings.SubSyncTasksComplete">すべてのタスクが完了しました。</system:String>
+    <system:String x:Key="App.Strings.SubSyncTasksFail">タスクの実行に失敗しました。</system:String>
+    <system:String x:Key="App.Strings.SubSyncTasksDuration">処理時間</system:String>
+    <system:String x:Key="App.Strings.SubSyncBinDownloadTitle">FFsubsync の自動タイムライン同期</system:String>
+    <system:String x:Key="App.Strings.SubSyncBinDownloadDesc">FFsubsync をダウンロードしています...</system:String>
+    <system:String x:Key="App.Strings.SubSyncBinDownloadDone">FFsubsync のダウンロードに成功しました</system:String>
+    <system:String x:Key="App.Strings.ProgressDialogCancel">キャンセル</system:String>
+    <system:String x:Key="App.Strings.ProgressDialogDone">完了</system:String>
 </ResourceDictionary>

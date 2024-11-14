@@ -23,14 +23,16 @@ public class FilesService : IFilesService
     {
         Patterns = GetVideoExtensions().Concat(GetSubtitleExtensions()).Select(x => $"*.{x}").ToArray(),
     };
+
+    public Task<IReadOnlyList<IStorageFile>> OpenFilesAsync() => OpenFilesAsync([]);
     
-    public async Task<IReadOnlyList<IStorageFile>> OpenFilesAsync()
+    public async Task<IReadOnlyList<IStorageFile>> OpenFilesAsync(FilePickerFileType[] fileTypes)
     {
         var files = await _target.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions()
         {
             Title = Application.Current.GetResource<string>("App.Strings.OpenFileDialogTitle"),
             AllowMultiple = true,
-            FileTypeFilter = new []{ VideosAndSubtitles },
+            FileTypeFilter = fileTypes,
         });
 
         return files;

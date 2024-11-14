@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Avalonia.Controls;
 using SubRenamer.Helper;
 using SubRenamer.Model;
@@ -13,7 +14,7 @@ namespace SubRenamer.Services;
 public class RenameService(Window target) : IRenameService
 {
     private readonly Window _target = target;
-
+    
     public void UpdateRenameTaskList(IReadOnlyList<MatchItem> matchList, Collection<RenameTask> destList)
     {
         destList.Clear();
@@ -40,14 +41,17 @@ public class RenameService(Window target) : IRenameService
                 var subSplit = Path.GetFileNameWithoutExtension(item.Subtitle).Split('.');
                 if (subSplit.Length > 1) subSuffix = "." + subSplit[^1];
             }
-            if (hasCustomLangExt) {
+
+            if (hasCustomLangExt)
+            {
                 // Custom appended suffix
                 subSuffix += "." + customLangExt.TrimStart('.');
             }
 
             // Splice new subtitle file path
             var videoFolder = Path.GetDirectoryName(item.Video) ?? "";
-            var subFilename = Path.GetFileNameWithoutExtension(item.Video) + subSuffix + Path.GetExtension(item.Subtitle);
+            var subFilename = Path.GetFileNameWithoutExtension(item.Video) + subSuffix +
+                              Path.GetExtension(item.Subtitle);
             var altered = Path.Combine(videoFolder, subFilename);
 
             // No need to alter
@@ -65,18 +69,19 @@ public class RenameService(Window target) : IRenameService
             });
         }
     }
-
-    public void ExecuteRename(IReadOnlyList<RenameTask> taskList)
+    
+    public Task ExecuteRename(IReadOnlyList<RenameTask> taskList)
     {
         var backupEnabled = Config.Get().Backup;
-        
+
         // Record files that have been backed up,
         // avoid duplicate backups when mapping is one-to-many (video-subtitle)
         var filesHadBackup = new Dictionary<string, bool>();
-        
+
         foreach (var task in taskList)
         {
-            RenameTaskStatus?[] skipStatus = [RenameTaskStatus.Altered, RenameTaskStatus.NoNeed];
+            RenameTaskStatus?[] skipStatus =
+                [RenameTaskStatus.Altered, RenameTaskStatus.NoNeed];
             if (skipStatus.Contains(task.Status)) continue;
 
             try
@@ -84,13 +89,13 @@ public class RenameService(Window target) : IRenameService
                 // Whether the origin and alter files are in the same folder
                 // If they are, rename in-place; otherwise, copy the file
                 var isSameFolder = Path.GetDirectoryName(task.Origin) == Path.GetDirectoryName(task.Alter);
-                
+
                 if (isSameFolder)
                 {
                     // Backup (only rename in-place)
                     if (backupEnabled && filesHadBackup.TryAdd(task.Origin, true))
                         FileHelper.BackupFile(task.Origin);
-                    
+
                     // Rename in-place (like mv in linux)
                     FileHelper.RenameFile(task.Origin, task.Alter);
                 }
@@ -109,17 +114,22 @@ public class RenameService(Window target) : IRenameService
                 task.Status = RenameTaskStatus.Failed;
             }
         }
+
+        return Task.CompletedTask;
     }
 
     public string GenerateRenameCommands(IReadOnlyList<MatchItem> list)
     {
         var command = "";
-        
+
         foreach (var item in list)
         {
             var subtitle = !string.IsNullOrEmpty(item.Subtitle) ? item.Subtitle : "?";
-            var video = !string.IsNullOrEmpty(item.Video) ? item.Video : "?";
-            command += $"mv \"{subtitle.Replace("\"", "\\\"")}\" \"{video.Replace("\"", "\\\"")}\"\n";
+            var alterSubtitle = !string.IsNullOrEmpty(item.Video)
+                ? Path.GetDirectoryName(item.Video) + Path.DirectorySeparatorChar +
+                  Path.GetFileNameWithoutExtension(item.Video) + Path.GetExtension(subtitle)
+                : "?";
+            command += $"mv \"{subtitle.Replace("\"", "\\\"")}\" \"{alterSubtitle.Replace("\"", "\\\"")}\"\n";
         }
 
         return command.Trim();

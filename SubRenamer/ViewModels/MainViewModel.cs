@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -5,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Platform.Storage;
+using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DynamicData;
@@ -20,6 +22,7 @@ namespace SubRenamer.ViewModels;
 
 public partial class MainViewModel : ViewModelBase
 {
+    [ObservableProperty] private bool _allowExecute = true;
     [ObservableProperty] private ObservableCollection<MatchItem> _matchList = [];
     [ObservableProperty] private Collection<MatchItem> _selectedItems = [];
     [ObservableProperty] private ObservableCollection<RenameTask> _renameTasks = [];
@@ -30,6 +33,7 @@ public partial class MainViewModel : ViewModelBase
     private static IDialogService GetDialogService() => App.Current!.Services!.GetService<IDialogService>()!;
     private static IFilesService GetFilesService() => App.Current!.Services!.GetService<IFilesService>()!;
     private static IRenameService GetRenameService() => App.Current!.Services!.GetService<IRenameService>()!;
+    private static ISubSyncService GetSubSyncService() => App.Current!.Services!.GetService<ISubSyncService>()!;
     private static IImportService GetImportService() => App.Current!.Services!.GetService<IImportService>()!;
     #endregion
     
@@ -72,7 +76,7 @@ public partial class MainViewModel : ViewModelBase
      */
     [RelayCommand]
     private async Task OpenFile() =>
-        await Import(await GetFilesService().OpenFilesAsync());
+        await Import(await GetFilesService().OpenFilesAsync([ FilesService.VideosAndSubtitles ]));
     
     /**
      * Open a folder
@@ -126,12 +130,41 @@ public partial class MainViewModel : ViewModelBase
      * Perform Rename Task
      */
     [RelayCommand]
-    private void PerformRename()
+    private void Run()
     {
         ShowRenameTasks = true;
-        GetRenameService().ExecuteRename(RenameTasks);
+        Task.Run(async () =>
+        {
+            AllowExecute = false;
+
+            try
+            {
+                // Execute Rename
+                await GetRenameService().ExecuteRename(RenameTasks);
+            
+                // Execute SubSync
+                if (SubSyncAvailable && SubSyncEnabled)
+                {
+                    await GetSubSyncService().ExecuteSubSync(RenameTasks);
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBoxHelper.ShowError($"Failed to execute: {e.Message}\n\n{e.StackTrace}");
+            }
+            
+            AllowExecute = true;
+        });
     }
     
+    #endregion
+
+    #region SubSync
+    [ObservableProperty] private bool _subSyncAvailable = true;
+    [ObservableProperty] private bool _subSyncEnabled = true;
+
+    // partial void OnSubSyncEnabledChanged(bool value)
+    //     =>  AllowExecute = !value || SubSyncServerLoaded;
     #endregion
     
     #region Match
@@ -187,6 +220,36 @@ public partial class MainViewModel : ViewModelBase
     }
     
     /**
+     * Perform subtitle sync
+     */
+    [RelayCommand]
+    private void PerformSubSyncSelected()
+    {
+        if (SelectedItems.Count == 0) return;
+        var list = SelectedItems.Select(x => x.Status switch
+        {
+            MatchItemStatus.Altered => (x.Video,
+                RenameTasks.FirstOrDefault(y => y.MatchItem == x)?.Alter ?? ""),
+            _ => (x.Video, x.Subtitle),
+        }).Where(x => x.Item1 != "" && x.Item2 != "").ToList();
+        if (list.Count == 0) return;
+
+        Task.Run(async () =>
+        {
+            AllowExecute = false;
+            try
+            {
+                await GetSubSyncService().ExecuteSubSync(list);
+            }
+            catch (Exception e)
+            {
+                MessageBoxHelper.ShowError($"Failed to execute: {e.Message}\n\n{e.StackTrace}");
+            }
+            AllowExecute = true;
+        });
+    }
+    
+    /**
      * Reveal file in folder
      */
     [RelayCommand]
@@ -201,6 +264,9 @@ public partial class MainViewModel : ViewModelBase
             });
             return false;
         });
+    
+    [RelayCommand]
+    private void ExitPreviewMode() => ShowRenameTasks = false;
     #endregion
     
     #region MenuBar
@@ -219,6 +285,9 @@ public partial class MainViewModel : ViewModelBase
             MatchMode.Regex => Application.Current.GetResource<string>("App.Strings.RulesRegexMatch") ?? "Regex",
             _ => ""
         };
+
+    public void SyncSubSyncStatus() =>
+        SubSyncAvailable = GetSubSyncService().GetIsAvailable();
     
     /**
      * Open version link

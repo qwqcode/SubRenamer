@@ -1,11 +1,15 @@
 using System;
+using System.IO;
 using System.Linq;
 using Avalonia;
 using Avalonia.Markup.Xaml.Styling;
+using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SubRenamer.Helper;
 using DynamicData;
+using Microsoft.Extensions.DependencyInjection;
+using SubRenamer.Model;
 
 namespace SubRenamer.ViewModels;
 
@@ -19,10 +23,16 @@ public partial class SettingsViewModel : ViewModelBase
     private string _customLangExt = Config.Get().CustomLangExt;
     private string _videoExtAppend = Config.Get().VideoExtAppend;
     private string _subtitleExtAppend = Config.Get().SubtitleExtAppend;
+    private bool _subSyncExeDownloaded = false;
 
     /// Whether enabled the custom extension appending to classify the video and subtitle files
     private bool _fileClsExtAppendEnabled =
         !string.IsNullOrEmpty(Config.Get().VideoExtAppend) || !string.IsNullOrEmpty(Config.Get().SubtitleExtAppend);
+
+    public SettingsViewModel()
+    {
+        _subSyncExeDownloaded = !string.IsNullOrEmpty(GetSubSyncService().RetrieveExePath());
+    }
 
     public bool BackupEnabled
     {
@@ -119,8 +129,37 @@ public partial class SettingsViewModel : ViewModelBase
         }
     }
     
+    public bool SubSyncExeDownloaded
+    {
+        get => _subSyncExeDownloaded;
+        set => SetProperty(ref _subSyncExeDownloaded, value);
+    }
+    
     [RelayCommand]
     private void OpenLink(string url) => BrowserHelper.OpenBrowserAsync(url);
+
+    private ISubSyncService GetSubSyncService() => App.Current!.Services!.GetService<ISubSyncService>()!;
+    
+    [RelayCommand]
+    private void DownloadSubSyncExe()
+    {
+        Dispatcher.UIThread.Post(async () =>
+        {
+            try
+            {
+                await GetSubSyncService().Shutdown();
+                await GetSubSyncService().DownloadFFsubsyncBin();
+                Console.Write("FFsubsync binary downloaded");
+                SubSyncExeDownloaded = true;
+
+                await GetSubSyncService().Bootstrap();
+            }
+            catch (Exception)
+            {
+                SubSyncExeDownloaded = false;
+            }
+        });
+    }
     
     #region Language
     public static string[] LanguageNames { get; } = I18NHelper.LanguageNames;

@@ -7,6 +7,8 @@ namespace SubRenamer.Model;
 public interface IFilesService
 {
     public Task<IReadOnlyList<IStorageFile>> OpenFilesAsync();
+    
+    public Task<IReadOnlyList<IStorageFile>> OpenFilesAsync(FilePickerFileType[] fileTypes);
 
     public Task<IStorageFile?> OpenSingleFileAsync();
 

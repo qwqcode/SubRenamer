@@ -11,6 +11,7 @@
     <system:String x:Key="App.Strings.OpRules">Rules</system:String>
     <system:String x:Key="App.Strings.OpSettings">Settings</system:String>
     <system:String x:Key="App.Strings.OpPreview">Preview</system:String>
+    <system:String x:Key="App.Strings.OpSubSync">Sync</system:String>
     <system:String x:Key="App.Strings.OpRename">Rename</system:String>
     <system:String x:Key="App.Strings.NativeMenuSettings">Settings...</system:String>
     <system:String x:Key="App.Strings.NativeMenuQuit">Quit SubRenamer</system:String>
@@ -32,6 +33,8 @@
     <system:String x:Key="App.Strings.ContextMenuRevealVideo">Reveal Video in Folder</system:String>
     <system:String x:Key="App.Strings.ContextMenuRevealSubtitle">Reveal Subtitle in Folder</system:String>
     <system:String x:Key="App.Strings.ContextMenuCopyRenameCommands">Copy Rename Commands to Clipboard</system:String>
+    <system:String x:Key="App.Strings.ContextMenuPerformSubSync">Perform Subtitle Timeline Synchronization</system:String>
+    <system:String x:Key="App.Strings.ContextMenuExitPreviewMode">Exit Preview Mode</system:String>
     <system:String x:Key="App.Strings.DataGridMatch">Match</system:String>
     <system:String x:Key="App.Strings.DataGridVideo">Video</system:String>
     <system:String x:Key="App.Strings.DataGridSubtitle">Subtitle</system:String>
@@ -110,7 +113,13 @@ It can be modified to: "[Steins;Gate][$$]*.sc.ass"</system:String>
     <system:String x:Key="App.Strings.SettingsVideoFormatExtension">Video Format Extension</system:String>
     <system:String x:Key="App.Strings.SettingsVideoFormatWatermark">e.g., mkv</system:String>
     <system:String x:Key="App.Strings.SettingsUpdateCheck">Check for Program Updates</system:String>
-    <system:String x:Key="App.Strings.SettingsOpenSourceProgram">|´・ω・)ノ Hi! This is an open-source program</system:String>
+    <system:String x:Key="App.Strings.SettingsSubSyncProgram">Automatic Subtitles Sync: </system:String>
+    <system:String x:Key="App.Strings.SettingsSubSyncInstalled">Installed</system:String>
+    <system:String x:Key="App.Strings.SettingsSubSyncNotInstalled">Not installed</system:String>
+    <system:String x:Key="App.Strings.SettingsSubSyncDesc">Support FFsubsync + FFmpeg automatic subtitles timeline synchronization, additional download is required, and the ffsubsync_bin file in the current program directory is read by default</system:String>
+    <system:String x:Key="App.Strings.SettingsSubSyncDownload">Download</system:String>
+    <system:String x:Key="App.Strings.SettingsSubSyncViewReadme">View Readme</system:String>
+    <system:String x:Key="App.Strings.SettingsOpenSourceProgram">|´・ω・)ノ Hi! SubRenamer is an open-source program</system:String>
     <system:String x:Key="App.Strings.SettingsConsiderStar1">You can find the source code on</system:String>
     <system:String x:Key="App.Strings.SettingsConsiderStar2">GitHub</system:String>
     <system:String x:Key="App.Strings.SettingsConsiderStar3">, please consider giving it a star 🌟, it would help us a lot!</system:String>
@@ -123,4 +132,12 @@ It can be modified to: "[Steins;Gate][$$]*.sc.ass"</system:String>
     <system:String x:Key="App.Strings.OpenFileDialogTitle">Select and Import Files</system:String>
     <system:String x:Key="App.Strings.OpenFolderDialogTitle">Import Folder</system:String>
     <system:String x:Key="App.Strings.SaveFileDialogTitle">Save File</system:String>
+    <system:String x:Key="App.Strings.SubSyncTasksComplete">All tasks have been completed.</system:String>
+    <system:String x:Key="App.Strings.SubSyncTasksFail">Task execution failed.</system:String>
+    <system:String x:Key="App.Strings.SubSyncTasksDuration">Duration</system:String>
+    <system:String x:Key="App.Strings.SubSyncBinDownloadTitle">FFsubsync automatic timeline synchronization</system:String>
+    <system:String x:Key="App.Strings.SubSyncBinDownloadDesc">Downloading FFsubsync...</system:String>
+    <system:String x:Key="App.Strings.SubSyncBinDownloadDone">FFsubsync download successful</system:String>
+    <system:String x:Key="App.Strings.ProgressDialogCancel">Cancel</system:String>
+    <system:String x:Key="App.Strings.ProgressDialogDone">Done</system:String>
 </ResourceDictionary>
