@@ -1,0 +1,31 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:SubRenamer.ViewModels"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterOwner"
+        Width="430"
+        Height="140"
+        CanResize="False"
+        x:Class="SubRenamer.Views.ProgressWindow"
+        x:Name="ProgressWindowRef"
+        x:DataType="vm:ProgressViewModel"
+        Title="{Binding Title}">
+    
+    <Design.DataContext>
+        <vm:ProgressViewModel/>
+    </Design.DataContext>
+    
+    <StackPanel Margin="20">
+        <TextBlock Text="{Binding Desc}" />
+        <Border Height="10" />
+        <ProgressBar Margin="0 10" Height="10"  Minimum="0" Maximum="100" Value="{Binding Progress}" />
+        <Border Height="10" />
+        <Grid ColumnDefinitions="Auto,*,Auto">
+            <TextBlock Grid.Column="0" Text="{Binding ProgressText}" />
+            <Button Grid.Column="2" IsVisible="{Binding !IsDone}" Content="{DynamicResource App.Strings.ProgressDialogCancel}" Command="{Binding AbortCommand}" CommandParameter="{Binding ElementName=ProgressWindowRef}" />
+            <Button Grid.Column="2" IsVisible="{Binding IsDone}" Content="{DynamicResource App.Strings.ProgressDialogDone}" Command="{Binding DoneCommand}" CommandParameter="{Binding ElementName=ProgressWindowRef}" />
+        </Grid>
+    </StackPanel>
+</Window>

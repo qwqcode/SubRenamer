@@ -25,15 +25,15 @@ public class IssueReporter
             var crashLog = await File.ReadAllTextAsync(App.CrashLogFile);
             var title = crashLog.Split('\n').FirstOrDefault() ?? "";
 
-            var reportBtnName = Application.Current.GetResource<string>("App.Strings.IssueReporterReport");
+            var reportBtnName = Application.Current.GetResource<string>("App.Strings.IssueReporterReport") ?? "Report";
             var box = MessageBoxManager.GetMessageBoxCustom(new MessageBoxCustomParams
             {
                 ButtonDefinitions = new List<ButtonDefinition>
                 {
                     new ButtonDefinition { Name = reportBtnName, IsDefault = true },
-                    new ButtonDefinition { Name = Application.Current.GetResource<string>("App.Strings.IssueReporterIgnore"), IsCancel = true }
+                    new ButtonDefinition { Name = Application.Current.GetResource<string>("App.Strings.IssueReporterIgnore") ?? "Ignore", IsCancel = true }
                 },
-                ContentTitle = Application.Current.GetResource<string>("App.Strings.IssueReporterCapital"),
+                ContentTitle = Application.Current.GetResource<string>("App.Strings.IssueReporterCapital") ?? "Issue Reporter",
                 ContentMessage = $"{title}\n\n{Application.Current.GetResource<string>("App.Strings.IssueReporterMessage")}",
                 Icon = MsBox.Avalonia.Enums.Icon.Warning,
                 WindowStartupLocation = WindowStartupLocation.CenterScreen,
