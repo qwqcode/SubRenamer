@@ -27,14 +27,27 @@ public static class Matcher
             subtitleFiles.Add(item.Subtitle);
         });
 
+        // Return directly if only 1 video and 1 subtitle
+        if (videoFiles.Count == 1 && subtitleFiles.Count == 1)
+            return [new MatchItem("1", videoFiles[0], subtitleFiles[0])];
+
         // Get file keys
         var video2Keys = CalculateFileKeys(videoFiles, customRegex: options.VideoRegex);
         var subtitle2Keys = CalculateFileKeys(subtitleFiles, customRegex: options.SubtitleRegex);
 
+        // Merge items with same filename
+        result = MatcherHelper.MergeSameFilenameItems(result);
+        
         // Apply keys
         List<MatchItem> keyedItems = [];
         foreach (var item in result)
         {
+            if (item.Key != "")
+            {
+                keyedItems.Add(item);
+                continue;
+            }
+            
             string? k = null;
 
             if (!string.IsNullOrEmpty(item.Video)) video2Keys.TryGetValue(item.Video, out k);
@@ -77,7 +90,8 @@ public static class Matcher
             // Extract Match keys
             foreach (var f in files)
             {
-                result[f] = MatcherHelper.PatchKey(MatcherDiff.ExtractMatchKeyByDiff(diff, Path.GetFileNameWithoutExtension(f)));
+                result[f] = MatcherHelper.PatchKey(
+                    MatcherDiff.ExtractMatchKeyByDiff(diff, Path.GetFileNameWithoutExtension(f)));
             }
         }
         else
@@ -85,7 +99,8 @@ public static class Matcher
             // Method 2. Custom Regex
             foreach (var f in files)
             {
-                result[f] = MatcherHelper.PatchKey(MatcherHelper.ExtractMatchKeyRegex(customRegex, Path.GetFileName(f)));
+                result[f] = MatcherHelper.PatchKey(
+                    MatcherHelper.ExtractMatchKeyRegex(customRegex, Path.GetFileName(f)));
             }
         }
 

@@ -65,6 +65,43 @@ public static class MatcherHelper
         return result;
     }
 
+    public static List<MatchItem> MergeSameFilenameItems(IReadOnlyList<MatchItem> items)
+    {
+        var groupBNotNullCNull = items
+            .Where(item => string.IsNullOrEmpty(item.Key) && !string.IsNullOrEmpty(item.Video) && string.IsNullOrEmpty(item.Subtitle))
+            .ToList();
+
+        var groupBNullCNotNull = items
+            .Where(item => string.IsNullOrEmpty(item.Key) && string.IsNullOrEmpty(item.Video) && !string.IsNullOrEmpty(item.Subtitle))
+            .ToList();
+
+        var result = new List<MatchItem>();
+
+        var mergedItems = groupBNotNullCNull
+            .Join(groupBNullCNotNull,
+                item1 => Path.GetFileNameWithoutExtension(item1.Video),           
+                item2 => Path.GetFileNameWithoutExtension(item2.Subtitle),           
+                (item1, item2) => new MatchItem(Path.GetFileNameWithoutExtension(item1.Video), item1.Video, item2.Subtitle))
+            .ToList();
+
+        result.AddRange(mergedItems);
+        
+        var mergedVideos = new HashSet<string>(mergedItems.Select(x => x.Video));
+        var mergedSubtitles = new HashSet<string>(mergedItems.Select(x => x.Subtitle));
+
+        var itemsToRemove = items.Where(item =>
+        {
+            if (item.Key != "") return false;
+            if (item.Video != "" && item.Subtitle != "") return false;
+            if (item.Video != "" && mergedVideos.Contains(item.Video)) return true;
+            if (item.Subtitle != "" && mergedSubtitles.Contains(item.Subtitle)) return true;
+            return false;
+        });
+        result.AddRange(items.Where(item => !itemsToRemove.Contains(item)));
+
+        return result;
+    }
+
     public static List<MatchItem> MoveEmptyKeyItemsToLast(IReadOnlyList<MatchItem> items)
     {
         var keyedItems = items.Where(x => !string.IsNullOrEmpty(x.Key));
