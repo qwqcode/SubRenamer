@@ -1,0 +1,72 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:SubRenamer.ViewModels"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterOwner"
+        Width="850"
+        Height="450"
+        x:Class="SubRenamer.Views.TerminalWindow"
+        x:DataType="vm:TerminalViewModel"
+        Background="Black"
+        Title="Terminal">
+    
+    <Design.DataContext>
+        <vm:TerminalViewModel/>
+    </Design.DataContext>
+    
+    <Window.Styles>
+        <Style Selector="TextBox.terminal">
+            <Style Selector="^:pointerover">
+                <Setter Property="Foreground" Value="White" />
+
+                <Style Selector="^ /template/ Border#PART_BorderElement">
+                    <Setter Property="BorderBrush" Value="Black"/>
+                    <Setter Property="Background" Value="Black" />
+                </Style>
+
+                <Style Selector="^ /template/ TextBlock#PART_Watermark">
+                    <Setter Property="Foreground" Value="White" />
+                </Style>
+            </Style>
+            
+            <Style Selector="^:focus">
+                <Setter Property="Foreground" Value="White" />
+
+                <Style Selector="^ /template/ TextBlock#PART_Watermark">
+                    <Setter Property="Foreground" Value="White" />
+                </Style>
+
+                <Style Selector="^ /template/ Border#PART_BorderElement">
+                    <Setter Property="Background" Value="Black"/>
+                    <Setter Property="BorderBrush" Value="Black"/>
+                    <Setter Property="BorderThickness" Value="0" />
+                </Style>
+            </Style>
+        </Style> 
+    </Window.Styles>
+    
+    <Grid>
+        <ScrollViewer Name="ScrollViewer">
+            <TextBox
+                Classes="terminal"
+                Background="Black"
+                Foreground="White"
+                FontFamily="ui-monospace, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace, PingFang SC, Microsoft YaHei"
+                FontSize="14"
+                MinLines="25"
+                VerticalAlignment="Stretch"
+                HorizontalAlignment="Stretch"
+                AcceptsReturn="True"
+                TextWrapping="Wrap"
+                Margin="10"
+                BorderThickness="0"
+                IsReadOnly="True"
+                Text="{Binding TerminalText}"
+                TextChanged="TextBox_OnTextChanged"
+            />
+        </ScrollViewer>
+        
+    </Grid>
+</Window>
