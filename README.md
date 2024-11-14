@@ -51,6 +51,7 @@ SubRenamer 专注于字幕文件改名，简单易用。
 - **手动匹配编辑器**：自定义规则，支持简单通配符
 - **正则表达式编辑器**：包含正则表达式匹配测试工具
 - **匹配微调**：支持对匹配结果进行微调
+- **自动调轴**：支持字幕时间轴和视频音频自动对齐（集成 [FFsubsync](https://github.com/qwqcode/ffsubsync-bin) + [FFmpeg](https://www.ffmpeg.org/)）
 - **改名命令**：右键快速复制 Linux 改名命令到剪贴板
 - **字幕备份**：改名前自动备份字幕文件
 - **追加后缀**：支持在文件扩展名前添加自定义后缀
@@ -109,6 +110,24 @@ SubRenamer 专注于字幕文件改名，简单易用。
 ### 手动匹配模式
 
 自动匹配模式可能在复杂的文件名格式下失效，此时可切换至手动匹配模式，手动模式允许你自定义规则（支持简单通配符和正则表达式）。程序提供一个简单的编辑器，以便你可以快速地编写匹配规则。
+
+## 自动调轴
+
+SubRenamer 支持基于 [FFsubsync](https://github.com/qwqcode/ffsubsync-bin) + FFmpeg 的字幕时间轴自动调整功能（自动对齐字幕时间轴和视频音频）。
+
+你需要额外下载 FFsubsync 程序，可在设置界面点击下载按钮自动安装：
+
+<img width="420" alt="image" src="https://github.com/user-attachments/assets/d0184502-4bc8-4c0f-bcc6-431be02612ed">
+
+调轴可以在改名后随即执行，勾选“调轴”选项，然后点击“一键改名”即可。
+
+你也可以导入视频和字幕文件后，在列表中右键点击“执行字幕自动调轴程序”，只执行单独的调轴，而不改名。
+
+<img width="300" alt="image" src="https://github.com/user-attachments/assets/6e26540b-ff5f-44a4-aefd-d76d8f6df21f">
+
+如遇网络问题无法下载，可尝试 [手动下载](https://github.com/qwqcode/ffsubsync-bin) 并修改下载的文件名为 `ffsubsync_bin.exe`，然后放到 `SubRenamer.exe` 程序相同目录内。
+
+你也可以通过网盘下载“智能调轴版”压缩包：[蓝奏云](https://wwi.lanzoui.com/s/sub-renamer) (密码: 233)
 
 ## 用户故事
 

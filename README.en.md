@@ -40,6 +40,7 @@ You can find historical versions and changelogs on the [Release](https://github.
 - **Manual Matching Editor**: Customizable rules with simple wildcards.
 - **Regex Editor**: Includes a regex matching test tool.
 - **Match Fine-tuning**: Allows fine-tuning of matching results.
+- **Auto Subtitle Sync**: Supports automatic alignment of subtitle timelines with video/audio (integrates [FFsubsync](https://github.com/qwqcode/ffsubsync-bin) + [FFmpeg](https://www.ffmpeg.org/))
 - **Rename Commands**: Quickly copy Linux rename commands to clipboard via right-click.
 - **Subtitle Backup**: Automatically backs up subtitle files before renaming.
 - **Append Suffix**: Supports adding custom suffixes before file extensions.
@@ -99,6 +100,22 @@ To perform automatic matching, you need to import at least two video files and t
 ### Manual Matching Mode
 
 The automatic matching mode may fail with complex filename formats, in which case you can switch to manual matching mode. Manual mode allows you to define rules (supporting simple wildcards and regular expressions). The program provides a simple editor for quickly writing matching rules.
+
+## Auto Sync Subtitles
+
+SubRenamer supports automatic subtitle timeline adjustment based on [FFsubsync](https://github.com/qwqcode/ffsubsync-bin) + FFmpeg (automatically aligning subtitle timelines with video/audio).
+
+You need to download the FFsubsync program separately. You can automatically install it by clicking the download button in the settings interface:
+
+<img width="420" alt="image" src="https://github.com/user-attachments/assets/d0184502-4bc8-4c0f-bcc6-431be02612ed">
+
+The sync can be executed right after renaming. Simply check the “Sync” option and click “Rename All” to execute.
+
+You can also import video and subtitle files, then right-click on the list to select “Execute Subtitle Auto Sync Program” to perform the sync alone, without renaming.
+
+<img width="300" alt="image" src="https://github.com/user-attachments/assets/6e26540b-ff5f-44a4-aefd-d76d8f6df21f">
+
+If you encounter network issues and are unable to download, you can try [manual download](https://github.com/qwqcode/ffsubsync-bin) and rename the downloaded file to `ffsubsync_bin.exe`, then place it in the same directory as the `SubRenamer.exe` program.
 
 ## FAQ
 
