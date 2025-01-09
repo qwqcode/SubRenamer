@@ -1,7 +1,7 @@
 #!/bin/sh
 
 mkdir -p dist/SubRenamer
-dotnet publish ../SubRenamer/SubRenamer.csproj -c Release -r linux-x64 -o dist/SubRenamer -p:PublishAot=true -p:PublishTrimmed=true -p:TrimMode=link --self-contained
+dotnet publish ../SubRenamer/SubRenamer.csproj -c Release -r linux-x64 -o dist/SubRenamer
 
 if command -v upx &> /dev/null; then
   upx -fq dist/SubRenamer/SubRenamer dist/SubRenamer/*.so

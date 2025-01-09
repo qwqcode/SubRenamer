@@ -6,10 +6,11 @@
         <TargetFramework>net8.0</TargetFramework>
         <ApplicationIcon>Assets\icon.ico</ApplicationIcon>
         <Nullable>enable</Nullable>
-        <TrimMode>copyused</TrimMode>
-        <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
-        <!--Public AOT-->
+        <!-- Public AOT -->
         <PublishAot>true</PublishAot>
+        <TrimMode>link</TrimMode>
+        <PublishTrimmed>true</PublishTrimmed>
+        <SelfContained>true</SelfContained>
         <InvariantGlobalization>true</InvariantGlobalization>
         <StripSymbols>true</StripSymbols>
         <NoWarn>IL2057;IL2026;IL2104;IL3053</NoWarn>
@@ -33,14 +34,7 @@
     <LinkerArg Include="-mmacosx-version-min=11.0" />
   </ItemGroup>
 
-	<ItemGroup>
-        <!--This helps with theme dll-s trimming.
-        If you will publish your application in self-contained mode with p:PublishTrimmed=true and it will use Fluent theme Default theme will be trimmed from the output and vice versa.
-        https://github.com/AvaloniaUI/Avalonia/issues/5593 -->
-        <TrimmableAssembly Include="Avalonia.Themes.Fluent" />
-        <TrimmableAssembly Include="Avalonia.Themes.Default" />
-    </ItemGroup>
-	
+  <!-- https://github.com/AvaloniaUI/Avalonia/issues/9503 -->
     <ItemGroup Condition="$(RuntimeIdentifier.StartsWith('win')) And '$(ENABLE_NATIVE_LIBS)' == 'true'">
         <DirectPInvoke Include="libHarfBuzzSharp" />
         <NativeLibrary Include="native\libHarfBuzzSharp.lib" Condition="$(RuntimeIdentifier.StartsWith('win'))" />

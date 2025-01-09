@@ -6,7 +6,7 @@ if (Test-Path dist\SubRenamer_windows_amd64.zip) {
     Remove-Item dist\SubRenamer_windows_amd64.zip -Force
 }
 
-dotnet publish ..\SubRenamer\SubRenamer.csproj -c Release -r win-x64 -o dist\SubRenamer -p:PublishAot=true -p:PublishTrimmed=true -p:TrimMode=link --self-contained
+dotnet publish ..\SubRenamer\SubRenamer.csproj -c Release -r win-x64 -o dist\SubRenamer
 
 $files = Get-ChildItem -Path dist\SubRenamer
 $files | Where-Object { $_.Name -ne "SubRenamer.exe" } | Remove-Item -Force
