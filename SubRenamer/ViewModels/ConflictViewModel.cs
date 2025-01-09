@@ -38,7 +38,7 @@ public partial class ConflictViewModel : ViewModelBase
     
     private static Dictionary<string, string> GetFriendlyOptionsDictionary(IEnumerable<string> options)
     {
-        // var lang2Info = CultureInfo.GetCultures(CultureTypes.NeutralCultures).ToDictionary(c => c.Name, c => c);
+        // var lang2Info = CultureInfo.GetCultures(CultureTypes.NeutralCultures).ToDictionary(c => c.NativeName, c => c);
 
         var dict = new Dictionary<string, string>();
         foreach (var k in options)

@@ -18,7 +18,6 @@ public static class I18NHelper
     {
         string tz = TimeZoneInfo.Local.Id.ToLower();
         
-        // FIXME: `CultureInfo.CurrentCulture.Name` always return `null` in AvaloniaUI
         var name = CultureInfo.CurrentCulture.Name;
         if (string.IsNullOrWhiteSpace(name)) name = Environment.GetEnvironmentVariable("LANG");
 
