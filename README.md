@@ -8,7 +8,7 @@
 
 A Tool for Batch Rename Subtitle Files to Match Video Names with One Click.
 
-(Read this in other languages: [English](README.en.md))
+(Available languages: [English](README.en.md)、简体中文、繁體中文、日本語)
 
 **原因？** 如果视频和字幕文件名一致，任何视频播放器都可以自动载入字幕。
 
