@@ -134,7 +134,7 @@
     <system:String x:Key="App.Strings.SaveFileDialogTitle">ファイルを保存</system:String>
     <system:String x:Key="App.Strings.SubSyncTasksComplete">すべてのタスクが完了しました。</system:String>
     <system:String x:Key="App.Strings.SubSyncTasksFail">タスクの実行に失敗しました。</system:String>
-    <system:String x:Key="App.Strings.SubSyncTasksDuration">処理時間</system:String>
+    <system:String x:Key="App.Strings.SubSyncTasksDuration">処理時間:</system:String>
     <system:String x:Key="App.Strings.SubSyncBinDownloadTitle">FFsubsync の自動タイムライン同期</system:String>
     <system:String x:Key="App.Strings.SubSyncBinDownloadDesc">FFsubsync をダウンロードしています...</system:String>
     <system:String x:Key="App.Strings.SubSyncBinDownloadDone">FFsubsync のダウンロードに成功しました</system:String>

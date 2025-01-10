@@ -134,7 +134,7 @@ It can be modified to: "[Steins;Gate][$$]*.sc.ass"</system:String>
     <system:String x:Key="App.Strings.SaveFileDialogTitle">Save File</system:String>
     <system:String x:Key="App.Strings.SubSyncTasksComplete">All tasks have been completed.</system:String>
     <system:String x:Key="App.Strings.SubSyncTasksFail">Task execution failed.</system:String>
-    <system:String x:Key="App.Strings.SubSyncTasksDuration">Duration</system:String>
+    <system:String x:Key="App.Strings.SubSyncTasksDuration">Duration:</system:String>
     <system:String x:Key="App.Strings.SubSyncBinDownloadTitle">FFsubsync automatic timeline synchronization</system:String>
     <system:String x:Key="App.Strings.SubSyncBinDownloadDesc">Downloading FFsubsync...</system:String>
     <system:String x:Key="App.Strings.SubSyncBinDownloadDone">FFsubsync download successful</system:String>

@@ -98,6 +98,9 @@
                     </StackPanel>
                 </StackPanel>
                 
+                <!-- Middle Separator -->
+                <Border Grid.Column="1" BorderThickness=".5" Width="1" BorderBrush="#D2D4D5" Margin="15,0" />
+                
                 <!-- Right Column -->
                 <StackPanel Grid.Column="2">
                     <CheckBox IsChecked="{Binding FileClsExtAppendEnabled}" Content="{DynamicResource App.Strings.SettingsFileFormatExtension}" />
