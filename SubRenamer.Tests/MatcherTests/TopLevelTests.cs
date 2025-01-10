@@ -1,5 +1,6 @@
 using System.Text.Json;
 using SubRenamer.Core;
+using SubRenamer.Helper;
 
 namespace SubRenamer.Tests.MatcherTests;
 
@@ -26,7 +27,8 @@ public class TopLevelTests
     [Test, TestCaseSource(nameof(TestData))]
     public void TestCasesFromJson(string name, List<MatchItem> input, List<MatchItem> expected)
     {
-        var actual = Matcher.Execute(input);
+        var normalizer = new MatcherFilenameNormalizer();
+        var actual = Matcher.Execute(normalizer.Normalize(input));
 
         var jsonOpts = new JsonSerializerOptions { WriteIndented = true, Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping };
         TestContext.Progress.WriteLine("{1}\n\n  \ud83c\udf1f Matcher Test Case: {0}\n\n{1}", name, new string('=', 50));
@@ -37,6 +39,7 @@ public class TopLevelTests
         TestContext.Progress.WriteLine("{2}\n  {0}\n{2}\n{1}", "Actual", JsonSerializer.Serialize(actual, jsonOpts),
             new string('-', 50));
 
-        Assert.That(actual, Is.EqualTo(expected));
+        Assert.That(normalizer.Denormalize(actual), Is.EqualTo(expected));
+        normalizer.Clear();
     }
 }
