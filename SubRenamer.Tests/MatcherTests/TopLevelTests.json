@@ -95,6 +95,19 @@
     ]
   },
   {
+    "Name": "轻音少女 (Whitespace as Suffix)",
+    "Input": [
+      {"Key": "", "Video": "轻音少女 S01E01 1080p.VCB-Studio.mkv", "Subtitle": ""},
+      {"Key": "", "Video": "轻音少女 S01E02 1080p.VCB-Studio.mkv", "Subtitle": ""},
+      {"Key": "", "Video": "", "Subtitle": "轻音少女S01E01.ass"},
+      {"Key": "", "Video": "", "Subtitle": "轻音少女S01E02.ass"}
+    ],
+    "Output": [
+      {"Key": "1", "Video": "轻音少女 S01E01 1080p.VCB-Studio.mkv", "Subtitle": "轻音少女S01E01.ass"},
+      {"Key": "2", "Video": "轻音少女 S01E02 1080p.VCB-Studio.mkv", "Subtitle": "轻音少女S01E02.ass"}
+    ]
+  },
+  {
     "Name": "SquareBrackets",
     "Input": [
       {"Key": "", "Video": "abc [01].mkv", "Subtitle": ""},
@@ -121,7 +134,7 @@
     ]
   },
   {
-    "Name": "WhiteSpaceEnd",
+    "Name": "WhiteSpaceAsSuffix",
     "Input": [
       {"Key": "", "Video": "视频 1 xyz.mov", "Subtitle": ""},
       {"Key": "", "Video": "视频 77 test xyz.mov", "Subtitle": ""},
