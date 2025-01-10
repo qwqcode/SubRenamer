@@ -145,5 +145,37 @@
       {"Key": "1", "Video": "视频 1 xyz.mov", "Subtitle": "字幕 1xyz.srt"},
       {"Key": "77", "Video": "视频 77 test xyz.mov", "Subtitle": "字幕 77test xyz.srt"}
     ]
+  },
+  {
+    "Name": "Nのために (Japanese, Unicode NFKD Test#1)",
+    "Input": [
+      {"Key": "", "Video": "Nのために EP01 720p HDTV x264 AAC-DoA.mkv", "Subtitle": ""},
+      {"Key": "", "Video": "Nのために EP02 720p HDTV x264 AAC-DoA.mkv", "Subtitle": ""},
+      {"Key": "", "Video": "Nのために EP10 End 720p HDTV x264 AAC-DoA.mkv", "Subtitle": ""},
+      {"Key": "", "Video": "", "Subtitle": "[ドラマ][Nのために 第01話]「榮倉奈々、窪田正孝、賀来賢人、小出恵介、徳井義実、小西真奈美、三浦友和」[720p x264 AAC].tc.srt"},
+      {"Key": "", "Video": "", "Subtitle": "[ドラマ][Nのために 第02話]「榮倉奈々、窪田正孝、賀来賢人、小出恵介、徳井義実、小西真奈美、三浦友和」[720p x264 AAC].tc.srt"},
+      {"Key": "", "Video": "", "Subtitle": "[ドラマ][Nのために 第10話]「榮倉奈々、窪田正孝、賀来賢人、小出恵介、徳井義実、小西真奈美、三浦友和」[720p x264 AAC][最終話].tc.srt"}
+    ],
+    "Output": [
+      {"Key": "1", "Video": "Nのために EP01 720p HDTV x264 AAC-DoA.mkv", "Subtitle": "[ドラマ][Nのために 第01話]「榮倉奈々、窪田正孝、賀来賢人、小出恵介、徳井義実、小西真奈美、三浦友和」[720p x264 AAC].tc.srt"},
+      {"Key": "2", "Video": "Nのために EP02 720p HDTV x264 AAC-DoA.mkv", "Subtitle": "[ドラマ][Nのために 第02話]「榮倉奈々、窪田正孝、賀来賢人、小出恵介、徳井義実、小西真奈美、三浦友和」[720p x264 AAC].tc.srt"},
+      {"Key": "10", "Video": "Nのために EP10 End 720p HDTV x264 AAC-DoA.mkv", "Subtitle": "[ドラマ][Nのために 第10話]「榮倉奈々、窪田正孝、賀来賢人、小出恵介、徳井義実、小西真奈美、三浦友和」[720p x264 AAC][最終話].tc.srt"}
+    ]
+  },
+  {
+    "Name": "機動警察 (Japanese, Unicode NFKD Test#2)",
+    "Input": [
+      {"Key": "", "Video": "[AI-Raws] 机动警察パトレイバー #1 (BD HEVC 1440x1080 FLAC)[9F318F24].mkv", "Subtitle": ""},
+      {"Key": "", "Video": "[AI-Raws] 机动警察パトレイバー #2 (BD HEVC 1440x1080 FLAC)[7F3281F4].mkv", "Subtitle": ""},
+      {"Key": "", "Video": "[AI-Raws] 机动警察パトレイバー #10 (BD HEVC 1440x1080 FLAC)[8F01DF54].mkv", "Subtitle": ""},
+      {"Key": "", "Video": "", "Subtitle": "[炎之川字幕] 机动警察 機動警察パトレイバー 01.ass"},
+      {"Key": "", "Video": "", "Subtitle": "[炎之川字幕] 机动警察 機動警察パトレイバー 02.ass"},
+      {"Key": "", "Video": "", "Subtitle": "[炎之川字幕] 机动警察 機動警察パトレイバー 10.ass"}
+    ],
+    "Output": [
+      {"Key": "1", "Video": "[AI-Raws] 机动警察パトレイバー #1 (BD HEVC 1440x1080 FLAC)[9F318F24].mkv", "Subtitle": "[炎之川字幕] 机动警察 機動警察パトレイバー 01.ass"},
+      {"Key": "2", "Video": "[AI-Raws] 机动警察パトレイバー #2 (BD HEVC 1440x1080 FLAC)[7F3281F4].mkv", "Subtitle": "[炎之川字幕] 机动警察 機動警察パトレイバー 02.ass"},
+      {"Key": "10", "Video": "[AI-Raws] 机动警察パトレイバー #10 (BD HEVC 1440x1080 FLAC)[8F01DF54].mkv", "Subtitle": "[炎之川字幕] 机动警察 機動警察パトレイバー 10.ass"}
+    ]
   }
 ]

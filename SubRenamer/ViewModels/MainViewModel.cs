@@ -174,8 +174,10 @@ public partial class MainViewModel : ViewModelBase
     [RelayCommand]
     private void PerformMatch()
     {
+        var filenameNormalizer = new MatcherFilenameNormalizer();
         ShowRenameTasks = false;
         var inputItems = MatcherDataConverter.ConvertMatchItems(MatchList);
+        inputItems = filenameNormalizer.Normalize(inputItems);
         var m = Config.Get().MatchMode;
         var resultRaw = Matcher.Execute(inputItems, new MatcherOptions()
         {
@@ -183,6 +185,8 @@ public partial class MainViewModel : ViewModelBase
             VideoRegex = (m != MatchMode.Diff) ? (m == MatchMode.Manual ? Config.Get().ManualVideoRegex : Config.Get().VideoRegex) : null,
             SubtitleRegex = (m != MatchMode.Diff) ? (m == MatchMode.Manual ? Config.Get().ManualSubtitle : Config.Get().SubtitleRegex) : null,
         });
+        resultRaw = filenameNormalizer.Denormalize(resultRaw);
+        filenameNormalizer.Clear();
         var result =  MatcherDataConverter.ConvertMatchItems(resultRaw);
         result.ForEach(UpdateMatchItemStatus);
         MatchList = new ObservableCollection<MatchItem>(result);
