@@ -9,7 +9,7 @@ public interface ISubSyncService
 {
     Task Bootstrap();
     
-    Task Shutdown();
+    void Shutdown();
     
     event Action? OnBootstrapped;
     
@@ -20,8 +20,6 @@ public interface ISubSyncService
     bool GetIsBootstrapped();
     
     string RetrieveExePath();
-    
-    string? GetExePath();
     
     Task ExecuteSubSync(IReadOnlyList<RenameTask> taskList);
 

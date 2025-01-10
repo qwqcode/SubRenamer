@@ -147,7 +147,7 @@ public partial class SettingsViewModel : ViewModelBase
         {
             try
             {
-                await GetSubSyncService().Shutdown();
+                GetSubSyncService().Shutdown();
                 await GetSubSyncService().DownloadFFsubsyncBin();
                 Console.Write("FFsubsync binary downloaded");
                 SubSyncExeDownloaded = true;

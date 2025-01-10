@@ -18,15 +18,13 @@ public class SubSyncService(Window target) : ISubSyncService
     public class BinaryNotFoundException() : Exception("FFsubsync binary not found");
 
     private readonly Window _target = target;
-    private ExternalProgram? _externalProgram;
-    private bool _isBootstrapped = false;
-    private string? _exePath = "";
+    private ExternalProgram? _program;
+    private bool _isBootstrapped;
     public event Action? OnBootstrapped;
     public event Action? OnShutdown;
 
-    public bool GetIsAvailable() => _externalProgram != null;
+    public bool GetIsAvailable() => _program != null;
     public bool GetIsBootstrapped() => _isBootstrapped;
-    public string? GetExePath() => _exePath;
 
     public string RetrieveExePath()
     {
@@ -42,6 +40,9 @@ public class SubSyncService(Window target) : ISubSyncService
 
     public async Task Bootstrap()
     {
+        if (_isBootstrapped) return;
+        
+        // try find exe file
         var exePath = RetrieveExePath();
         if (string.IsNullOrEmpty(exePath))
         {
@@ -49,49 +50,60 @@ public class SubSyncService(Window target) : ISubSyncService
             throw new BinaryNotFoundException();
         }
 
-        _exePath = exePath;
-
+        // start program
         try
         {
-            _externalProgram = new ExternalProgram(exePath, "--server");
-            _externalProgram.OnLoaded += () => _isBootstrapped = true;
-            _externalProgram.OnLoaded += () => OnBootstrapped?.Invoke();
+            _program = new ExternalProgram(exePath, "--server");
+            _program.OnAbort += () =>
+            {
+                // Restart when abort
+                Shutdown();
+                _ = Bootstrap();
+            };
             Console.WriteLine("Bootstrapping SubSync server...");
-            await _externalProgram.StartServer();
+            await _program.StartServer();
         }
         catch (Exception e)
         {
             MessageBoxHelper.ShowError($"Failed to launch SubSync server:\n\n{e.Message}\n\n{e.StackTrace}");
-            await Shutdown();
+            Shutdown();
             throw;
         }
+        
+        _isBootstrapped = true;
+        OnBootstrapped?.Invoke();
     }
 
-    public Task Shutdown()
+    public void Shutdown()
     {
-        if (_externalProgram == null) return Task.CompletedTask;
         _isBootstrapped = false;
-        _externalProgram?.Dispose();
-        _externalProgram = null;
-        _exePath = null;
+        _program?.Dispose();
+        _program = null;
         OnShutdown?.Invoke();
-        return Task.CompletedTask;
     }
 
-    public async Task WaitForLoaded()
+    private async Task WaitForBootstrap(CancellationToken cancellationToken = default)
     {
-        if (!_isBootstrapped)
-        {
-            var stopwatch = Stopwatch.StartNew();
-            while (!_isBootstrapped)
-            {
-                if (stopwatch.ElapsedMilliseconds > 20 * 1000)
-                {
-                    throw new Exception("Server initialization timeout");
-                }
+        if (_isBootstrapped) return;
 
-                await Task.Delay(100);
-            }
+        var tcs = new TaskCompletionSource();
+        Action handler = () => tcs.TrySetResult();
+        OnBootstrapped += handler;
+
+        using var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+        cts.CancelAfter(TimeSpan.FromSeconds(20));
+
+        try
+        {
+            await tcs.Task.WaitAsync(cts.Token);
+        }
+        catch (OperationCanceledException)
+        {
+            throw new Exception("Server initialization timeout");
+        }
+        finally
+        {
+            OnBootstrapped -= handler;
         }
     }
 
@@ -103,28 +115,30 @@ public class SubSyncService(Window target) : ISubSyncService
 
     public async Task ExecuteSubSync(IReadOnlyList<(string video, string subtitle)> taskList)
     {
-        if (_externalProgram == null) throw new Exception("External program not initialized");
-        await WaitForLoaded();
+        if (_program == null) throw new Exception("External program not initialized");
 
+        // Wait until bootstrapped
+        await WaitForBootstrap();
+
+        // Add tasks to queue
         foreach (var item in taskList)
         {
             await AddPostTaskQueue(item.video, item.subtitle);
         }
 
+        // Start all sub-sync tasks
         var timeDuring = Stopwatch.StartNew();
-        var (ready, data) = await _externalProgram.Send("start", "ready", false);
+        var (ok, result) = await _program.StartTask("start", "ready");
         timeDuring.Stop();
-        _externalProgram.Log((ready
-                                 ? $"\ud83d\ude09 {Application.Current.GetResource<string>("App.Strings.SubSyncTasksComplete")}"
-                                 : $"\ud83e\udd72 {Application.Current.GetResource<string>("App.Strings.SubSyncTasksFail")} Data: {data}")
-                             + $" [{Application.Current.GetResource<string>("App.Strings.SubSyncTasksDuration")}{timeDuring.ElapsedMilliseconds}ms]\n");
-        await Task.Delay(300);
-        _externalProgram.SetAllowTerminalClose(true);
+
+        _program?.Log((ok ? $"\ud83d\ude09 {Application.Current.GetResource<string>("App.Strings.SubSyncTasksComplete")}"
+                          : $"\ud83e\udd72 {Application.Current.GetResource<string>("App.Strings.SubSyncTasksFail")} Data: {result}")
+                          + $" [{Application.Current.GetResource<string>("App.Strings.SubSyncTasksDuration")}{timeDuring.ElapsedMilliseconds}ms]\n");
     }
 
     private async Task AddPostTaskQueue(string video, string subtitle)
     {
-        if (_externalProgram == null) throw new Exception("External program not initialized");
+        if (_program == null) throw new Exception("External program not initialized");
 
         // var postTask = Config.Get().SubSyncCommand;
         var postTask = "\"{video}\" -i \"{subtitle}\" --overwrite-input";
@@ -134,47 +148,9 @@ public class SubSyncService(Window target) : ISubSyncService
             .Replace("{subtitle}", subtitle)
             .Replace("{video}", video);
 
-        var (added, data) = await _externalProgram.Send("add:" + command, "added");
-        if (!added) _externalProgram.Log($"Add post task to queue failed, Data: {data}");
+        var (added, data) = await _program.SendAndWaitForStatus("add:" + command, "added");
+        if (!added) _program.Log($"Add post task to queue failed, Data: {data}");
     }
 
-    public async Task DownloadFFsubsyncBin()
-    {
-        var path = Path.Combine(Config.ConfigDir, "ffsubsync_bin");
-        var url =
-            $"https://github.com/qwqcode/ffsubsync-bin/releases/latest/download/ffsubsync_bin_{SystemInfo.GetOSArchPair().Replace("windows", "win")}";
-        var dialog = MessageBoxHelper.ShowProgress(_target,
-            Application.Current.GetResource<string>("App.Strings.SubSyncBinDownloadTitle") ?? "",
-            Application.Current.GetResource<string>("App.Strings.SubSyncBinDownloadDesc") ?? "");
-
-        var tokenSource = new CancellationTokenSource();
-        dialog.OnAbort += () => tokenSource.Cancel();
-
-        try
-        {
-            await DownloadHelper.DownloadFileAsync(url, path, (progress, downloadedSize, totalSize) =>
-                {
-                    dialog.Update(progress, progress >= 100);
-                    dialog.Desc = $"{Application.Current.GetResource<string>("App.Strings.SubSyncBinDownloadDesc")} [{downloadedSize}/{totalSize}]";
-                },
-                tokenSource.Token);
-
-            // add execute permission for unix
-            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                File.SetUnixFileMode(path, UnixFileMode.UserExecute | UnixFileMode.UserRead | UnixFileMode.UserWrite);
-            }
-        }
-        catch (TaskCanceledException)
-        {
-            throw new TaskCanceledException("Download canceled");
-        }
-        catch (Exception e)
-        {
-            MessageBoxHelper.ShowError($"Failed to download ffsubsync binary: {e.Message}");
-            throw;
-        }
-
-        dialog.Desc = $"{Application.Current.GetResource<string>("App.Strings.SubSyncBinDownloadDone")}";
-    }
+    public Task DownloadFFsubsyncBin() => FFsubsyncDownloader.Download(_target);
 }
