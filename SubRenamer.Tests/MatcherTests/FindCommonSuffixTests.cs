@@ -16,7 +16,7 @@ public class FindCommonSuffixTests
     {
         Assert.That(FindCommonSuffix("01]", "02]"), Is.EqualTo("]"));
         Assert.That(FindCommonSuffix("01]end", "02]end"), Is.EqualTo("]"));
-        Assert.That(FindCommonSuffix(" 01 ] end", " 02 ] end"), Is.EqualTo("]"));
+        Assert.That(FindCommonSuffix(" 01 ] end", " 02 ] end"), Is.EqualTo(" "));
     }
 
     [Test]
@@ -30,15 +30,15 @@ public class FindCommonSuffixTests
         Assert.That(FindCommonSuffix("01a", "02a"), Is.EqualTo(""), "should skip Lowercase Letter, then no match");
         Assert.That(FindCommonSuffix("01a]", "02a]"), Is.EqualTo("]"), "should skip Lowercase Letter, then match");
 
-        Assert.That(FindCommonSuffix("01 ", "02  "), Is.EqualTo(""), "should skip Whitespace, then no match");
-        Assert.That(FindCommonSuffix("01 ]", "02  ]"), Is.EqualTo("]"), "should skip Whitespace, then match");
+        Assert.That(FindCommonSuffix("01 ", "02  "), Is.EqualTo(" "), "should not skip Whitespace, then match");
+        Assert.That(FindCommonSuffix("01 ]", "02  ]"), Is.EqualTo(" "), "should not skip Whitespace, then match");
     }
 
     [Test]
     public void NoCommon()
     {
         Assert.That(FindCommonSuffix("01$", "02]"), Is.EqualTo(""));
-        Assert.That(FindCommonSuffix("01 abc", "02 def"), Is.EqualTo(""));
+        Assert.That(FindCommonSuffix("01abc", "02def"), Is.EqualTo(""));
     }
 
     [Test]
@@ -65,9 +65,9 @@ public class FindCommonSuffixTests
     {
         // @see https://github.com/qwqcode/SubRenamer/pull/45
         Assert.That(FindCommonSuffix("01話", "02話"), Is.EqualTo("話"));
-        Assert.That(FindCommonSuffix("01B 集", "02B 集"), Is.EqualTo("集"));
+        Assert.That(FindCommonSuffix("01B 集", "02B 集"), Is.EqualTo(" "));
 
-        var result = FindCommonSuffix("01B 話 番外篇", "02B 話 番外篇");
+        var result = FindCommonSuffix("01B話 番外篇", "02B話 番外篇");
         Assert.That(result.Length, Is.EqualTo(1), "should match only single character");
         Assert.That(result, Is.EqualTo("話"));
     }

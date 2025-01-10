@@ -76,14 +76,14 @@ public static class MatcherDiff
 
         return "";
 
-        // Skip [a-z], [A-Z], [0-9], and whitespace. Which is not allowed as a suffix.
+        // Skip [a-z], [A-Z], [0-9]. Which is not allowed as a suffix.
         // Because it may be a part of the `Key` (Episode Number).
         // Such as "file [01A] end" and "file [01B] end".
         //
         // But allows Chinese character as a suffix.
         // Such as "file 01 話" and "file 02 話".
         // @see https://github.com/qwqcode/SubRenamer/pull/45
-        bool Skip(char c) => char.IsAsciiLetterOrDigit(c) || c == ' ';
+        bool Skip(char c) => char.IsAsciiLetterOrDigit(c);
     }
 
     public static string ExtractMatchKeyByDiff(DiffResult? diff, string filename)
