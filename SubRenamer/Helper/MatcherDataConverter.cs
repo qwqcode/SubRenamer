@@ -1,17 +1,16 @@
 using System.Collections.Generic;
 using System.Linq;
-using SubRenamer.Core;
 
 namespace SubRenamer.Helper;
 
 public static class MatcherDataConverter
 {
-    public static List<MatchItem> ConvertMatchItems(IReadOnlyList<Model.MatchItem> matchItems)
+    public static List<Core.MatchItem> ConvertMatchItems(IReadOnlyList<Model.MatchItem> matchItems)
     {
-        return matchItems.Select(item => new MatchItem(item.Key, item.Video, item.Subtitle)).ToList();
+        return matchItems.Select(item => new Core.MatchItem(item.Key, item.Video, item.Subtitle)).ToList();
     }
     
-    public static List<Model.MatchItem> ConvertMatchItems(IReadOnlyList<MatchItem> matchItems)
+    public static List<Model.MatchItem> ConvertMatchItems(IReadOnlyList<Core.MatchItem> matchItems)
     {
         return matchItems.Select(item => new Model.MatchItem(item.Key, item.Video, item.Subtitle)).ToList();
     }

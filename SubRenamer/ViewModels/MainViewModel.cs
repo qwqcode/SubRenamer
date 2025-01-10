@@ -161,10 +161,10 @@ public partial class MainViewModel : ViewModelBase
 
     #region SubSync
     [ObservableProperty] private bool _subSyncAvailable = true;
-    [ObservableProperty] private bool _subSyncEnabled = true;
+    [ObservableProperty] private bool _subSyncEnabled = Config.Get().SubSyncEnabled;
 
-    // partial void OnSubSyncEnabledChanged(bool value)
-    //     =>  AllowExecute = !value || SubSyncServerLoaded;
+    partial void OnSubSyncEnabledChanged(bool value)
+        => Config.Get().SubSyncEnabled = value;
     #endregion
     
     #region Match

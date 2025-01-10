@@ -24,6 +24,8 @@ public partial class Config
     public string VideoRegex { get; set; } = "";
     public string SubtitleRegex { get; set; } = "";
     
+    public bool SubSyncEnabled { get; set; } = true;
+    
     // Manual Match Mode Configs
     public string ManualVideoRegex { get; set; } = "";
     public string ManualSubtitleRegex { get; set; } = "";
