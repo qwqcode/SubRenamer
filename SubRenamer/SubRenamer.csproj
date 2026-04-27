@@ -3,7 +3,7 @@
         <AssemblyName>SubRenamer</AssemblyName>
         <AssemblyVersion>2.4.0</AssemblyVersion>
         <OutputType>WinExe</OutputType>
-        <TargetFramework>net10.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <ApplicationIcon>Assets\icon.ico</ApplicationIcon>
         <Nullable>enable</Nullable>
         <!-- Public AOT -->
