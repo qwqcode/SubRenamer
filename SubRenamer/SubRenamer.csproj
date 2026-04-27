@@ -3,7 +3,7 @@
         <AssemblyName>SubRenamer</AssemblyName>
         <AssemblyVersion>2.4.0</AssemblyVersion>
         <OutputType>WinExe</OutputType>
-        <TargetFramework>net8.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <ApplicationIcon>Assets\icon.ico</ApplicationIcon>
         <Nullable>enable</Nullable>
         <!-- Public AOT -->
@@ -15,6 +15,7 @@
         <InvariantGlobalization>false</InvariantGlobalization>
         <StripSymbols>true</StripSymbols>
         <NoWarn>IL2057;IL2026;IL2104;IL3053</NoWarn>
+        <!-- <AvaloniaUseCompiledBindingsByDefault>false</AvaloniaUseCompiledBindingsByDefault> -->
         <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
         <JsonSerializerIsReflectionEnabledByDefault>false</JsonSerializerIsReflectionEnabledByDefault>
     </PropertyGroup>
@@ -46,17 +47,17 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Avalonia" Version="11.2.3" />
-        <PackageReference Include="Avalonia.Controls.DataGrid" Version="11.2.3" />
-        <PackageReference Include="Avalonia.Desktop" Version="11.2.3" />
+        <PackageReference Include="Avalonia" Version="12.0.1" />
+        <PackageReference Include="Avalonia.Controls.DataGrid" Version="12.0.0" />
+        <PackageReference Include="Avalonia.Desktop" Version="12.0.1" />
         <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-        <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.2.3" />
-        <PackageReference Include="Avalonia.ReactiveUI" Version="11.2.3" />
-        <PackageReference Include="Avalonia.Themes.Fluent" Version="11.2.3" />
-        <PackageReference Include="Avalonia.Fonts.Inter" Version="11.2.3" />
+        <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.1" />
+        <PackageReference Include="ReactiveUI.Avalonia" Version="12.0.1" />
+        <PackageReference Include="Avalonia.Themes.Fluent" Version="12.0.1" />
+        <PackageReference Include="Avalonia.Fonts.Inter" Version="12.0.1" />
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
-        <PackageReference Include="LoadingIndicators.Avalonia" Version="11.0.11.1" />
-        <PackageReference Include="MessageBox.Avalonia" Version="3.2.0" />
+        <PackageReference Include="Optris.LoadingIndicators.Avalonia" Version="12.0.3" />
+        <PackageReference Include="MessageBox.Avalonia" Version="12.0.0" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
 
         <!--Compresse with UPX-->

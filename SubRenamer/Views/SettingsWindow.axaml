@@ -94,7 +94,7 @@
                     <CheckBox IsChecked="{Binding CustomLangExtEnabled}" Content="{DynamicResource App.Strings.SettingsAddCustomSuffix}" />
                     <StackPanel Margin="30 0 0 0">
                         <TextBlock Text="{DynamicResource App.Strings.SettingsAddCustomSuffixHint}" Foreground="Gray" FontSize="13" Padding="0" Margin="0 0 0 10" TextWrapping="Wrap" />
-                        <TextBox IsEnabled="{Binding CustomLangExtEnabled}" Watermark="{DynamicResource App.Strings.SettingsCustomSuffixWatermark}" Text="{Binding CustomLangExt}" />
+                        <TextBox IsEnabled="{Binding CustomLangExtEnabled}" PlaceholderText="{DynamicResource App.Strings.SettingsCustomSuffixWatermark}" Text="{Binding CustomLangExt}" />
                     </StackPanel>
                 </StackPanel>
                 
@@ -108,11 +108,11 @@
                     <Grid IsEnabled="{Binding FileClsExtAppendEnabled}"  Margin="30 0 0 0" HorizontalAlignment="Stretch" ColumnDefinitions="*,10,*">
                         <StackPanel Grid.Column="0">
                             <TextBlock Margin="0 5 0 10" FontSize="13" Text="{DynamicResource App.Strings.SettingsSubtitleFormatExtension}" />
-                            <TextBox Watermark="{DynamicResource App.Strings.SettingsSubtitleFormatWatermark}" Text="{Binding SubtitleExtAppend}" />  
+                            <TextBox PlaceholderText="{DynamicResource App.Strings.SettingsSubtitleFormatWatermark}" Text="{Binding SubtitleExtAppend}" />  
                         </StackPanel>
                         <StackPanel Grid.Column="2">
                             <TextBlock Margin="0 5 0 10" FontSize="13" Text="{DynamicResource App.Strings.SettingsVideoFormatExtension}" />
-                            <TextBox Watermark="{DynamicResource App.Strings.SettingsVideoFormatWatermark}" Text="{Binding VideoExtAppend}" />
+                            <TextBox PlaceholderText="{DynamicResource App.Strings.SettingsVideoFormatWatermark}" Text="{Binding VideoExtAppend}" />
                         </StackPanel>
                     </Grid>
                     

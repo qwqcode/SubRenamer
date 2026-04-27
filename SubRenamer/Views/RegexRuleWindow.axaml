@@ -37,13 +37,13 @@
         <StackPanel Margin="10">
                 <Label Content="{DynamicResource App.Strings.RegexRuleVideoLabel}" />
                 <Border Height="5" />
-                <TextBox Height="90" Margin="5" AcceptsReturn="True" TextWrapping="Wrap" Text="{Binding VideoRegexStr}" Watermark="{DynamicResource App.Strings.RegexRuleVideoRegexWatermark}" />
+                <TextBox Height="90" Margin="5" AcceptsReturn="True" TextWrapping="Wrap" Text="{Binding VideoRegexStr}" PlaceholderText="{DynamicResource App.Strings.RegexRuleVideoRegexWatermark}" />
                 
                 <Border Height="10" />
                 
                 <Label Content="{DynamicResource App.Strings.RegexRuleSubtitleLabel}" />
                 <Border Height="5" />
-                <TextBox Height="90" Margin="5" AcceptsReturn="True" TextWrapping="Wrap" Text="{Binding SubtitleRegexStr}" Watermark="{DynamicResource App.Strings.RegexRuleSubtitleRegexWatermark}" />
+                <TextBox Height="90" Margin="5" AcceptsReturn="True" TextWrapping="Wrap" Text="{Binding SubtitleRegexStr}" PlaceholderText="{DynamicResource App.Strings.RegexRuleSubtitleRegexWatermark}" />
                 
                 <Border BorderThickness=".5" BorderBrush="#D2D4D5" Margin="0 20"></Border>
                 
@@ -52,18 +52,18 @@
                         <Border Height="5" />
                         <Grid ColumnDefinitions="Auto,10,*,10,50,10,80">
                                 <Label Grid.Column="0" VerticalAlignment="Center" Content="{DynamicResource App.Strings.RegexRuleVideoTestLabel}" />
-                                <TextBox Grid.Column="2" Watermark="{DynamicResource App.Strings.RegexRuleInputOrOpenFileWatermark}" Text="{Binding VideoTestStr}" />
+                                <TextBox Grid.Column="2" PlaceholderText="{DynamicResource App.Strings.RegexRuleInputOrOpenFileWatermark}" Text="{Binding VideoTestStr}" />
                                 <Button Grid.Column="4" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Command="{Binding OpenFileCommand}" CommandParameter="{x:Static common:FileType.Video}">...</Button>
-                                <TextBox Grid.Column="6" IsReadOnly="True" Watermark="{DynamicResource App.Strings.RegexRuleNoMatchWatermark}" Text="{Binding VideoTestResult}" />
+                                <TextBox Grid.Column="6" IsReadOnly="True" PlaceholderText="{DynamicResource App.Strings.RegexRuleNoMatchWatermark}" Text="{Binding VideoTestResult}" />
                         </Grid>
                 
                         <Border Height="10" />
                 
                         <Grid ColumnDefinitions="Auto,10,*,10,50,10,80">
                                 <Label Grid.Column="0" VerticalAlignment="Center" Content="{DynamicResource App.Strings.RegexRuleSubtitleTestLabel}" />
-                                <TextBox Grid.Column="2" Watermark="{DynamicResource App.Strings.RegexRuleInputOrOpenFileWatermark}" Text="{Binding SubtitleTestStr}" />
+                                <TextBox Grid.Column="2" PlaceholderText="{DynamicResource App.Strings.RegexRuleInputOrOpenFileWatermark}" Text="{Binding SubtitleTestStr}" />
                                 <Button Grid.Column="4" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Command="{Binding OpenFileCommand}" CommandParameter="{x:Static common:FileType.Subtitle}">...</Button>
-                                <TextBox Grid.Column="6" IsReadOnly="True" Watermark="{DynamicResource App.Strings.RegexRuleNoMatchWatermark}" Text="{Binding SubtitleTestResult}" />
+                                <TextBox Grid.Column="6" IsReadOnly="True" PlaceholderText="{DynamicResource App.Strings.RegexRuleNoMatchWatermark}" Text="{Binding SubtitleTestResult}" />
                         </Grid>
                 </StackPanel>
                 

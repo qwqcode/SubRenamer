@@ -5,7 +5,8 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
-using Avalonia.ReactiveUI;
+using ReactiveUI;
+using ReactiveUI.Avalonia;
 using SubRenamer.Helper;
 using SubRenamer.Model;
 using SubRenamer.ViewModels;
@@ -24,9 +25,9 @@ public partial class MainWindow : ReactiveWindow<Window>
 
     private async void OnDrop(object? sender, DragEventArgs e)
     {
-        if (!e.Data.Contains(DataFormats.Files)) return;
-        
-        var items = e.Data.GetFiles() ?? Array.Empty<IStorageItem>();
+        if (!e.DataTransfer.Contains(DataFormat.File)) return;
+
+        var items = e.DataTransfer.TryGetFiles() ?? Array.Empty<IStorageItem>();
         var files = new List<IStorageFile>();
         
         foreach (var item in items)
