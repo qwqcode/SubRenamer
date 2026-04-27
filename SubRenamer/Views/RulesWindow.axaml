@@ -12,7 +12,8 @@
         Title="{DynamicResource App.Strings.RulesTitle}"
         WindowStartupLocation="CenterOwner"
         Width="500"
-        SizeToContent="Height">
+        SizeToContent="Height"
+        x:DataType="vm:RulesViewModel">
     
         <Design.DataContext>
                 <vm:RulesViewModel/>

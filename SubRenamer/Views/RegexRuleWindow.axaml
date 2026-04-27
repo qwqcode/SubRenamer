@@ -5,12 +5,13 @@
         mc:Ignorable="d"
         x:Name="Window"
         x:Class="SubRenamer.Views.RegexRuleWindow"
-        xmlns:vm="clr-namespace:SubRenamer.ViewModels"
+        xmlns:vm="using:SubRenamer.ViewModels"
         xmlns:common="clr-namespace:SubRenamer.Common"
         Title="{DynamicResource App.Strings.RegexRuleTitle}"
         WindowStartupLocation="CenterOwner"
         Width="500"
-        SizeToContent="Height">
+        SizeToContent="Height"
+        x:DataType="vm:RegexRuleViewModel">
         
         <Design.DataContext>
                 <vm:RegexRuleViewModel />

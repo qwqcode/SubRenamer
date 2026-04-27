@@ -5,12 +5,13 @@
         mc:Ignorable="d"
         x:Name="Window"
         x:Class="SubRenamer.Views.ManualRuleWindow"
-        xmlns:vm="clr-namespace:SubRenamer.ViewModels"
+        xmlns:vm="using:SubRenamer.ViewModels"
         xmlns:common="clr-namespace:SubRenamer.Common"
         Title="{DynamicResource App.Strings.ManualRuleTitle}"
         WindowStartupLocation="CenterOwner"
         Width="710"
-        SizeToContent="Height">
+        SizeToContent="Height"
+        x:DataType="vm:ManualRuleViewModel">
         
         <Design.DataContext>
                 <vm:ManualRuleViewModel />
