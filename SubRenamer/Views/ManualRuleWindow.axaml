@@ -5,12 +5,13 @@
         mc:Ignorable="d"
         x:Name="Window"
         x:Class="SubRenamer.Views.ManualRuleWindow"
-        xmlns:vm="clr-namespace:SubRenamer.ViewModels"
+        xmlns:vm="using:SubRenamer.ViewModels"
         xmlns:common="clr-namespace:SubRenamer.Common"
         Title="{DynamicResource App.Strings.ManualRuleTitle}"
         WindowStartupLocation="CenterOwner"
         Width="710"
-        SizeToContent="Height">
+        SizeToContent="Height"
+        x:DataType="vm:ManualRuleViewModel">
         
         <Design.DataContext>
                 <vm:ManualRuleViewModel />
@@ -26,7 +27,7 @@
                                 <StackPanel Grid.Column="2" Spacing="10">
                                         <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Command="{Binding OpenFileCommand}" CommandParameter="{x:Static common:FileType.Video}" Content="{DynamicResource App.Strings.ManualRuleSelectVideoFile}"></Button>
                                         <TextBlock TextWrapping="Wrap" LineSpacing="5" Text="{DynamicResource App.Strings.ManualRuleInstruction}"></TextBlock>
-                                        <TextBox IsReadOnly="True" Watermark="{DynamicResource App.Strings.ManualRuleNoMatch}" Text="{Binding VideoMatchResult}" />
+                                        <TextBox IsReadOnly="True" PlaceholderText="{DynamicResource App.Strings.ManualRuleNoMatch}" Text="{Binding VideoMatchResult}" />
                                 </StackPanel>
                         </Grid>
                 </StackPanel>
@@ -42,7 +43,7 @@
                                 <StackPanel Grid.Column="2" Spacing="10">
                                         <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Command="{Binding OpenFileCommand}" CommandParameter="{x:Static common:FileType.Subtitle}" Content="{DynamicResource App.Strings.ManualRuleSelectSubtitleFile}"></Button>
                                         <TextBlock TextWrapping="Wrap" LineSpacing="5" Text="{DynamicResource App.Strings.ManualRuleInstruction}"></TextBlock>
-                                        <TextBox IsReadOnly="True" Watermark="{DynamicResource App.Strings.ManualRuleNoMatch}" Text="{Binding SubtitleMatchResult}" />
+                                        <TextBox IsReadOnly="True" PlaceholderText="{DynamicResource App.Strings.ManualRuleNoMatch}" Text="{Binding SubtitleMatchResult}" />
                                 </StackPanel>
                         </Grid>
                 </StackPanel>

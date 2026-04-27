@@ -52,7 +52,7 @@ public class DialogService : IDialogService
     
     public async Task<string?> OpenConflict(List<string> options)
     {
-        var keepAllText = Application.Current.GetResource<string>("App.Strings.ConflictKeepAll");
+        var keepAllText = Application.Current.GetResource<string>("App.Strings.ConflictKeepAll") ?? "";
 
         var store = new ConflictViewModel([..options, keepAllText]);
         var dialog = new ConflictWindow

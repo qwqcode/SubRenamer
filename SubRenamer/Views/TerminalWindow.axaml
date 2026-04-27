@@ -26,15 +26,15 @@
                     <Setter Property="Background" Value="Black" />
                 </Style>
 
-                <Style Selector="^ /template/ TextBlock#PART_Watermark">
+                <Style Selector="^ /template/ TextBlock#PART_PlaceholderText">
                     <Setter Property="Foreground" Value="White" />
                 </Style>
             </Style>
-            
+
             <Style Selector="^:focus">
                 <Setter Property="Foreground" Value="White" />
 
-                <Style Selector="^ /template/ TextBlock#PART_Watermark">
+                <Style Selector="^ /template/ TextBlock#PART_PlaceholderText">
                     <Setter Property="Foreground" Value="White" />
                 </Style>
 

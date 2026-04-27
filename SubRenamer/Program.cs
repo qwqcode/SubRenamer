@@ -1,5 +1,5 @@
 using Avalonia;
-using Avalonia.ReactiveUI;
+using ReactiveUI.Avalonia;
 using System;
 using System.IO;
 using System.Text;
@@ -41,7 +41,7 @@ internal class Program
             .UsePlatformDetect()
             .WithInterFont()
             .LogToTrace()
-            .UseReactiveUI()
+            .UseReactiveUI(_ => {})
             .With(new MacOSPlatformOptions
             {
                 DisableDefaultApplicationMenuItems = true
